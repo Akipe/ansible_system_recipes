@@ -1,0 +1,6 @@
+---
+- name: Set timezone
+  timezone:
+    name: "{{ role_systemdTimedatectl_timezone }}"
+  vars:
+    role_systemdTimedatectl_timezone: "{{ time_timezone }}"

@@ -1,0 +1,52 @@
+---
+- name: Create containers user
+  user:
+    state: present
+    name: containers
+    comment: Uer who manage containers
+    shell: /usr/bin/fish
+    groups: docker
+    append: yes
+
+- name: Create containers directory (volumes)
+  become: yes
+  become_user: containers
+  file:
+    path: /containers/volumes
+    state: directory
+    mode: u+rwx,g-xr,o-x
+    owner: containers
+    group: containers
+    recurse: yes
+
+- name: Create containers directory (mount)
+  become: yes
+  become_user: containers
+  file:
+    path: /containers/mount
+    state: directory
+    mode: u+rwx,g-xr,o-x
+    owner: containers
+    group: containers
+    recurse: yes
+
+- name: Create containers directory (data)
+  become: yes
+  become_user: containers
+  file:
+    path: /containers/data
+    state: directory
+    mode: u+rwx,g-xr,o-x
+    owner: containers
+    group: containers
+    recurse: yes
+
+## TODO: need reboot
+
+## Create containers & volumes
+- name: "Include all tasks for create containers"
+  include_tasks: "containers/{{ item }}.yml"
+  loop:
+    - containersAdmin
+    - containersRouter
+    - containersUpdate

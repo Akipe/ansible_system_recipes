@@ -1,0 +1,33 @@
+---
+- name: Load tasks for install on Archlinux
+  include_tasks: archlinux/main.yml
+  when: ansible_distribution == "Archlinux"
+
+- name: Change hostname
+  hostname:
+    name: "{{ role_hostname_name }}"
+  vars:
+    role_hostname_name: "{{ hostname_name }}"
+  notify: Execute hostnamectl command
+
+- name: Define /etc/hostname
+  template:
+    src: hostname.j2
+    dest: /etc/hostname
+    owner: root
+    group: root
+    mode: u+rw,g+r,o+r
+  vars:
+    role_hostname_name: "{{ hostname_name }}"
+  notify: Execute hostnamectl command
+
+- name: Define /etc/hosts
+  template:
+    src: hosts.j2
+    dest: /etc/hosts
+    owner: root
+    group: root
+    mode: u+rw,g+r,o+r
+  vars:
+    role_hostname_name: "{{ hostname_name }}"
+  notify: Execute hostnamectl command

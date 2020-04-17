@@ -1,0 +1,7 @@
+---
+- name: "Remove repository config"
+  apt_repository:
+    repo: "{{ item.repository.repo }}"
+    state: absent
+  notify: Update APT cache
+  with_items: "{{ remove_repository }}"

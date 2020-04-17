@@ -1,0 +1,13 @@
+---
+- name: Install k3b
+  pacman:
+    state: present
+    name:
+      - k3b
+      - cdparanoia
+      - cdrdao
+      - cdrtools
+      - dvd+rw-tools
+      - emovix
+      - transcode
+      - vcdimager 

@@ -1,0 +1,21 @@
+---
+# todo: add comment from https://github.com/konkor/cpufreq/issues/48#issuecomment-345753362
+- name: Install irqbalance (Ubuntu/Debian)
+  apt:
+    update_cache: yes
+    name: irqbalance
+    state: latest
+  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+
+- name: Install irqbalance (Archlinux)
+  pacman:
+    update_cache: yes
+    name: irqbalance
+    state: latest
+  when: ansible_distribution == 'Archlinux'
+
+- name: Start and enable irqbalance
+  systemd:
+    name: irqbalance.service
+    enabled: yes
+    state: started

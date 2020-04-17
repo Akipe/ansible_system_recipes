@@ -1,0 +1,7 @@
+---
+- name: Install Avahi and dependencies
+  pacman:
+    name:
+      - avahi
+      - nss-mdns 
+    state: present

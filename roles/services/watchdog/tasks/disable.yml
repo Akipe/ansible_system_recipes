@@ -1,0 +1,18 @@
+---
+- name: Blacklist watchdog module kernel
+  template:
+    src: modprobe.d/disable_watchdog.conf.j2
+    dest: /etc/modprobe.d/disable_watchdog.conf
+    owner: root
+    group: root
+    mode: "u=rw,g=r,o=r"
+  notify: Restart modules loaded
+
+- name: Disable NMI watchdog
+  template:
+    src: sysctl.d/disable_nmi_watchdog.conf.j2
+    dest: /etc/sysctl.d/disable_nmi_watchdog.conf
+    owner: root
+    group: root
+    mode: "u=rw,g=r,o=r"
+  notify: Restart sysctl

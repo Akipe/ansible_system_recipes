@@ -1,0 +1,32 @@
+---
+# Lenovo Thinkpad w530
+
+ansible_python_interpreter: /usr/bin/python
+ansible_user: "{{ user_name }}"
+
+hardware:
+  cpu:
+    vendor: Intel
+  gpu:
+    vendor: Intel
+    generation: 14 # Todo: get real number generation
+  disks:
+    - system:
+      id: "{{ ansible_devices.sda.links.ids[0] }}"
+      smartmontools:
+        parameters: -a -d sat -o on -S on -s (S/../.././06|L/../../1/10)
+
+ssh:
+  port: 22
+
+systemd_boot:
+  timeout: 5
+
+bootloader:
+  options:
+    - "cryptdevice=UUID={{ ansible_devices.sda.partitions.sda2.uuid }}:akproot:allow-discards root=/dev/mapper/akproot rw"
+    - "acpi_osi=Linux"
+    - "acpi=force"
+    - "acpi_enforce_ressources=lax"
+    - "pcie_aspm=force"
+    - "nowatchdog"

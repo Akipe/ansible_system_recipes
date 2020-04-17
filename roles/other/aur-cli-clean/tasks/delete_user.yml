@@ -1,0 +1,16 @@
+---
+- name: Remove sudo config for ansible_aur user
+  file:
+    state: absent
+    path: /etc/sudoers.d/10-ansible_aur-allow-pacman
+
+- name: Remove ansible_aur user
+  user:
+    name: ansible_aur
+    state: absent
+    remove: yes
+
+- name: Remove ansible_aur home directory
+  file:
+    state: absent
+    path: /home/ansible_aur/

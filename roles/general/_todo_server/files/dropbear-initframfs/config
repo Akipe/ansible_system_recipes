@@ -1,0 +1,17 @@
+# Generate with Ansible
+
+#
+# Configuration options for the dropbear-initramfs boot scripts.
+# You must run update-initramfs(8) to effect changes to this file (like
+# for other files under the '/etc/dropbear-initramfs' directory).
+
+DROPBEAR_OPTIONS="-p 22222 -s -j -k -I 60"
+
+#
+# On local (non-NFS) mounts, interfaces matching this pattern are
+# brought down before exiting the ramdisk to avoid dirty network
+# configuration in the normal kernel.
+# The special value 'none' keeps all interfaces up and preserves routing
+# tables and addresses.
+#
+#IFDOWN=*

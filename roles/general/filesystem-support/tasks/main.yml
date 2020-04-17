@@ -1,0 +1,32 @@
+---
+- name: Install different filesystem support
+  pacman:
+    state: present
+    name:
+      - ntfs-3g
+      - f2fs-tools
+      - exfat-utils
+      - e2fsprogs
+      - dosfstools
+      - dmraid
+      - btrfs-progs
+      - jfsutils
+      - reiserfsprogs
+      - udftools
+      - nilfs-utils
+      - xfsprogs
+      - squashfs-tools
+      - unionfs-fuse
+      - gparted
+      - gpart
+      - mtools
+
+- name: Install different filesystem support (AUR)
+  become: yes
+  become_user: ansible_aur
+  aur:
+    use: yay
+    skip_installed: true
+    name:
+      - hfsprogs
+# #      - zfs-dkms zfs-utils linux-apfs-dkms-git apfsprogs-git

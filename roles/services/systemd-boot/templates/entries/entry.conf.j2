@@ -1,0 +1,7 @@
+## {{ ansible_managed }}
+
+title   {{ item.role_systemdBoot_title }}
+linux   {{ item.role_systemdBoot_linux_path }}
+initrd  {{ role_systemdBoot_microcode_path }}
+initrd  {{ item.role_systemdBoot_initramfs_path }}
+options {% for option in item.role_systemdBoot_bootloader_options %}{{ option }} {% endfor %}

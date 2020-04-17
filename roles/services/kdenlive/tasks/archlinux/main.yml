@@ -1,0 +1,12 @@
+---
+- name: Install kdenlive
+  pacman:
+    state: present
+    name:
+      - kdenlive
+      - cdrtools
+      - dvdauthor
+      - dvgrab
+      - ffmpeg
+      - vlc
+      - xine-ui

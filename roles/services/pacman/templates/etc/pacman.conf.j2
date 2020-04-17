@@ -1,0 +1,47 @@
+## {{ ansible_managed }}
+
+### GENERAL OPTIONS
+[options]
+Color
+TotalDownload
+CheckSpace
+VerbosePkgLists
+
+### SIGNATURE OPTIONS
+SigLevel            = Required DatabaseOptional
+LocalFileSigLevel   = Optional
+#RemoteFileSigLevel = Required
+
+### OTHERS OPTIONS
+HoldPkg             = pacman glibc
+#XferCommand        = /usr/bin/curl -L -C - -f -o %o %u
+#XferCommand        = /usr/bin/wget --passive-ftp -c -O %o %u
+#CleanMethod        = KeepInstalled
+Architecture        = auto
+
+### DIRECTORY OPTIONS
+#RootDir            = /
+#DBPath             = /var/lib/pacman/
+#CacheDir           = /var/cache/pacman/pkg/
+#LogFile            = /var/log/pacman.log
+#GPGDir             = /etc/pacman.d/gnupg/
+#HookDir            = /etc/pacman.d/hooks/
+
+### IGNORE SOME PACKAGES
+#IgnorePkg          =
+#IgnoreGroup        =
+#NoUpgrade          =
+#NoExtract          =
+
+### REPOSITORIES
+[core]
+Include     = /etc/pacman.d/mirrorlist
+
+[extra]
+Include     = /etc/pacman.d/mirrorlist
+
+[community]
+Include     = /etc/pacman.d/mirrorlist
+
+[multilib]
+Include     = /etc/pacman.d/mirrorlist

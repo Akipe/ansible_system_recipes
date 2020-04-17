@@ -1,0 +1,16 @@
+---
+- name: Install base server apps (Fedora)
+  dnf:
+    state: present
+    name:
+      - neovim
+      - git
+  when: ansible_distribution == "Fedora"
+
+- name: Install base server apps (Fedora)
+  apt:
+    state: present
+    name:
+      - neovim
+      - git
+  when: ansible_distribution == "Debian" or ansible_distribution == "Ubuntu"

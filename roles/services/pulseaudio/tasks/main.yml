@@ -1,0 +1,8 @@
+---
+- name: Install PulseAudio
+  pacman:
+    state: present
+    name:
+      - pulseaudio
+      - pulseaudio-alsa
+      - pulseaudio-bluetooth

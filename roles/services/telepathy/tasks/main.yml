@@ -1,0 +1,25 @@
+---
+- name: Install Empathy and extensions
+  pacman:
+    state: present
+    name:
+      - empathy
+#      - purple-plugin-pack
+#      - purple-facebook
+#      - purple-skypeweb
+      - telepathy-gabble
+      - telepathy-haze
+      - telepathy-idle
+      - telepathy-salut
+
+# - name: Install extensions
+#   become: yes
+#   become_user: ansible_aur
+#   aur:
+#     use: yay
+#     skip_installed: true
+#     aur_only: yes
+#     name:
+# #      - purple-rocketchat
+# #      - purple-discord-git
+#       - libpurple-lurch

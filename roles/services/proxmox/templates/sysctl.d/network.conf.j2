@@ -1,0 +1,92 @@
+## {{ ansible_managed }}
+
+net.ipv4.ip_forward=1
+
+# Disconnect dead TCP connections after 10 minutes
+net.ipv4.tcp_keepalive_time = 600
+
+# Determines the wait time between isAlive interval probes (reduce from 75 sec to 15)
+net.ipv4.tcp_keepalive_intvl = 15
+
+# Determines the number of probes before timing out (reduce from 9 sec to 5 sec)
+net.ipv4.tcp_keepalive_probes = 5
+
+# allow that much active connections
+net.core.somaxconn = 256000
+
+# Timeout broken connections faster (amount of time to wait for FIN)
+net.ipv4.tcp_fin_timeout = 10
+
+# Protection from SYN flood attack.
+net.ipv4.tcp_syncookies = 1
+
+# Minimize the time it takes for a connection attempt to fail
+net.ipv4.tcp_syn_retries = 2
+net.ipv4.tcp_synack_retries = 2
+net.ipv4.tcp_orphan_retries = 2
+
+# Handle SYN floods and large numbers of valid HTTPS connections
+net.ipv4.tcp_max_syn_backlog = 40000
+
+# Increase the length of the network device input queue
+net.core.netdev_max_backlog = 50000
+
+# Faster full-speed than cubic
+# And faster recover if connection looses
+
+# http://lwn.net/Articles/616241/
+net.core.default_qdisc = fq_codel
+
+# Increase ephermeral IP ports
+net.ipv4.ip_local_port_range = 10000    60000
+
+# Broken combined
+net.ipv4.tcp_tw_reuse = 0
+net.ipv4.tcp_tw_recycle = 0
+
+# https://www.serveradminblog.com/2011/02/neighbour-table-overflow-sysctl-conf-tunning/
+net.ipv4.neigh.default.gc_thresh1 = 1024
+net.ipv4.neigh.default.gc_thresh2 = 2048
+net.ipv4.neigh.default.gc_thresh3 = 4096
+
+# Don't slow network - save congestion window after idle
+# https://github.com/ton31337/tools/wiki/tcp_slow_start_after_idle---tcp_no_metrics_save-performance
+net.ipv4.tcp_slow_start_after_idle = 0
+
+# If we must send packets at first place, but throughput is on second
+net.ipv4.tcp_low_latency = 1
+
+# Allow a high number of timewait sockets
+net.ipv4.tcp_max_tw_buckets = 2000000
+
+# Increase Linux autotuning TCP buffer limits
+net.ipv4.tcp_wmem = 4096        65536   16777216
+net.ipv4.tcp_rmem = 4096        87380   16777216
+net.core.rmem_max = 16777216
+net.core.wmem_max = 16777216
+net.core.optmem_max = 65536
+
+# If your servers talk UDP, also up these limits
+net.ipv4.udp_rmem_min = 8192
+net.ipv4.udp_wmem_min = 8192
+
+# Sockets/UDP query length
+net.unix.max_dgram_qlen = 1024
+
+# http://vds-admin.ru/unix-linux/oshibki-v-dmesg-vida-nfconntrack-table-full-dropping-packet
+# load module nf_contrack if needed
+#net.netfilter.nf_conntrack_max = 1048576
+#net.nf_conntrack_max = 1048576
+
+# http://www.opennet.ru/opennews/art.shtml?num=49135
+net.ipv4.ipfrag_high_thresh=262144
+net.ipv4.ipfrag_low_thresh=196608
+net.ipv6.ip6frag_high_thresh=262144
+net.ipv6.ip6frag_low_thresh=196608
+
+# http://www.opennet.ru/opennews/art.shtml?num=50889
+net.ipv4.tcp_sack = 0
+net.ipv4.tcp_mtu_probing = 0
+
+# Prevent TIME_WAIT attak.
+net.ipv4.tcp_rfc1337 = 1

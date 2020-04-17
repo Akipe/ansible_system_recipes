@@ -1,0 +1,20 @@
+---
+- name: Load roles concerning akpServer02
+  hosts: akpServer02
+  become_user: root
+  become: yes
+  roles:
+    ### Base
+    - { role: ansible-guest, tags: ansible-guest }
+    - { role: ssh, tags: ssh }
+    ### Package manager
+    - { role: apt, tags: apt }
+    ### Hardware
+    - { role: ssd, tags: ssd }
+    ### Shell
+    - { role: fish, tags: fish }
+    ### Commons rules
+    - { role: common_server, tags: common_server }
+    ### Specifics rules
+    - { role: proxmox, tags: proxmox }
+    - { role: akp_create_akpcontainers01, tags: akp_create_akpcontainers01 }

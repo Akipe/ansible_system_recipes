@@ -1,0 +1,3 @@
+.ifndef SYSTEM_ALIASES_PIPE_TRANSPORT
+    SYSTEM_ALIASES_PIPE_TRANSPORT = address_pipe
+.endif

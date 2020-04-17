@@ -1,0 +1,6 @@
+---
+- name: Start and active Pacserve service
+  systemd:
+    name: pacserve.service
+    enabled: yes
+    state: started

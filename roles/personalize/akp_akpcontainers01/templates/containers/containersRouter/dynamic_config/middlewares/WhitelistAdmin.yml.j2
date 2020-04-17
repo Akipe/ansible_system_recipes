@@ -1,0 +1,9 @@
+---
+## {{ ansible_managed }}
+
+http:
+  middlewares:
+    WhitelistAdmin:
+      ipWhiteList:
+        sourceRange:
+        - "{{ ipv4_lan_subnet }}"

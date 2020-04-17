@@ -1,0 +1,4 @@
+[Prosody]
+title=Prosody
+description=A simple XMPP server 
+ports=5222/tcp|5269/tcp

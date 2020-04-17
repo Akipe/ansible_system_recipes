@@ -1,0 +1,5 @@
+---
+- name: Install sudo
+  pacman:
+    state: present
+    name: sudo

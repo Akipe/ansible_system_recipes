@@ -1,0 +1,12 @@
+---
+- name: Load tasks for Debian & derivate
+  include_tasks: debian/main.yml
+  when: ansible_distribution == "Debian" or ansible_distribution == "Ubuntu"
+
+- name: Load tasks for Fedora
+  include_tasks: fedora/main.yml
+  when: ansible_distribution == "Fedora"
+
+- name: Load tasks for Archlinux
+  include_tasks: archlinux/main.yml
+  when: ansible_distribution == "Archlinux"

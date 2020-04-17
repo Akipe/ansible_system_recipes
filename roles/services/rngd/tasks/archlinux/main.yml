@@ -1,0 +1,5 @@
+---
+- name: Install Rng-tools
+  pacman:
+    name: rng-tools
+    state: present

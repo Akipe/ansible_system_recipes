@@ -1,0 +1,61 @@
+---
+- name: Define microcode path (Intel)
+  set_fact:
+    role_systemdBoot_microcode_path: "/intel-ucode.img"
+  when: hardware_cpu_vendor == 'Intel'
+
+- name: Define microcode path (AMD)
+  set_fact:
+    role_systemdBoot_microcode_path: "/amd-ucode.img"
+  when: hardware_cpu_vendor == 'AMD'
+
+- name: Configure bootloader
+  template:
+    src: loader.conf.j2
+    dest: /boot/loader/loader.conf
+    owner: root
+    group: root
+    mode: "u=rwx,g=rx,o=rx"
+  vars:
+    role_systemdBoot_default_entry: "{{ bootloader_defaultEntry }}"
+    role_systemdBoot_timeout: "{{ bootloader_timeout }}"
+  notify: Restart sysctl
+
+- name: Configure entries
+  template:
+    src: entries/entry.conf.j2
+    dest: "/boot/loader/entries/{{ item.role_systemdBoot_filename }}.conf"
+    owner: root
+    group: root
+    mode: "u=rwx,g=rx,o=rx"
+  loop:
+    - role_systemdBoot_title: "AkpOS"
+      role_systemdBoot_filename: "akpos-zen"
+      role_systemdBoot_linux_path: "/vmlinuz-linux-zen"
+      role_systemdBoot_initramfs_path: "/initramfs-linux-zen.img"
+      role_systemdBoot_bootloader_options: "{{ bootloader_options }}"
+    - role_systemdBoot_title: "AkpOS (fallback)"
+      role_systemdBoot_filename: "akpos-zen-fallback"
+      role_systemdBoot_linux_path: "/vmlinuz-linux-zen"
+      role_systemdBoot_initramfs_path: "/initramfs-linux-zen-fallback.img"
+      role_systemdBoot_bootloader_options: "{{ bootloader_options }}"
+    - role_systemdBoot_title: "AkpOS (LTS)"
+      role_systemdBoot_filename: "akpos-lts"
+      role_systemdBoot_linux_path: "/vmlinuz-linux-lts"
+      role_systemdBoot_initramfs_path: "/vmlinuz-linux-lts.img"
+      role_systemdBoot_bootloader_options: "{{ bootloader_options }}"
+    - role_systemdBoot_title: "AkpOS (fallback LTS)"
+      role_systemdBoot_filename: "akpos-lts-fallback"
+      role_systemdBoot_linux_path: "/vmlinuz-linux-lts"
+      role_systemdBoot_initramfs_path: "/vmlinuz-linux-lts-fallback.img"
+      role_systemdBoot_bootloader_options: "{{ bootloader_options }}"
+  notify: Restart sysctl
+
+- name: Install Pacman hook for auto upgrade Systemd Boot config
+  become: yes
+  become_user: ansible_aur
+  aur:
+    use: yay
+    skip_installed: true
+    name:
+      - systemd-boot-pacman-hook

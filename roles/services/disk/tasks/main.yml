@@ -1,0 +1,22 @@
+---
+- name: Load tasks for install on Archlinux
+  include_tasks: archlinux/main.yml
+  when: ansible_distribution == "Archlinux"
+
+- name: Active periodic TRIM for SSD
+  systemd:
+    name: fstrim.timer
+    state: started
+    enabled: yes
+
+- name: Set I/O scheduler
+  template:
+    src: rules.d/60-ioschedulers.rules.j2
+    dest: /etc/udev/rules.d/60-ioschedulers.rules
+    backup: yes
+    owner: root
+    group: root
+    mode: "u=rw,g=r,o=r"
+  notify:
+    - Reload udev
+    - Force udev to trigger rules

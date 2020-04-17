@@ -1,0 +1,6 @@
+---
+- name: Install Open-iSCSI client
+  apt:
+    state: present
+    name:
+      - open-iscsi

@@ -1,0 +1,52 @@
+## {{ ansible_managed }}
+
+Protocol 2
+Port {{ role_ssh_port }}
+{% if role_ssh_users is defined %}
+
+AllowUsers {% for user in role_ssh_users %}{{ user }} {% endfor %}
+
+{% endif %}
+
+HostKey /etc/ssh/ssh_host_ed25519_key
+HostKey /etc/ssh/ssh_host_rsa_key
+HostKey /etc/ssh/ssh_host_ecdsa_key
+
+KexAlgorithms curve25519-sha256@libssh.org,ecdh-sha2-nistp521,ecdh-sha2-nistp384,ecdh-sha2-nistp256,diffie-hellman-group-exchange-sha256
+Ciphers chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr
+MACs hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-512,hmac-sha2-256,umac-128@openssh.com
+
+SyslogFacility AUTH
+LogLevel VERBOSE
+
+PermitRootLogin no
+ChallengeResponseAuthentication no
+PermitEmptyPasswords no
+PasswordAuthentication no
+AllowAgentForwarding no
+UsePAM no
+
+AuthenticationMethods publickey
+PubkeyAuthentication yes
+AuthorizedKeysFile      .ssh/authorized_keys
+
+ClientAliveInterval 900
+#LoginGraceTime 900
+ClientAliveCountMax 0
+MaxAuthTries 10
+
+Compression yes
+
+X11Forwarding no
+PrintMotd no
+IgnoreRhosts yes
+HostbasedAuthentication no
+GSSAPIAuthentication no
+
+AcceptEnv LANG LC_*
+AcceptEnv XMODIFIERS
+
+Subsystem sftp internal-sftp
+
+#Privilege Separation is turned on for security
+#UsePrivilegeSeparation yes

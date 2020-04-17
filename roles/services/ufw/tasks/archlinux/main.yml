@@ -1,0 +1,7 @@
+---
+- name: Install ufw and gui
+  pacman:
+    state: present
+    name:
+      - ufw
+      - gufw

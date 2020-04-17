@@ -1,0 +1,10 @@
+---
+- name: Restart smartmontools (Ubuntu)
+  systemd:
+    name: smartmontools
+    state: restarted
+
+- name: Restart smartmontools (Archlinux)
+  systemd:
+    name: smartd.service
+    state: restarted

@@ -1,0 +1,4 @@
+[Pacserve]
+title=Pacserve
+description=Allow Pacserve for sharing pacman package with local network
+ports=15678

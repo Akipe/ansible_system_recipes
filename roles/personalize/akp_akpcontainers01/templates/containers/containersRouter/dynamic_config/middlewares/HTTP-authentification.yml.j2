@@ -1,0 +1,9 @@
+---
+## {{ ansible_managed }}
+
+http:
+  middlewares:
+    HTTP_Authentification:
+      basicAuth:
+        users:
+          - "{{ akpRouter_middlewares_httpAuth_user1 }}"

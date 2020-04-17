@@ -1,0 +1,45 @@
+---
+- name: Add Docker official repository
+  include_role:
+    name: apt
+    tasks_from: add_repository
+  vars:
+    add_repository:
+      - key:
+          id: 9DC858229FC7DD38854AE2D88D81803C0EBFCD88
+          url: https://download.docker.com/linux/ubuntu/gpg
+        repository:
+          repo: "deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable"
+          filename: docker
+
+- name: Install Docker CE
+  apt:
+    name:
+      - docker-ce
+    state: present
+    update_cache: yes
+
+# - name: Install NDP Proxy Daemon
+#   apt:
+#     name: ndppd
+#     state: present
+
+# - name: Configure NDP Proxy Daemon
+#   copy:
+#     src: ndppd/ndppd.conf
+#     dest: /etc/ndppd.conf
+#     owner: root
+#     group: root
+#     mode: 0644
+#   notify: Restart Ndppd
+
+# - name: Enable proxy_ndp for public adapter
+#   sysctl:
+#     name: net.ipv6.conf.enp6s0.proxy_ndp
+#     value: 1
+#     state: present
+
+# To check
+# sudo sysctl net.ipv6.conf.all.forwarding=1
+# sudo sysctl net.ipv6.conf.default.forwarding=1
+# sudo sysctl "net.ipv6.conf.enp6s0.accept_ra=2"

@@ -1,0 +1,199 @@
+---
+- name: Install sddm
+  pacman:
+    state: present
+    name:
+      - sddm
+      - sddm-kcm
+
+- name: Add french keyboard
+  template:
+    src: xorg.conf.d/00-keyboard.conf.j2
+    dest: /etc/X11/xorg.conf.d/00-keyboard.conf
+    owner: root
+    group: root
+    mode: u+rw,g+r,o+r
+
+- name: Install KDE and base apps
+  pacman:
+    state: present
+    name:
+      - plasma-meta
+      - plasma-wayland-session
+      - kscreen
+      - kcron
+      - ksystemlog
+      - kate
+      - kwrite
+      - kdialog
+      - kfind
+      - khelpcenter
+      - gwenview
+      - kamera
+      - kcolorchooser
+      - kdegraphics-mobipocket
+      - kdegraphics-thumbnailers
+      - kipi-plugins
+      - libkvkontakte
+      - libmediawiki
+      - qt5-xmlpatterns
+      - kolourpaint
+      - okular
+      - calligra
+      - chmlib
+      - ebook-tools
+      - kdegraphics-mobipocket
+      - khtml
+      - libzip
+      - unrar
+      - p7zip
+      - libappindicator-gtk3
+      - appmenu-gtk-module
+      - xdg-desktop-portal
+      - kdeplasma-addons
+      - qt5-webengine
+      - quota-tools
+      - purpose
+      - kross 
+      - spectacle
+      - svgpart
+      - audiocd-kio
+      - opus-tools
+      - ffmpegthumbs
+      - kmix
+      - kdenetwork-filesharing
+      - kget 
+      - kio-extras
+      - kimageformats
+      - libappimage
+      - perl
+      - phonon-qt5
+      - qt5-imageformats
+      - taglib
+      - zeroconf-ioslave
+      - kleopatra
+      - print-manager
+      - system-config-printer
+      - cups-pk-helper
+      - libsecret 
+      - powerdevil
+      - phonon-qt5-gstreamer
+      - gst-libav
+      - gst-plugins-good
+      - gst-plugins-ugly
+      - gst-plugins-bad
+      - phonon-qt5-vlc
+      - kde-gtk-config
+      - breeze-gtk
+      - kcm-wacomtablet
+      - kdeconnect
+      - sshfs
+      - plasma-nm
+      - usb_modeswitch
+      - bluedevil
+      - kwalletmanager
+      - kwallet-pam
+      - ksshaskpass
+      - alsa-utils
+      - alsa-plugins
+      - alsa-firmware
+      - libinput
+      - xf86-input-libinput
+      - akonadi-calendar-tools
+      - akonadiconsole
+      - grantlee-editor
+      - kaddressbook
+      - kalarm
+      - kdepim-addons
+      - grammalecte
+      - kmail
+      - knotes
+      - kontact
+      - korganizer
+      - plasma-pa
+      - kinfocenter
+      - kompare
+      - plasma-browser-integration
+      - discover
+      - packagekit-qt5
+      - kaccounts-integration
+      - kaccounts-providers
+      - xdg-user-dirs
+
+- name: Install Thunar
+  pacman:
+    state: present
+    name:
+      - thunar
+      - gvfs
+      - gvfs-mtp
+      - gvfs-gphoto2
+      - gvfs-afc
+      - gvfs-smb
+      - gvfs-nfs
+      - gnome-keyring
+      - thunar-archive-plugin
+      - ark
+      - thunar-media-tags-plugin
+      - thunar-volman
+      - tumbler
+      - ffmpegthumbnailer
+      - raw-thumbnailer
+      - libgsf
+      - qt5-virtualkeyboard
+
+- name: Install Dolphin
+  pacman:
+    state: present
+    name:
+      - dolphin
+      - dolphin-plugins
+      - kdegraphics-thumbnailers
+      - kimageformats
+      - kdesdk-thumbnailers
+      - ffmpegthumbs
+      - raw-thumbnailer
+      - taglib
+      - audiocd-kio
+
+# - name: Install Dolphin (AUR)
+#   become: yes
+#   become_user: ansible_aur
+#   aur:
+#     use: yay
+#     skip_installed: yes
+#     aur_only: yes
+#     name:
+#       - resvg
+#       - kde-thumbnailer-apk
+#       - kde-thumbnailer-blender
+#       - kde-thumbnailer-epub
+
+- name: Enable SDDM at startup
+  systemd:
+    name: sddm.service
+    enabled: yes
+
+- name: Install KDE apps (AUR)
+  become: yes
+  become_user: ansible_aur
+  aur:
+    use: yay
+    skip_installed: yes
+    aur_only: yes
+    name:
+      - kwalletcli
+
+# https://github.com/PapirusDevelopmentTeam/adapta-kde
+- name: Install themes Adapta
+  pacman:
+    state: present
+    name:
+      - kvantum-qt5
+      - adapta-kde
+      - kvantum-theme-adapta
+      - adapta-gtk-theme
+      - qt5-styleplugins
+      - gtk-engine-murrine
+      - papirus-icon-theme
+      - latte-dock

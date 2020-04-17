@@ -1,0 +1,9 @@
+---
+- name: Install ASUS WMI sensors kernel module
+  become: yes
+  become_user: ansible_aur
+  aur:
+    use: yay
+    skip_installed: true
+    aur_only: yes
+    name: asus-wmi-sensors-dkms-git

@@ -1,0 +1,11 @@
+---
+## {{ ansible_managed }}
+
+http:
+  middlewares:
+    SecureMiddlewares:
+      chain:
+        middlewares:
+        - HTTPS-only
+        - Security-Headers
+        - RateLimit

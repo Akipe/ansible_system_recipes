@@ -1,0 +1,10 @@
+---
+- name: Create environment directory for user
+  become: yes
+  become_user: "{{ user_name }}"
+  file:
+    path: "/home/{{ user_name }}/.config/environment.d"
+    state: directory
+    owner: "{{ user_name }}"
+    group: "{{ user_name }}"
+    mode: u+rw,g+r,o+r

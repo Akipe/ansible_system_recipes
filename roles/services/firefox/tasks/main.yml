@@ -1,0 +1,28 @@
+---
+- name: Installation
+  pacman:
+    state: present
+    name:
+      - firefox
+      - firefox-i18n-fr
+      - libnotify
+
+# - name: Create system wide configuration directory
+#   file:
+#     path: /etc/firefox
+#     state: directory
+#     mode: u+rw,g+r,o+r
+
+# - name: Add system wide configuration
+#   template:
+#     src: etc/syspref.js
+#     dest: /etc/firefox/syspref.js
+#     owner: root
+#     group: root
+#     mode: u+rw,g+r,o+r
+
+# - name: Add link to load system wide configuration
+#   file:
+#     src: /etc/firefox/syspref.js
+#     dest: /usr/lib/firefox/browser/defaults/preferences/syspref.js
+#     state: link

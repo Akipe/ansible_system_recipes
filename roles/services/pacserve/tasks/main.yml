@@ -1,0 +1,9 @@
+---
+- name: Include install tasks
+  include_tasks: install.yml
+
+- name: Include configuration tasks
+  include_tasks: configuration.yml
+
+- name: Include ufw tasks
+  include_tasks: ufw.yml

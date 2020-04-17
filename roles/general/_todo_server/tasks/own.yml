@@ -1,0 +1,58 @@
+---
+- name: Create directory for mount storage
+  file:
+    path: /srv/storage
+    state: directory
+
+- name: Create directory for containers data
+  file:
+    path: /srv/containers
+    state: directory
+
+- name: Create directory for local data
+  file:
+    path: /srv/local
+    state: directory
+
+- name: Create directory for local data
+  file:
+    path: /srv/local/data
+    state: directory
+
+- name: Create directory for local data for Syncthing
+  file:
+    path: /srv/local/data/syncthing
+    state: directory
+
+# Home Assistant 
+- name: Configure path for OpenZWave USB device for Home Assistant
+  copy:
+    src: openzwave/udev/99-usb-openwave.rules
+    dest: /etc/udev/rules.d/99-usb-openwave.rules
+    owner: root
+    group: root
+    mode: u+rw,g+r,o+r
+
+- name: Add configuration for Prosody
+  copy:
+    src: prosody/prosody.cfg.lua
+    dest: /srv/containers/prosody/config/prosody.cfg.lua
+    owner: 101
+    group: 102
+    mode: u+rw,g+r,o-rwx
+
+- name: Add configuration akipe.tech
+  copy:
+    src: akpblog/wordpress.conf
+    dest: /srv/containers/akpblog/nginx/conf/wordpress.conf
+    owner: root
+    group: root
+    mode: u+rw,g+r,o+r
+
+- name: Add Traefik configuration
+  copy:
+    src: traefik/traefik.toml
+    dest: /srv/containers/traefik/traefik.toml
+    owner: root
+    group: root
+    mode: u+rwx,g+rx,o+rx

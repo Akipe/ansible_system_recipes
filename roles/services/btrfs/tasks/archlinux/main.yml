@@ -1,0 +1,7 @@
+---
+- name: Install base
+  pacman:
+    state: present
+    name:
+      - btrfs-progs
+      - zstd

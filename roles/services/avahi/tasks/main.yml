@@ -1,0 +1,19 @@
+---
+- name: Include tasks for Archlinux
+  include_tasks: archlinux/main.yml
+  when: ansible_distribution == "Archlinux"
+
+- name: Add hostname resolution
+  template:
+    src: etc/nsswitch.conf.j2
+    dest: /etc/nsswitch.conf
+    owner: root
+    group: root
+    mode: u+rw,g+r,o+r
+  notify: Restart Avahi
+
+- name: Start and enable Avahi
+  systemd:
+    name: avahi-daemon.service
+    enabled: yes
+    state: started

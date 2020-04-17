@@ -1,0 +1,47 @@
+---
+- name: Install fonts
+  pacman:
+    state: present
+    name:
+      - ttf-font-awesome
+      - ttf-ionicons
+      - powerline-fonts
+      - ttf-dejavu
+      - gnu-free-fonts
+      - noto-fonts
+      - ttf-bitstream-vera
+      - ttf-croscore
+      - ttf-droid
+      - ttf-ibm-plex
+      - ttf-liberation
+      - ttf-opensans
+      - ttf-ubuntu-font-family
+      - terminus-font
+      - ttf-inconsolata
+      - ttf-lato
+      - ttf-hack
+      - ttf-roboto
+      - ttf-roboto-mono
+      - bdf-unifont
+      - ttf-anonymous-pro
+      - ttf-fira-mono
+      - otf-fira-mono
+      - adobe-source-code-pro-fonts
+      - ttf-linux-libertine
+      - font-mathematica
+      - texlive-core
+      - texlive-fontsextra
+      - otf-latin-modern
+      - otf-latinmodern-math
+      - ttf-proggy-clean
+      - ttf-nerd-fonts-symbols
+      - ttf-joypixels
+      - ttf-jetbrains-mono
+      - ttf-fira-sans
+      - ttf-fira-mono
+      - ttf-fira-code
+      - ttf-fantasque-sans-mono
+      - ttf-cormorant
+      - ttf-cascadia-code
+      - ttf-carlito
+      - ttf-caladea

@@ -1,0 +1,19 @@
+---
+- name: Add service for idle several disk
+  template:
+    src: systemd/hdparm_disk.service.j2
+    dest: "/etc/systemd/system/hdparm_disk_{{ item.name }}.service"
+    owner: root
+    group: root
+    mode: u+rw,g+r,o+r
+  loop: "{{ hdparm.disks }}"
+  when: hdparm.disks is defined
+
+- name: Start and enable service for idle several disk
+  systemd:
+    name: "hdparm_disk_{{ item.name }}.service"
+    daemon_reload: yes
+    enabled: yes
+    state: started
+  loop: "{{ hdparm.disks }}"
+  when: hdparm.disks is defined

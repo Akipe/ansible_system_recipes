@@ -1,0 +1,52 @@
+---
+- name: Installation
+  pacman:
+    state: present
+    name:
+      - bluez
+      - bluez-utils
+      - bluez-cups
+      - bluez-hid2hci
+      - bluez-plugins
+      - bluez-tools
+  tags: bluetooth
+
+- name: Installation of additionnal bluetooth firmwares (AUR)
+  become: yes
+  become_user: ansible_aur
+  aur:
+    use: yay
+    skip_installed: yes
+    aur_only: yes
+    name:
+      - bluez-firmware
+
+- name: Audio bluetooth
+  pacman:
+    state: present
+    name:
+      - pulseaudio-alsa
+      # - pulseaudio-bluetooth # Replace with pulseaudio-modules-bt-git
+
+- name: Audio bluetooth (AUR)
+  become: yes
+  become_user: ansible_aur
+  aur:
+    use: yay
+    skip_installed: yes
+    aur_only: yes
+    name:
+      - pulseaudio-modules-bt-git
+      - libldac
+
+- name: Adding user to audit group to get notification
+  user:
+    name: "{{ user_name }}"
+    groups: lp
+    append: yes
+
+- name: Enable and start Bluetooth service
+  systemd:
+    name: bluetooth.service
+    enabled: yes
+    state: started

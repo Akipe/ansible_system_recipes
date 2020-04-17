@@ -1,0 +1,8 @@
+---
+- name: Include categories tasks
+  include_tasks: "{{ item }}.yml"
+  loop:
+    - 'timesyncd'
+    - 'timezone'
+    - 'keyboard'
+    - 'language'

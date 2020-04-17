@@ -1,0 +1,10 @@
+---
+- name: Install
+  pacman:
+    state: present
+    name:
+      - obs-studio
+      - libfdk-aac
+      - gst-plugins-good
+      - libxcomposite
+      - luajit

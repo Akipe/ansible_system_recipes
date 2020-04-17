@@ -1,0 +1,240 @@
+---
+pacman:
+  apps:
+    kernel:
+      - linux-zen
+      - linux-zen-headers
+    commons:
+      - android-udev
+      - android-tools
+#      - kdeconnect
+      - gprename
+      - jre-openjdk
+      - jre-openjdk-headless
+      - conky
+      - rmlint
+      - rmlint-shredder
+    system:
+      - bleachbit
+      - lostfiles
+      - baobab
+#      - systemd-manager
+      - gnome-logs
+      - gnome-multi-writer
+      - trash-cli
+      - systemd-ui
+    utility:
+      - nemo
+      - nemo-fileroller
+      - nemo-image-converter
+      - nemo-preview
+      - nemo-python
+      - nemo-seahorse
+      - nemo-share
+      - cinnamon-translations
+    media:
+      - smplayer
+      - smplayer-skins
+      - smplayer-themes
+      - gst-libav
+      - gst-plugins-bad
+      - gst-plugins-base
+      - gst-plugins-good
+      - gst-plugins-ugly
+      - gstreamer
+      - gstreamer-vaapi
+      - youtube-dl
+      - easytag
+      - handbrake
+      - ffmpeg
+      - xine-lib
+    security:
+      - rng-tools # todo: https://wiki.archlinux.org/index.php/Rng-tools
+      - ufw
+      - gufw
+      - lynis
+      - metasploit
+      - rkhunter
+      - aide
+      - clamav
+      - clamtk
+      - keepassxc
+      - sshguard # todo: https://wiki.archlinux.org/index.php/Sshguard
+    maintenance:
+      - hdparm
+      - smartmontools
+      - gsmartcontrol
+      - gparted
+      - gpart
+      - mtools
+      - efibootmgr
+      - virtualbox
+      - virtualbox-guest-iso
+      - virtualbox-host-dkms
+      - aircrack-ng
+      - wireshark-qt
+      - hardinfo
+      - hwinfo
+      - dmidecode
+      - clonezilla
+      - ddrescue
+      - dcfldd # todo: https://wiki.archlinux.org/index.php/disk_cloning
+      - extundelete
+      - foremost
+      - testdisk
+
+    productivity:
+      - libreoffice-fresh
+      - libreoffice-fresh-fr
+      - hunspell-fr
+      - aspell-fr
+      - hyphen-fr
+      - mythes-fr
+      - hunspell-en_US
+      - aspell-en
+      - hyphen-en
+      - mythes-en
+      - pdfsam
+      - simple-scan
+      - qt5-tools # dependency for qownnotes
+      - qt5-xmlpatterns # dependency for qownnotes
+    internet:
+      - firefox
+      - firefox-i18n-fr
+      - chromium
+      - qbittorrent
+      - syncthing
+      - feedreader # todo: add too FeedTheMonkey ?
+    multimedia:
+      - inkscape
+      - pstoedit
+      - python2-scour
+      - texlive-core
+      - python2-numpy
+      - python2-lxml
+      - gimp
+      - gimp-help-fr
+      - gimp-nufraw
+      - gimp-plugin-fblur
+      - gimp-plugin-gmic
+      - gimp-plugin-lqr
+      - gimp-plugin-wavelet-denoise
+      - gimp-refocus
+      - poppler-glib
+      - pinta
+      - scribus
+      - dia
+      - mtpaint
+      - obs-studio
+      - darktable
+      - handbrake
+      - lmms
+      - audacity
+      - ardour
+      - variety
+    development:
+      - base-devel
+      - tilix
+      - git
+      - code
+      - ansible
+      - sshpass # for ansible
+      - docker
+      - docker-compose
+      - zeal
+      - dbeaver
+      - arduino
+      - strace
+      - jdk-openjdk
+      - notepadqq
+    terminal:
+      - sudo
+      - fish
+      - openssh
+      - htop
+      - ntop
+      - iotop
+      - atop
+      - iftop
+      - gtop
+      - nethogs
+      # For server : Glances
+      - glances
+      - hddtemp
+      - python-bottle
+      - python-docker
+      - python-matplotlib
+      - python-netifaces
+      - python-zeroconf
+      - neovim
+      - curl
+      - wget
+      - dialog
+      - wpa_supplicant
+      - tmux
+      - whois
+      - ethtool
+      - archey3  # todo: https://wiki.archlinux.org/index.php/Archey3
+      - hwinfo
+    font:
+#      - ttf-google-fonts-typewolf
+      
+
+aur:
+  apps:
+    commons:
+      - fslint
+      - anoise
+      - anoise-gui
+    system:
+      - etcher-bin
+#      - etcher-cli-bin
+    media:
+      - spotify
+    security:
+      - fingerprint-gui
+      - clamav-unofficial-sigs # todo: https://wiki.archlinux.org/index.php/ClamAV
+      - maldet
+      - clamtk-gnome
+#      - nessus # todo: error download sources
+      - ssh-audit
+    maintenance:
+      - virtualbox-ext-oracle
+      - ddrutility
+      - ddrescue-gui
+      - ddrescueview
+      - scalpel-git
+#      - dvdisaster
+    filesystem:
+      - hfsprogs
+#      - zfs-linux-zen
+#      - zfs-linux-zen-headers
+    productivity:
+      - qownnotes
+    internet:
+      - chromium-widevine
+      - electronmail-bin
+      - jdownloader2
+    multimedia:
+#      - davinci-resolve
+      - curlew
+      - ffmulticonverter
+      - freac
+    development:
+      - jetbrains-toolbox
+      - gitkraken
+      - bless
+#      - android-ndk
+#      - android-sdk-build-tools
+#      - android-sdk-platform-tools
+#      - aosp-devel
+#    terminal:
+#      - bcal
+    font:
+      - all-repository-fonts
+#      - ttf-google-fonts-typewolf
+      - otf-exo
+      - ttf-mac-fonts
+      - artwiz-fonts
+#      - ttf-win7-fonts
+#      - ttf-google-fonts

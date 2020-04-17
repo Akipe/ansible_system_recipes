@@ -1,0 +1,5 @@
+---
+- name: Install fish
+  apt:
+    name: fish
+    state: present

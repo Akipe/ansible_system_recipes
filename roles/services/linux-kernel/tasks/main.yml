@@ -1,0 +1,4 @@
+---
+- name: Load tasks for install on Archlinux
+  include_tasks: archlinux/main.yml
+  when: ansible_distribution == "Archlinux"

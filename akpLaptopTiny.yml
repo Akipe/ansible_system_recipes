@@ -1,0 +1,6 @@
+---
+- name: Load specific roles for akpLaptopBird
+  hosts: akpLaptopBird
+  remote_user: root
+  become: yes
+  roles:

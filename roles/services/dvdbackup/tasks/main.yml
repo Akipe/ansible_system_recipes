@@ -1,0 +1,8 @@
+---
+- name: Install dvdbackup
+  pacman:
+    state: present
+    name:
+      - dvdbackup
+      - libdvdcss
+      - dvdauthor

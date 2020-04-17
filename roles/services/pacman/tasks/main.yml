@@ -1,0 +1,6 @@
+---
+- name: Include configure tasks
+  include_tasks: configure.yml
+
+- name: Include upgrade package tasks
+  include_tasks: upgrade_packages.yml

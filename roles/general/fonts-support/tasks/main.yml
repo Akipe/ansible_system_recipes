@@ -1,0 +1,13 @@
+---
+- name: Load tasks for install on Archlinux
+  include_tasks: archlinux/main.yml
+  when: ansible_distribution == "Archlinux"
+
+- name: Install Windows 10 fonts
+  copy:
+    src: windows_10_fonts/
+    dest: /usr/share/fonts/WindowsFonts/
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
+  notify: Regenerate the fontconfig cache

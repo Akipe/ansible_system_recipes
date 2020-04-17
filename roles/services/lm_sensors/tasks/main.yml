@@ -1,0 +1,8 @@
+---
+- name: Install lm_sensors
+  pacman:
+    state: present
+    name:
+      - lm_sensors
+      - lib32-lm_sensors
+  notify: Detect sensors with lm-sensors

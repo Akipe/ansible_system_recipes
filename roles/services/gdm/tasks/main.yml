@@ -1,0 +1,20 @@
+---
+- name: Install GDM
+  pacman:
+    state: present
+    name:
+      - gdm
+
+- name: Install GDM configuration interface
+  become: yes
+  become_user: ansible_aur
+  aur:
+    use: yay
+    skip_installed: true
+    aur_only: yes
+    name: gdm3setup-utils
+
+- name: Enable GDM at boot time
+  systemd:
+    name: gdm.service
+    enabled: yes

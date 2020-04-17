@@ -1,0 +1,8 @@
+---
+- name: Install Android accessing app
+  pacman:
+    state: present
+    name:
+      - android-udev
+      - android-tools
+      - heimdall

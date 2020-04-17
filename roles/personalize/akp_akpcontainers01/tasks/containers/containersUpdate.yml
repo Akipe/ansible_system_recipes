@@ -1,0 +1,13 @@
+---
+- name: Create containersUpdate
+  become: yes
+  become_user: containers
+  docker_container:
+    name: containersRouter
+    state: started
+    networks_cli_compatible: yes
+    image: containrrr/watchtower
+    restart_policy: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: --cleanup --schedule "30 07 * * * *"

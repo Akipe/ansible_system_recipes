@@ -1,0 +1,11 @@
+---
+- name: Define keyboard map for decryption boot
+  template:
+    src: vconsole.conf.j2
+    dest: /etc/vconsole.conf
+    owner: root
+    group: root
+    mode: u+rw,g+r,o+r
+  notify: 
+  - Execute localectl for update keymap
+  - Update initramfs

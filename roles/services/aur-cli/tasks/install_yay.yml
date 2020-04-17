@@ -1,0 +1,14 @@
+---
+- name: Install Yay
+  become: yes
+  become_user: ansible_aur
+  aur:
+    use: makepkg
+    skip_installed: true
+    name:
+      - yay
+
+- name: Remove old makepkg directory
+  file:
+    path: /tmp/makepkg/
+    state: absent

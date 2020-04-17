@@ -1,0 +1,24 @@
+---
+- name: "Add apt key"
+  apt_key:
+    id: "{{ item.key.id }}"
+    url: "{{ item.key.url }}"
+    state: present
+  notify: Update APT cache
+  when: item.key is defined
+  with_items: "{{ add_repository }}"
+
+- name: "Verify repository key"
+  apt_key:
+    id: "{{ item.key.id }}"
+    state: present
+  when: item.key is defined
+  with_items: "{{ add_repository }}"
+
+- name: "Add repository config"
+  apt_repository:
+    repo: "{{ item.repository.repo }}"
+    filename: "{{ item.repository.filename }}"
+    state: present
+  notify: Update APT cache
+  with_items: "{{ add_repository }}"

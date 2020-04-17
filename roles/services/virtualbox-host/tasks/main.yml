@@ -1,0 +1,24 @@
+- name: Install virtualbox
+  pacman:
+    state: present
+    name:
+      - virtualbox
+      - virtualbox-host-dkms
+      - virtualbox-guest-iso
+      - virtualbox-ext-vnc
+
+- name: Install Virtualbox extension pack
+  become: yes
+  become_user: ansible_aur
+  aur:
+    use: yay
+    skip_installed: yes
+    aur_only: yes
+    name:
+      - virtualbox-ext-oracle
+
+- name: Allow user to share usb devices in Virtualbox
+  user:
+    name: "{{ user_name }}"
+    groups: vboxusers
+    append: yes

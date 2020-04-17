@@ -1,0 +1,7 @@
+---
+- name: Install Python 3 and pip
+  pacman:
+    state: present
+    name:
+      - python
+      - python-pip

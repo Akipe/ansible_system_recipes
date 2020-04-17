@@ -1,0 +1,8 @@
+---
+- name: Install Visual Studio Code
+  pacman:
+    state: present
+    name:
+      - code
+      - libdbusmenu-glib
+      - x11-ssh-askpass

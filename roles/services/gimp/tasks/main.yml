@@ -1,0 +1,15 @@
+---
+- name: Install
+  pacman:
+    state: present
+    name:
+      - gimp
+      - poppler-glib
+      - gimp-dbp
+      - gimp-help-fr
+      - gimp-nufraw
+      - gimp-plugin-fblur
+      - gimp-plugin-gmic
+      - gimp-plugin-lqr
+      - gimp-plugin-wavelet-denoise
+      - gimp-refocus

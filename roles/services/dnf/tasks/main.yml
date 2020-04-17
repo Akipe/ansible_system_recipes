@@ -1,0 +1,14 @@
+---
+- name: Install basics dnf apps
+  dnf:
+    state: present
+    name:
+      - dnf-automatic
+      - dnf-plugins-core
+
+- name: Start and enable auto upgrade
+  systemd:
+    name: dnf-automatic.timer
+    daemon_reload: yes
+    enabled: yes
+    state: started

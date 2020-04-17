@@ -1,0 +1,8 @@
+---
+- name: Load tasks for disable watchdog
+  include_tasks: disable.yml
+  when: role_watchdog_status == "disable"
+
+- name: Load tasks for enable watchdog
+  include_tasks: enable.yml
+  when: role_watchdog_status == "enable"

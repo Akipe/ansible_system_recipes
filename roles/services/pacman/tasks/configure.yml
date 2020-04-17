@@ -1,0 +1,47 @@
+---
+- name: Intall utilities for pacman
+  pacman:
+    name:
+      - reflector
+      - xdelta3
+      - pacman-contrib
+      - pacman-mirrorlist
+      - perl-locale-gettext
+    state: present
+
+- name: Add reflector.service
+  template:
+    src: systemd/reflector.service.j2
+    dest: /etc/systemd/system/reflector.service
+    owner: root
+    group: root
+    mode: u+rw,g+r,o+r
+
+- name: Add reflector.timer
+  template:
+    src: systemd/reflector.timer.j2
+    dest: /etc/systemd/system/reflector.timer
+    owner: root
+    group: root
+    mode: u+rw,g+r,o+r
+
+- name: Enable and active reflector.timer service
+  systemd:
+    name: reflector.timer
+    daemon_reload: yes
+    enabled: yes
+    state: started
+
+- name: Add configuration for pacman
+  template:
+    src: etc/pacman.conf.j2
+    dest: /etc/pacman.conf
+    owner: root
+    group: root
+    mode: u+rw,g+r,o+r
+
+- name: Active auto remove package cache
+  systemd:
+    name: paccache.timer
+    enabled: yes
+    state: started

@@ -1,0 +1,9 @@
+---
+- name: Install Pamac GUI
+  become: yes
+  become_user: ansible_aur
+  aur:
+    use: yay
+    skip_installed: true
+    name:
+      - pamac-aur

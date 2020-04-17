@@ -1,0 +1,57 @@
+---
+- name: Installation with somes extensions
+  pacman:
+    state: present
+    name:
+      - libreoffice-fresh
+      - libreoffice-fresh-fr
+      - libreoffice-extension-texmaths
+      - libreoffice-extension-writer2latex
+
+- name: Install grammalecte extension
+  become: yes
+  become_user: ansible_aur
+  aur:
+    use: yay
+    skip_installed: true
+    name:
+      - libreoffice-extension-grammalecte-fr
+
+- name: Installation of dictionaries
+  pacman:
+    state: present
+    name:
+      - hunspell
+      - hunspell-en_US
+      - hunspell-fr
+      - aspell
+      - aspell-en
+      - aspell-fr
+      - hyphen
+      - hyphen-en
+      - hyphen-fr
+      - libmythes
+      - mythes-en
+      - mythes-fr
+
+# - name: Add configuration to use GTK3 theme
+#   lineinfile:
+#     path: /etc/environment
+#     regexp: '^SAL_USE_VCLPLUGIN='
+#     line: 'SAL_USE_VCLPLUGIN=gtk3'
+
+- name: Add configuration to properly define icons with dark theme
+  lineinfile:
+    path: /etc/environment
+    regexp: '^VCL_ICONS_FOR_DARK_THEME='
+    line: 'VCL_ICONS_FOR_DARK_THEME=1'
+
+# - name: Define environment variables
+#   become: yes
+#   become_user: "{{ user_name }}"
+#   template:
+#     src: environment.d/libreoffice.conf.j2
+#     dest: "/home/{{ user_name }}/.config/environment.d/libreoffice.conf"
+#     owner: "{{ user_name }}"
+#     group: "{{ user_name }}"
+#     mode: u+rw,g+r,o+r

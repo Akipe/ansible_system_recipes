@@ -1,0 +1,30 @@
+---
+- name: Installation
+  apt:
+    state: present
+    name: smartmontools
+
+- name: Start and enable service
+  systemd:
+    name: smartmontools
+    state: started
+    enabled: yes
+  notify: Restart smartmontools (Ubuntu)
+
+- name: Add default configuration
+  template:
+    src: etc/default/smartmontools.j2
+    dest: /etc/default/smartmontools
+    owner: root
+    group: root
+    mode: u+rw,g+r,o+r
+  notify: Restart smartmontools (Ubuntu)
+
+- name: Add configuration
+  template:
+    src: etc/smartd.conf.j2
+    dest: /etc/smartd.conf
+    owner: root
+    group: root
+    mode: u+rw,g+r,o+r
+  notify: Restart smartmontools (Ubuntu)

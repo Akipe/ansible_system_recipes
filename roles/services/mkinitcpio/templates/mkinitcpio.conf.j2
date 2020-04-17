@@ -1,0 +1,39 @@
+## {{ ansible_managed }}
+
+{% if role_mkinitcpio_modules is defined %}
+MODULES=({% for module in role_mkinitcpio_modules %}{{ module }} {% endfor %})
+{% else %}
+MODULES=()
+{% endif %}
+
+{% if role_mkinitcpio_binaries is defined %}
+BINARIES=({% for binary in role_mkinitcpio_binaries %}{{ binary }} {% endfor %})
+{% else %}
+BINARIES=()
+{% endif %}
+
+{% if role_mkinitcpio_files is defined %}
+FILES=({% for file in role_mkinitcpio_files %}"{{ file }}" {% endfor %})
+{% else %}
+FILES=()
+{% endif %}
+
+{% if role_mkinitcpio_hooks is defined %}
+HOOKS=({% for hook in role_mkinitcpio_hooks %}{{ hook }} {% endfor %})
+{% else %}
+HOOKS=()
+{% endif %}
+
+{% if role_mkinitcpio_compression is defined %}
+COMPRESSION=({{ role_mkinitcpio_compression }})
+{% else %}
+#COMPRESSION=()
+{% endif %}
+
+# Usage of this setting is strongly discouraged.
+# https://wiki.archlinux.org/index.php/Mkinitcpio#Configuration
+{% if role_mkinitcpio_compressionOptions is defined %}
+COMPRESSION_OPTIONS=({{ role_mkinitcpio_compressionOptions }})
+{% else %}
+#COMPRESSION_OPTIONS=()
+{% endif %}

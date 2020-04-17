@@ -1,0 +1,134 @@
+---
+- name: Install Gnome apps
+  pacman:
+    state: present
+    name:
+      - gnome-tweaks
+      - dconf
+      - dconf-editor
+      - gvfs-goa
+      - gnome-keyring # todo: https://wiki.archlinux.org/index.php/GNOME/Keyring
+      - libsecret
+      - seahorse
+      - gnome-shell-extensions
+      - chrome-gnome-shell
+      - materia-gtk-theme
+      - papirus-icon-theme
+      - ffmpegthumbnailer
+      - gst-libav
+      - gst-plugins-ugly
+      - python-nautilus
+# - name: Install Gnome apps (AUR)
+#   become: yes
+#   become_user: ansible_aur
+#   aur:
+#     use: yay
+#     skip_installed: yes
+#     aur_only: yes
+#     name: yaru-gnome-shell-theme
+# 
+
+- name: Active night mode
+  become: yes
+  become_user: "{{ user_name }}"
+  dconf:
+    key: /org/gnome/settings-daemon/plugins/color/night-light-enabled
+    value: "true"
+    state: present
+
+- name: Define level night mode
+  become: yes
+  become_user: "{{ user_name }}"
+  dconf:
+    key: /org/gnome/settings-daemon/plugins/color/night-light-temperature
+    value: uint32 5000 # default: 4000
+    state: present
+
+# todo: not working with number
+- name: Define time when start night mode
+  become: yes
+  become_user: "{{ user_name }}"
+  dconf:
+    key: /org/gnome/settings-daemon/plugins/color/night-light-schedule-from
+    value: double 18 # default: 20
+    state: present
+
+- name: Define time when stop night mode
+  become: yes
+  become_user: "{{ user_name }}"
+  dconf:
+    key: /org/gnome/settings-daemon/plugins/color/night-light-schedule-to
+    value: double 8 # default: 6
+    state: present
+
+- name: Show date & time
+  become: yes
+  become_user: "{{ user_name }}"
+  dconf:
+    key: /org/gnome/desktop/interface/clock-show-date
+    value: "true"
+    state: present
+
+- name: Show battery percentage
+  become: yes
+  become_user: "{{ user_name }}"
+  dconf:
+    key: /org/gnome/desktop/interface/show-battery-percentage
+    value: "true"
+    state: present
+
+- name: Define icons toolbar size to small
+  become: yes
+  become_user: "{{ user_name }}"
+  dconf:
+    key: /org/gnome/desktop/interface/toolbar-icons-size
+    value: "'small'"
+    state: present
+
+- name: Define GTK theme
+  become: yes
+  become_user: "{{ user_name }}"
+  dconf:
+    key: /org/gnome/desktop/interface/gtk-theme
+    value: "'Materia-dark-compact'"
+    state: present
+
+- name: Define icon theme
+  become: yes
+  become_user: "{{ user_name }}"
+  dconf:
+    key: /org/gnome/desktop/interface/icon-theme
+    value: "'ePapirus'"
+    state: present
+
+- name: Define shell theme
+  become: yes
+  become_user: "{{ user_name }}"
+  dconf:
+    key: /org/gnome/shell/extensions/user-theme/name
+    value: "'Materia-dark-compact'"
+    state: present
+
+# todo: add check if extension bellow is enable and enable it if not 
+# org.gnome.shell enabled-extensions ['user-theme@gnome-shell-extensions.gcampax.github.com']
+
+- name: Add theme for Qt
+  pacman:
+    state: present
+    name:
+        - breeze
+        - qt5-styleplugins
+
+- name: Configure Qt theme
+  become: yes
+  become_user: "{{ user_name }}"
+  template:
+    src: environment.d/qt_theme.conf.j2
+    dest: "/home/{{ user_name }}/.config/environment.d/qt_theme.conf"
+    owner: "{{ user_name }}"
+    group: "{{ user_name }}"
+    mode: u+rw,g+r,o+r
+
+# pacman -Sy gnome gdm python-nautilus seahorse-nautilus nautilus-sendto accerciser dconf-editor gnome-mines gnome-multi-writer gnome-nettool gnome-sound-recorder gnome-tweaks gnome-usage nautilus-sendto sysprof xdg-desktop-portal-gtk gnome-software gnome-software-packagekit-plugin flatpak xorg-server xorg-xinit mesa alsa-utils pulseaudio pulseaudio-bluetooth pavucontrol bluez-utils gvfs-mtp gvfs-gphoto2 gvfs-afc gvfs-smb gvfs-goa gvfs-nfs sshfs tumbler poppler-glib ffmpegthumbnailer libgsf raw-thumbnailer --needed --noconfirm && \
+# 	systemctl enable gdm.service && \
+# 	systemctl enable NetworkManager

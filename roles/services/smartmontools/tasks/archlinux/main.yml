@@ -1,0 +1,20 @@
+---
+- name: Install (Archlinux)
+  pacman:
+    state: present
+    name: smartmontools
+
+- name: Start and enable service
+  systemd:
+    name: smartd.service
+    state: started
+    enabled: yes
+
+- name: Add configuration
+  template:
+    src: etc/smartd.conf
+    dest: /etc/smartd.conf
+    owner: root
+    group: root
+    mode: u+rw,g+r,o+r
+  notify: Restart smartmontools (Archlinux)

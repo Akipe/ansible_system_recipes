@@ -1,0 +1,63 @@
+---
+## {{ ansible_managed }}
+
+global:
+  checkNewVersion: true
+  sendAnonymousUsage: false
+
+accessLog:
+  filePath: "/log/access.log"
+  bufferingSize: 2
+
+log:
+  level: INFO
+  #format: "json"
+  #filePath: "/log/traefik.log"
+
+serversTransport:
+  insecureSkipVerify: true
+  maxIdleConnsPerHost: 422
+  forwardingTimeouts:
+    dialTimeout: 422
+    responseHeaderTimeout: 422
+    idleConnTimeout: 422
+
+entryPoints:
+  http:
+    address: ':80'
+  https:
+    address: ':443'
+
+providers:
+  docker:
+    endpoint: "unix:///var/run/docker.sock"
+    watch: true
+    exposedByDefault: false
+    network: webrouter
+    #tls:
+      #cert: /etc/certs/lan_ssl.cert
+      #key: /etc/certs/lan_ssl.key
+  file:
+    directory: "/etc/traefik/dynamic_config"
+    #filename: "/etc/traefik/dynamic_conf.yml"
+    watch: true
+
+api:
+  dashboard: true
+  insecure: true
+
+# ping:
+#   entryPoint: foobar
+#   manualRouting: true
+
+tls:
+  certificates:
+    - certFile: /etc/certs/default.cert
+      keyFile: /etc/certs/defaul.key
+
+certificatesResolvers:
+  letsencrypt:
+    acme:
+      email: letsencrypt@akipe.pm
+      storage: /etc/traefik/acme.json
+      tlsChallenge: {}

@@ -1,0 +1,5 @@
+---
+- name: Install fwupd
+  pacman:
+    state: present
+    name: fwupd

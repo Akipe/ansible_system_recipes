@@ -1,0 +1,4 @@
+[Librespot]
+title=Librespot
+description=Librespot server which permit share spotify music
+ports=5353/udp|8489

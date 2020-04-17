@@ -1,0 +1,5 @@
+---
+- name: Install tool for hostname command
+  pacman:
+    state: present
+    name: inetutils

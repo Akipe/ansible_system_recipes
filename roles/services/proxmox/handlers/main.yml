@@ -1,0 +1,23 @@
+---
+- name: restart pvedaemon
+  service:
+    name: pvedaemon
+    state: restarted
+
+- name: restart pveproxy
+  service:
+    name: pveproxy
+    state: restarted
+
+- name: open-iscsi restart
+  service:
+    name: 'open-iscsi'
+    state: 'restarted'
+
+- name: Restart Nginx
+  service:
+    name: nginx
+    state: restarted
+
+- name: Reload kernel config
+  shell: sysctl --system

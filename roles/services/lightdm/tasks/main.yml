@@ -1,0 +1,23 @@
+---
+- name: Install Lightdm
+  pacman:
+    state: present
+    name:
+      - lightdm
+      - lightdm-gtk-greeter
+
+# - name: Add reflector.service
+#   template:
+#     src: systemd/reflector.service.j2
+#     dest: /etc/systemd/system/reflector.service
+#     owner: root
+#     group: root
+#     mode: u+rw,g+r,o+r
+
+# - name: Add reflector.timer
+#   template:
+#     src: systemd/reflector.timer.j2
+#     dest: /etc/systemd/system/reflector.timer
+#     owner: root
+#     group: root
+#     mode: u+rw,g+r,o+r

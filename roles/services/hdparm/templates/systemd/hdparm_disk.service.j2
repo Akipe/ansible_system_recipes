@@ -1,0 +1,11 @@
+## {{ ansible_managed }}
+
+[Unit]
+Description=hdparm configuration for disk id {{ item.id }}
+
+[Service]
+Type=oneshot
+ExecStart=/sbin/hdparm {{ item.hdparm.parameters }} /dev/disk/by-id/{{ item.id }}
+
+[Install]
+WantedBy=multi-user.target

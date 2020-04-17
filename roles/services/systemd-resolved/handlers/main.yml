@@ -1,0 +1,5 @@
+---
+- name: Restart systemd-resolved
+  systemd:
+    name: systemd-resolved.service
+    state: restarted

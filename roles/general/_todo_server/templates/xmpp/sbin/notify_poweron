@@ -1,0 +1,3 @@
+#!/bin/bash
+
+/bin/echo "Server has power on" | sendxmpp -t -n -f /root/.sendxmpprc email@email.com

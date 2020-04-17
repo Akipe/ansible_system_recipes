@@ -1,0 +1,25 @@
+---
+- name: Create ansible_aur for Ansible
+  user:
+    name: ansible_aur
+    create_home: yes
+
+# - name: Append sudo config for Ansible AUR build
+#   lineinfile:
+#     path: /etc/sudoers.d/aur_builder-allow-to-sudo-pacman
+#     state: present
+#     line: "ansible_aur ALL=(ALL) NOPASSWD: /usr/bin/pacman"
+#     validate: /usr/sbin/visudo -cf %s
+#     create: yes
+
+- name: Append sudo config for Ansible AUR build
+  template:
+    src: 10-ansible_aur-allow-pacman.j2
+    dest: /etc/sudoers.d/10-ansible_aur-allow-pacman
+    owner: root
+    group: root
+    mode: u+r,g+r,o-rwx
+    validate: /usr/sbin/visudo -cf %s
+
+
+# Todo: create service to check if Ansible aur user existe, each boot, and delete i

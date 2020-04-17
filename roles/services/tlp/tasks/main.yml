@@ -1,0 +1,34 @@
+---
+- name: Install TLP
+  pacman:
+    state: present
+    name:
+      - tlp
+      - x86_energy_perf_policy 
+      # - tlp-rdw
+  tags: debug
+
+- name: Add configuration for TLP
+  template:
+    src: etc/tlp.j2
+    dest:  /etc/default/tlp
+    owner: root
+    group: root
+    mode: u+rw,g+r,o+r
+  notify:
+    - Restart TLP
+  tags: debug
+
+- name: Start and enable TLP
+  systemd:
+    name: tlp.service
+    enabled: yes
+    state: started
+  tags: debug
+
+# - name: Start and enable NetworkManager dispatcher for tlp-rdw
+#   systemd:
+#     name: NetworkManager-dispatcher.service
+#     enabled: yes
+#     state: started
+#   tags: debug

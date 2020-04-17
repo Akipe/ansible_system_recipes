@@ -1,0 +1,24 @@
+## {{ ansible_managed }}
+
+# do less swap but not disable it
+vm.swappiness = 2
+
+# allow application request allocation of virtual memory
+# more than real RAM size (or OpenVZ/LXC limits)
+vm.overcommit_memory = 1
+
+# https://major.io/2008/12/03/reducing-inode-and-dentry-caches-to-keep-oom-killer-at-bay/
+vm.vfs_cache_pressure = 500
+
+# time in  centi-sec. i.e. 100 points = 1 second
+# delayed write of dirty data
+vm.dirty_writeback_centisecs = 3000
+# flush from memory old dirty data
+vm.dirty_expire_centisecs = 18000
+
+##
+# Adjust vfs cache
+# https://lonesysadmin.net/2013/12/22/better-linux-disk-caching-performance-vm-dirty_ratio/
+# Decriase dirty cache to faster flush on disk
+vm.dirty_background_ratio = 5
+vm.dirty_ratio = 10

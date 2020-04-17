@@ -1,0 +1,22 @@
+---
+- name: Set language support
+  locale_gen:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ role_language_list }}"
+  vars:
+    role_language_list: "{{ language_list }}"
+
+- name: Set locale configuration
+  template:
+    src: locale.conf.j2
+    dest: /etc/locale.conf
+    owner: root
+    group: root
+    mode: u+rw,g+r,o+r
+  vars:
+    role_language_default: "{{ language_default }}"
+    role_language_order: "{{ language_listOrder }}"
+    role_language_timeFormat: "{{ language_timeFormat }}"
+    role_language_collate: "{{ language_collate }}"
+  # notify: Set immediately language

@@ -1,0 +1,17 @@
+---
+- name: Execute localectl for update keymap
+  command: localectl set-keymap --no-convert fr
+
+- name: Update initramfs
+  command: mkinitcpio -P
+
+- name: Run timedatectl
+  command: timedatectl set-ntp true
+
+- name: Restart timedatectl
+  systemd:
+    name: systemd-timesyncd.service
+    state: restarted
+
+- name: Set immediately language
+  command: "export LANG={{ role_language_default }}"

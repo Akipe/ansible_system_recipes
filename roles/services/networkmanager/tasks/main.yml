@@ -1,0 +1,21 @@
+---
+- name: Install NetworkManager and extensions
+  pacman:
+    state: present
+    name:
+      - networkmanager
+      - modemmanager
+      - mobile-broadband-provider-info
+      - usb_modeswitch
+      - usbutils
+      - networkmanager-openvpn
+      - networkmanager-pptp
+      - networkmanager-openconnect
+      - networkmanager-vpnc
+      - networkmanager-strongswan
+
+- name: Active and enable NetworkManager
+  systemd:
+    name: NetworkManager.service
+    state: started
+    enabled: yes

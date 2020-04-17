@@ -1,0 +1,37 @@
+---
+- name: Load tasks for install on Debian & derivate
+  include_tasks: debian/main.yml
+  when: ansible_distribution == "Debian" or ansible_distribution == "Ubuntu"
+
+- name: Load tasks for install on Fedora
+  include_tasks: fedora/main.yml
+  when: ansible_distribution == "Fedora"
+
+- name: Configure Docker
+  template:
+    src: docker/daemon.json.j2
+    dest: /etc/docker/daemon.json
+    owner: root
+    group: root
+    mode: u+rw,g-rwx,o-rwx
+  notify: Restart Docker
+
+- name: Create "docker" group
+  group:
+    name: docker
+    state: present
+
+- name: Install Docker Python library
+  pip:
+    name: docker
+    state: present
+
+#- name: Create Docker web network
+#  docker_network:
+#    name: web
+#    driver: bridge
+#    driver_options:
+#      com.docker.network.enable_ipv6: true
+#    ipam_config:
+#      driver: default
+#      config:

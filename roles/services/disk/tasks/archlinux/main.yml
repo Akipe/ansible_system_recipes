@@ -1,0 +1,10 @@
+---
+- name: Install tools for disks
+  pacman:
+    state: present
+    name:
+      - util-linux
+      - nvme-cli
+      - hdparm
+      - sdparm
+      - smartmontools 

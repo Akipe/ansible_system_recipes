@@ -1,0 +1,13 @@
+---
+- name: Install usefull app for guest Qemu
+  apt:
+    name:
+      - qemu-guest-agent
+      - cloud-init
+    state: present
+
+- name: Enable QEMU agent
+  service:
+    name: qemu-guest-agent
+    state: started
+    enabled: yes

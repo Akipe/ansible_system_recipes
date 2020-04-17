@@ -1,0 +1,94 @@
+---
+- name: Install driver
+  pacman:
+    name:
+      - mesa
+      - vulkan-radeon
+      - xf86-video-amdgpu
+      - lib32-mesa
+      - lib32-vulkan-radeon
+    state: present
+
+- name: Install video acceleration support
+  pacman:
+    name:
+      - libva-mesa-driver
+      - mesa-vdpau
+      - libva-utils
+      - vdpauinfo
+      - lib32-libva-mesa-driver
+      - lib32-mesa-vdpau
+    state: present
+
+- name: Install GPGPU driver
+  pacman:
+    name:
+      - ocl-icd
+      - opencl-mesa
+      - clinfo
+      - lib32-ocl-icd
+      - lib32-opencl-mesa
+    state: present
+    
+- name: Install proprietary standalone runtime from ADMGPU-PRO
+  become: yes
+  become_user: ansible_aur
+  aur:
+    use: yay
+    skip_installed: true
+    aur_only: yes
+    name:
+      - opencl-amdgpu-pro-orca
+      - lib32-opencl-amdgpu-pro-orca
+
+# ? /etc/profile
+
+- name: Enable video acceleration support globally (libva)
+  lineinfile:
+    path: /etc/environment
+    regexp: '^LIBVA_DRIVER_NAME='
+    line: 'LIBVA_DRIVER_NAME=radeonsi'
+
+- name: Enable video acceleration support globally (vdpau)
+  lineinfile:
+    path: /etc/environment
+    regexp: '^VDPAU_DRIVER='
+    line: 'VDPAU_DRIVER=radeonsi'
+
+- name: Enable ACO compiler globally
+  lineinfile:
+    path: /etc/environment
+    regexp: '^RADV_PERFTEST='
+    line: 'RADV_PERFTEST=aco'
+
+- name: Enable some AMD debug options globally
+  lineinfile:
+    path: /etc/environment
+    regexp: '^AMD_DEBUG='
+    line: 'AMD_DEBUG="nodma,nongg"'
+
+- name: Enable video acceleration support for the user (libva and vdpau)
+  become: yes
+  become_user: "{{ user_name }}"
+  template:
+    src: environment.d/video_amdgpu.conf.j2
+    dest: "/home/{{ user_name }}/.config/environment.d/video_amdgpu.conf"
+    owner: "{{ user_name }}"
+    group: "{{ user_name }}"
+    mode: u+rw,g+r,o+r
+
+- name: Add kernel options
+  template:
+    src: modprobe.d/amdgpu.conf.j2
+    dest: /etc/modprobe.d/amdgpu.conf
+    owner: root
+    group: root
+    mode: u+rw,g+r,o+r
+
+- name: Add configuration for Xorg
+  template:
+    src: xorg.conf.d/20-amdgpu.conf.j2
+    dest: /etc/X11/xorg.conf.d/20-amgpu.conf
+    owner: root
+    group: root
+    mode: u+rw,g+r,o+r

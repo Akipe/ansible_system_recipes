@@ -1,0 +1,16 @@
+---
+## {{ ansible_managed }}
+
+http:
+  middlewares:
+    SecurityHeaders:
+      headers:
+        #contentTypeNosniff: true
+        #browserXssFilter: true
+        forceSTSHeader: true
+        stsSeconds: 31536000
+        stsIncludeSubdomains: true
+        stsPreload: true
+        #accessControlMaxAge: 100
+        accessControlMaxAge: 86400
+        #referrerPolicy: no-referrer

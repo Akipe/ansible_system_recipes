@@ -1,0 +1,28 @@
+---
+## {{ ansible_managed }}
+
+http:
+  routers:
+    akpHome:
+      entryPoints:
+       - http
+      service: akpHome
+      rule: "Host(`{{ url_akpHome }}`)"
+      middlewares:
+       - SecureMiddlewares
+
+    akpHome_secure:
+      entryPoints:
+       - https
+      service: akpHome
+      rule: "Host(`{{ url_akpHome }}`)"
+      middlewares:
+       - SecureMiddlewares
+      tls:
+        certResolver: letsencrypt
+
+  services:
+    akpHome:
+      loadBalancer:
+        servers:
+          - url: {{ akpRouter_loadBalancer_server_akpHome }}

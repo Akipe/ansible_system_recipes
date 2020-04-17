@@ -1,0 +1,4 @@
+---
+- name: Generate mkinitcpio
+  command: mkinitcpio -P
+  tags: [ "mkinitcpio" ]

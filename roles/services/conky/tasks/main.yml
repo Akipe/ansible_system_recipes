@@ -1,0 +1,15 @@
+---
+- name: Install
+  pacman:
+    state: present
+    name:
+      - conky
+
+# - name: Set autostarting for conky
+#   template:
+#     src: autostart/conky.desktop.j2
+#     dest: /home/akipe/.config/autostart/conky.desktop
+#     owner: "{{ user_name }}"
+#     group: "{{ user_name }}"
+#     mode: u+rw,g+r,o+r
+#   tags: debug

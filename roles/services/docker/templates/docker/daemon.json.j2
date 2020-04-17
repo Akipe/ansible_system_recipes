@@ -1,0 +1,13 @@
+{
+    "ipv6": true,
+    "bip": "{{ docker_network_bip_ipv4_subnet }}",
+    "fixed-cidr": "{{ docker_network_fixed_cidr_ipv4_subnet }}",
+    "fixed-cidr-v6": "{{ docker_network_fixed_cidr_ipv6_subnet }}",
+    "default-address-pools": [{
+		"base": "{{ docker_network_default_pools_ipv4_subnet }}",
+		"size": {{ docker_network_default_pools_ipv4_size }}
+	}, {
+		"base": "{{ docker_network_default_pools_ipv6_subnet }}",
+		"size": {{ docker_network_default_pools_ipv6_size }}
+	}]
+}

@@ -1,0 +1,26 @@
+---
+- name: Install packages for decode Blueray
+  pacman:
+    state: present
+    name:
+      - libbluray
+      - libaacs
+
+- name: Install package for decode Blueray
+  become: yes
+  become_user: ansible_aur
+  aur:
+    use: yay
+    skip_installed: true
+    name:
+      - aacskeys
+      - libbdplus
+
+
+- name: Copy the keydb
+   copy:
+    src: aacs/
+    dest: "/home/{{ user_name }}/.config/aacs"
+    owner: "{{ user_name }}"
+    group: "{{ user_name }}"
+    mode: u+rw,g+r,o+r

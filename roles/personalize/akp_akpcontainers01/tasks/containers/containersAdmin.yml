@@ -1,0 +1,39 @@
+---
+- name: Create containersAdminData volume
+  become: yes
+  become_user: containers
+  docker_volume:
+    name:   containersAdminData
+    state:  present
+    driver: local
+    driver_options:
+      type:   nfs4
+      device: :/mnt/akpData02/akpServer02/akpContainers01/containersAdmin/portainer/data
+      o:      "addr={{ ip4_lan_10gb_A_akpServer01 }},rw,noatime,rsize=8192,wsize=8192,tcp,timeo=14,nfsvers=4,async"
+
+- name: Create containersAdmin
+  become: yes
+  become_user: containers
+  docker_container:
+    name: containersAdmin
+    state: started
+    networks_cli_compatible: yes
+    image: portainer/portainer
+    restart_policy: unless-stopped
+    ports:
+      - "8000:8000"
+      - "9000:9000"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - containersAdminData:/data
+    networks:
+      - name: webrouter
+    labels:
+      traefik.enable=true
+      traefik.http.routers.containersAdmin.entrypoints=http
+      traefik.http.routers.containersAdmin.rule=Host(`'{{ containers.containersAdmin.url }}'`)
+      traefik.http.routers.containersAdmin.middlewares=HTTPS_Redirection@file
+      traefik.http.routers.containersAdmin_secure.entrypoints=https
+      traefik.http.routers.containersAdmin_secure.tls=true
+      traefik.http.routers.containersAdmin_secure.rule=Host(`'{{ containers.containersAdmin.url }}'`)
+      traefik.http.services.containersAdmin.loadbalancer.server.port=9000

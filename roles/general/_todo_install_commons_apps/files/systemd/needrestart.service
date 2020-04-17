@@ -1,0 +1,11 @@
+# Generate by Ansible
+[Unit]
+Description=Restart all services needed with needrestart
+Wants=needrestart.timer
+
+[Service]
+ExecStart=/usr/sbin/needrestart -ra -l
+Type=oneshot
+
+[Install]
+WantedBy=multi-user.target

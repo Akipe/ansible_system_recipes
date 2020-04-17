@@ -1,0 +1,36 @@
+---
+- name: Install Thermald
+  become: yes
+  become_user: ansible_aur
+  aur:
+    use: yay
+    skip_installed: true
+    aur_only: yes
+    name:
+      - thermald
+
+- name: Create directory for surchage Thermald service
+  file:
+    path: /etc/systemd/system/thermald.service.d
+    state: directory
+    owner: root
+    group: root
+    mode: u+rwx,g+rx,o+rx
+  tags: debug
+
+- name: Ignore cpuid check for Thermald
+  template:
+    src: thermald.service.d/ignore_cpuid_check.conf.j2
+    dest:  /etc/systemd/system/thermald.service.d/ignore_cpuid_check.conf
+    owner: root
+    group: root
+    mode: u+rw,g+r,o+r
+  tags: debug
+
+- name: Start and enable Thermald service
+  systemd:
+    name: thermald.service
+    daemon_reload: yes
+    enabled: yes
+    state: started
+  tags: debug

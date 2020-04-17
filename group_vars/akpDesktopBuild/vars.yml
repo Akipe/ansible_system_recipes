@@ -1,0 +1,29 @@
+---
+ansible_python_interpreter: /usr/bin/python
+
+bootloader:
+  options:
+    - "cryptdevice=UUID=91d3a001-a8c3-45ec-b111-d1fc4be0c263:akpencrypt:allow-discards" # Todo: UUID dynamics
+    - "root=/dev/mapper/akpsys-root"
+    - "resume=/dev/mapper/akpsys-swap"
+    - "usbhid.quirks=0x1b1c:0x1b55:0x20000408"
+    - "usbcore.quirks=1b1c:1b55:gn"
+    - "quiet"
+    - "rw"
+
+hardware:
+  cpu:
+    vendor: AMD
+  gpu:
+    vendor: AMD
+  disks:
+    - system:
+      id: 
+      smartmontools:
+        parameters: -a -d sat -o on -S on -s (S/../.././06|L/../../1/10)
+
+ssh:
+  port: 22
+
+systemd_boot:
+  timeout: 15

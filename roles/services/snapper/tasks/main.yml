@@ -1,0 +1,17 @@
+---
+# Todo: https://wiki.archlinux.org/index.php/Snapper
+
+- name: Install
+  pacman:
+    state: present
+    name:
+      - snapper
+
+- name: Install GUI
+  become: yes
+  become_user: ansible_aur
+  aur:
+    use: yay
+    skip_installed: true
+    name:
+      - snapper-gui-git

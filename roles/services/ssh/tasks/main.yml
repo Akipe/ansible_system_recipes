@@ -1,0 +1,82 @@
+---
+# https://infosec.mozilla.org/guidelines/openssh
+# https://www.cyberciti.biz/tips/linux-unix-bsd-openssh-server-best-practices.html
+
+- name: Load tasks for Debian & derivate
+  include_tasks: debian/main.yml
+  when: ansible_distribution == "Debian" or ansible_distribution == "Ubuntu"
+
+- name: Load tasks for Fedora
+  include_tasks: fedora/main.yml
+  when: ansible_distribution == "Fedora"
+
+- name: Load tasks for Archlinux
+  include_tasks: archlinux/main.yml
+  when: ansible_distribution == "Archlinux"
+
+- name: Check if SSH key have being regenerate
+  stat:
+    path: /etc/ssh/.ansible_has_generate_keys
+  register: is_ansible_has_generate_keys
+
+- name: Generate Ed25519 key
+  openssh_keypair:
+    path: /etc/ssh/ssh_host_ed25519_key
+    type: ed25519
+    force: yes
+  when: not is_ansible_has_generate_keys.stat.exists
+
+- name: Generate RSA key
+  openssh_keypair:
+    path: /etc/ssh/ssh_host_rsa_key
+    type: rsa
+    size: 4096
+    force: yes
+  when: not is_ansible_has_generate_keys.stat.exists
+
+- name: Generate ECDSA key
+  openssh_keypair:
+    path: /etc/ssh/ssh_host_ecdsa_key
+    type: ecdsa
+    size: 521
+    force: yes
+  when: not is_ansible_has_generate_keys.stat.exists
+
+- name: remove DSA key
+  file:
+    path: "{{ item }}"
+    state: absent
+  with_items:
+    - /etc/ssh/ssh_host_dsa_key
+    - /etc/ssh/ssh_host_dsa_key.pub
+
+- name: Set keys generate by Ansible
+  file:
+    path: /etc/ssh/.ansible_has_generate_keys
+    state: touch
+  when: not is_ansible_has_generate_keys.stat.exists
+
+- name: Set public key for SSH
+  authorized_key:
+    state: present
+    user: "{{ item.user }}"
+    key: "{{ item.public_key }}"
+  with_items: "{{ ssh_key }}"
+
+- name: Add config for SSH server
+  template:
+    src: ssh/sshd_config.j2
+    dest: /etc/ssh/sshd_config
+    owner: root
+    group: root
+    mode: u+rw,g+r,o+r
+  vars:
+    role_ssh_port: "{{ ssh_port  }}"
+    role_ssh_users: "{{ ssh_users }}"
+  notify: Restart SSH server
+
+- name: Start and enable SSH server
+  systemd:
+    name: sshd.service
+    enabled: yes
+    state: started

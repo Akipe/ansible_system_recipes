@@ -1,0 +1,7 @@
+## {{ ansible_managed }}
+
+DEVICESCAN -d removable -n standby -m root
+
+{% for disk in hardware.disks %}
+/dev/disk/by-id/{{ disk.id }} {{ disk.smartmontools.parameters }} -m root
+{% endfor %}

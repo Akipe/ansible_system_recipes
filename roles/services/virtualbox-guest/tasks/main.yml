@@ -1,0 +1,21 @@
+---
+- name: Install package for guest client
+  pacman:
+    state: present
+    name:
+      - virtualbox-guest-dkms
+      - virtualbox-guest-utils
+      - xf86-video-vmware
+      # - virtualbox-guest-utils-nox
+
+- name: Enable and start VirtualBox kernel modules service
+  systemd:
+    name: vboxservice.service
+    state: started
+    enabled: yes
+
+- name: Add user to Virtualbox group vboxsf
+  user:
+    name: "{{ user_name }}"
+    groups: vboxsf
+    append: yes

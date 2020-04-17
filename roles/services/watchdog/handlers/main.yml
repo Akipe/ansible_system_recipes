@@ -1,0 +1,10 @@
+---
+- name: Restart sysctl
+  systemd:
+    name: systemd-sysctl.service
+    state: restarted
+
+- name: Restart modules loaded
+  systemd:
+    name: systemd-modules-load.service
+    state: restarted

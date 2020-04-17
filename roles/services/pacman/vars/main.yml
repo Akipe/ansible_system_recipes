@@ -1,0 +1,4 @@
+---
+pacman:
+  reflector:
+    command: reflector --country France --latest 200 --age 24 --protocol https --sort rate --save /etc/pacman.d/mirrorlist

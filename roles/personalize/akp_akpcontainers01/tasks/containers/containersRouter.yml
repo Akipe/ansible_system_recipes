@@ -1,0 +1,96 @@
+---
+- name: Create webrouter networks for containersRouter
+  become: yes
+  become_user: containers
+  docker_network:
+    name: webrouter
+    enable_ipv6: yes
+    ipam_config:
+      - subnet: "{{ docker_network_webrouter_ipv4_subnet }}"
+      - subnet: "{{ docker_network_webrouter_ipv6_subnet }}"
+
+- name: Create containersRouter directory
+  become: yes
+  become_user: root
+  file:
+    path: /containers/volumes/containersRouter/traefik
+    state: directory
+    mode: u+rwx,g-xr,o-x
+    owner: containers
+    group: containers
+    recurse: yes
+
+- name: Create containersRouter directory (dynamic_config)
+  become: yes
+  become_user: root
+  file:
+    path: /containers/volumes/containersRouter/traefik/dynamic_config
+    state: directory
+    mode: u+rwx,g-xr,o-x
+    owner: containers
+    group: containers
+    recurse: yes
+
+- name: Create containersRouter directory (certificats)
+  become: yes
+  become_user: root
+  file:
+    path: /containers/volumes/containersRouter/traefik/certificats
+    state: directory
+    mode: u+rwx,g-xr,o-x
+    owner: containers
+    group: containers
+    recurse: yes
+
+- name: Generate OpenSSL private key
+  openssl_privatekey:
+    path: /containers/volumes/containersRouter/traefik/certificats/default.priv.key
+    cipher: aes256
+    size: 4096
+    type: RSA
+
+- name: Create self certificat
+  openssl_certificate:
+    path:
+    privatekey_path:
+    csr_path:
+    provider: selfsigned
+
+- name: Create containersRouter
+  become: yes
+  become_user: containers
+  docker_container:
+    name: containersRouter
+    state: started
+    networks_cli_compatible: yes
+    image: traefik
+    restart_policy: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8080:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /containers/volumes/containersRouter/traefik/traefik.yml:/etc/traefik/traefik.yml:ro
+      - /containers/volumes/containersRouter/traefik/acme.json:/etc/traefik/acme.json
+      - /containers/volumes/containersRouter/traefik/certificats:/etc/certs:ro
+      - /containers/volumes/containersRouter/traefik/dynamic_config:/etc/traefik/dynamic_config:ro
+    networks:
+      - name: webrouter
+    command:
+      --api.insecure=true
+      --api.dashboard=true
+      --providers.docker
+      --providers.docker.exposedbydefault=false
+      --providers.file=true
+    labels:
+      traefik.enable=true
+      traefik.http.routers.containersRouter.entrypoints=http
+      traefik.http.routers.containersRouter.rule=Host(`'{{ containers.containersRouter.url }}'`)
+      traefik.http.routers.containersRouter.middlewares=HTTPS-only@file
+      traefik.http.routers.containersRouter_secure.entrypoints=https
+      traefik.http.routers.containersRouter_secure.tls=true
+      traefik.http.routers.containersRouter_secure.rule=Host(`'{{ containers.containersRouter.url }}'`)
+      traefik.http.routers.containersRouter_secure.middlewares=WhitelistAdmin@file
+      traefik.http.routers.containersRouter_secure.service=api@internal
+      traefik.http.services.containersRouter.loadbalancer.server.port=8080

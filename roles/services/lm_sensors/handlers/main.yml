@@ -1,0 +1,3 @@
+---
+- name: Detect sensors with lm-sensors
+  command: sensors-detect --auto

@@ -1,0 +1,43 @@
+---
+- name: Installation
+  pacman:
+    state: present
+    name:
+      - chromium
+      - libpipewire02
+      - libu2f-host
+
+- name: Installation of DRM
+  become: yes
+  become_user: ansible_aur
+  aur:
+    use: yay
+    skip_installed: yes
+    aur_only: yes
+    name:
+      - chromium-widevine
+
+# - name: Add flags configuration
+#   template:
+#     src: chromium-flags.conf.j2
+#     dest: "/home/{{ user_name }}/.config/chromium-flags.conf"
+#     owner: "{{ user_name }}"
+#     group: "{{ user_name }}"
+#     mode: u+rw,g+r,o+r
+
+# See https://www.chromium.org/administrators/policy-list-3
+# - name: Create Chromium policies directory for all users
+#   file:
+#     path: /etc/chromium/policies/managed
+#     state: directory
+#     owner: root
+#     group: root
+#     mode: u+rwx,g+rx,o+rx
+
+# - name: Create Chromium JSON policy file to force settings for all users
+#   template:
+#     src: policy.json.j2
+#     dest: "/etc/chromium/policies/managed/policy.json"
+#     owner: root
+#     group: root
+#     mode: u+rwx,g+rx,o+rx

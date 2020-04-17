@@ -1,0 +1,172 @@
+---
+- name: Install Cockpit
+  apt:
+    name:
+      - cockpit
+      - cockpit-docker
+      - cockpit-packagekit
+      - cockpit-pcp
+      - udisks2
+    state: present
+
+- name: Active and enable Cockpit
+  systemd:
+    name: cockpit.socket
+    state: started
+    enabled: yes
+
+- name: Install Python Pip
+  apt:
+    name: python3-pip
+    state: present
+
+- name: Install Dropbear for unlock disk with SSH
+  apt:
+    name:
+      - dropbear-initramfs
+      - busybox-initramfs
+    state: present
+
+# todo: install latest dropbear-initframfs and dependancies from dpkg
+
+- name: Add config for Dropbear
+  copy:
+    src: dropbear-initframfs/config
+    dest: /etc/dropbear-initramfs/config
+    owner: root
+    group: root
+    mode: u+rw,g-rwx,o-rwx
+  notify: Regenerate initframfs
+
+- name: Add public key SSH for Dropbear
+  copy:
+    src: dropbear-initframfs/authorized_keys
+    dest: /etc/dropbear-initramfs/authorized_keys
+    owner: root
+    group: root
+    mode: u+rw,g-rwx,o-rwx
+  notify: Regenerate initframfs
+
+- name: Add public key SSH for Dropbear
+  copy:
+    src: dropbear-initframfs/authorized_keys
+    dest: /etc/dropbear-initramfs/authorized_keys
+    owner: root
+    group: root
+    mode: u+rw,g-rwx,o-rwx
+  notify: Regenerate initframfs
+
+# Todo: https://wiki.debian-fr.xyz/Smartmontools
+- name: Install disk tools
+  apt:
+    name: smartmontools
+    state: present
+
+- name: Install notification system with XMPP
+  apt:
+    name: 
+        - sendxmpp
+        - exim4
+        - procmail
+    state: present
+
+
+- name: Add configurations to the user for sending notification with XMPP protocol
+  template:
+    src: xmpp/sendxmpp/sendxmpprc
+    dest: /home/.../.sendxmpprc
+    owner: 
+    group: 
+    mode: u+rw,g-rwx,o-rwx
+
+- name: Add configurations to root user for sending notification with XMPP protocol
+  template:
+    src: xmpp/sendxmpp/sendxmpprc
+    dest: /root/.sendxmpprc
+    owner: root
+    group: root
+    mode: u+rw,g-rwx,o-rwx
+
+- name: Add configurations for sendxmpp
+  template:
+    src: xmpp/sendxmpp/sendxmpprc
+    dest: /etc/mail2xmpp.conf
+    owner: Debian-exim
+    group: Debian-exim
+    mode: u+rw,g-rwx,o-rwx
+
+- name: Add mail2xmpp
+  template:
+    src: xmpp/sbin/mail2xmpp
+    dest: /usr/sbin/mail2xmpp
+    owner: root
+    group: root
+    mode: u+rwx,g+rx,o+rx
+
+# sudo dpkg-reconfigure exim4-config
+- name: Add exim4 macro for sendxmpp
+  copy:
+    src: exim4/99_exim4-config_system_aliases
+    dest: /etc/exim4/conf.d/main/99_exim4-config_system_aliases
+    owner: root
+    group: root
+    mode: u+rw,g+r,o+r
+
+- name: Configure aliases
+  template:
+    src: etc/aliases.j2
+    dest: /etc/aliases
+    owner: root
+    group: root
+    mode: u+rw,g+r,o+r
+  notify:
+    - Reload aliases
+    - Restart exim4
+
+- name: Add script to send notification when shutdown
+  template:
+    src: xmpp/sbin/notify_shutdown
+    dest: /usr/sbin/notify_shutdown
+    owner: root
+    group: root
+    mode: u+rwx,g+rx,o+rx
+
+- name: Add service for notification when shutdown server
+  template:
+    src: xmpp/systemd/notify_shutdown.service
+    dest: /etc/systemd/system/notify_shutdown.service
+    owner: root
+    group: root
+    mode: u+rw,g+r,o+r
+
+- name: Start and enable notification send service
+  systemd:
+    name: notify_shutdown
+    daemon_reload: yes
+    enabled: yes
+    state: started
+
+- name: Add script to send notification when power on
+  template:
+    src: xmpp/sbin/notify_poweron
+    dest: /usr/sbin/notify_poweron
+    owner: root
+    group: root
+    mode: u+rwx,g+rx,o+rx
+
+- name: Add service for notification when power on server
+  template:
+    src: xmpp/systemd/notify_poweron.service
+    dest: /etc/systemd/system/notify_poweron.service
+    owner: root
+    group: root
+    mode: u+rw,g+r,o+r
+
+- name: Start and enable notification send service
+  systemd:
+    name: notify_poweron
+    daemon_reload: yes
+    enabled: yes
+
+- name: Import own change
+  include_tasks: own.yml

@@ -1,0 +1,55 @@
+---
+- name: Install
+  pacman:
+    state: present
+    name: profile-sync-daemon
+
+- name: Create config directory
+  become: yes
+  become_user: "{{ user_name }}"
+  file:
+    path: "/home/{{ user_name }}/.config/psd"
+    state: directory
+    owner: "{{ user_name }}"
+    group: "{{ user_name }}"
+    mode: u+rw,g+r,o+r
+
+- name: Add configuration
+  become: yes
+  become_user: "{{ user_name }}"
+  template:
+    src: psd/psd.conf.j2
+    dest: "/home/{{ user_name }}/.config/psd/psd.conf"
+    owner: "{{ user_name }}"
+    group: "{{ user_name }}"
+    mode: u+rw,g+r,o+r
+
+- name: Add sudo configuration
+  template:
+    src: sudo/10-psd-overlay-helper.j2
+    dest: /etc/sudoers.d/10-psd-overlay-helper
+    owner: root
+    group: root
+    mode: u+r,g+r,o-rwx
+
+- name: "Find uid of user"
+  command: "id -u {{ user_name }}"
+  register: the_user_uid
+  check_mode: no # Run even in check mode, otherwise the playbook fails with --check.
+  changed_when: false
+
+- name: "Determine XDG_RUNTIME_DIR"
+  set_fact:
+    xdg_runtime_dir: "/run/user/{{ the_user_uid.stdout }}"
+  changed_when: false
+
+- name: Start and enable user psd service
+  become: yes
+  become_user: "{{ user_name }}"
+  environment:
+    XDG_RUNTIME_DIR: "{{ xdg_runtime_dir }}"
+  systemd:
+    scope: user
+    name: psd.service
+    state: started
+    enabled: yes

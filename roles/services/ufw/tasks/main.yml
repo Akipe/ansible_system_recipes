@@ -1,0 +1,152 @@
+---
+- name: Load tasks for Archlinux
+  include_tasks: archlinux/main.yml
+  when: ansible_distribution == "Archlinux"
+
+- name: Start and enable Uncomplicated Firewall
+  systemd:
+    name: ufw.service
+    state: started
+    enabled: yes
+
+- name: Add UFW config
+  template:
+    src: etc/ufw.conf.j2
+    dest: /etc/ufw/ufw.conf
+    owner: root
+    group: root
+    mode: u+rw,g+r,o+r
+  notify: reload ufw
+
+# allow mdns
+
+# todo
+# - name: Set logging
+#   ufw:
+#     logging: 'on'
+
+- name: Enable UFW
+  ufw:
+    state: enabled
+  notify: reload ufw
+
+- name: Disallow all incoming
+  ufw:
+    policy: deny
+    direction: incoming
+  notify: reload ufw
+
+- name: Allow all outcoming
+  ufw:
+    policy: allow
+    direction: outgoing
+  notify: reload ufw
+
+# - name: Allow Http
+#   ufw:
+#     rule: allow
+#     port: 80
+#     proto: tcp
+#   notify: reload ufw
+
+# - name: Allow Https
+#   ufw:
+#     rule: allow
+#     port: 443
+#     proto: tcp
+#   notify: reload ufw
+
+- name: Add SSH rule
+  ufw:
+    rule: allow
+    name: ssh
+  notify: reload ufw
+
+# - name: Add mdns rule
+#   ufw:
+#     rule: allow
+#     name: mdns
+#   notify: reload ufw
+
+# - name: Connection rate limiting for SSH (deny connections IP if attempted to initiate 6 or more connection in the last 30 seconds)
+#   ufw:
+#     rule: limit
+#     port: ssh
+#     proto: tcp
+#   notify: reload ufw
+
+# - name: Allow Syncthing
+#   ufw:
+#     rule: allow
+#     name: syncthing
+#   notify: reload ufw
+
+# - name: Allow Syncthing (Sync Protocol Listen Address)
+#   ufw:
+#     rule: allow
+#     port: 22000
+#     proto: tcp
+#   notify: reload ufw
+
+# - name: Allow Syncthing (discovery broadcasts on IPv4 and multicasts on IPv6)
+#   ufw:
+#     rule: allow
+#     port: 21027
+#     proto: udp
+#   notify: reload ufw
+
+# - name: Add Syncthing rule
+#   template:
+#     src: rules/ufw_rule.j2
+#     dest: /etc/ufw/applications.d/syncthing
+#     owner: root
+#     group: root
+#     mode: u+rw,g+r,o+r
+#   vars:
+#     role_ufw_rule:
+#       appName: Syncthing
+#       title: Syncthing
+#       description:
+#       ports: 
+
+# - name: Add Samba rule
+#   copy:
+#     src: rules/samba
+#     dest: /etc/ufw/applications.d/samba
+#     owner: root
+#     group: root
+#     mode: u+rw,g+r,o+r
+    
+# - name: Allow Samba rule
+#   ufw:
+#     rule: allow
+#     name: Samba
+#   notify: reload ufw
+
+# - name: Add Librespot rule
+#   copy:
+#     src: rules/librespot
+#     dest: /etc/ufw/applications.d/librespot
+#     owner: root
+#     group: root
+#     mode: u+rw,g+r,o+r
+    
+# - name: Allow Librespot rule
+#   ufw:
+#     rule: allow
+#     name: Librespot
+#   notify: reload ufw
+
+# - name: Add Prosody rule
+#   copy:
+#     src: rules/prosody
+#     dest: /etc/ufw/applications.d/prosody
+#     owner: root
+#     group: root
+#     mode: u+rw,g+r,o+r
+    
+# - name: Allow Prosody rule
+#   ufw:
+#     rule: allow
+#     name: Prosody
+#   notify: reload ufw

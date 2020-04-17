@@ -1,0 +1,4 @@
+[Samba]
+title=Samba
+description=Server Samba for share files
+ports=137/udp|138/udp|139/tcp|445/tcp

@@ -1,0 +1,5 @@
+---
+- name: Reboot the computer (timeout after 1h)
+  reboot:
+    reboot_timeout: 3600
+    msg: "Reboot initiated by Ansible"

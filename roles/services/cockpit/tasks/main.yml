@@ -1,0 +1,16 @@
+---
+- name: Install Cockpit
+  dnf:
+    state: present
+    name:
+      - cockpit-ws
+      - cockpit-pcp
+      - cockpit-selinux
+      - cockpit-bridge
+      - cockpit-dashboard
+      - cockpit-packagekit
+      - cockpit-docker
+      - cockpit-kdump
+      - cockpit-storaged
+      - cockpit-networkmanager
+      - cockpit-system

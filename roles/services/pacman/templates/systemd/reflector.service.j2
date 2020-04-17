@@ -1,0 +1,13 @@
+## {{ ansible_managed }}
+
+[Unit]
+Description=Pacman mirrorlist update
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/reflector --country France --age 12 --protocol https --sort rate --save /etc/pacman.d/mirrorlist
+
+[Install]
+RequiredBy=multi-user.target

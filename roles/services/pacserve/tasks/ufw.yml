@@ -1,0 +1,14 @@
+---
+- name: Add Pacserve rule
+  template:
+    src: ufw/rule/pacserve
+    dest: /etc/ufw/applications.d/pacserve
+    owner: root
+    group: root
+    mode: u+rw,g+r,o+r
+    
+- name: Allow Pacserve rule
+  ufw:
+    rule: allow
+    name: Pacserve
+  notify: reload ufw

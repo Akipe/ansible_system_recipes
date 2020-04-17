@@ -1,0 +1,34 @@
+---
+- name: Install MPV
+  pacman:
+    state: present
+    name:
+      - mpv
+
+- name: Install SMPlayer
+  pacman:
+    state: present
+    name:
+      - smplayer
+      - smplayer-skins
+      - smplayer-themes
+
+- name: Create user MPV configuration directory
+  file:
+    path: "/home/{{ user_name }}/.config/mpv"
+    state: directory
+    owner: "{{ user_name }}"
+    group: "{{ user_name }}"
+    mode: u+rwx,g+rx,o+rx
+
+- name: Add MPV configuration
+  template:
+    src: "{{ item }}.conf.j2"
+    dest: "/home/{{ user_name }}/.config/mpv/{{ item }}.conf"
+    owner: "{{ user_name }}"
+    group: "{{ user_name }}"
+    mode: u+rw,g+r,o+r
+  loop:
+    - input
+    - mplayer-input
+    - mpv

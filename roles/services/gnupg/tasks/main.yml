@@ -1,0 +1,21 @@
+---
+- name: Install GnuPG packages
+  pacman:
+    state: present
+    name:
+      - gnupg
+
+- name: Install packages for Smartcards
+  pacman:
+    state: present
+    name:
+      - ccid
+      - opensc
+      - pcsc-tools
+
+- name: Enable systemd unit pcscd
+  become: true
+  systemd:
+    name: pcscd.service
+    enabled: true
+    state: started

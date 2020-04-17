@@ -1,0 +1,12 @@
+---
+- name: Load tasks for install on Archlinux
+  include_tasks: archlinux/main.yml
+  when: ansible_distribution == "Archlinux"
+
+- name: Allow wheel group to sudo
+  template:
+    src: 10-grant-group-wheel-sudo.j2
+    dest: /etc/sudoers.d/10-grant-group-wheel-sudo
+    owner: root
+    group: root
+    mode: u+r,g+r,o-rwx

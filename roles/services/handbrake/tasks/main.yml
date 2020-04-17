@@ -1,0 +1,9 @@
+---
+- name: Install
+  pacman:
+    state: present
+    name:
+      - handbrake
+      - gst-libav
+      - gst-plugins-good
+      - libdvdcss

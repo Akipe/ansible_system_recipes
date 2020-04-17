@@ -1,0 +1,15 @@
+---
+- name: Add configuration
+  template:
+    src: syslinux.cfg.j2
+    dest: /boot/syslinux/syslinux.cfg
+    owner: root
+    group: root
+    mode: "u=rw,g=r,o=r"
+
+- name: Remove basic Linux package (replace with linux-zen)
+  pacman:
+    state: absent
+    name: 
+      - linux
+      - linux-headers

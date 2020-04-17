@@ -1,0 +1,62 @@
+---
+unattended_cache_valid_time: 3600
+
+bootloader_defaultEntry:  akpos-zen.conf
+
+mkinitcpio_modules:  "{{ mkinitcpio_modules }}"
+
+ipv4_wan: "{{ vault_ipv4_wan }}"
+ipv4_lan_subnet: "{{ vault_ipv4_lan_subnet }}"
+ipv4_lan_router: "{{ vault_ipv4_lan_router }}"
+ipv4_lan_akpContainers01: "{{ vault_ipv4_lan_akpContainers01 }}"
+ipv4_lan_10gb_A_akpServer01: "{{ vault_ipv4_lan_10gb_A_akpServer01 }}"
+ipv4_lan_10gb_A_akpContainers01: "{{ vault_ipv4_lan_10gb_A_akpContainers01 }}"
+ipv4_lan_10gb_A_akpContainers01_size: "{{ vault_ipv4_lan_10gb_A_akpContainers01_size }}"
+
+url_dns_reverse: "{{ vault_url_dns_reverse }}"
+url_akpHome: "{{ vault_url_akpHome }}"
+
+docker_network_webrouter_ipv4_subnet: "{{ vault_docker_network_webrouter_ipv4_subnet }}"
+docker_network_webrouter_ipv6_subnet: "{{ vault_docker_network_webrouter_ipv6_subnet }}"
+docker_network_bip_ipv4_subnet: "{{ vault_docker_network_bip_ipv4_subnet }}"
+docker_network_fixed_cidr_ipv4_subnet: "{{ vault_docker_network_fixed_cidr_ipv4_subnet }}"
+docker_network_fixed_cidr_ipv6_subnet: "{{ vault_docker_network_fixed_cidr_ipv6_subnet }}"
+docker_network_default_pools_ipv4_subnet: "{{ vault_docker_network_default_pools_ipv4_subnet }}"
+docker_network_default_pools_ipv4_size: "{{ vault_docker_network_default_pools_ipv4_size }}"
+docker_network_default_pools_ipv6_subnet: "{{ vault_docker_network_default_pools_ipv6_subnet }}"
+docker_network_default_pools_ipv6_size: "{{ vault_docker_network_default_pools_ipv6_size }}"
+
+
+akpRouter_middlewares_httpAuth_user1: "{{ vault_akpRouter_middlewares_httpAuth_user1 }}"
+akpRouter_loadBalancer_server_akpHome: "{{ vault_akpRouter_loadBalancer_server_akpHome }}"
+
+akpServer02_proxmox_root_password: "{{ vault_akpServer02_proxmox_root_password }}"
+
+akpContainers01_hardware_network_net0_mac: "{{ vault_akpContainers01_hardware_network_net0_mac }}"
+akpContainers01_hardware_network_net1_mac: "{{ vault_akpContainers01_hardware_network_net1_mac }}"
+
+language_default:     "fr_FR.UTF-8"
+language_list:
+  - fr_FR.UTF-8
+  - en_US.UTF-8
+language_listOrder:   "fr_FR:en_US:en"
+language_timeFormat:  "fr_FR.UTF-8"
+language_collate:     "C"
+
+user_name: "{{ vault_user_name }}"
+
+ssh_port: 22
+ssh_users: 
+  - "{{ user_name }}"
+ssh_key:
+  - user: "{{ user_name }}"
+    public_key: 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDQF05BaRNIo6+CL5lYFSKSljMDRyE+vDPr3+IQYiHJ613cEo2TYQAK2vDv/gIZsDXAsVxnzUogQ1f7Jp4USceQ//d/QUdWAZkQfHH6Mvg5i30In8/YHVulSe1ENc6XGmVkmmc75mcd6CXWVEh0liQB6SwDRBO42rU4uhOUr77vs+wodCCSh6vF0whloOtm4jQhECAmnccnNKgBDkc35wfG3ugrfLFwRzhhvUDA0+CJG09yNT3Zg1Vx9OXasU0e+AoL722UN0UWuWtgAqNURgJiD4DQhsVZTLeS6HyL8o69bY6OOeAPxf1vE1vN9C1jvT+CSNsqYyPm5q2Putiiks8Pe8ZB0zDUF0qgIeOyJ+FuidMDJSzYJf7DGmzQQ90Pas9G3vUpWvkkJ1xMvtnnX2VcUBwKq52WvQfJkULYSqUJYwvk4XQ9uH1rqnkNtDPR08iyTaoQrjQgjGvaikm0v4jTjlweQjfW+Tivta51VSwhMDwKsAJthiV+F1iaBs5VU3psh28gv9fTKkOXhR+V7n2D3Pv4VKPsaww8PmMAZpEJGTDgXwim86XBkuRK0p2oWqbRx0eYG67It/A7Yo8MOxGlK3TXLJyC18z1iiwtDr37NnKfl/1NBpFVSe063Egu6XDmYpINwyha+v8Dm+ZdzFMtoGqQPZHn+FrdHfIr4/I10Q== cardno:000607318198'
+
+time_timezone: Europe/Paris
+time_ntpServers:
+  - "{{ ipv4_lan_router }}"
+time_ntpServers_fallback:
+  - 0.fr.pool.ntp.fr
+  - 1.fr.pool.ntp.fr 
+  - 2.fr.pool.ntp.fr
+  - 3.fr.pool.ntp.fr
