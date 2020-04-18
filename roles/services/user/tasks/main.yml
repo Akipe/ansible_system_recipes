@@ -1,0 +1,34 @@
+---
+
+- name: Set users vairables
+  set_fact:
+    role_user_listUsers: "{{ listUsers }}"
+
+- name: Install fish
+  apt:
+    state: present
+    name: fish
+
+- name: Create group wheel for sudo
+  group:
+    state: present
+    name: wheel
+
+- name: Creates users
+  user:
+    state: present
+    name: "{{ item.name }}"
+    shell: "{{ item.shell }}"
+    groups: "{{ item.groups }}"
+    password: "{{ item.password }}"
+  loop: "{{ role_user_listUsers }}"
+
+- name: Append public key for SSH
+  authorized_key:
+    user: "{{ item.name }}"
+    state: present
+    manage_dir: yes
+    key: "{{ role_user_sshPublicKey }}"
+  loop: "{{ role_user_listUsers }}"
+  vars:
+    role_user_sshPublicKey: "{{ ssh_public_key }}"
