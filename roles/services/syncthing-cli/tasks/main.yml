@@ -1,0 +1,38 @@
+---
+
+- name: Load tasks for Debian & derivate
+  include_tasks: debian/main.yml
+  when: ansible_distribution == "Debian" or ansible_distribution == "Ubuntu"
+
+- name: Load tasks for Archlinux
+  include_tasks: archlinux/main.yml
+  when: ansible_distribution == "Archlinux"
+
+# - name: Find uid of user
+#   command: "id -u {{ user_name }}"
+#   register: user_uid
+#   check_mode: no # Run even in check mode, otherwise the playbook fails with --check.
+#   changed_when: false
+
+- name: Start and active user Syncthing service (with user)
+  become: yes
+  become_user: "{{ user_name }}"
+  # environment:
+  #  XDG_RUNTIME_DIR: "/run/user/{{ user_uid.stdout }}"
+  systemd:
+    name: syncthing.service
+    scope: user
+    state: started
+    enabled: yes
+  when: not role_syncthing_start_as_superuser
+
+- name: Start and active user Syncthing service (with superuser)
+  systemd:
+    name: "syncthing@{{ user_name }}.service"
+    state: started
+    enabled: yes
+  when: role_syncthing_start_as_superuser
+
+# todo: configure ~/.config/syncthing/config.xml
+
+# 127.0.0.1:8384 > 0.0.0.0:8384

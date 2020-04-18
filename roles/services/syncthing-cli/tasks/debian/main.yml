@@ -1,0 +1,20 @@
+---
+
+- name: Add Syncthing official repository
+  include_role:
+    name: apt
+    tasks_from: add_repository
+  vars:
+    add_repository:
+      - key:
+          id: D26E6ED000654A3E
+          url: https://syncthing.net/release-key.txt
+        repository:
+          repo: "deb https://apt.syncthing.net/ syncthing stable"
+          filename: syncthing
+
+- name: Install Syncthing
+  apt:
+    state: present
+    update_cache: yes
+    name: syncthing

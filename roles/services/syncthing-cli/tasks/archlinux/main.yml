@@ -1,0 +1,6 @@
+---
+
+- name: Install Syncthing
+  pacman:
+    state: present
+    name: syncthing
