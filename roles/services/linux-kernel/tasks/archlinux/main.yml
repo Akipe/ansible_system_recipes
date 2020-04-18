@@ -26,27 +26,3 @@
     state: present
     name:
       - procps-ng
-
-- name: Add kernel config
-  template:
-    src: "sysctl.d/{{ item }}.conf.j2"
-    dest: "/etc/sysctl.d/{{ item }}.conf"
-    owner: root
-    group: root
-    mode: u+rw,g+r,o+r
-  loop:
-    - 10-network
-    - 10-security
-    - 10-set-amount-inotify-watchers
-    - 10-virtual_memory
-    - 10-magic_system_request_key
-
-- name: Add kernel config
-  template:
-    src: "modules-load.d/{{ item }}.conf.j2"
-    dest: "/etc/modules-load.d/{{ item }}.conf"
-    owner: root
-    group: root
-    mode: u+rw,g+r,o+r
-  loop:
-    - bbr_congestion

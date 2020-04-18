@@ -1,4 +1,33 @@
 ---
+
+- name: Load tasks for install on Debian & derivate
+  include_tasks: debian/main.yml
+  when: ansible_distribution == "Debian" or ansible_distribution == "Ubuntu"
+
 - name: Load tasks for install on Archlinux
   include_tasks: archlinux/main.yml
   when: ansible_distribution == "Archlinux"
+
+- name: Add kernel config
+  template:
+    src: "sysctl.d/{{ item }}.conf.j2"
+    dest: "/etc/sysctl.d/{{ item }}.conf"
+    owner: root
+    group: root
+    mode: u+rw,g+r,o+r
+  loop:
+    - 10-network
+    - 10-security
+    - 10-set-amount-inotify-watchers
+    - 10-virtual_memory
+    - 10-magic_system_request_key
+
+- name: Add kernel config
+  template:
+    src: "modules-load.d/{{ item }}.conf.j2"
+    dest: "/etc/modules-load.d/{{ item }}.conf"
+    owner: root
+    group: root
+    mode: u+rw,g+r,o+r
+  loop:
+    - bbr_congestion
