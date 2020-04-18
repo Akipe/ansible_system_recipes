@@ -1,6 +1,8 @@
 Readme
 ====================
 
+Carefull, this contains errors. Work in progress.
+
 # Initialize
 ```
 make init
