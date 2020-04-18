@@ -1,0 +1,6 @@
+---
+
+- name: Install sudo
+  apt:
+    state: present
+    name: sudo
