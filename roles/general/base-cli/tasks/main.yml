@@ -1,29 +1,9 @@
 ---
-- name: Install usefull CLI apps
-  pacman:
-    state: present
-    name:
-      - fortune-mod
-      - trash-cli
-      - ripgrep
-      - wget
-      - curl
-      - jq
-      - tree
-      - pcre
-      - whois
-      - hwinfo
-      - bat
-      - bash-completion
-      - lsb-release
-      - rsync
-      - tmux
-      - neovim
-      - man-db
-      - man-pages
-      - pkgfile
-      - htop
-      - iotop
-      - iftop
-      - atop
-      - gtop
+
+- name: Load tasks for install on Debian & derivate
+  include_tasks: debian/main.yml
+  when: ansible_distribution == "Debian" or ansible_distribution == "Ubuntu"
+
+- name: Load tasks for install on Archlinux
+  include_tasks: archlinux/main.yml
+  when: ansible_distribution == "Archlinux"

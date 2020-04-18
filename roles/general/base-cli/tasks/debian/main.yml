@@ -1,0 +1,24 @@
+---
+
+- name: Install usefull CLI apps
+  apt:
+    state: present
+    name: 
+      - trash-cli
+      - wget
+      - curl
+      - git
+      # - ripgrep
+      - tree
+      - hwinfo
+      - bash-completion
+      - lsb-release
+      - rsync
+      - tmux
+      - neovim
+      - man-db
+      - htop
+      - iotop
+      - iftop
+      # - atop
+      # - gtop
