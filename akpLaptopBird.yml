@@ -4,7 +4,6 @@
   remote_user: root
   become: yes
   roles:
-
     ### Base
     - { role: ansible-guest, tags: ansible-guest }
     - { role: ssh, tags: ssh }
@@ -58,7 +57,8 @@
     - { role: aur-gui, tags: aur-gui }
     - { role: vlc, tags: vlc }
     - { role: libreoffice, tags: libreoffice }
-    - { role: syncthing, tags: syncthing }
+    - { role: syncthing-cli, tags: syncthing }
+    - { role: syncthing-gui, tags: syncthing }
     - { role: profile-sync-daemon, tags: profile-sync-daemon }
     - { role: virtualbox-host, tags: virtualbox-host }
     - { role: mpv, tags: mpv }
