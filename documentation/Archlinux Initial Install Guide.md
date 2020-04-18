@@ -297,7 +297,7 @@ options cryptdevice=PARTLABEL=${LABEL_PARTITION_ENCRYPTED}:${LABEL_PARTITION_ROO
     pacman --needed --noconfirm -S \
         openssh && \
     systemctl enable sshd.service && \
-    sed -i 's/UsePAM yes/UsePAM yes\nAllowUsers $USER_NAME_SHELL/g' /etc/ssh/sshd_config && \
+    sed -i 's/UsePAM yes/UsePAM yes\nAllowGroups wheel/g' /etc/ssh/sshd_config && \
     less /etc/ssh/sshd_config && \
     echo -e "[Time]
 NTP=192.168.100.1
