@@ -111,3 +111,9 @@ logrotate
 # base-dev-gui
 # dev-php
 # antivirus
+
+## Proxmox
+
+### SMART disk
+- https://pve.proxmox.com/wiki/Disk_Health_Email_Alerts
+- https://jeedom-facile.fr/index.php/2018/12/05/surveillance-du-disque-dur-sous-proxmox/
