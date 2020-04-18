@@ -1,0 +1,14 @@
+---
+- name: Load roles concerning akpSync01
+  hosts: akpSync01
+  become_user: root
+  become: yes
+  roles:
+    - { role: ansible-guest }
+    - { role: user }
+    - { role: sudo }
+    - { role: ssh }
+    - { role: apt }
+    - { role: base-cli }
+    - { role: syncthing-cli, vars: { role_syncthing_start_as_superuser: yes}  }
+    
