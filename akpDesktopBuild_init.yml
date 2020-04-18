@@ -1,6 +1,6 @@
 ---
-- name: Load roles for initialize akpLaptopTiny
-  hosts: akpLaptopTiny
+- name: Load roles for initialize akpDesktopBuild
+  hosts: akpDesktopBuild
   become_user: root
   become: yes
   vars:

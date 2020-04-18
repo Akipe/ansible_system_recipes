@@ -1,6 +1,6 @@
 ---
-- name: Load specific roles for akpLaptopTiny
-  hosts: akpLaptopTiny
+- name: Load specific roles for akpDesktopBuild
+  hosts: akpDesktopBuild
   remote_user: root
   become: yes
   roles:
