@@ -7,14 +7,18 @@
     ### Base
     - { role: ansible-guest, tags: ansible-guest }
     - { role: ssh, tags: ssh }
-    ### Package manager
+    ### System
     - { role: apt, tags: apt }
-    ### Hardware
-    - { role: ssd, tags: ssd }
-    ### Shell
-    - { role: fish, tags: fish }
-    ### Commons rules
-    - { role: common_server, tags: common_server }
-    ### Specifics rules
+    - { role: linux-kernel, tags: linux-kernel }
+    - { role: irqbalance, tags: irqbalance }
+    - { role: rngd, tags: rngd }
     - { role: proxmox, tags: proxmox }
-    - { role: akp_create_akpcontainers01, tags: akp_create_akpcontainers01 }
+    ### Hardware
+    - { role: disk, tags: disk }
+    ### Commons rules
+    - { role: base-cli, tags: base-cli }
+    ### Apps
+    - { role: fish, tags: fish }
+    ### Specifics rules
+    - { role: create_akpcontainers01, tags: create_akpcontainers01 }
+    - { role: create_akpsync01, tags: akp_create_akpcontainers01 }

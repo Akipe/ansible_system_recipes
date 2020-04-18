@@ -1,0 +1,21 @@
+# https://pve.proxmox.com/wiki/Linux_Container
+- name: Create container akpSync01
+  proxmox:
+    api_user:     root@pam
+    api_password: "{{ akpServer02_proxmox_root_password }}"
+    api_host:     akpserver02
+    node:         akpserver02
+    state:        present
+    vmid:         300
+    hostname:     akpsync01
+    ostemplate:   'local:vztmpl/ubuntu-18.04-standard_18.04.1-1_amd64.tar.gz'
+    password:     "{{ akpSync01_root_password }}"
+    onboot:       yes
+    cpus:         1
+    cores:        4
+    memory:       1024
+    swap:         1024
+    disk:         20
+    storage:      akps01-lvm
+    netif:        '{ "net0" : "name=eth0,bridge=vmbr0,hwaddr={{ akpSync01_hardware_network_net0_mac }},ip=dhcp,ip6=dhcp,firewall=1", "net1" : "hwaddr={{ akpSync01_hardware_network_net1_mac }},bridge=vmbr1,name=eth1,ip=dhcp,ip6=dhcp" }'
+    pubkey:       "{{ ssh_public_key }}"

@@ -33,7 +33,6 @@
       - proxmox-ve
       - open-iscsi
       - ksm-control-daemon
-      - amd64-microcode
     state: present
 
 - name: Install dependencies for Ansible
@@ -43,20 +42,22 @@
       - proxmoxer
     state: present
 
-- name: Add kernel config
+- name: Add kernel config for Proxmox
   template:
-    src: "sysctl.d/{{ item }}.j2"
-    dest: /etc/sysctl.d/{{ item }}
+    src: "sysctl.d/{{ item }}.conf.j2"
+    dest: "/etc/sysctl.d/{{ item }}.conf"
     owner: root
     group: root
     mode: u+rw,g+r,o+r
   notify: Reload kernel config
   loop:
-    - network.conf
-    - protect-links.conf
-    - pve.conf
-    - system.conf
-    - security.conf
+    - pve
+
+- name: Active automatic update of LXC templates
+  systemd:
+    name: pve-daily-update.timer
+    enabled: yes
+    state: started
 
 - name: Include web interface proxy tasks
   include_tasks: web_interface_proxy.yml

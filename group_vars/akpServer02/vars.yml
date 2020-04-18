@@ -1,11 +1,7 @@
 ---
 ansible_python_interpreter: /usr/bin/python3
 ansible_user: "{{ user_name }}"
-
-ssh:
-  port: 22
-  users:
-  - "{{ user_name }}"
+ansible_become_pass: "{{ vault_ansible_become_pass }}"
 
 apt:
   unattended_origins_patterns:
