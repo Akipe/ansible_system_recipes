@@ -1,0 +1,6 @@
+---
+
+- name: Install AMD CPU microcode
+  apt:
+    state: present
+    name: amd64-microcode
