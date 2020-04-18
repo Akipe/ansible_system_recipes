@@ -1,11 +1,12 @@
 ---
-- name: Install Rng-tools
-  pacman:
-    name: rng-tools
+
+- name: Install
+  apt:
     state: present
+    name: rng-tools
 
 - name: Enable and start rngd.service
   systemd:
-    name: rngd.service
+    name: rng-tools
     enabled: yes
     state: started
