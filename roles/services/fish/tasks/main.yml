@@ -6,3 +6,38 @@
 - name: Load tasks for install on Archlinux
   include_tasks: archlinux/main.yml
   when: ansible_distribution == "Archlinux"
+
+- name: Check if Oh My Fish is installed
+  stat:
+    path: /etc/.omf_installed
+  register: omf
+
+- name: Clone Oh My Fish repository
+  git:
+    repo: 'https://github.com/oh-my-fish/oh-my-fish'
+    dest: '/tmp/omf'
+    clone: yes
+  when: not omf.stat.exists
+
+- name: Install Oh My Fish
+  become: true
+  become_user: "{{ user_name }}"
+  command: /tmp/omf/bin/install -y --offline --noninteractive
+  when: not omf.stat.exists
+
+- name: Mark Oh My Fish installed with /etc/.omf_installed
+  file:
+    path: /etc/omf.installed
+    state: touch
+
+- name: Check if fish theme bobthefish is installed
+  stat:
+    path: "/home/{{ user_name }}/.local/share/omf/themes/bobthefish"
+  register: omf_bobthefish
+ # .local/share/omf/themes/bobthefish
+
+- name: Install bobthefish fish theme
+  become: true
+  become_user: "{{ user_name }}"
+  command: fish -c "omf install bobthefish"
+  when: not omf_bobthefish.stat.exists

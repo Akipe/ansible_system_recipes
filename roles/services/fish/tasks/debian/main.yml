@@ -1,5 +1,11 @@
 ---
+
 - name: Install fish
   apt:
-    name: fish
     state: present
+    name: 
+      - fish
+      - git
+      - neofetch
+      - powerline
+      - fonts-powerline
