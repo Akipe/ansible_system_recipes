@@ -1,4 +1,4 @@
-.PHONY: init run run-password run-debug run-check clean get-info update-submodules 
+.PHONY: init run run-password run-debug run-check vault-create vault-edit clean get-info update-submodules 
 
 fetch_git_submodules:
 	git submodule update --init --recursive
