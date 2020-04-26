@@ -1,0 +1,33 @@
+---
+
+intelgraphics_app_base_archlinux:
+  - mesa
+  - vulkan-intel
+  - lib32-mesa
+  - lib32-vulkan-intel
+
+intelgraphics_app_video_iHD_archlinux:
+  - intel-media-driver
+  - libvdpau-va-gl
+  - libva-utils
+  - vdpauinfo
+
+intelgraphics_app_video_i965_archlinux:
+  - libva-intel-driver
+  - lib32-libva-intel-driver
+  - libvdpau-va-gl
+  - libva-utils
+  - vdpauinfo
+
+intelgraphics_app_gpgpu_beignet_archlinux:
+  - ocl-icd
+  - beignet
+  - clinfo
+  - lib32-ocl-icd
+
+intelgraphics_app_gpgpu_intelComputeRuntime_archlinux:
+  - ocl-icd
+  - intel-compute-runtime
+  - libva
+  - clinfo
+  - lib32-ocl-icd

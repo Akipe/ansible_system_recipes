@@ -2,11 +2,7 @@
 - name: Install driver
   pacman:
     state: present
-    name:
-      - mesa
-      - vulkan-intel
-      - lib32-mesa
-      - lib32-vulkan-intel
+    name: "{{ intelgraphics_app_base_archlinux }}"
 
 # Count generation intel from this page https://en.wikipedia.org/wiki/List_of_Intel_CPU_microarchitectures
 - name: Define video acceleration type support (generation after 19)
@@ -22,22 +18,13 @@
 - name: Install video acceleration support (iHD)
   pacman:
     state: present
-    name:
-      - intel-media-driver
-      - libvdpau-va-gl
-      - libva-utils
-      - vdpauinfo
+    name: "{{ intelgraphics_app_video_iHD_archlinux }}"
   when: video_acceleration_type == "iHD"
 
 - name: Install video acceleration support (i965)
   pacman:
     state: present
-    name: 
-      - libva-intel-driver
-      - lib32-libva-intel-driver
-      - libvdpau-va-gl
-      - libva-utils
-      - vdpauinfo
+    name: "{{ intelgraphics_app_video_i965_archlinux }}"
   when: video_acceleration_type == "i965"
 
 # - name: Install other video acceleration support (i965)
@@ -55,22 +42,13 @@
 - name: Install GPGPU driver Beignet
   pacman:
     state: present
-    name: 
-      - ocl-icd
-      - beignet
-      - clinfo
-      - lib32-ocl-icd
+    name: "{{ intelgraphics_app_gpgpu_beignet_archlinux }}"
   when: hardware_gpu_vendor|int < 19
 
 - name: Install GPGPU driver Intel compute runtime
   pacman:
     state: present
-    name: 
-      - ocl-icd
-      - intel-compute-runtime
-      - libva
-      - clinfo
-      - lib32-ocl-icd
+    name: "{{ intelgraphics_app_gpgpu_intelComputeRuntime_archlinux }}"
   when: hardware_gpu_vendor|int >= 19
 
 # - name: Install GPGPU driver Intel Opencl
