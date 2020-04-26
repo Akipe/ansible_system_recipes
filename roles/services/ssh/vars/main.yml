@@ -1,0 +1,7 @@
+---
+
+ssh_appToInstall_archlinux:
+  - openssh
+
+ssh_appToInstall_debian:
+  - openssh-server
