@@ -1,0 +1,54 @@
+---
+
+- name: Create networkAdmin volume for /config
+  become: yes
+  become_user: "{{ containerUser.name }}"
+  docker_volume:
+    name:   "{{ networkAdmin_volume_config_name }}"
+    state:  present
+    driver: local
+    driver_options:
+      type:   nfs4
+      device: "{{ networkAdmin_volume_config_nfsPath }}"
+      o:      "{{ containers_nfs_akpContainers01_options }}"
+
+- name: Create containersAdmin container
+  become:       yes
+  become_user:  "{{ containerUser.name }}"
+  docker_container:
+    name:   "{{ networkAdmin_name }}"
+    state:  started
+    networks_cli_compatible: yes
+    image:  "{{ networkAdmin_image }}"
+    restart_policy: unless-stopped
+    ports:
+      - "3478:3478/udp"
+      - "10001:10001/udp"
+      - "8080:8080"
+      - "8081:8081"
+      - "8443:8443"
+      - "8843:8843"
+      - "8880:8880"
+      - "6789:6789"
+    volumes:
+      - "{{ networkAdmin_volume_config_name }}:/config"
+    networks:
+      - name: "{{ containersRouter_network_name }}"
+    env:
+      PUID:     "{{ containerUser_uid }}"
+      PGID:     "{{ containerUser_gid }}"
+      LANGUAGE: "fr_FR.UTF-8"
+      LANG:     "fr_FR.UTF-8"
+    labels:
+      traefik.enable:                                                 "true"
+      traefik.http.routers.networkadmin.entrypoints:                  "http"
+      traefik.http.routers.networkadmin.rule:                         "Host(`{{ networkAdmin_url }}`)"
+      traefik.http.routers.networkadmin.middlewares:                  "HttpsRedirection@file"
+      traefik.http.routers.networkadmin_secure.entrypoints:           "https"
+      traefik.http.routers.networkadmin_secure.tls:                   "true"
+      traefik.http.routers.networkadmin_secure.rule:                  "Host(`{{ networkAdmin_url }}`)"
+      traefik.http.services.networkadmin.loadbalancer.server.port:    "8443"
+      traefik.http.services.networkadmin.loadbalancer.server.scheme:  "https"
+    comparisons:
+      env:      strict
+      volumes:  allow_more_present

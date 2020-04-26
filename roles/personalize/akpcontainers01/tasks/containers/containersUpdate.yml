@@ -1,13 +1,17 @@
 ---
-- name: Create containersUpdate
+
+- name: Create the container
   become: yes
-  become_user: containers
+  become_user: "{{ containerUser.name }}"
   docker_container:
-    name: containersRouter
-    state: started
     networks_cli_compatible: yes
-    image: containrrr/watchtower
+    name:           "{{ containersUpdate_name }}"
+    state:          started
+    image:          "{{ containersUpdate_image }}"
     restart_policy: unless-stopped
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-    command: --cleanup --schedule "30 07 * * * *"
+    command: "{{ containersUpdate_watchtower_options }}"
+    comparisons:
+      env:      strict
+      volumes:  allow_more_present

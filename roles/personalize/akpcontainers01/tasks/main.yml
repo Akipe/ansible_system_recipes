@@ -8,13 +8,10 @@
     mode: 0644
   notify: Restart network service
 
-# TODO: move this tasks to allow "Restart network service" before launch it
-# - name: Configure akpServer01 iSCSI containers connexion
-#   open_iscsi:
-#     show_nodes: yes
-#     discover: yes
-#     portal: 
-#   register: iscsi_debug
+- name: Define fish shell to user
+  user:
+    name: "{{ user_name }}"
+    shell: /usr/bin/fish
 
 - name: Load Docker rules
   include_tasks: docker.yml

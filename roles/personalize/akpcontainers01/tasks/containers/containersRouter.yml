@@ -1,82 +1,119 @@
 ---
+
 - name: Create webrouter networks for containersRouter
-  become: yes
-  become_user: containers
+  become:       yes
+  become_user:  "{{ containerUser.name }}"
   docker_network:
-    name: webrouter
+    name: "{{ containersRouter_network_name }}"
     enable_ipv6: yes
     ipam_config:
-      - subnet: "{{ docker_network_webrouter_ipv4_subnet }}"
-      - subnet: "{{ docker_network_webrouter_ipv6_subnet }}"
+      - subnet: "{{ containersRouter_network_subnet_ipv4 }}"
+      - subnet: "{{ containersRouter_network_subnet_ipv6 }}"
 
-- name: Create containersRouter directory
-  become: yes
-  become_user: root
+- name: Create containersRouter Treafik directories
+  # become: yes
+  # become_user: "{{ containerUser.name }}"
   file:
-    path: /containers/volumes/containersRouter/traefik
-    state: directory
-    mode: u+rwx,g-xr,o-x
-    owner: containers
-    group: containers
-    recurse: yes
+    path:     "{{ item }}"
+    state:    directory
+    mode:     u+rwx,g+rwx,o+x
+    owner:    root
+    group:    "{{ containerUser.name }}"
+    # recurse:  yes
+  loop:
+    - "{{ containersRouter_traefikPath }}"
+    - "{{ containersRouter_traefikDynamicConfigPath }}"
+    - "{{ containersRouter_TraefikCertsPath }}"
+    - "{{ containersRouter_TraefikLogsPath }}"
 
-- name: Create containersRouter directory (dynamic_config)
-  become: yes
-  become_user: root
+- name: Add Treafik configuration files
+  template:
+    src:    "containers/containersRouter/{{ item }}.j2"
+    dest:   "{{ containersRouter_traefikPath }}/{{ item }}"
+    owner:  root
+    group:  root
+    mode:   u+rw,g+r,o+r
+  loop:
+    - traefik.yml
+    - dynamic_config/conf_tls.yml
+    # - dynamic_config/mid_httpAuth.yml
+    - dynamic_config/mid_httpsRedirect.yml
+    # - dynamic_config/mid_rateLimit.yml
+    - dynamic_config/mid_secure.yml
+    - dynamic_config/mid_securityHeaders.yml
+    - dynamic_config/mid_whitelistAdmin.yml
+    # - dynamic_config/site_akpHome.yml
+    # - dynamic_config/site_ipHost.yml
+
+- name: Verify if acme.json exist
+  stat:
+    path: "{{ containersRouter_acmePath }}"
+  register: acmejson_path
+
+- name: Create acme.json if it doesn't exist
   file:
-    path: /containers/volumes/containersRouter/traefik/dynamic_config
-    state: directory
-    mode: u+rwx,g-xr,o-x
-    owner: containers
-    group: containers
-    recurse: yes
+    path:   "{{ containersRouter_acmePath }}"
+    state:  touch
+    owner:  root
+    group:  root
+    mode:   '0600'
+  when: acmejson_path.stat.exists == false
 
-- name: Create containersRouter directory (certificats)
-  become: yes
-  become_user: root
+- name: Fix permission for acme.json
   file:
-    path: /containers/volumes/containersRouter/traefik/certificats
-    state: directory
-    mode: u+rwx,g-xr,o-x
-    owner: containers
-    group: containers
-    recurse: yes
+    path:   "{{ containersRouter_acmePath }}"
+    owner:  root
+    group:  root
+    mode:   '0600'
 
-- name: Generate OpenSSL private key
+- name: Verify if self signed private key exist
+  stat:
+    path: "{{ containersRouter_selfSigned_PrivateKeyPath }}"
+  register: selfsigned_privatekey_path
+
+- name: Generate self-signed private key for containersRouter
   openssl_privatekey:
-    path: /containers/volumes/containersRouter/traefik/certificats/default.priv.key
-    cipher: aes256
-    size: 4096
-    type: RSA
+    path:   "{{ containersRouter_selfSigned_PrivateKeyPath }}"
+    size:   4096
+    type:   RSA
+  when: selfsigned_privatekey_path.stat.exists == false
 
-- name: Create self certificat
+- name: Generate self-signed CSR for containersRouter
+  openssl_csr:
+    path:             "{{ containersRouter_selfSigned_CsrPath }}"
+    privatekey_path:  "{{ containersRouter_selfSigned_PrivateKeyPath }}"
+    common_name:      "*.akpnet.lan"
+  when: selfsigned_privatekey_path.stat.exists == false
+
+- name: Generate self-signed certificat for containersRouter
   openssl_certificate:
-    path:
-    privatekey_path:
-    csr_path:
-    provider: selfsigned
+    path:             "{{ containersRouter_selfSigned_CertificatePath }}"
+    privatekey_path:  "{{ containersRouter_selfSigned_PrivateKeyPath }}"
+    csr_path:         "{{ containersRouter_selfSigned_CsrPath }}"
+    provider:         selfsigned
+  when: selfsigned_privatekey_path.stat.exists == false
 
-- name: Create containersRouter
-  become: yes
-  become_user: containers
+- name: Create containersRouter container
+  become:       yes
+  become_user:  "{{ containerUser.name }}"
   docker_container:
-    name: containersRouter
-    state: started
     networks_cli_compatible: yes
-    image: traefik
+    name:           "{{ containersRouter_name }}"
+    state:          started
+    image:          "{{ containersRouter_image }}"
     restart_policy: unless-stopped
     ports:
       - "80:80"
       - "443:443"
-      - "8080:8080"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - /containers/volumes/containersRouter/traefik/traefik.yml:/etc/traefik/traefik.yml:ro
-      - /containers/volumes/containersRouter/traefik/acme.json:/etc/traefik/acme.json
-      - /containers/volumes/containersRouter/traefik/certificats:/etc/certs:ro
-      - /containers/volumes/containersRouter/traefik/dynamic_config:/etc/traefik/dynamic_config:ro
+      - "{{ containersRouter_traefikPath }}/traefik.yml:/etc/traefik/traefik.yml:ro"
+      - "{{ containersRouter_traefikDynamicConfigPath }}:/etc/traefik/dynamic_config:ro"
+      - "{{ containersRouter_TraefikCertsPath }}:/etc/certs:ro"
+      - "{{ containersRouter_acmePath }}:/etc/traefik/acme.json"
+      - "{{ containersRouter_accessLogPath }}:/etc/traefik/log/access.log"
     networks:
-      - name: webrouter
+      - name: "{{ containersRouter_network_name }}"
     command:
       --api.insecure=true
       --api.dashboard=true
@@ -84,13 +121,18 @@
       --providers.docker.exposedbydefault=false
       --providers.file=true
     labels:
-      traefik.enable=true
-      traefik.http.routers.containersRouter.entrypoints=http
-      traefik.http.routers.containersRouter.rule=Host(`'{{ containers.containersRouter.url }}'`)
-      traefik.http.routers.containersRouter.middlewares=HTTPS-only@file
-      traefik.http.routers.containersRouter_secure.entrypoints=https
-      traefik.http.routers.containersRouter_secure.tls=true
-      traefik.http.routers.containersRouter_secure.rule=Host(`'{{ containers.containersRouter.url }}'`)
-      traefik.http.routers.containersRouter_secure.middlewares=WhitelistAdmin@file
-      traefik.http.routers.containersRouter_secure.service=api@internal
-      traefik.http.services.containersRouter.loadbalancer.server.port=8080
+      traefik.enable: "true"
+      traefik.http.routers.containersRouter.entrypoints:                "http"
+      traefik.http.routers.containersRouter.rule:                       "Host(`{{ containersRouter_url }}`)"
+      traefik.http.routers.containersRouter.middlewares:                "HttpsRedirection@file"
+      traefik.http.routers.containersRouter_secure.entrypoints:         "https"
+      traefik.http.routers.containersRouter_secure.tls:                 "true"
+      traefik.http.routers.containersRouter_secure.rule:                "Host(`{{ containersRouter_url }}`)"
+      traefik.http.routers.containersRouter_secure.middlewares:         "WhitelistAdmin@file,containersRouter_authentication"
+      traefik.http.routers.containersRouter_secure.service:             "api@internal"
+      traefik.http.services.containersRouter.loadbalancer.server.port:  "8080"
+      traefik.http.middlewares.containersRouter_authentication.basicauth.users: "{{ containersRouter_authentification }}"
+    comparisons:
+      env:      strict
+      volumes:  allow_more_present
+

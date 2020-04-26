@@ -1,39 +1,43 @@
 ---
-- name: Create containersAdminData volume
+
+- name: Create containersAdmin volume for /data
   become: yes
-  become_user: containers
+  become_user: "{{ containerUser.name }}"
   docker_volume:
-    name:   containersAdminData
+    name:   "{{ containersAdmin_volume_data_name }}"
     state:  present
     driver: local
     driver_options:
       type:   nfs4
-      device: :/mnt/akpData02/akpServer02/akpContainers01/containersAdmin/portainer/data
-      o:      "addr={{ ip4_lan_10gb_A_akpServer01 }},rw,noatime,rsize=8192,wsize=8192,tcp,timeo=14,nfsvers=4,async"
+      device: "{{ containersAdmin_volume_data_nfsPath }}"
+      o:      "{{ containers_nfs_akpContainers01_options }}"
 
-- name: Create containersAdmin
-  become: yes
-  become_user: containers
+- name: Create containersAdmin container
+  become:       yes
+  become_user:  "{{ containerUser.name }}"
   docker_container:
-    name: containersAdmin
-    state: started
     networks_cli_compatible: yes
-    image: portainer/portainer
+    name:           "{{ containersAdmin_name }}"
+    state:          started
+    image:          "{{ containersAdmin_image }}"
     restart_policy: unless-stopped
     ports:
       - "8000:8000"
       - "9000:9000"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - containersAdminData:/data
+      - "{{ containersAdmin_volume_data_name }}:/data"
     networks:
-      - name: webrouter
+      - name: "{{ containersRouter_network_name }}"
     labels:
-      traefik.enable=true
-      traefik.http.routers.containersAdmin.entrypoints=http
-      traefik.http.routers.containersAdmin.rule=Host(`'{{ containers.containersAdmin.url }}'`)
-      traefik.http.routers.containersAdmin.middlewares=HTTPS_Redirection@file
-      traefik.http.routers.containersAdmin_secure.entrypoints=https
-      traefik.http.routers.containersAdmin_secure.tls=true
-      traefik.http.routers.containersAdmin_secure.rule=Host(`'{{ containers.containersAdmin.url }}'`)
-      traefik.http.services.containersAdmin.loadbalancer.server.port=9000
+      traefik.enable:                                                 "true"
+      traefik.http.routers.containersAdmin.entrypoints:               "http"
+      traefik.http.routers.containersAdmin.rule:                      "Host(`{{ containersAdmin_url }}`)"
+      traefik.http.routers.containersAdmin.middlewares:               "HttpsRedirection@file"
+      traefik.http.routers.containersAdmin_secure.entrypoints:        "https"
+      traefik.http.routers.containersAdmin_secure.tls:                "true"
+      traefik.http.routers.containersAdmin_secure.rule:               "Host(`{{ containersAdmin_url }}`)"
+      traefik.http.services.containersAdmin.loadbalancer.server.port: "9000"
+    comparisons:
+      env:      strict
+      volumes:  allow_more_present

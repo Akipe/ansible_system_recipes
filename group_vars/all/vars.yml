@@ -16,18 +16,6 @@ ipv4_lan_10gb_A_akpContainers01_size: "{{ vault_ipv4_lan_10gb_A_akpContainers01_
 url_dns_reverse: "{{ vault_url_dns_reverse }}"
 url_akpHome: "{{ vault_url_akpHome }}"
 
-docker_network_webrouter_ipv4_subnet: "{{ vault_docker_network_webrouter_ipv4_subnet }}"
-docker_network_webrouter_ipv6_subnet: "{{ vault_docker_network_webrouter_ipv6_subnet }}"
-docker_network_bip_ipv4_subnet: "{{ vault_docker_network_bip_ipv4_subnet }}"
-docker_network_fixed_cidr_ipv4_subnet: "{{ vault_docker_network_fixed_cidr_ipv4_subnet }}"
-docker_network_fixed_cidr_ipv6_subnet: "{{ vault_docker_network_fixed_cidr_ipv6_subnet }}"
-docker_network_default_pools_ipv4_subnet: "{{ vault_docker_network_default_pools_ipv4_subnet }}"
-docker_network_default_pools_ipv4_size: "{{ vault_docker_network_default_pools_ipv4_size }}"
-docker_network_default_pools_ipv6_subnet: "{{ vault_docker_network_default_pools_ipv6_subnet }}"
-docker_network_default_pools_ipv6_size: "{{ vault_docker_network_default_pools_ipv6_size }}"
-
-
-akpRouter_middlewares_httpAuth_user1: "{{ vault_akpRouter_middlewares_httpAuth_user1 }}"
 akpRouter_loadBalancer_server_akpHome: "{{ vault_akpRouter_loadBalancer_server_akpHome }}"
 
 akpServer02_proxmox_root_password: "{{ vault_akpServer02_proxmox_root_password }}"

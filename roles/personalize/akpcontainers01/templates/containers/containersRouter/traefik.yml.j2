@@ -1,4 +1,5 @@
 ---
+
 ## {{ ansible_managed }}
 
 global:
@@ -6,7 +7,7 @@ global:
   sendAnonymousUsage: false
 
 accessLog:
-  filePath: "/log/access.log"
+  filePath: "/etc/traefik/access.log"
   bufferingSize: 2
 
 log:
@@ -16,11 +17,11 @@ log:
 
 serversTransport:
   insecureSkipVerify: true
-  maxIdleConnsPerHost: 422
-  forwardingTimeouts:
-    dialTimeout: 422
-    responseHeaderTimeout: 422
-    idleConnTimeout: 422
+  # maxIdleConnsPerHost: 422
+  # forwardingTimeouts:
+  #   dialTimeout: 422
+  #   responseHeaderTimeout: 422
+  #   idleConnTimeout: 422
 
 entryPoints:
   http:
@@ -33,7 +34,7 @@ providers:
     endpoint: "unix:///var/run/docker.sock"
     watch: true
     exposedByDefault: false
-    network: webrouter
+    network: {{ containersRouter_network_name }}
     #tls:
       #cert: /etc/certs/lan_ssl.cert
       #key: /etc/certs/lan_ssl.key
@@ -52,12 +53,12 @@ api:
 
 tls:
   certificates:
-    - certFile: /etc/certs/default.cert
-      keyFile: /etc/certs/defaul.key
+    - certFile: /etc/certs/fullchain.pem
+      keyFile: /etc/certs/default.privkey.pem
 
 certificatesResolvers:
   letsencrypt:
     acme:
-      email: letsencrypt@akipe.pm
+      email: {{ containersRouter_acme_email }}
       storage: /etc/traefik/acme.json
       tlsChallenge: {}

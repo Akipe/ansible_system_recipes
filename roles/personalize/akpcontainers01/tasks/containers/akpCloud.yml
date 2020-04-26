@@ -1,0 +1,60 @@
+---
+
+- name: Create akpCloud volume for /config
+  become: yes
+  become_user: "{{ containerUser.name }}"
+  docker_volume:
+    name:   "{{ akpCloud_volume_config_name }}"
+    state:  present
+    driver: local
+    driver_options:
+      type:   nfs4
+      device: "{{ akpCloud_volume_config_nfsPath }}"
+      o:      "{{ containers_nfs_akpContainers01_options }}"
+
+- name: Create akpCloud volume for /data
+  become: yes
+  become_user: "{{ containerUser.name }}"
+  docker_volume:
+    name:   "{{ akpCloud_volume_data_name }}"
+    state:  present
+    driver: local
+    driver_options:
+      type:   nfs4
+      device: "{{ akpCloud_volume_data_nfsPath }}"
+      o:      "{{ containers_nfs_akpContainers01_options }}"
+
+- name: Create akpCloud container
+  become:       yes
+  become_user:  "{{ containerUser.name }}"
+  docker_container:
+    networks_cli_compatible: yes
+    state:          started
+    restart_policy: unless-stopped
+    name:           "{{ akpCloud_name }}"
+    image:          "{{ akpCloud_image }}"
+    hostname:       "{{ akpCloud_hostname }}"
+    volumes:
+      - "{{ akpCloud_volume_config_name }}:/config"
+      - "{{ akpCloud_volume_data_name }}:/data"
+    networks:
+      - name: "{{ containersRouter_network_name }}"
+      - name: "{{ dbMariadb01_network_name }}"
+    env:
+      LANGUAGE: "fr_FR.UTF-8"
+      LANG:     "fr_FR.UTF-8"
+      TZ:       "Europe/Paris"
+    labels:
+      traefik.enable:                                             "true"
+      traefik.http.routers.akpCloud.entrypoints:                  "http"
+      traefik.http.routers.akpCloud.rule:                         "Host(`{{ akpCloud_url }}`)"
+      traefik.http.routers.akpCloud.middlewares:                  "HttpsRedirection@file"
+      traefik.http.routers.akpCloud_secure.entrypoints:           "https"
+      traefik.http.routers.akpCloud_secure.tls:                   "true"
+      traefik.http.routers.akpCloud_secure.tls.certresolver:      "letsencrypt"
+      traefik.http.routers.akpCloud_secure.rule:                  "Host(`{{ akpCloud_url }}`)"
+      traefik.http.services.akpCloud.loadbalancer.server.port:    "443"
+      traefik.http.services.akpCloud.loadbalancer.server.scheme:  "https"
+    comparisons:
+      env:      strict
+      volumes:  allow_more_present

@@ -1,11 +1,12 @@
 ---
 ansible_python_interpreter: /usr/bin/python3
-ansible_user: "{{ user_name }}"
+ansible_user:               "{{ user_name }}"
+ansible_become_pass:        "{{ vault_ansible_become_pass }}"
 
-ssh:
-  port: 2222
-  users:
-  - "{{ user_name }}"
+ssh_port: 2222
+ssh_users:
+  - name:       "{{ user_name }}"
+    public_key: "{{ ssh_public_key }}"
 
 apt:
   unattended_origins_patterns:
@@ -20,6 +21,162 @@ apt:
 
 containers:
   containersAdmin:
-    url: {{ vault_containers_containersAdmin_url }}
+    # url: "{{ vault_containers_containersAdmin_url }}"
+    url: admin.containers.akpnet.lan
   containersRouter:
-    url: {{ vault_containers_containersRouter_url }}
+    # url: "{{ vault_containers_containersRouter_url }}"
+    url: router.containers.akpnet.lan
+containersAdmin_url: admin.containers.akpnet.lan
+containersRouter_url: router.containers.akpnet.lan
+
+docker_network_webrouter_ipv4_subnet: "{{ vault_docker_network_webrouter_ipv4_subnet }}"
+docker_network_webrouter_ipv6_subnet: "{{ vault_docker_network_webrouter_ipv6_subnet }}"
+docker_network_bip_ipv4_subnet: "{{ vault_docker_network_bip_ipv4_subnet }}"
+docker_network_fixed_cidr_ipv4_subnet: "{{ vault_docker_network_fixed_cidr_ipv4_subnet }}"
+docker_network_fixed_cidr_ipv6_subnet: "{{ vault_docker_network_fixed_cidr_ipv6_subnet }}"
+docker_network_default_pools_ipv4_subnet: "{{ vault_docker_network_default_pools_ipv4_subnet }}"
+docker_network_default_pools_ipv4_size: "{{ vault_docker_network_default_pools_ipv4_size }}"
+docker_network_default_pools_ipv6_subnet: "{{ vault_docker_network_default_pools_ipv6_subnet }}"
+docker_network_default_pools_ipv6_size: "{{ vault_docker_network_default_pools_ipv6_size }}"
+
+
+### Global for containers
+
+containerUser:
+  name: containers
+  comment: User who manage containers
+  shell: /usr/bin/fish
+
+containers_storage_rootPath: /containers
+containers_volumesPath:      "{{ containers_storage_rootPath }}/volumes"
+containers_mountPath:        "{{ containers_storage_rootPath }}/mount"
+containers_dataPath:         "{{ containers_storage_rootPath }}/data"
+
+containers_nfs_akpContainers01_rootPath:  :/mnt/akpData02/akpContainers01/volumes
+containers_nfs_akpContainers01_options:   "addr={{ ipv4_lan_10gb_A_akpServer01 }},intr,nolock,exec,rw,noatime,rsize=8192,wsize=8192,tcp,timeo=14,nfsvers=4,async"
+
+### ContainersRouter
+
+containersRouter_network_name:                webrouter
+containersRouter_network_subnet_ipv4:         "{{ docker_network_webrouter_ipv4_subnet }}"
+containersRouter_network_subnet_ipv6:         "{{ docker_network_webrouter_ipv6_subnet }}"
+containersRouter_name:                        containersRouter
+containersRouter_image:                       traefik:2.2
+containersRouter_volumePath:                  "{{ containers_volumesPath }}/containersRouter"
+containersRouter_traefikPath:                 "{{ containersRouter_volumePath }}/traefik"
+containersRouter_traefikDynamicConfigPath:    "{{ containersRouter_traefikPath }}/dynamic_config"
+containersRouter_TraefikCertsPath:            "{{ containersRouter_traefikPath }}/certificats"
+containersRouter_TraefikLogsPath:             "{{ containersRouter_traefikPath }}/log"
+containersRouter_acmePath:                    "{{ containersRouter_traefikPath }}/acme.json"
+containersRouter_selfSigned_PrivateKeyPath:   "{{ containersRouter_TraefikCertsPath }}/default.privkey.pem"
+containersRouter_selfSigned_CsrPath:          "{{ containersRouter_TraefikCertsPath }}/default.csr"
+containersRouter_selfSigned_CertificatePath:  "{{ containersRouter_TraefikCertsPath }}/fullchain.pem"
+containersRouter_accessLogPath:               "{{ containersRouter_TraefikLogsPath }}/access.log }}"
+containersRouter_acme_email:                  "{{ vault_containersRouter_acme_email }}"
+containersRouter_authentification:            "{{ vault_containersRouter_authentification }}"
+
+### ContainersAdmin
+
+containersAdmin_name:                 containersAdmin
+containersAdmin_image:                portainer/portainer
+containersAdmin_volume_data_name:     containersAdminData
+containersAdmin_volume_data_nfsPath: "{{ containers_nfs_akpContainers01_rootPath }}/containersAdminData"
+
+### ContainersUpdate
+
+containersUpdate_name:                containersUpdate
+containersUpdate_image:               containrrr/watchtower
+containersUpdate_watchtower_options:  --cleanup --schedule "30 07 * * * *"
+
+### NetworkAdmin
+
+networkAdmin_name:                  networkAdmin
+networkAdmin_image:                 linuxserver/unifi-controller:latest
+networkAdmin_url:                   "{{ vault_networkAdmin_url }}"
+networkAdmin_volume_config_name:    networkAdminConfig
+networkAdmin_volume_config_nfsPath: "{{ containers_nfs_akpContainers01_rootPath }}/networkAdminConfig"
+
+### dbMariadb01
+
+dbMariadb01_name:                 dbMariadb01
+dbMariadb01_hostname:             dbmariadb01
+dbMariadb01_network_name:         dbmariadb01
+dbMariadb01_network_subnet_ipv4:  "{{ vault_dbMariadb01_network_subnet_ipv4 }}"
+dbMariadb01_network_subnet_ipv6:  "{{ vault_dbMariadb01_network_subnet_ipv6 }}"
+dbMariadb01_image:                mariadb
+dbMariadb01_volume_data_name:     dbMariadb01Data
+dbMariadb01_volume_data_nfsPath:  "{{ containers_nfs_akpContainers01_rootPath }}/dbMariadb01Data"
+dbMariadb01_volumePath:           "{{ containers_volumesPath }}/dbMariadb01"
+dbMariadb01_mariadbPath:          "{{ dbMariadb01_volumePath }}/mariadb"
+dbMariadb01_mariadbConfigPath:    "{{ dbMariadb01_mariadbPath }}/config"
+
+### akpCloud
+
+akpCloud_name:                  akpCloud
+akpCloud_hostname:              akpcloud
+akpCloud_image:                 linuxserver/nextcloud:latest
+akpCloud_url:                   "{{ vault_akpCloud_url }}"
+akpCloud_volume_config_name:    akpCloudConfig
+akpCloud_volume_config_nfsPath: "{{ containers_nfs_akpContainers01_rootPath }}/akpCloudConfig"
+akpCloud_volume_data_name:      akpCloudData
+akpCloud_volume_data_nfsPath:   "{{ containers_nfs_akpContainers01_rootPath }}/akpCloudData"
+
+### akpCode
+
+akpCode_name:                 akpCode
+akpCode_hostname:             akpcode
+akpCode_image:                gitea/gitea:1
+akpCode_url:                  "{{ vault_akpCode_url }}"
+akpCode_volume_data_name:     akpCodeData
+akpCode_volume_data_nfsPath:  "{{ containers_nfs_akpContainers01_rootPath }}/akpCodeData"
+
+### akpRss
+
+akpRss_name:                 akpRss
+akpRss_hostname:             akprss
+akpRss_image:                freshrss/freshrss:latest
+akpRss_url:                  "{{ vault_akpRss_url }}"
+akpRss_volume_data_name:     akpRssData
+akpRss_volume_data_nfsPath:  "{{ containers_nfs_akpContainers01_rootPath }}/akpRssData"
+
+akpRssBridge_name:                akpRssBridge
+akpRssBridge_hostname:            akprssbridge
+akpRssBridge_image:               rssbridge/rss-bridge:latest
+akpRssBridge_url:                 "{{ vault_akpRssBridge_url }}"
+akpRssBridge_network_name:        akprssbridge
+akpRssBridge_network_subnet_ipv4: "{{ vault_akpRssBridge_network_subnet_ipv4 }}"
+akpRssBridge_network_subnet_ipv6: "{{ vault_akpRssBridge_network_subnet_ipv6 }}"
+akpRssBridge_volumePath:          "{{ containers_volumesPath }}/akpRssBridge"
+
+### akpBuild
+
+akpBuild_name:                akpBuild
+akpBuild_hostname:            akpbuild
+akpBuild_image:               jenkins/jenkins:lts
+akpBuild_url:                 "{{ vault_akpBuild_url }}"
+akpBuild_volume_data_name:    akpBuildData
+akpBuild_volume_data_nfsPath: "{{ containers_nfs_akpContainers01_rootPath }}/akpBuildData"
+akpBuild_network_name:        akpbuild
+akpBuild_network_subnet_ipv4: "{{ vault_akpBuild_network_subnet_ipv4 }}"
+akpBuild_network_subnet_ipv6: "{{ vault_akpBuild_network_subnet_ipv6 }}"
+
+akpBuildDockerAgent_name:     akpBuildDockerAgent
+akpBuildDockerAgent_hostname: akpbuilddockeragent
+akpBuildDockerAgent_image:    docker:dind
+
+### akpBag
+
+akpBag_name:                  akpBag
+akpBag_hostname:              akpbag
+akpBag_image:                 wallabag/wallabag:latest
+akpBag_url:                   "{{ vault_akpBag_url }}"
+# akpBag_volume_image_name:     akpBagImage
+# akpBag_volume_image_nfsPath:  "{{ containers_nfs_akpContainers01_rootPath }}/akpBagImage"
+akpBag_volumePath:            "{{ containers_volumesPath }}/akpBag"
+akpBag_imagePath:             "{{ akpBag_volumePath }}/image"
+akpBag_database_user:         "akpbag"
+akpBag_database_password:     "{{ vault_akpBag_database_password }}"
+akpBag_database_table:        "akpbag"
+akpBag_database_charset:      "utf8mb4"
+akpBag_register:              "false"
+akpBag_language:              "fr"

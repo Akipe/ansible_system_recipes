@@ -1,0 +1,69 @@
+---
+
+# Todo: propose uid/gid for container : https://github.com/wallabag/docker
+# Because can't move to nfs share ("nobody" user/group)
+# - name: Create akpBag volume for image
+#   become: yes
+#   become_user: "{{ containerUser.name }}"
+#   docker_volume:
+#     name:   "{{ akpBag_volume_image_name }}"
+#     state:  present
+#     driver: local
+#     driver_options:
+#       type:   nfs4
+#       device: "{{ akpBag_volume_image_nfsPath }}"
+#       o:      "{{ containers_nfs_akpContainers01_options }}"
+
+# Doc: https://doc.wallabag.org/en/developer/docker.html
+
+- name: Create akpBag image directory
+  file:
+    path:     "{{ akpBag_imagePath }}"
+    state:    directory
+    mode:     u+rwx,g+rwx,o+x
+    owner:    root
+    group:    "{{ containerUser.name }}"
+    # recurse:  yes
+
+- name: Create akpBag container
+  become:       yes
+  become_user:  "{{ containerUser.name }}"
+  docker_container:
+    networks_cli_compatible: yes
+    state:          started
+    restart_policy: unless-stopped
+    name:           "{{ akpBag_name }}"
+    image:          "{{ akpBag_image }}"
+    hostname:       "{{ akpBag_hostname }}"
+    volumes:
+      - "{{ akpBag_imagePath }}:/var/www/wallabag/web/assets/images" # Not backup!
+      # - "{{ akpBag_volume_image_name }}:/var/www/wallabag/web/assets/images"
+    networks:
+      - name: "{{ containersRouter_network_name }}"
+      - name: "{{ dbMariadb01_network_name }}"
+    env:
+      SYMFONY__ENV__DOMAIN_NAME:          'https://bag.julien.milletre.fr'
+      TRUSTED_PROXIES:                    "{{ docker_network_webrouter_ipv4_subnet }}"
+      SYMFONY__ENV__DATABASE_DRIVER:      'pdo_mysql'
+      SYMFONY__ENV__DATABASE_HOST:        "{{ dbMariadb01_hostname }}"
+      SYMFONY__ENV__DATABASE_PORT:        '3306'
+      SYMFONY__ENV__DATABASE_NAME:        "{{ akpBag_database_table }}"
+      SYMFONY__ENV__DATABASE_USER:        "{{ akpBag_database_user }}"
+      SYMFONY__ENV__DATABASE_PASSWORD:    "{{ akpBag_database_password }}"
+      SYMFONY__ENV__DATABASE_CHARSET:     "{{ akpBag_database_charset }}"
+      SYMFONY__ENV__LOCALE:               "{{ akpBag_language }}"
+      SYMFONY__ENV__FOSUSER_REGISTRATION: "{{ akpBag_register }}"
+      SYMFONY__ENV__FOSUSER_CONFIRMATION: "{{ akpBag_register }}"
+    labels:
+      traefik.enable:                                           "true"
+      traefik.http.routers.akpBag.entrypoints:                  "http"
+      traefik.http.routers.akpBag.rule:                         "Host(`{{ akpBag_url }}`)"
+      traefik.http.routers.akpBag.middlewares:                  "HttpsRedirection@file"
+      traefik.http.routers.akpBag_secure.entrypoints:           "https"
+      traefik.http.routers.akpBag_secure.tls:                   "true"
+      traefik.http.routers.akpBag_secure.tls.certresolver:      "letsencrypt"
+      traefik.http.routers.akpBag_secure.rule:                  "Host(`{{ akpBag_url }}`)"
+      traefik.http.services.akpBag.loadbalancer.server.port:    "80"
+    comparisons:
+      env:      strict
+      volumes:  allow_more_present

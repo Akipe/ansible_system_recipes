@@ -1,0 +1,110 @@
+---
+
+- name: Create akpRssBridge networks
+  become:       yes
+  become_user:  "{{ containerUser.name }}"
+  docker_network:
+    name: "{{ akpRssBridge_network_name }}"
+    enable_ipv6: yes
+    ipam_config:
+      - subnet: "{{ akpRssBridge_network_subnet_ipv4 }}"
+      - subnet: "{{ akpRssBridge_network_subnet_ipv6 }}"
+
+- name: Create akpRssBridge directory
+  # become: yes
+  # become_user: "{{ containerUser.name }}"
+  file:
+    path:     "{{ akpRssBridge_volumePath }}"
+    state:    directory
+    mode:     u+rwx,g+xr,o+x
+    owner:    root
+    group:    root
+    recurse:  yes
+
+- name: Add akpRssBridge whitlist files
+  template:
+    src:    "containers/akpRssBridge/whitelist.txt.j2"
+    dest:   "{{ akpRssBridge_volumePath }}/whitelist.txt"
+    owner:  root
+    group:  root
+    mode:   u+rw,g+r,o+r
+
+- name: Create akpRssBridge container
+  become:       yes
+  become_user:  "{{ containerUser.name }}"
+  docker_container:
+    networks_cli_compatible: yes
+    state:          started
+    restart_policy: unless-stopped
+    name:           "{{ akpRssBridge_name }}"
+    image:          "{{ akpRssBridge_image }}"
+    hostname:       "{{ akpRssBridge_hostname }}"
+    volumes:
+      - "{{ akpRssBridge_volumePath }}/whitelist.txt:/app/whitelist.txt"
+    networks:
+      - name: "{{ containersRouter_network_name }}"
+      - name: "{{ akpRssBridge_network_name }}"
+    env:
+      LANGUAGE: "fr_FR.UTF-8"
+      LANG:     "fr_FR.UTF-8"
+      TZ:       "Europe/Paris"
+    labels:
+      traefik.enable:                                                 "true"
+      traefik.http.routers.akpRssBridge.entrypoints:                  "http"
+      traefik.http.routers.akpRssBridge.rule:                         "Host(`{{ akpRssBridge_url }}`)"
+      traefik.http.routers.akpRssBridge.middlewares:                  "HttpsRedirection@file"
+      traefik.http.routers.akpRssBridge_secure.entrypoints:           "https"
+      traefik.http.routers.akpRssBridge_secure.tls:                   "true"
+      #traefik.http.routers.akpRssBridge_secure.tls.certresolver:  "letsencrypt"
+      #traefik.http.routers.akpRssBridge_secure.rule:                  "Host(`{{ akpRssBridge_url }}`)"
+      traefik.http.services.akpRssBridge.loadbalancer.server.port:    "80"
+    comparisons:
+      env:      strict
+      volumes:  allow_more_present
+
+- name: Create akpRss volume for /data
+  become: yes
+  become_user: "{{ containerUser.name }}"
+  docker_volume:
+    name:   "{{ akpRss_volume_data_name }}"
+    state:  present
+    driver: local
+    driver_options:
+      type:   nfs4
+      device: "{{ akpRss_volume_data_nfsPath }}"
+      o:      "{{ containers_nfs_akpContainers01_options }}"
+
+- name: Create akpRss container
+  become:       yes
+  become_user:  "{{ containerUser.name }}"
+  docker_container:
+    networks_cli_compatible: yes
+    state:          started
+    restart_policy: unless-stopped
+    name:           "{{ akpRss_name }}"
+    image:          "{{ akpRss_image }}"
+    hostname:       "{{ akpRss_hostname }}"
+    volumes:
+      - "{{ akpRss_volume_data_name }}:/var/www/FreshRSS/data"
+    networks:
+      - name: "{{ containersRouter_network_name }}"
+      - name: "{{ dbMariadb01_network_name }}"
+      - name: "{{ akpRssBridge_network_name }}"
+    env:
+      CRON_MIN: "*/20"
+      LANGUAGE: "fr_FR.UTF-8"
+      LANG:     "fr_FR.UTF-8"
+      TZ:       "Europe/Paris"
+    labels:
+      traefik.enable:                                            "true"
+      traefik.http.routers.akpRss.entrypoints:                  "http"
+      traefik.http.routers.akpRss.rule:                         "Host(`{{ akpRss_url }}`)"
+      traefik.http.routers.akpRss.middlewares:                  "HttpsRedirection@file"
+      traefik.http.routers.akpRss_secure.entrypoints:           "https"
+      traefik.http.routers.akpRss_secure.tls:                   "true"
+      traefik.http.routers.akpRss_secure.tls.certresolver:      "letsencrypt"
+      traefik.http.routers.akpRss_secure.rule:                  "Host(`{{ akpRss_url }}`)"
+      traefik.http.services.akpRss.loadbalancer.server.port:    "80"
+    comparisons:
+      env:      strict
+      volumes:  allow_more_present

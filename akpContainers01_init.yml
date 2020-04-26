@@ -7,3 +7,4 @@
     - { role: ansible-guest }
     - { role: ssh }
     - { role: apt }
+    - { role: qemu-guest }

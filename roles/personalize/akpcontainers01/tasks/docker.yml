@@ -1,52 +1,91 @@
 ---
-- name: Create containers user
+
+- name: Install Docker
+  include_role:
+    name: docker
+    tasks_from: install
+
+- name: Preparation for configuring users with Docker
+  include_role:
+    name: docker
+    tasks_from: user_management
+
+- name: Set Docker configuration
+  include_role:
+    name: docker
+    tasks_from: set_configuration
+  vars:
+    docker_configuration:
+      network:
+        enableIpv6:     true
+        bip:
+          ipv4:
+            subnet: "{{ docker_network_bip_ipv4_subnet }}"
+        fixed_cidr:
+          ipv4:
+            subnet: "{{ docker_network_fixed_cidr_ipv4_subnet }}"
+          ipv6:
+            subnet: "{{ docker_network_fixed_cidr_ipv6_subnet }}"
+        default_pools:
+          ipv4:
+            subnet: "{{ docker_network_default_pools_ipv4_subnet }}"
+            size:   "{{ docker_network_default_pools_ipv4_size }}"
+          ipv6:
+            subnet: "{{ docker_network_default_pools_ipv6_subnet }}"
+            size:   "{{ docker_network_default_pools_ipv6_size }}"
+
+- name: Create an user for manage containers
   user:
-    state: present
-    name: containers
-    comment: Uer who manage containers
-    shell: /usr/bin/fish
-    groups: docker
+    state:    present
+    name:     "{{ containerUser.name }}"
+    comment:  "{{ containerUser.comment }}"
+    shell:    "{{ containerUser.shell }}"
+    groups:   
+      - docker
+    append:   yes
+
+- name: Add containers management group to the user
+  user:
+    name: "{{ user_name }}"
+    groups:
+      - "{{ containerUser.name }}"
     append: yes
 
-- name: Create containers directory (volumes)
-  become: yes
-  become_user: containers
+- name: Save to a variable the id of the user container
+  getent:
+    database: passwd
+    key: containers
+
+- name: Set uid and gid variables for user container
+  set_fact:
+    containerUser_uid: "{{ getent_passwd[containerUser.name][1] }}"
+    containerUser_gid: "{{ getent_passwd[containerUser.name][2] }}"
+
+- name: Create containers directories
   file:
-    path: /containers/volumes
-    state: directory
-    mode: u+rwx,g-xr,o-x
-    owner: containers
-    group: containers
-    recurse: yes
+    path:     "{{ item }}"
+    state:    directory
+    mode:     u+rwx,g+xwr,o-xwr
+    owner:    "{{ containerUser.name }}"
+    group:    "{{ containerUser.name }}"
+    # recurse:  yes
+  loop:
+    - "{{ containers_storage_rootPath }}"
+    - "{{ containers_volumesPath }}"
+    - "{{ containers_mountPath }}"
+    - "{{ containers_dataPath }}"
 
-- name: Create containers directory (mount)
-  become: yes
-  become_user: containers
-  file:
-    path: /containers/mount
-    state: directory
-    mode: u+rwx,g-xr,o-x
-    owner: containers
-    group: containers
-    recurse: yes
+## Containers
 
-- name: Create containers directory (data)
-  become: yes
-  become_user: containers
-  file:
-    path: /containers/data
-    state: directory
-    mode: u+rwx,g-xr,o-x
-    owner: containers
-    group: containers
-    recurse: yes
-
-## TODO: need reboot
-
-## Create containers & volumes
 - name: "Include all tasks for create containers"
   include_tasks: "containers/{{ item }}.yml"
   loop:
-    - containersAdmin
+    - dbMariadb01
     - containersRouter
+    - containersAdmin
     - containersUpdate
+    - networkAdmin
+    - akpCloud
+    - akpCode
+    - akpRss
+    - akpBag
