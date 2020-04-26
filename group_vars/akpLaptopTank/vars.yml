@@ -1,9 +1,10 @@
 ---
+
 # Lenovo Thinkpad w530
 
 ansible_python_interpreter: /usr/bin/python
-ansible_user: "{{ user_name }}"
-ansible_become_pass: "{{ vault_ansible_become_pass }}"
+ansible_user:               "{{ user_name }}"
+ansible_become_pass:        "{{ vault_ansible_become_pass }}"
 
 hostname_name: akplaptoptank
 
