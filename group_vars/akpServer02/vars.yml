@@ -13,4 +13,3 @@ apt:
   - 'origin=Debian,archive=stable-updates'
   - 'origin=Debian,archive=proposed-updates'
   - 'origin=Proxmox,archive=stable'
-  - 'origin=Docker'
