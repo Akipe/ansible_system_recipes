@@ -77,6 +77,8 @@
     - { role: handbrake, tags: handbrake }
     - { role: obs-studio, tags: obs-studio }
     - { role: scribus, tags: scribus }
+    ### Development
+    - { role: ansible-host, tags: ansible-host }
     ### General
     - { role: base-cli, tags: base-cli }
     - { role: user-dotnet-config, tags: user-dotnet-config }
