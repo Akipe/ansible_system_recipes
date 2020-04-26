@@ -1,0 +1,5 @@
+---
+- name: Install
+  pacman:
+    state: present
+    name: "{{ appToInstall_archlinux }}"

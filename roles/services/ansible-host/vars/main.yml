@@ -1,0 +1,5 @@
+---
+
+appToInstall_archlinux:
+  - ansible
+  - sshpass
