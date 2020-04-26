@@ -16,6 +16,7 @@
     - { role: systemd-resolved, tags: systemd-resolved }
     - { role: avahi, tags: avahi }
     - { role: host, tags: host }
+    - { role: earlyoom, tags: earlyoom }
     - { role: locale, tags: locale }
     - { role: sudo, tags: sudo }
     - { role: mkinitcpio, tags: mkinitcpio }
