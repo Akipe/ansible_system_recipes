@@ -1,28 +1,15 @@
 ---
-- name: Install Linux Zen kernel
+- name: Install kernel
   pacman:
     state: present
-    name:
-      - linux-zen
-      - linux-zen-headers
-
-- name: Install Linux long-term support (LTS) kernel
-  pacman:
-    state: present
-    name:
-      - linux-lts
-      - linux-lts-headers
+    name: "{{ role_appToInstall_archlinux_kernels }}"
 
 - name: App for compilling kernel modules
   pacman:
     state: present
-    name:
-      - dkms
-      - kmod
-      - base-devel
+    name: "{{ role_appToInstall_archlinux_compileTools }}"
 
 - name: App usefull for Linux kernel
   pacman:
     state: present
-    name:
-      - procps-ng
+    name: "{{ role_appToInstall_archlinux_usefullTools }}"

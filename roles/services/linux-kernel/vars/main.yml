@@ -1,0 +1,18 @@
+---
+
+role_appToInstall_debian:
+  - procps
+
+role_appToInstall_archlinux_kernels:
+  - linux-zen
+  - linux-zen-headers
+  - linux-lts
+  - linux-lts-headers
+
+role_appToInstall_archlinux_compileTools:
+  - dkms
+  - kmod
+  - base-devel
+
+role_appToInstall_archlinux_usefullTools:
+  - procps-ng
