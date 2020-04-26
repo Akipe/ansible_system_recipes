@@ -11,23 +11,6 @@
     - { role: makepkg, tags: makepkg }
     - { role: aur-cli, tags: aur-cli }
     - { role: pacman, tags: pacman }
-    ### Hardware
-    - { role: intelgraphics, tags: intelgraphics }
-    - { role: thinkpad, tags: thinkpad }
-    - { role: disk, tags: disk }
-    - { role: btrfs, tags: btrfs }
-    - role: swap
-      tags: swap
-      vars:
-        role_swap_type:       "file"
-        role_swap_filesystem: "btrfs"
-        role_swap_bootloader: "systemd-boot"
-    - { role: networkmanager, tags: networkmanager }
-    - { role: watchdog, vars: { role_watchdog_status: "disable"}, tags: watchdog }
-    - { role: android-client, tags: android-client }
-    - { role: alsa, tags: alsa }
-    - { role: lm_sensors, tags: lm_sensors }
-    - { role: bluetooth, tags: bluetooth }
     ### System
     - { role: systemd-boot, tags: systemd-boot }
     - { role: systemd-resolved, tags: systemd-resolved }
@@ -46,6 +29,23 @@
     - { role: snap, tags: snap }
     - { role: fwupd, tags: fwupd }
     - { role: snapper, tags: snapper }
+    ### Hardware
+    - { role: intelgraphics, tags: intelgraphics }
+    - { role: thinkpad, tags: thinkpad }
+    - { role: disk, tags: disk }
+    - { role: btrfs, tags: btrfs }
+    - role: swap
+      tags: swap
+      vars:
+        role_swap_type:       "file"
+        role_swap_filesystem: "btrfs"
+        role_swap_bootloader: "systemd-boot"
+    - { role: networkmanager, tags: networkmanager }
+    - { role: watchdog, vars: { role_watchdog_status: "disable"}, tags: watchdog }
+    - { role: android-client, tags: android-client }
+    - { role: alsa, tags: alsa }
+    - { role: lm_sensors, tags: lm_sensors }
+    - { role: bluetooth, tags: bluetooth }
     ### Desktop environment
     - { role: kde, tags: kde }
     - { role: base-reboot, tags: base-reboot }
