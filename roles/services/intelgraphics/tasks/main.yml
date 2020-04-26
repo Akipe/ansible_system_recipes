@@ -103,16 +103,15 @@
     line: 'GST_VAAPI_ALL_DRIVERS=1'
   when: hardware_gpu_vendor|int >= 19
 
-# todo
-# - name: Enable video acceleration support for the user (libva and vdpau)
-#   become: yes
-#   become_user: "{{ user_name }}"
-#   template:
-#     src: environment.d/video_intel.conf.j2
-#     dest: "/home/{{ user_name }}/.config/environment.d/video_amdgpu.conf"
-#     owner: "{{ user_name }}"
-#     group: "{{ user_name }}"
-#     mode: u+rw,g+r,o+r
+- name: Enable video acceleration support for the user (libva and vdpau)
+  become: yes
+  become_user: "{{ user_name }}"
+  template:
+    src: environment.d/video_intel.conf.j2
+    dest: "/home/{{ user_name }}/.config/environment.d/video_intel.conf"
+    owner: "{{ user_name }}"
+    group: "{{ user_name }}"
+    mode: u+rw,g+r,o+r
 
 # - name: Create Xorg configuration directory
 #   file:
