@@ -1,13 +1,16 @@
 ---
 
-- name: Set users vairables
+- name: Load tasks for install on Debian & derivate
+  include_tasks: debian/main.yml
+  when: ansible_distribution == "Debian" or ansible_distribution == "Ubuntu"
+
+- name: Load tasks for install on Archlinux
+  include_tasks: archlinux/main.yml
+  when: ansible_distribution == "Archlinux"
+
+- name: Set users variables
   set_fact:
     role_user_listUsers: "{{ listUsers }}"
-
-- name: Install fish
-  apt:
-    state: present
-    name: fish
 
 - name: Create group wheel for sudo
   group:
@@ -19,8 +22,9 @@
     state: present
     name: "{{ item.name }}"
     shell: "{{ item.shell }}"
-    groups: "{{ item.groups }}"
-    password: "{{ item.password }}"
+    groups: 
+      - "{{ item.groups }}"
+    append: yes
   loop: "{{ role_user_listUsers }}"
 
 - name: Append public key for SSH
@@ -32,3 +36,12 @@
   loop: "{{ role_user_listUsers }}"
   vars:
     role_user_sshPublicKey: "{{ ssh_public_key }}"
+
+- name: Create systemd user environment variables directory
+  file:
+    path: "/home/{{ item.name }}/.config/environment.d"
+    state: directory
+    owner: "{{ item.name }}"
+    group: "{{ item.name }}"
+    mode: u+rwx,g+rx,o+rx
+  loop: "{{ role_user_listUsers }}"
