@@ -3,3 +3,4 @@
   reboot:
     reboot_timeout: 3600
     msg: "Reboot initiated by Ansible"
+  when: ansible_connection != "local"
