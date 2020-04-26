@@ -21,3 +21,7 @@
 
 - name: Reload kernel config
   shell: sysctl --system
+
+- name: Reload systemd configuration
+  systemd: 
+    daemon_reload: yes

@@ -22,6 +22,21 @@
     mode: u+rw,g+r,o+r
   notify: Restart Nginx
 
+- name: Create systemd Nginx directory for editing service
+  file:
+    path: /etc/systemd/system/nginx.service.d
+    state: directory
+
+- name: Edit nginx service for wait ssl certificats
+  template:
+    src: nginx.service.d/waiting-proxmox.conf.j2
+    dest: /etc/systemd/system/nginx.service.d/nginx.conf
+    owner: root
+    group: root
+    mode: u+rw,g+r,o+r
+  notify:
+    - Reload systemd configuration
+    - Restart Nginx
 # remove :
 #   /etc/nginx/sites-available/default
 #   /etc/nginx/sites-enabled/default
