@@ -23,6 +23,7 @@
     - { role: avahi, tags: avahi }
     - { role: host, tags: host }
     - { role: earlyoom, tags: earlyoom }
+    - { role: user, tags: user }
     - { role: locale, tags: locale }
     - { role: sudo, tags: sudo }
     - { role: mkinitcpio, tags: mkinitcpio }
