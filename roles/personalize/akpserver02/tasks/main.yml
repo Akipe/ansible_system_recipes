@@ -1,0 +1,7 @@
+---
+
+- name: Load task for creating akpContainers01
+  include_tasks: create/akpcontainers01.yml
+
+- name: Load task for creating akpSync01
+  include_tasks: create/akpsync01.yml

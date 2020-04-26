@@ -20,5 +20,4 @@
     ### Apps
     - { role: fish, tags: fish }
     ### Specifics rules
-    - { role: create_akpcontainers01, tags: create_akpcontainers01 }
-    - { role: create_akpsync01, tags: akp_create_akpcontainers01 }
+    - { role: akpserver02, tags: akpserver02 }
