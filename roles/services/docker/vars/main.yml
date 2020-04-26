@@ -1,0 +1,14 @@
+---
+
+docker_group_name:  docker
+
+docker_pip_libraries_toInstall:
+  - docker
+
+role_repository_ubuntu_key_id:     9DC858229FC7DD38854AE2D88D81803C0EBFCD88
+role_repository_ubuntu_key_url:    https://download.docker.com/linux/ubuntu/gpg
+role_repository_ubuntu_expression: "deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable"
+role_repository_ubuntu_filename:   docker
+
+role_appToInstall_debian:
+  - docker-ce

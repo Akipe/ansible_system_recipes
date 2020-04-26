@@ -1,13 +1,13 @@
 {
-    "ipv6": true,
-    "bip": "{{ docker_network_bip_ipv4_subnet }}",
-    "fixed-cidr": "{{ docker_network_fixed_cidr_ipv4_subnet }}",
-    "fixed-cidr-v6": "{{ docker_network_fixed_cidr_ipv6_subnet }}",
-    "default-address-pools": [{
-		"base": "{{ docker_network_default_pools_ipv4_subnet }}",
-		"size": {{ docker_network_default_pools_ipv4_size }}
-	}, {
-		"base": "{{ docker_network_default_pools_ipv6_subnet }}",
-		"size": {{ docker_network_default_pools_ipv6_size }}
-	}]
+	{% if docker_configuration.network.enableIpv6 == true %}"ipv6": true,{% endif %}
+	{% if docker_configuration.network.bip.ipv4.subnet is defined %}"bip": "{{ docker_configuration.network.bip.ipv4.subnet }}",{% endif %}
+	{% if docker_configuration.network.fixed_cidr.ipv4.subnet is defined %}"fixed-cidr": "{{ docker_configuration.network.fixed_cidr.ipv4.subnet }}",{% endif %}
+	{% if docker_configuration.network.fixed_cidr.ipv6.subnet is defined %}"fixed-cidr-v6": "{{ docker_configuration.network.fixed_cidr.ipv6.subnet }}",{% endif %}
+	{% if docker_configuration.network.default_pools is defined %}"default-address-pools": [{% if docker_configuration.network.default_pools.ipv4 is defined %}{
+		"base": "{{ docker_configuration.network.default_pools.ipv4.subnet }}",
+		"size": {{ docker_configuration.network.default_pools.ipv4.size }}
+	},{% endif %} {% if docker_configuration.network.default_pools.ipv6 is defined %}{
+		"base": "{{ docker_configuration.network.default_pools.ipv6.subnet }}",
+		"size": {{ docker_configuration.network.default_pools.ipv6.size }}
+	}{% endif %}]{% endif %}
 }
