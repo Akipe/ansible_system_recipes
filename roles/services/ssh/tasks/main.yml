@@ -30,7 +30,7 @@
   openssh_keypair:
     path: /etc/ssh/ssh_host_rsa_key
     type: rsa
-    size: 4096
+    size: "{{ ssh_keys_rsa_size }}"
     force: yes
   when: not is_ansible_has_generate_keys.stat.exists
 
@@ -38,7 +38,7 @@
   openssh_keypair:
     path: /etc/ssh/ssh_host_ecdsa_key
     type: ecdsa
-    size: 521
+    size: "{{ ssh_keys_ecdsa_size }}"
     force: yes
   when: not is_ansible_has_generate_keys.stat.exists
 
@@ -59,9 +59,9 @@
 - name: Set public key for SSH
   authorized_key:
     state: present
-    user: "{{ item.user }}"
+    user: "{{ item.name }}"
     key: "{{ item.public_key }}"
-  with_items: "{{ ssh_key }}"
+  with_items: "{{ ssh_users }}"
 
 - name: Add config for SSH server
   template:
@@ -70,9 +70,6 @@
     owner: root
     group: root
     mode: u+rw,g+r,o+r
-  vars:
-    role_ssh_port: "{{ ssh_port  }}"
-    role_ssh_users: "{{ ssh_users }}"
   notify: Restart SSH server
 
 - name: Start and enable SSH server

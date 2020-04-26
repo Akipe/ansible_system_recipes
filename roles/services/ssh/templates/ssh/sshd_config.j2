@@ -1,10 +1,10 @@
 ## {{ ansible_managed }}
 
 Protocol 2
-Port {{ role_ssh_port }}
-{% if role_ssh_users is defined %}
+Port {{ ssh_port }}
+{% if ssh_users is defined %}
 
-AllowUsers {% for user in role_ssh_users %}{{ user }} {% endfor %}
+AllowUsers {% for user in ssh_users %}{{ user.name }} {% endfor %}
 
 {% endif %}
 
