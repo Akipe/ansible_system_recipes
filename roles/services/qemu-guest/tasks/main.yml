@@ -1,9 +1,7 @@
 ---
 - name: Install usefull app for guest Qemu
   apt:
-    name:
-      - qemu-guest-agent
-      - cloud-init
+    name: "{{ qemuGuest_appToInstall_debian }}"
     state: present
 
 - name: Enable QEMU agent
