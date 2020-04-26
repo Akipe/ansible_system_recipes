@@ -1,0 +1,7 @@
+---
+
+earlyoom_config_memoryReportInterval:   "3600"
+earlyoom_config_enableNotifications:    yes
+earlyoom_config_avoidProcess:           "'(^|/)(init|systemd|Xorg|sshd)$'"
+earlyoom_config_memory_minimum_percent: "10"
+earlyoom_config_swap_minimum_percent:   "10"

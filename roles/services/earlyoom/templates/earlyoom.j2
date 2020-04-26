@@ -1,0 +1,20 @@
+## {{ ansible_managed }}
+
+# See more at 'earlyoom -h'
+
+EARLYOOM_ARGS="
+{%- if earlyoom_config_memoryReportInterval is defined %} -r {{ earlyoom_config_memoryReportInterval }}
+{%- endif -%}
+
+{%- if earlyoom_config_enableNotifications is sameas true %} -n
+{%- endif -%}
+
+{%- if earlyoom_config_avoidProcess is defined %} --avoid {{ earlyoom_config_avoidProcess }}
+{%- endif -%}
+
+{%- if earlyoom_config_memory_minimum_percent is defined %} -m {{ earlyoom_config_memory_minimum_percent }}
+{%- endif -%}
+
+{%- if earlyoom_config_swap_minimum_percent is defined %} -s {{ earlyoom_config_swap_minimum_percent }}
+{%- endif -%}
+"

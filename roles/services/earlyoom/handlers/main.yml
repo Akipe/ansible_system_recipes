@@ -1,0 +1,6 @@
+---
+
+- name: Restart earlyoom
+  systemd:
+    state: restarted
+    name: earlyoom.service

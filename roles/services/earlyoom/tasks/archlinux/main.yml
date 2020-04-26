@@ -1,0 +1,6 @@
+---
+
+- name: Install
+  pacman:
+    state: present
+    name: "{{ earlyoom_app_archlinux }}"
