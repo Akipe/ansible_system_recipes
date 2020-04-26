@@ -1,33 +1,17 @@
 ---
 - name: Install driver
   pacman:
-    name:
-      - mesa
-      - vulkan-radeon
-      - xf86-video-amdgpu
-      - lib32-mesa
-      - lib32-vulkan-radeon
+    name: "{{ amdgpu_app_base_archlinux }}"
     state: present
 
 - name: Install video acceleration support
   pacman:
-    name:
-      - libva-mesa-driver
-      - mesa-vdpau
-      - libva-utils
-      - vdpauinfo
-      - lib32-libva-mesa-driver
-      - lib32-mesa-vdpau
+    name: "{{ amdgpu_app_video_archlinux }}"
     state: present
 
 - name: Install GPGPU driver
   pacman:
-    name:
-      - ocl-icd
-      - opencl-mesa
-      - clinfo
-      - lib32-ocl-icd
-      - lib32-opencl-mesa
+    name: "{{ amdgpu_app_gpgpu_archlinux }}"
     state: present
     
 - name: Install proprietary standalone runtime from ADMGPU-PRO
@@ -37,9 +21,7 @@
     use: yay
     skip_installed: true
     aur_only: yes
-    name:
-      - opencl-amdgpu-pro-orca
-      - lib32-opencl-amdgpu-pro-orca
+    name: "{{ amdgpu_app_gpgpu_amdGpuPro_archlinux }}"
 
 # ? /etc/profile
 
@@ -73,6 +55,16 @@
   template:
     src: environment.d/video_amdgpu.conf.j2
     dest: "/home/{{ user_name }}/.config/environment.d/video_amdgpu.conf"
+    owner: "{{ user_name }}"
+    group: "{{ user_name }}"
+    mode: u+rw,g+r,o+r
+
+- name: Add driver environment config to user
+  become: yes
+  become_user: "{{ user_name }}"
+  template:
+    src: environment.d/driver_amdgpu.conf.j2
+    dest: "/home/{{ user_name }}/.config/environment.d/driver_amdgpu.conf"
     owner: "{{ user_name }}"
     group: "{{ user_name }}"
     mode: u+rw,g+r,o+r

@@ -1,0 +1,27 @@
+---
+
+amdgpu_app_base_archlinux:
+  - mesa
+  - vulkan-radeon
+  - xf86-video-amdgpu
+  - lib32-mesa
+  - lib32-vulkan-radeon
+
+amdgpu_app_video_archlinux:
+  - libva-mesa-driver
+  - mesa-vdpau
+  - libva-utils
+  - vdpauinfo
+  - lib32-libva-mesa-driver
+  - lib32-mesa-vdpau
+
+amdgpu_app_gpgpu_archlinux:
+  - ocl-icd
+  - opencl-mesa
+  - clinfo
+  - lib32-ocl-icd
+  - lib32-opencl-mesa
+
+amdgpu_app_gpgpu_amdGpuPro_archlinux:
+  - opencl-amdgpu-pro-orca
+  - lib32-opencl-amdgpu-pro-orca
