@@ -74,3 +74,5 @@ initramfs_compression:  lz4
 
 earlyoom_config_memory_minimum_percent: "3"
 earlyoom_config_swap_minimum_percent:   "3"
+
+makepkg_build_from_tmp: false
