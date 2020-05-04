@@ -1,0 +1,20 @@
+---
+
+- name: Installation
+  pacman:
+    state: present
+    name: "{{ gnome_appToInstall_base_archlinux }}"
+
+- name: Installation of theme (AUR)
+  become: yes
+  become_user: ansible_aur
+  aur:
+    use: yay
+    skip_installed: yes
+    aur_only: yes
+    name: "{{ gnome_appToInstall_theme_archlinux_aur }}"
+
+- name: Installation of apps for Qt theme
+  pacman:
+    state: present
+    name: "{{ gnome_appToInstall_qtTheme_archlinux }}"
