@@ -190,10 +190,19 @@
     state: present
     name:
       - kvantum-qt5
-      - adapta-kde
       - kvantum-theme-adapta
       - adapta-gtk-theme
       - qt5-styleplugins
       - gtk-engine-murrine
       - papirus-icon-theme
       - latte-dock
+
+- name: Install themes Adapta (AUR)
+  become: yes
+  become_user: ansible_aur
+  aur:
+    use: yay
+    skip_installed: yes
+    aur_only: yes
+    name:
+      - adapta-kde
