@@ -12,6 +12,6 @@
     - "/usr/bin/git -C /home/{{ user_name }} init"
     - "/usr/bin/git -C /home/{{ user_name }} remote add origin https://code.akipe.fr/akp/dotfiles.git"
     - "/usr/bin/git -C /home/{{ user_name }} remote add origin-ssh git@code.akipe.fr:akp/dotfiles.git"
-    - "/usr/bin/git -C /home/{{ user_name }} fetch"
+    - "/usr/bin/git -C /home/{{ user_name }} fetch origin"
     - "/usr/bin/git -C /home/{{ user_name }} checkout -t origin/master -f"
   when: not role_dotnet_config_path.stat.exists
