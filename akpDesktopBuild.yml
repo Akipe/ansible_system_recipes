@@ -49,6 +49,7 @@
     - { role: lm_sensors, tags: lm_sensors }
     # - { role: bluetooth, tags: bluetooth }
     ### Desktop environment
+    - { role: sddm, tags: sddm }
     - { role: kde, tags: kde }
     ### Reboot
     - { role: base-reboot, tags: base-reboot }
@@ -61,7 +62,7 @@
     - { role: vlc, tags: vlc }
     - { role: libreoffice, tags: libreoffice }
     - { role: syncthing-cli, tags: syncthing }
-    - { role: syncthing-gui, tags: syncthing }
+    - { role: syncthing-gui-kde, tags: syncthing }
     - { role: profile-sync-daemon, tags: profile-sync-daemon }
     - { role: virtualbox-host, tags: virtualbox-host }
     - { role: mpv, tags: mpv }
