@@ -68,9 +68,11 @@ BUILDENV=(!distcc color !ccache check !sign)
 #-- If using DistCC, your MAKEFLAGS will also need modification. In addition,
 #-- specify a space-delimited list of hosts running in the DistCC cluster.
 #DISTCC_HOSTS=""
-#
+
+{% if makepkg_build_from_tmp %}
 #-- Specify a directory for package building.
 BUILDDIR=/tmp/makepkg
+{% endif %}
 
 #########################################################################
 # GLOBAL PACKAGE OPTIONS
