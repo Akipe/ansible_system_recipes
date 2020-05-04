@@ -12,6 +12,12 @@
     - { role: aur-cli, tags: aur-cli }
     - { role: pacman, tags: pacman }
     ### System
+    - role: swap
+      tags: swap
+      vars:
+        role_swap_type:       "file"
+        role_swap_filesystem: "btrfs"
+        role_swap_bootloader: "systemd-boot"
     - { role: systemd-boot, tags: systemd-boot }
     - { role: systemd-resolved, tags: systemd-resolved }
     - { role: avahi, tags: avahi }
@@ -36,12 +42,6 @@
     - { role: thinkpad, tags: thinkpad }
     - { role: disk, tags: disk }
     - { role: btrfs, tags: btrfs }
-    - role: swap
-      tags: swap
-      vars:
-        role_swap_type:       "file"
-        role_swap_filesystem: "btrfs"
-        role_swap_bootloader: "systemd-boot"
     - { role: networkmanager, tags: networkmanager }
     - { role: watchdog, vars: { role_watchdog_status: "disable"}, tags: watchdog }
     - { role: android-client, tags: android-client }
