@@ -1,16 +1,4 @@
 ---
-- name: Install sddm
-  pacman:
-    state: present
-    name: "{{ kde_appToInstall_sddm_archlinux }}"
-
-- name: Add french keyboard
-  template:
-    src: xorg.conf.d/00-keyboard.conf.j2
-    dest: /etc/X11/xorg.conf.d/00-keyboard.conf
-    owner: root
-    group: root
-    mode: u+rw,g+r,o+r
 
 - name: Install KDE and base apps
   pacman:
@@ -48,11 +36,6 @@
 #       - kde-thumbnailer-apk
 #       - kde-thumbnailer-blender
 #       - kde-thumbnailer-epub
-
-- name: Enable SDDM at startup
-  systemd:
-    name: sddm.service
-    enabled: yes
 
 # https://github.com/PapirusDevelopmentTeam/adapta-kde
 - name: Install themes Adapta

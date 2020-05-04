@@ -1,9 +1,5 @@
 ---
 
-kde_appToInstall_sddm_archlinux:
-  - sddm
-  - sddm-kcm
-
 kde_appToInstall_base_archlinux:
   - plasma-meta
   - plasma-wayland-session

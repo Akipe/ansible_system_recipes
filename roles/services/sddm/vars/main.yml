@@ -1,0 +1,5 @@
+---
+
+sddm_appToInstall_archlinux:
+  - sddm
+  - sddm-kcm

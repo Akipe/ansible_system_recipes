@@ -1,0 +1,6 @@
+---
+
+- name: Installation
+  pacman:
+    state: present
+    name: "{{ sddm_appToInstall_archlinux }}"

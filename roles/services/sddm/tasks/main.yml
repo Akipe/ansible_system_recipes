@@ -4,6 +4,11 @@
   include_tasks: archlinux/main.yml
   when: ansible_distribution == "Archlinux"
 
+- name: Enable SDDM at startup
+  systemd:
+    name: sddm.service
+    enabled: yes
+
 - name: Add french keyboard
   template:
     src: xorg.conf.d/00-keyboard.conf.j2
