@@ -38,7 +38,7 @@
       - libvorbis
       - libfdk-aac
       - libwebp
-      - openjpeg
+      - openjpeg2
       - jasper
       - dav1d
       - libdv
