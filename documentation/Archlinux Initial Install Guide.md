@@ -279,6 +279,7 @@ sed -i 's/HOOKS=(base udev autodetect modconf block filesystems keyboard fsck)/H
 sed -i 's/#COMPRESSION="lz4"/COMPRESSION="lz4"/g' /etc/mkinitcpio.conf && \
 mkinitcpio -P && \
 less /etc/mkinitcpio.conf && \
+mkinitcpio -P && \
 pacman --needed --noconfirm -S \
 efibootmgr && \
 bootctl --path=/boot install && \
