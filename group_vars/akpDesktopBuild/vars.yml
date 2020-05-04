@@ -65,5 +65,5 @@ initramfs_hooks:
   - resume
 initramfs_compression:  lz4
 
-earlyoom_config_memory_minimum_percent: "5"
-earlyoom_config_swap_minimum_percent:   "5"
+earlyoom_config_memory_minimum_percent: "2"
+earlyoom_config_swap_minimum_percent:   "2"
