@@ -1,0 +1,4 @@
+---
+
+gdm_appToInstall_base_archlinux:
+  - gdm
