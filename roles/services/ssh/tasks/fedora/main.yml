@@ -1,0 +1,5 @@
+---
+- name: Install SSH server
+  dnf:
+    state: present
+    name: "{{ ssh_appToInstall_fedora }}"

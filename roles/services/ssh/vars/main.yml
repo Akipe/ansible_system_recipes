@@ -5,3 +5,6 @@ ssh_appToInstall_archlinux:
 
 ssh_appToInstall_debian:
   - openssh-server
+
+ssh_appToInstall_fedora:
+  - openssh-server
