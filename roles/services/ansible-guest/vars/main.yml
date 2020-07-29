@@ -3,6 +3,11 @@
 role_appToInstall_archlinux:
   - python
   - python-pip
+
 role_appToInstall_debian:
+  - python3
+  - python3-pip
+
+role_appToInstall_fedora:
   - python3
   - python3-pip
