@@ -1,0 +1,5 @@
+---
+
+dnf_appToInstall_fedora:
+  - dnf-plugins-core
+  - python3-dnf-plugin-system-upgrade

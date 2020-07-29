@@ -1,14 +1,13 @@
 ---
-- name: Install basics dnf apps
+- name: Install basics plugins
   dnf:
     state: present
-    name:
-      - dnf-automatic
-      - dnf-plugins-core
+    name: "{{ dnf_appToInstall_fedora }}"
 
-- name: Start and enable auto upgrade
-  systemd:
-    name: dnf-automatic.timer
-    daemon_reload: yes
-    enabled: yes
-    state: started
+- name: Add configuration
+  template:
+    src: dnf.conf.j2
+    dest: /etc/dnf/dnf.conf
+    owner: root
+    group: root
+    mode: u+rw,g+r,o+r
