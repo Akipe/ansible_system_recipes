@@ -1,0 +1,22 @@
+---
+
+- name: Enable Cisco Openh264 repo
+  become: yes
+  command: dnf config-manager --set-enabled fedora-cisco-openh264
+
+- name: Install multimedia file support
+  dnf:
+    state: present
+    name: "{{ formatsupport_multimedia_appToInstall_fedora }}"
+
+- name: Install multimedia file support
+  dnf:
+    state: present
+    name:
+      - "@multimedia"
+      - "@sound-and-video"
+
+- name: Install archive file support
+  dnf:
+    state: present
+    name: "{{ formatsupport_archive_appToInstall_fedora }}"

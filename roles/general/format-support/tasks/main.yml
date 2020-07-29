@@ -1,83 +1,13 @@
 ---
-- name: Install multimedia file support
-  pacman:
-    state: present
-    name:
-      - ffmpeg
-      - youtube-dl
-      - gst-libav
-      - gst-editing-services
-      - gst-plugins-bad
-      - gst-plugins-base
-      - gst-plugins-base-libs
-      - gst-plugins-espeak
-      - gst-plugins-good
-      - gst-plugins-ugly
-      - gst-python
-      - gst-transcoder
-      - lib32-gst-plugins-base
-      - lib32-gst-plugins-base-libs
-      - lib32-gst-plugins-good
-      - libde265
-      - gstreamer
-      - gstreamer-vaapi
-      - xine-lib
-      - flac
-      - wavpack
-      - a52dec
-      - celt
-      - libmad
-      - lame
-      - libmpcdec
-      - opus
-      - opencore-amr
-      - speex
-      - libdca
-      - libmpcdec
-      - opencore-amr
-      - libvorbis
-      - libfdk-aac
-      - libwebp
-      - openjpeg2
-      - jasper
-      - dav1d
-      - libdv
-      - libmpeg2
-      - schroedinger
-      - libtheora
-      - libvpx
-      - x264
-      - x265
-      - xvidcore
-      - faac
-      - faad2
-      - libxv
+
+- name: Load tasks for Fedora
+  include_tasks: fedora/main.yml
+  when: ansible_distribution == "Fedora"
+
+- name: Load tasks for Archlinux
+  include_tasks: archlinux/main.yml
+  when: ansible_distribution == "Archlinux"
 
 # smplayer
 # smplayer-skins
 # smplayer-themes
-
-- name: Install archive file support
-  pacman:
-    state: present
-    name:
-      - tar
-      - libarchive
-      - binutils
-      - cpio
-      - bzip2
-      - pbzip2
-      - gzip
-      - pigz
-      - lz4
-      - lzip
-      - lzo
-      - lzop
-      - xz
-      - zstd
-      - p7zip
-      - unrar
-      - zip
-      - unzip
-      - brotli
-      - zlib
