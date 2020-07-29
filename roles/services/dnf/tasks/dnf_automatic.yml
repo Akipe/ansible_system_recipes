@@ -1,0 +1,14 @@
+---
+
+- name: Install DNF Automatic
+  dnf:
+    state: present
+    name:
+      - dnf-automatic
+
+- name: Start and enable auto upgrade
+  systemd:
+    name: dnf-automatic.timer
+    daemon_reload: yes
+    enabled: yes
+    state: started
