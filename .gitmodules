@@ -3,7 +3,7 @@
 	url = https://github.com/kewlfft/ansible-aur.git
 [submodule "_external/secrets"]
 	path = _external/secrets
-	url = git@code.akipe.fr:akp/ansible_system_recipes_external_secrets.git
+	url = https://code.akipe.fr/akp/ansible_system_recipes_external_secrets.git
 [submodule "_external/blob"]
 	path = _external/blob
-	url = git@code.akipe.fr:akp/ansible_system_recipes_external_blob.git
+	url = https://code.akipe.fr/akp/ansible_system_recipes_external_blob.git
