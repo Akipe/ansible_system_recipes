@@ -18,6 +18,9 @@ run:
 run-init:
 	ansible-playbook $(NODE)_init.yml -i inventory_init.ini
 
+run-local:
+	ansible-playbook $(NODE).yml -i inventory_local.ini
+
 run-debug:
 	ansible-playbook $(NODE).yml -vvv
 
