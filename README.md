@@ -12,12 +12,18 @@ make init
 ```
 make run NODE=nameNode
 make run-init NODE=nameNode
+make run-local NODE=nameNode
 make run-debug NODE=nameNode
 make run-check NODE=nameNode
 ```
 
 # Generate encrypt var
 ```
+make vault-create
+make vault-create NODE=nameNode
+make vault-edit
+make vault-edit NODE=nameNode
+
 ansible-vault encrypt_string --name 'variable_name'
 ```
 
