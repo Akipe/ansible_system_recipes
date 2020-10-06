@@ -1,8 +1,8 @@
 ---
 
 - name: Create containersAdmin volume for /data
-  become: yes
-  become_user: "{{ containerUser.name }}"
+  # become: yes
+  # become_user: "{{ containerUser.name }}"
   docker_volume:
     name:   "{{ containersAdmin_volume_data_name }}"
     state:  present
@@ -13,8 +13,8 @@
       o:      "{{ containers_nfs_akpContainers01_options }}"
 
 - name: Create containersAdmin container
-  become:       yes
-  become_user:  "{{ containerUser.name }}"
+  # become:       yes
+  # become_user:  "{{ containerUser.name }}"
   docker_container:
     networks_cli_compatible: yes
     name:           "{{ containersAdmin_name }}"

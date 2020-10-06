@@ -53,8 +53,8 @@ containers_volumesPath:      "{{ containers_storage_rootPath }}/volumes"
 containers_mountPath:        "{{ containers_storage_rootPath }}/mount"
 containers_dataPath:         "{{ containers_storage_rootPath }}/data"
 
-containers_nfs_akpContainers01_rootPath:  :/mnt/akpData02/akpContainers01/volumes
-containers_nfs_akpContainers01_options:   "addr={{ ipv4_lan_10gb_A_akpServer01 }},intr,nolock,exec,rw,noatime,rsize=8192,wsize=8192,tcp,timeo=14,nfsvers=4,async"
+containers_nfs_akpContainers01_rootPath:  :/mnt/akpDataPool01/akpServices/nodes/containers01/volumes
+containers_nfs_akpContainers01_options:   "addr={{ vault_ipv6_adress_akpnet10g1_akpserver01 }},intr,nolock,exec,rw,noatime,rsize=8192,wsize=8192,tcp,timeo=14,nfsvers=4,async"
 
 ### ContainersRouter
 
@@ -79,7 +79,7 @@ containersRouter_authentification:            "{{ vault_containersRouter_authent
 ### ContainersAdmin
 
 containersAdmin_name:                 containersAdmin
-containersAdmin_image:                portainer/portainer
+containersAdmin_image:                portainer/portainer-ce
 containersAdmin_volume_data_name:     containersAdminData
 containersAdmin_volume_data_nfsPath: "{{ containers_nfs_akpContainers01_rootPath }}/containersAdminData"
 
@@ -110,6 +110,8 @@ dbMariadb01_volume_data_nfsPath:  "{{ containers_nfs_akpContainers01_rootPath }}
 dbMariadb01_volumePath:           "{{ containers_volumesPath }}/dbMariadb01"
 dbMariadb01_mariadbPath:          "{{ dbMariadb01_volumePath }}/mariadb"
 dbMariadb01_mariadbConfigPath:    "{{ dbMariadb01_mariadbPath }}/config"
+dbMariadb01_mariadbSecretsPath:    "{{ dbMariadb01_mariadbPath }}/.secrets"
+dbMariadb01_databases_root_password:  "{{ vault_dbMariadb01_databases_root_password }}"
 
 ### akpCloud
 
@@ -169,8 +171,10 @@ akpBuildDockerAgent_image:    docker:dind
 
 akpBag_name:                  akpBag
 akpBag_hostname:              akpbag
-akpBag_image:                 wallabag/wallabag:latest
+akpBag_image:                 wallabag/wallabag:2.3.8
 akpBag_url:                   "{{ vault_akpBag_url }}"
+akpBag_volume_data_name:      akpBagData
+akpBag_volume_data_nfsPath:   "{{ containers_nfs_akpContainers01_rootPath }}/akpBagData"
 # akpBag_volume_image_name:     akpBagImage
 # akpBag_volume_image_nfsPath:  "{{ containers_nfs_akpContainers01_rootPath }}/akpBagImage"
 akpBag_volumePath:            "{{ containers_volumesPath }}/akpBag"

@@ -1,8 +1,8 @@
 ---
 
 - name: Create webrouter networks for containersRouter
-  become:       yes
-  become_user:  "{{ containerUser.name }}"
+  # become:       yes
+  # become_user:  "{{ containerUser.name }}"
   docker_network:
     name: "{{ containersRouter_network_name }}"
     enable_ipv6: yes
@@ -94,8 +94,8 @@
   when: selfsigned_privatekey_path.stat.exists == false
 
 - name: Create containersRouter container
-  become:       yes
-  become_user:  "{{ containerUser.name }}"
+  # become:       yes
+  # become_user:  "{{ containerUser.name }}"
   docker_container:
     networks_cli_compatible: yes
     name:           "{{ containersRouter_name }}"

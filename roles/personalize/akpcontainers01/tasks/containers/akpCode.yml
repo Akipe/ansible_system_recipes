@@ -1,8 +1,8 @@
 ---
 
 - name: Create akpCode volume for /data
-  become: yes
-  become_user: "{{ containerUser.name }}"
+  # become: yes
+  # become_user: "{{ containerUser.name }}"
   docker_volume:
     name:   "{{ akpCode_volume_data_name }}"
     state:  present
@@ -13,8 +13,8 @@
       o:      "{{ containers_nfs_akpContainers01_options }}"
 
 - name: Create akpCode container
-  become:       yes
-  become_user:  "{{ containerUser.name }}"
+  # become:       yes
+  # become_user:  "{{ containerUser.name }}"
   docker_container:
     networks_cli_compatible: yes
     state:          started
@@ -30,8 +30,8 @@
       - name: "{{ containersRouter_network_name }}"
       - name: "{{ dbMariadb01_network_name }}"
     env:
-      PUID:     "{{ containerUser_uid }}"
-      PGID:     "{{ containerUser_gid }}"
+      #PUID:     "{{ containerUser_uid }}"
+      #PGID:     "{{ containerUser_gid }}"
       LANGUAGE: "fr_FR.UTF-8"
       LANG:     "fr_FR.UTF-8"
       TZ:       "Europe/Paris"

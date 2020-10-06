@@ -14,6 +14,10 @@ ipv4_lan_10gb_A_akpServer01: "{{ vault_ipv4_lan_10gb_A_akpServer01 }}"
 ipv4_lan_10gb_A_akpContainers01: "{{ vault_ipv4_lan_10gb_A_akpContainers01 }}"
 ipv4_lan_10gb_A_akpContainers01_size: "{{ vault_ipv4_lan_10gb_A_akpContainers01_size }}"
 
+adress_akpnet10g1_akpserver01: "{{ vault_adress_akpnet10g1_akpserver01 }}"
+ipv6_akpnet10g1_akpContainers01:          "{{ vault_ipv6_akpnet10g1_akpContainers01 }}"
+ipv6_akpnet10g1_akpContainers01_size:     "{{ vault_ipv6_akpnet10g1_akpContainers01_size }}"
+
 url_dns_reverse: "{{ vault_url_dns_reverse }}"
 url_akpHome: "{{ vault_url_akpHome }}"
 

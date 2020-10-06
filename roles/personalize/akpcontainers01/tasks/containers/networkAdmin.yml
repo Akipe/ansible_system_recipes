@@ -1,8 +1,8 @@
 ---
 
 - name: Create networkAdmin volume for /config
-  become: yes
-  become_user: "{{ containerUser.name }}"
+  # become: yes
+  # become_user: "{{ containerUser.name }}"
   docker_volume:
     name:   "{{ networkAdmin_volume_config_name }}"
     state:  present
@@ -13,8 +13,8 @@
       o:      "{{ containers_nfs_akpContainers01_options }}"
 
 - name: Create containersAdmin container
-  become:       yes
-  become_user:  "{{ containerUser.name }}"
+  # become:       yes
+  # become_user:  "{{ containerUser.name }}"
   docker_container:
     name:   "{{ networkAdmin_name }}"
     state:  started

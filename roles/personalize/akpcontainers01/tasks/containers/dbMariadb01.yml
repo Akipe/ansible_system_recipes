@@ -1,8 +1,8 @@
 ---
 
 - name: Create mariadb01 networks for dbMariadb01
-  become:       yes
-  become_user:  "{{ containerUser.name }}"
+  # become:       yes
+  # become_user:  "{{ containerUser.name }}"
   docker_network:
     name: "{{ dbMariadb01_network_name }}"
     enable_ipv6: yes
@@ -11,8 +11,8 @@
       - subnet: "{{ dbMariadb01_network_subnet_ipv6 }}"
 
 - name: Create dbMariadb01 volume for /data
-  become: yes
-  become_user: "{{ containerUser.name }}"
+  # become: yes
+  # become_user: "{{ containerUser.name }}"
   docker_volume:
     name:   "{{ dbMariadb01_volume_data_name }}"
     state:  present
@@ -31,6 +31,15 @@
     group:    "{{ containerUser.name }}"
     recurse:  yes
 
+- name: Create mariadb secrets directory
+  file:
+    path:     "{{ dbMariadb01_mariadbSecretsPath }}"
+    state:    directory
+    mode:     u+r,g-rwx,g-rwx
+    owner:    root
+    group:    root
+    recurse:  yes
+
 - name: Add mariadb configuration files
   template:
     src:    "containers/dbMariadb01/config/mysqlconf.cnf.j2"
@@ -39,9 +48,19 @@
     group:  root
     mode:   u+rw,g+r,o+r
 
+- name: Add mariadb root password secret files
+  template:
+    src:    "containers/dbMariadb01/secrets/mysql_root_pass.j2"
+    dest:   "{{ dbMariadb01_mariadbSecretsPath }}/.mysql_root_pass"
+    owner:  root
+    group:  root
+    mode:   u+r,g-rwx,g-rwx
+
+## Todo: recreate database a second time without root password file for security
+## check before volume empty (/var/lib/docker/volumes/dbMariadb01Data/_data)
 - name: Create dbMariadb01 container
-  become:       yes
-  become_user:  "{{ containerUser.name }}"
+  # become:       yes
+  # become_user:  "{{ containerUser.name }}"
   docker_container:
     networks_cli_compatible: yes
     state:          started
@@ -52,11 +71,12 @@
     volumes:
       - "{{ dbMariadb01_volume_data_name }}:/var/lib/mysql"
       - "{{ dbMariadb01_mariadbConfigPath }}/mysqlconf.cnf:/etc/mysql/conf.d/mysqlconf.cnf:ro"
+#      - "{{ dbMariadb01_mariadbSecretsPath }}:/run/secrets:ro"
     networks:
       - name: "{{ dbMariadb01_network_name }}"
     env:
-      TZ:       "Europe/Paris"
-      # MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+      TZ:                   "Europe/Paris"
+#      MYSQL_ROOT_PASSWORD_FILE:  "/run/secrets/.mysql_root_pass"
     command:
       --max_allowed_packet=32505856
       --character-set-server=utf8mb4
