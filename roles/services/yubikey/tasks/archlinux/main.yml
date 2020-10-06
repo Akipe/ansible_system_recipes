@@ -1,0 +1,16 @@
+---
+
+- name: Install YubiKey tools
+  pacman:
+    state: present
+    name:
+    - yubico-pam
+    - yubikey-manager
+    - yubikey-manager-qt
+    - yubikey-personalization
+    - yubikey-personalization-gui
+    - yubioath-desktop
+    - yubikey-full-disk-encryption
+    - pcsclite
+    - libu2f-host
+    - libusb-compat

@@ -1,18 +1,12 @@
 ---
-- name: Install YubiKey tools
-  pacman:
-    state: present
-    name:
-    - yubico-pam
-    - yubikey-manager
-    - yubikey-manager-qt
-    - yubikey-personalization
-    - yubikey-personalization-gui
-    - yubioath-desktop
-    - yubikey-full-disk-encryption
-    - pcsclite
-    - libu2f-host
-    - libusb-compat
+
+- name: Load tasks for Fedora
+  include_tasks: fedora/main.yml
+  when: ansible_distribution == "Fedora"
+
+- name: Load tasks for Archlinux
+  include_tasks: archlinux/main.yml
+  when: ansible_distribution == "Archlinux"
 
 - name: Enable systemd unit pcscd
   become: true

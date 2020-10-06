@@ -1,0 +1,15 @@
+---
+
+- name: Install GnuPG packages
+  dnf:
+    state: present
+    name:
+      - gnupg
+
+- name: Install packages for Smartcards
+  dnf:
+    state: present
+    name:
+      - ccid
+      - opensc
+      - pcsc-tools

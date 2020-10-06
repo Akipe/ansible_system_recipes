@@ -1,17 +1,12 @@
 ---
-- name: Install GnuPG packages
-  pacman:
-    state: present
-    name:
-      - gnupg
 
-- name: Install packages for Smartcards
-  pacman:
-    state: present
-    name:
-      - ccid
-      - opensc
-      - pcsc-tools
+- name: Load tasks for Fedora
+  include_tasks: fedora/main.yml
+  when: ansible_distribution == "Fedora"
+
+- name: Load tasks for Archlinux
+  include_tasks: archlinux/main.yml
+  when: ansible_distribution == "Archlinux"
 
 - name: Enable systemd unit pcscd
   become: true

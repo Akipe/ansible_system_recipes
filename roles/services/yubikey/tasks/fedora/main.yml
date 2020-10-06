@@ -1,0 +1,15 @@
+---
+
+- name: Install YubiKey tools
+  dnf:
+    state: present
+    name:
+    - pam_yubico
+    - yubikey-manager
+    - yubioath-desktop
+    - yubico-piv-tool
+    - yubikey-personalization-gui
+    - ykclient
+    - pcsc-tools
+    - opensc
+    - ccid
