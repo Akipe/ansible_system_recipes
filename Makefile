@@ -8,6 +8,7 @@ update_git_submodules:
 
 prepare_vault_password_file:
 	cp .vault_password.dist .vault_password
+	chmod 660 .vault_password
 
 prepare_log_directory:
 	mkdir ./log
