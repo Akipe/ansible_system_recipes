@@ -1,0 +1,6 @@
+---
+
+- name: Install driver
+  pacman:
+    name: "{{ nvidia_app_base_manjaro }}"
+    state: present

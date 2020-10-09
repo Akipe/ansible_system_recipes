@@ -1,36 +1,13 @@
 ---
+
 - name: Intall utilities for pacman
   pacman:
-    name:
-      - reflector
-      - xdelta3
-      - pacman-contrib
-      - pacman-mirrorlist
-      - perl-locale-gettext
+    name: "{{ pacman_app_archlinux_common }}"
     state: present
 
-- name: Add reflector.service
-  template:
-    src: systemd/reflector.service.j2
-    dest: /etc/systemd/system/reflector.service
-    owner: root
-    group: root
-    mode: u+rw,g+r,o+r
-
-- name: Add reflector.timer
-  template:
-    src: systemd/reflector.timer.j2
-    dest: /etc/systemd/system/reflector.timer
-    owner: root
-    group: root
-    mode: u+rw,g+r,o+r
-
-- name: Enable and active reflector.timer service
-  systemd:
-    name: reflector.timer
-    daemon_reload: yes
-    enabled: yes
-    state: started
+- name: Include tasks for Archlinux
+  include_tasks: archlinux/main.yml
+  when: ansible_lsb.id == "Archlinux"
 
 - name: Add configuration for pacman
   template:
@@ -45,3 +22,11 @@
     name: paccache.timer
     enabled: yes
     state: started
+
+- name: Create hook directory
+  file:
+    path: /etc/pacman.d/hooks
+    state: directory
+    owner: root
+    group: root
+    mode: u+rwx,g+rx,o+rx

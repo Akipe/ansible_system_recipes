@@ -7,13 +7,15 @@
     ### Base
     - { role: ansible-guest, tags: ansible-guest }
     - { role: ssh, tags: ssh }
-    ### Package manager
-    - { role: dnf, tags: dnf }
-    - { role: rpmfusion, tags: rpmfusion }
     - { role: format-support, tags: format-support }
-    # - { role: makepkg, tags: makepkg }
-    # - { role: aur-cli, tags: aur-cli }
-    # - { role: pacman, tags: pacman }
+    ### Package manager
+    # - { role: dnf, tags: dnf }
+    # - { role: rpmfusion, tags: rpmfusion }
+    - { role: makepkg, tags: makepkg }
+    - { role: aur-cli, tags: aur-cli }
+    - { role: pacman, tags: pacman }
+    ### Hardware init
+    - { role: microcode, tags: microcode }
     ### System
     # - role: swap
     #   tags: swap
@@ -21,6 +23,7 @@
     #     role_swap_type:       "file"
     #     role_swap_filesystem: "btrfs"
     #     role_swap_bootloader: "systemd-boot"
+    - { role: refind, tags: refind }
     # - { role: systemd-boot, tags: systemd-boot }
     # - { role: systemd-resolved, tags: systemd-resolved }
     # - { role: avahi, tags: avahi }
@@ -29,28 +32,27 @@
     # - { role: user, tags: user }
     # - { role: locale, tags: locale }
     # - { role: sudo, tags: sudo }
-    # - { role: mkinitcpio, tags: mkinitcpio }
-    # - { role: linux-kernel, tags: linux-kernel }
+    - { role: mkinitcpio, tags: mkinitcpio }
+    - { role: linux-kernel, tags: linux-kernel }
     # - { role: ufw, tags: ufw }
     # - { role: apparmor, tags: apparmor }
-    # # - { role: tlp, tags: tlp }
-    # # - { role: thermald, tags: thermald }
-    # - { role: irqbalance, tags: irqbalance }
-#     - { role: flatpak, tags: flatpak }
-#     - { role: snap, tags: snap }
-#     - { role: fwupd, tags: fwupd }
+    # - { role: tlp, tags: tlp }
+    # - { role: thermald, tags: thermald }
+    - { role: irqbalance, tags: irqbalance }
+    - { role: flatpak, tags: flatpak }
+    - { role: snap, tags: snap }
+    - { role: fwupd, tags: fwupd }
     # - { role: snapper, tags: snapper }
     ### Hardware
-#     - { role: nvidia, tags: nvidia }
-    # - { role: amdgpu, tags: amdgpu }
-#     - { role: asus-prime, tags: asus-prime }
-    # - { role: disk, tags: disk }
+    - { role: nvidia, tags: nvidia }
+    - { role: asus-prime, tags: asus-prime }
+    - { role: disk, tags: disk }
     # - { role: btrfs, tags: btrfs }
     # - { role: networkmanager, tags: networkmanager }
-    # - { role: watchdog, vars: { role_watchdog_status: "disable"}, tags: watchdog }
-    # - { role: android-client, tags: android-client }
-    # - { role: alsa, tags: alsa }
-    # - { role: lm_sensors, tags: lm_sensors }
+    - { role: watchdog, vars: { role_watchdog_status: "disable"}, tags: watchdog }
+    - { role: android-client, tags: android-client }
+    - { role: alsa, tags: alsa }
+    - { role: lm_sensors, tags: lm_sensors }
     # - { role: bluetooth, tags: bluetooth }
     ### Desktop environment
 #     - { role: sddm, tags: sddm }
@@ -59,8 +61,8 @@
     # - { role: base-reboot, tags: base-reboot }
     ### CLI apps
 #     - { role: fish, tags: fish }
-#     - { role: yubikey, tags: yubikey }
-#     - { role: gnupg, tags: gnupg }
+    # - { role: yubikey, tags: yubikey }
+    # - { role: gnupg, tags: gnupg }
     ### GUI apps
     # - { role: aur-gui, tags: aur-gui }
     # - { role: vlc, tags: vlc }
@@ -91,4 +93,4 @@
     # - { role: user-dotnet-config, tags: user-dotnet-config }
     
     ### Remove uncessary AUR builder user
-    # - { role: aur-cli-clean, tags: aur-cli }
+    - { role: aur-cli-clean, tags: aur-cli }

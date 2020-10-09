@@ -12,7 +12,7 @@
   become_user: ansible_aur
   aur:
     use: yay
-    skip_installed: yes
+    state: present
     aur_only: yes
     name:
       - virtualbox-ext-oracle

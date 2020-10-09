@@ -3,9 +3,13 @@
   include_tasks: debian/main.yml
   when: ansible_distribution == "Debian" or ansible_distribution == "Ubuntu"
 
-- name: Load tasks for install on Archlinux
-  include_tasks: archlinux/main.yml
+- name: Include tasks for all Archlinux based distributions
+  include_tasks: archlinux_common/main.yml
   when: ansible_distribution == "Archlinux"
+
+- name: Include tasks for Manjaro
+  include_tasks: manjaro/main.yml
+  when: ansible_lsb.id == "ManjaroLinux"
 
 - name: Active periodic TRIM for SSD
   systemd:

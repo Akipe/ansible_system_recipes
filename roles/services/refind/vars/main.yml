@@ -1,0 +1,10 @@
+---
+
+refind_app_archlinux_common:
+  - refind
+  - gptfdisk
+  - imagemagick
+  - python
+  - sbsigntools
+  - refind-drivers
+  - efibootmgr

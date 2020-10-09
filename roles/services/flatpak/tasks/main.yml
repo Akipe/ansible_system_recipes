@@ -1,6 +1,9 @@
 ---
-- name: Install
-  pacman:
-    state: present
-    name:
-      - flatpak
+
+- name: Include tasks for all Archlinux based distributions
+  include_tasks: archlinux_common/main.yml
+  when: ansible_distribution == "Archlinux"
+
+- name: Include tasks for Manjaro
+  include_tasks: manjaro/main.yml
+  when: ansible_lsb.id == "ManjaroLinux"

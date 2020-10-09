@@ -1,13 +1,4 @@
 ---
-# - name: Define Intel GPU module
-#   set_fact:
-#     gpu_module: i915
-#   when:  hardware.gpu.vendor == 'Intel'
-
-# - name: Define AMD GPU module
-#   set_fact:
-#     gpu_module: amdgpu
-#   when:  hardware.gpu.vendor == 'AMD'
 
 - name: Add mkinitcpio configuration
   template:
@@ -18,8 +9,3 @@
     group: root
     mode: "u=rw,g=r,o=r"
   notify: Generate mkinitcpio
-  vars:
-    role_mkinitcpio_modules:      "{{ initramfs_modules }}"
-    role_mkinitcpio_binaries:     "{{ initramfs_binaries }}"
-    role_mkinitcpio_hooks:        "{{ initramfs_hooks }}"
-    role_mkinitcpio_compression:  "{{ initramfs_compression }}"

@@ -1,0 +1,11 @@
+---
+
+- name: App for compilling kernel modules
+  pacman:
+    state: present
+    name: "{{ linux_kernel_compileTools_archlinux_common }}"
+
+- name: App usefull for Linux kernel
+  pacman:
+    state: present
+    name: "{{ linux_kernel_usefullTools_archlinux_common }}"

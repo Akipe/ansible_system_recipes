@@ -1,0 +1,16 @@
+---
+
+- name: Installation
+  pacman:
+    name: "{{ refind_app_archlinux_common }}"
+    state: present
+
+- name: Define microcode path for Intel processor
+  set_fact:
+    microcode_path: "intel-ucode.img"
+  when: cpu_vendor == "intel"
+
+- name: Define microcode path for AMD processor
+  set_fact:
+    microcode_path: "amd-ucode.img"
+  when: cpu_vendor == "amd"

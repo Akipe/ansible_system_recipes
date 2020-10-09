@@ -13,7 +13,8 @@ LocalFileSigLevel   = Optional
 #RemoteFileSigLevel = Required
 
 ### OTHERS OPTIONS
-HoldPkg             = pacman glibc
+HoldPkg             = pacman glibc {% if ansible_lsb.id == 'ManjaroLinux' %}manjaro-system{% endif %}
+SyncFirst           = archlinux-keyring {% if ansible_lsb.id == 'ManjaroLinux' %}manjaro-system manjaro-keyring{% endif %}
 #XferCommand        = /usr/bin/curl -L -C - -f -o %o %u
 #XferCommand        = /usr/bin/wget --passive-ftp -c -O %o %u
 #CleanMethod        = KeepInstalled
@@ -22,7 +23,7 @@ Architecture        = auto
 ### DIRECTORY OPTIONS
 #RootDir            = /
 #DBPath             = /var/lib/pacman/
-#CacheDir           = /var/cache/pacman/pkg/
+CacheDir           = /var/cache/pacman/pkg/
 #LogFile            = /var/log/pacman.log
 #GPGDir             = /etc/pacman.d/gnupg/
 #HookDir            = /etc/pacman.d/hooks/
@@ -35,13 +36,17 @@ Architecture        = auto
 
 ### REPOSITORIES
 [core]
+SigLevel    = PackageRequired
 Include     = /etc/pacman.d/mirrorlist
 
 [extra]
+SigLevel    = PackageRequired
 Include     = /etc/pacman.d/mirrorlist
 
 [community]
+SigLevel    = PackageRequired
 Include     = /etc/pacman.d/mirrorlist
 
 [multilib]
+SigLevel    = PackageRequired
 Include     = /etc/pacman.d/mirrorlist

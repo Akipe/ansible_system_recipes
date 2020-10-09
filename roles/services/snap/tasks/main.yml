@@ -1,18 +1,22 @@
 ---
-- name: Install snapd
-  become: yes
-  become_user: ansible_aur
-  aur:
-    use: yay
-    skip_installed: true
-    aur_only: yes
-    name: snapd
 
-- name: Start and enable snapd with AppArmor
-  systemd:
-    name: snapd.apparmor.service
-    enabled: yes
-    state: started
+- name: Include tasks for all Archlinux based distributions
+  include_tasks: archlinux_common/main.yml
+  when: ansible_distribution == "Archlinux"
+    
+- name: Include tasks for Archlinux
+  include_tasks: archlinux/main.yml
+  when: ansible_lsb.id == "Archlinux"
+
+- name: Include tasks for Manjaro
+  include_tasks: manjaro/main.yml
+  when: ansible_lsb.id == "ManjaroLinux"
+
+# - name: Start and enable snapd with AppArmor
+#   systemd:
+#     name: snapd.apparmor.service
+#     enabled: yes
+#     state: started
 
 - name: Start and enable snapd
   systemd:

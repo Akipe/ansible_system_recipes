@@ -21,5 +21,7 @@
     mode: u+r,g+r,o-rwx
     validate: /usr/sbin/visudo -cf %s
 
+- name: disable ability to connect with Ansible AUR user
+  shell: "passwd -l ansible_aur"
 
 # Todo: create service to check if Ansible aur user existe, each boot, and delete i

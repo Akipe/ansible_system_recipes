@@ -1,0 +1,7 @@
+---
+
+- name: Install
+  pacman:
+    state: present
+    name:
+      - pamac-flatpak-plugin

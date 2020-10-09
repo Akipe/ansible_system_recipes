@@ -1,0 +1,10 @@
+---
+
+mkinitcpio_initramfs_modules:             ""
+mkinitcpio_initramfs_binaries:            ""
+mkinitcpio_initramfs_mkinitcpio_files:    ""
+mkinitcpio_initramfs_hooks:               ""
+mkinitcpio_initramfs_compression:         gzip
+# Usage of "mkinitcpio_initramfs_compressionOptions" is strongly discouraged.
+# https://wiki.archlinux.org/index.php/Mkinitcpio#Configuration
+mkinitcpio_initramfs_compressionOptions:  ""

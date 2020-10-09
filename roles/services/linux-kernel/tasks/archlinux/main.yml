@@ -1,15 +1,6 @@
 ---
+
 - name: Install kernel
   pacman:
     state: present
-    name: "{{ role_appToInstall_archlinux_kernels }}"
-
-- name: App for compilling kernel modules
-  pacman:
-    state: present
-    name: "{{ role_appToInstall_archlinux_compileTools }}"
-
-- name: App usefull for Linux kernel
-  pacman:
-    state: present
-    name: "{{ role_appToInstall_archlinux_usefullTools }}"
+    name: "{{ linux_kernel_kernels_archlinux }}"

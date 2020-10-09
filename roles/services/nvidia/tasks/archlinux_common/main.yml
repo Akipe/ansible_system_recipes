@@ -1,0 +1,19 @@
+---
+
+- name: Install driver
+  pacman:
+    name: "{{ nvidia_app_base_archlinux_common }}"
+    state: present
+
+- name: Install GPU decoding libraries
+  pacman:
+    name: "{{ nvidia_app_video_archlinux_common }}"
+    state: present
+
+- name: Configure Pacman hook for update initramfs after an NVIDIA driver upgrade
+  template:
+    src: archlinux_common/pacman_hook/nvidia.hook.j2
+    dest: /etc/pacman.d/hooks/nvidia.hook
+    owner: root
+    group: root
+    mode: "u=rwx,g=rx,o=rx"

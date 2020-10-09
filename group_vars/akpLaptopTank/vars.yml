@@ -25,7 +25,7 @@ bootloader_options:
   - "rootflags=subvol=@root"
   - "rd.luks.options=discard"
   - "resume=/dev/mapper/akpsystem"
-  - "resume_offset={{ swap_file_offset_command.stdout }}"
+#   - "resume_offset={{ swap_file_offset_command.stdout }}"
   - "apparmor=1 lsm=lockdown,yama,apparmor"
   - "audit=1"
   - "quiet"

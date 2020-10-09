@@ -1,0 +1,8 @@
+---
+
+- name: Install
+  pacman:
+    state: present
+    name:
+      - snapd
+      - pamac-snap-plugin

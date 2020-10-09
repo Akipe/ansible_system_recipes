@@ -13,7 +13,7 @@
   become_user: ansible_aur
   aur:
     use: yay
-    skip_installed: true
+    state: present
     name:
       - libreoffice-extension-grammalecte-fr
 

@@ -4,7 +4,7 @@
   become_user: ansible_aur
   aur:
     use: makepkg
-    skip_installed: true
+    state: present
     name:
       - yay
 

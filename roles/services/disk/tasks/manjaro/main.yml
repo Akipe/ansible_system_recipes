@@ -1,0 +1,6 @@
+---
+
+- name: Remove default disks schelduler
+  file:
+    state: absent
+    path: /etc/udev/rules.d/60-ioscheduler.rules

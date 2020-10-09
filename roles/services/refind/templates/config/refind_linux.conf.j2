@@ -1,0 +1,9 @@
+## {{ ansible_managed }}
+
+#"Boot with standard options"  "ro cryptdevice=UUID=f8440c85-30ab-4b5a-bb9c-7191475f716b:akpcrypt root=/dev/mapper/akpsys-sysroot resume=UUID=9577ce80-9e34-4523-92bb-36ee86df7e6d nvidia-drm.modeset=1 quiet splash"
+#"Boot to single-user mode"    "ro cryptdevice=UUID=f8440c85-30ab-4b5a-bb9c-7191475f716b:akpcrypt root=/dev/mapper/akpsys-sysroot single resume=UUID=9577ce80-9e34-4523-92bb-36ee86df7e6d"
+
+"Boot with standard options"    "{% for option in bootloader_options %}{{ option }} {% endfor %} initrd={{ microcode_path }} initrd=initramfs-%v.img"
+"Boot to terminal"              "{% for option in bootloader_options %}{{ option }} {% endfor %} initrd={{ microcode_path }} initrd=initramfs-%v.img systemd.unit=multi-user.target"
+"Boot to single-user mode"      "{% for option in bootloader_options %}{{ option }} {% endfor %} initrd={{ microcode_path }} initrd=initramfs-%v.img single"
+"Boot using fallback initramfs" "{% for option in bootloader_options %}{{ option }} {% endfor %} initrd={{ microcode_path }} initrd=initramfs-%v-fallback.img"

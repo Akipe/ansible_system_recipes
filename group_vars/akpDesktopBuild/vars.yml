@@ -20,19 +20,22 @@ listUsers:
 
 bootloader_timeout: 20
 bootloader_options:
-  - "cryptdevice=PARTLABEL=akpcryptsystem:akpsystem:allow-discards"
-  - "root=/dev/mapper/akpsystem"
-  - "rootflags=subvol=@root"
+  - "add_efi_memmap"
+  - "cryptdevice=UUID=f8440c85-30ab-4b5a-bb9c-7191475f716b:akpcrypt:allow-discards"
+  - "root=/dev/mapper/akpsys-sysroot"
   - "rd.luks.options=discard"
-  - "resume=/dev/mapper/akpsystem"
-  - "resume_offset={{ swap_file_offset_command.stdout }}"
-  - "apparmor=1 lsm=lockdown,yama,apparmor"
-  - "audit=1"
-  # - "usbhid.quirks=0x1b1c:0x1b55:0x20000408"
+  - "resume=/dev/mapper/akpsys-swap"
+  - "nvidia-drm.modeset=1"
   - "quiet"
+  - "splash"
   - "rw"
 
-hardware_cpu_vendor: AMD
+#  - "cryptdevice=PARTLABEL=akpcryptsystem:akpsystem:allow-discards" # old
+#  - "root=/dev/mapper/akpsystem" # old
+# - "apparmor=1 lsm=lockdown,yama,apparmor"
+# - "audit=1"
+# - "usbhid.quirks=0x1b1c:0x1b55:0x20000408"
+
 hardware_gpu_vendor: AMD
 hardware_disks:
   - system:
@@ -40,8 +43,11 @@ hardware_disks:
     smartmontools:
       parameters: -a -d sat -o on -S on -s (S/../.././06|L/../../1/10)
 
-initramfs_modules:
-  - amdgpu
+mkinitcpio_initramfs_modules:
+  - nvidia
+  - nvidia_modeset
+  - nvidia_uvm
+  - nvidia_drm
   - dm_mod
   - dm_crypt
   - btrfs
@@ -50,20 +56,20 @@ initramfs_modules:
   - sha256
   - sha512
   - crc32c-intel
-initramfs_binaries:
-  - /usr/bin/btrfs
-initramfs_hooks:
+mkinitcpio_initramfs_hooks:
   - base
   - udev
   - autodetect
+  - keymap
   - modconf
   - block
-  - keyboard
-  - keymap
   - encrypt
+  - lvm2
   - filesystems
   - resume
-initramfs_compression:  lz4
+  - keyboard
+  - fsck
+mkinitcpio_initramfs_compression: lz4
 
 earlyoom_config_memory_minimum_percent: "2"
 earlyoom_config_swap_minimum_percent:   "2"

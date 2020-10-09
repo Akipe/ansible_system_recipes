@@ -1,5 +1,6 @@
 ## {{ ansible_managed }}
 
+vm.swappiness = 10
 # Percentage of total available memory that contains free pages and reclaimable pages
 # the number of pages at which a process which is generating disk writes will itself start writing out dirty data
 vm.dirty_ratio = 4
@@ -8,3 +9,4 @@ vm.dirty_ratio = 4
 vm.dirty_background_ratio = 3
 # VFS cache
 vm.vfs_cache_pressure = 50
+#vm.dirty_ratio = 3

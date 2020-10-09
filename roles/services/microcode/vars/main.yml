@@ -1,0 +1,7 @@
+---
+
+microcode_intel_archlinux_common:
+  - intel-ucode
+
+microcode_amd_archlinux_common:
+  - amd-ucode

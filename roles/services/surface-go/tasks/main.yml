@@ -5,7 +5,7 @@
   become_user: ansible_aur
   aur:
     use: yay
-    skip_installed: true
+    state: present
     aur_only: yes
     name: "{{ surfaceGo_appToInstall_archlinux_aur }}"
 

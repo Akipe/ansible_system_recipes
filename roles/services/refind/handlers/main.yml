@@ -1,0 +1,4 @@
+---
+
+- name: Reinstall rEFInd
+  shell: "refind-install"

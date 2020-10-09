@@ -1,0 +1,23 @@
+---
+
+nvidia_app_base_archlinux:
+  - nvidia-lts
+
+nvidia_app_base_manjaro:
+  - linux54-nvidia-450xx
+
+nvidia_app_base_archlinux_common:
+  - nvidia-utils
+  - opencl-nvidia
+  - ocl-icd
+  - cuda
+  - lib32-nvidia-utils
+  - lib32-opencl-nvidia
+  - lib32-ocl-icd
+
+nvidia_app_video_archlinux_common:
+  - libvdpau
+  - libva-vdpau-driver
+  - libva-utils
+  - vdpauinfo
+  - lib32-libva-vdpau-driver

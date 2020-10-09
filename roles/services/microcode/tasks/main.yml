@@ -1,0 +1,25 @@
+---
+
+- name: Check if processor vendor is Intel
+  command: grep -q Intel /proc/cpuinfo
+  ignore_errors: true
+  register: check_cpu_vendor_is_intel
+
+- name: Set variable check to Intel
+  set_fact:
+    cpu_vendor: intel
+  when: check_cpu_vendor_is_intel is succeeded
+
+- name: Check if processor vendor is AMD
+  command: grep -q AMD /proc/cpuinfo
+  ignore_errors: true
+  register: check_cpu_vendor_is_amd
+
+- name: Set variable check to AMD
+  set_fact:
+    cpu_vendor: amd
+  when: check_cpu_vendor_is_amd is succeeded
+
+- name: Include tasks for all Archlinux based distributions
+  include_tasks: archlinux_common/main.yml
+  when: ansible_distribution == "Archlinux"

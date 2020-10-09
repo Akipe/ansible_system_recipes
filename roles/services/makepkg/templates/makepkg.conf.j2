@@ -40,12 +40,12 @@ CHOST="x86_64-pc-linux-gnu"
 #-- Compiler and Linker Flags
 CPPFLAGS="-D_FORTIFY_SOURCE=2"
 CFLAGS="-march=native -O2 -pipe -fstack-protector-strong -fno-plt"
-###CFLAGS="-march=x86-64 -mtune=generic -O2 -pipe -fno-plt"
+###CFLAGS="-march=x86-64 -mtune=generic -O2 -pipe -fstack-protector-strong -fno-plt"
 CXXFLAGS="${CFLAGS}"
-###CXXFLAGS="-march=x86-64 -mtune=generic -O2 -pipe -fno-plt"
+###CXXFLAGS="-march=x86-64 -mtune=generic -O2 -pipe -fstack-protector-strong -fno-plt"
 LDFLAGS="-Wl,-O1,--sort-common,--as-needed,-z,relro,-z,now"
 #-- Make Flags: change this for DistCC/SMP systems
-MAKEFLAGS="-j$(nproc)"
+MAKEFLAGS="-j$(($(nproc)+1))"
 #-- Debugging flags
 DEBUG_CFLAGS="-g -fvar-tracking-assignments"
 DEBUG_CXXFLAGS="-g -fvar-tracking-assignments"
