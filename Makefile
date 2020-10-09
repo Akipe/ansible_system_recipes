@@ -20,7 +20,11 @@ run-init:
 	ansible-playbook $(NODE)_init.yml -i inventory_init.ini
 
 run-local:
-	ansible-playbook $(NODE).yml -i inventory_local.ini
+	ansible-playbook $(NODE).yml \
+		--connection=local \
+		--inventory $(NODE), \
+		--extra-vars "@./group_vars/$(NODE)/vars.yml" \
+		--extra-vars "@./group_vars/$(NODE)/vault.yml"
 
 run-debug:
 	ansible-playbook $(NODE).yml -vvv
