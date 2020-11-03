@@ -20,11 +20,10 @@ listUsers:
 
 bootloader_timeout: 20
 bootloader_options:
-  - "add_efi_memmap"
-  - "cryptdevice=UUID=f8440c85-30ab-4b5a-bb9c-7191475f716b:akpcrypt:allow-discards"
-  - "root=/dev/mapper/akpsys-sysroot"
+  - "cryptdevice=PARTLABEL=akpcryptsystem:akpsystem:allow-discards"
+  - "root=/dev/mapper/akpsystem-sysroot"
   - "rd.luks.options=discard"
-  - "resume=/dev/mapper/akpsys-swap"
+  - "resume=/dev/mapper/akpsystem-swap"
   - "nvidia-drm.modeset=1"
   - "quiet"
   - "splash"
@@ -60,14 +59,14 @@ mkinitcpio_initramfs_hooks:
   - base
   - udev
   - autodetect
-  - keymap
   - modconf
   - block
+  - keyboard
+  - keymap
   - encrypt
   - lvm2
   - filesystems
   - resume
-  - keyboard
   - fsck
 mkinitcpio_initramfs_compression: lz4
 
