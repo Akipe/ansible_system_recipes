@@ -5,19 +5,19 @@
     state: present
     name: "{{ kde_appToInstall_base_archlinux }}"
 
-- name: Install KDE apps (AUR)
-  become: yes
-  become_user: ansible_aur
-  aur:
-    use: yay
-    state: present
-    aur_only: yes
-    name: "{{ kde_appToInstall_base_archlinux_aur }}"
+# - name: Install KDE apps (AUR)
+#   become: yes
+#   become_user: ansible_aur
+#   aur:
+#     use: yay
+#     state: present
+#     aur_only: yes
+#     name: "{{ kde_appToInstall_base_archlinux_aur }}"
 
-- name: Install Thunar
-  pacman:
-    state: present
-    name: "{{ kde_appToInstall_thunar_archlinux }}"
+# - name: Install Thunar
+#   pacman:
+#     state: present
+#     name: "{{ kde_appToInstall_thunar_archlinux }}"
 
 - name: Install Dolphin
   pacman:
@@ -37,17 +37,12 @@
 #       - kde-thumbnailer-blender
 #       - kde-thumbnailer-epub
 
-# https://github.com/PapirusDevelopmentTeam/adapta-kde
-- name: Install themes Adapta
+- name: Install apps utils for theming
   pacman:
     state: present
-    name: "{{ kde_appToInstall_theme_archlinux }}"
+    name: "{{ kde_app_utils_theme_archlinux }}"
 
-- name: Install themes Adapta (AUR)
-  become: yes
-  become_user: ansible_aur
-  aur:
-    use: yay
+- name: Install themes Materia
+  pacman:
     state: present
-    aur_only: yes
-    name: "{{ kde_appToInstall_theme_archlinux_aur }}"
+    name: "{{ kde_app_theme_materia_archlinux }}"

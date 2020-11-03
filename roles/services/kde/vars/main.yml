@@ -103,9 +103,6 @@ kde_appToInstall_base_archlinux:
   - kaccounts-providers
   - xdg-user-dirs
 
-kde_appToInstall_base_archlinux_aur:
-  - kwalletcli
-
 kde_appToInstall_thunar_archlinux:
   - thunar
   - gvfs
@@ -136,14 +133,19 @@ kde_appToInstall_dolphin_archlinux:
   - taglib
   - audiocd-kio
 
-kde_appToInstall_theme_archlinux:
+kde_app_utils_theme_archlinux:
   - kvantum-qt5
   - kvantum-theme-adapta
-  - adapta-gtk-theme
+  # - adapta-gtk-theme
   - qt5-styleplugins
   - gtk-engine-murrine
+  # - latte-dock
+
+kde_app_theme_materia_archlinux:
+  - materia-kde
+  - kvantum-theme-materia
+  - materia-gtk-theme
   - papirus-icon-theme
-  - latte-dock
 
 kde_appToInstall_theme_archlinux_aur:
   - adapta-kde
