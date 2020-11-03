@@ -1,7 +1,7 @@
 ---
 
 nvidia_app_base_archlinux:
-  - nvidia-lts
+  - nvidia-dkms
 
 nvidia_app_base_manjaro:
   - linux54-nvidia-450xx
