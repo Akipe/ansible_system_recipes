@@ -60,9 +60,9 @@
     ### Reboot
     # - { role: base-reboot, tags: base-reboot }
     ### CLI apps
-#     - { role: fish, tags: fish }
-    # - { role: yubikey, tags: yubikey }
-    # - { role: gnupg, tags: gnupg }
+    - { role: fish, tags: fish }
+    - { role: yubikey, tags: yubikey }
+    - { role: gnupg, tags: gnupg }
     ### GUI apps
     # - { role: aur-gui, tags: aur-gui }
     # - { role: vlc, tags: vlc }

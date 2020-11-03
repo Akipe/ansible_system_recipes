@@ -8,6 +8,31 @@
   include_tasks: archlinux/main.yml
   when: ansible_distribution == "Archlinux"
 
+- name: Set GPG agent configuration
+  become: yes
+  become_user: "{{ user_name }}"
+  template:
+    src: user_gnupg/gpg-agent.conf.j2
+    dest: "/home/{{ user_name }}/.gnupg/gpg-agent.conf"
+    owner: "{{ user_name }}"
+    group: "{{ user_name }}"
+    mode: u+rw,g-rwx,o-rwx
+
+- name: Set configuration for SSH authentification in bash.rc
+  become: yes
+  become_user: "{{ user_name }}"
+  blockinfile:
+    path: "/home/{{ user_name }}/.bashrc"
+#    insertafter: .*SSH authentification with GnuPG
+    block: |
+      # SSH authentification with GnuPG
+      export GPG_TTY=$(tty)
+      gpg-connect-agent updatestartuptty /bye > /dev/null
+      unset SSH_AGENT_PID
+      if [ "${gnupg_SSH_AUTH_SOCK_by:-0}" -ne $$ ]; then
+        export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
+      fi
+
 - name: Enable systemd unit pcscd
   become: true
   systemd:
