@@ -17,3 +17,19 @@
     owner: root
     group: root
     mode: "u=rwx,g=rx,o=rx"
+
+- name: Add kernel configuration
+  template:
+    src: archlinux_common/modprobe.d/nvidia.conf.j2
+    dest: /etc/modprobe.d/nvidia.conf
+    owner: root
+    group: root
+    mode: "u=rwx,g=rx,o=rx"
+
+- name: Add xorg configuration
+  template:
+    src: archlinux_common/xorg.conf.d/20-nvidia.conf.j2
+    dest: /etc/X11/xorg.conf.d/20-nvidia.conf
+    owner: root
+    group: root
+    mode: "u=rwx,g=rx,o=rx"

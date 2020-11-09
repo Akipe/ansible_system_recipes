@@ -1,17 +1,25 @@
 ---
-- name: Install MPV
+
+- name: Installation
   pacman:
     state: present
     name:
       - mpv
 
-- name: Install SMPlayer
+- name: Installation of SMPlayer
   pacman:
     state: present
     name:
       - smplayer
+
+- name: Installation of SMPlayer dependencies
+  pacman:
+    state: present
+    name:
       - smplayer-skins
       - smplayer-themes
+      - youtube-dl
+    extra_args: --asdeps
 
 - name: Create user MPV configuration directory
   file:

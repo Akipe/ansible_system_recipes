@@ -28,7 +28,7 @@
       - otf-fira-mono
       - adobe-source-code-pro-fonts
       - ttf-linux-libertine
-      - font-mathematica
+      # - font-mathematica
       - texlive-core
       - texlive-fontsextra
       - otf-latin-modern

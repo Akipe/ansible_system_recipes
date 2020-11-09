@@ -5,6 +5,12 @@
     name: "{{ refind_app_archlinux_common }}"
     state: present
 
+- name: Installation of dependencies
+  pacman:
+    state: present
+    name: "{{ refind_app_archlinux_common }}"
+    extra_args: --asdeps
+
 - name: Define microcode path for Intel processor
   set_fact:
     microcode_path: "intel-ucode.img"
@@ -14,3 +20,20 @@
   set_fact:
     microcode_path: "amd-ucode.img"
   when: cpu_vendor == "amd"
+
+- name: Installation of Regular theme
+  become: yes
+  become_user: ansible_aur
+  aur:
+    use: yay
+    state: present
+    name:
+      - refind-theme-regular-git
+
+- name: Set dark mode for Regular theme
+  template:
+    src: theme_regular/theme.conf.j2
+    dest: /boot/EFI/refind/refind-theme-regular/theme.conf
+    owner: root
+    group: root
+    mode: "u=rwx,g=rx,o=x"

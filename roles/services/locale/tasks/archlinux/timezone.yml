@@ -1,4 +1,5 @@
 ---
+
 - name: Set timezone
   timezone:
     name: "{{ role_systemdTimedatectl_timezone }}"

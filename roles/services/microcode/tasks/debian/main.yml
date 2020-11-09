@@ -1,0 +1,13 @@
+---
+
+- name: Install Intel CPU microcode
+  apt:
+    state: present
+    name: intel-microcode
+  when: cpu_vendor == "intel"
+
+- name: Install AMD CPU microcode
+  apt:
+    state: present
+    name: amd64-microcode
+  when: cpu_vendor == "amd"

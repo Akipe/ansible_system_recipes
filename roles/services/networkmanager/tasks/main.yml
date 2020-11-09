@@ -1,21 +1,74 @@
 ---
+
 - name: Install NetworkManager and extensions
   pacman:
     state: present
     name:
       - networkmanager
-      - modemmanager
-      - mobile-broadband-provider-info
-      - usb_modeswitch
-      - usbutils
       - networkmanager-openvpn
       - networkmanager-pptp
       - networkmanager-openconnect
       - networkmanager-vpnc
       - networkmanager-strongswan
 
+- name: Installation of dependencies
+  pacman:
+    state: present
+    name:
+      - modemmanager
+      - usb_modeswitch
+      - usbutils
+      - mobile-broadband-provider-info
+    extra_args: --asdeps
+
 - name: Active and enable NetworkManager
   systemd:
     name: NetworkManager.service
     state: started
     enabled: yes
+
+- name: Open firewall for dhcpv6-client 
+  ansible.posix.firewalld:
+    service: dhcpv6-client
+    state: enabled
+    permanent: true
+    immediate: yes
+
+
+# - name: Configure network interfaces 
+#   community.general.nmcli:
+#     conn_name:  "{{ item.ifname }}"
+#     # ifname:     "{{ item.ifname }}"
+#     type:       "{{ item.type }}"
+#     ip4:        "{{ item.ipv4 }}"
+#     gw4:        "{{ item.gw4 }}"
+#     ip6:        "{{ item.ipv6 }}"
+#     gw6:        "{{ item.gw6 }}"
+#     mtu:        "{{ item.mtu }}"
+#     state:      present
+#   when: item.ipv4 and item.gw4 and item.ipv6 and item.gw6
+#   with_items:
+#     - '{{ networks }}'
+
+# - name: Configure network interfaces
+#   community.general.nmcli:
+#     conn_name:  "{{ item.ifname }}"
+#     # ifname:     "{{ item.ifname }}"
+#     type:       "{{ item.type }}"
+#     ip6:        "{{ item.ipv6 }}"
+#     mtu:        "{{ item.mtu }}"
+#     state:      present
+#   when: not item.ipv4 and not item.gw4 and item.ipv6 and not item.gw6
+#   with_items:
+#     - '{{ networks }}'
+
+# - name: Configure network interfaces
+#   community.general.nmcli:
+#     conn_name:  "{{ item.ifname }}"
+#     # ifname:     "{{ item.ifname }}"
+#     type:       "{{ item.type }}"
+#     mtu:        "{{ item.mtu }}"
+#     state:      present
+#   when: not item.ipv4 and not item.gw4 and not item.ipv6 and not item.gw6
+#   with_items:
+#     - '{{ networks }}'

@@ -1,0 +1,10 @@
+---
+
+- name: Add encryption boot configuration
+  template:
+    src: crypttab.j2
+    dest: /etc/crypttab.initramfs
+    owner: root
+    group: root
+    mode: u+rw,g+r,o+r
+  notify: Generate mkinitcpio

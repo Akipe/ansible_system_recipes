@@ -1,0 +1,13 @@
+---
+
+- name: Installation
+  pacman:
+    state: present
+    name: audit
+
+- name: Start and enable service
+  systemd:
+    name: auditd.service
+    state: started
+    daemon_reload: yes
+    enabled: yes

@@ -1,0 +1,22 @@
+---
+
+- name: Installation
+  pacman:
+    state: present
+    name: firewalld
+
+- name: Start and enable service
+  systemd:
+    name: firewalld.service
+    state: started
+    daemon_reload: yes
+    enabled: yes
+
+- name: Set firewall zone for each network interface
+  ansible.posix.firewalld:
+    zone:       "{{ item.firewall_zone }}"
+    interface:  "{{ item.ifname }}"
+    permanent:  yes
+    state:      enabled
+  with_items:
+    - '{{ networks }}'

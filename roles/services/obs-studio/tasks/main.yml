@@ -1,10 +1,18 @@
 ---
-- name: Install
+
+- name: Installation
   pacman:
     state: present
     name:
       - obs-studio
+
+- name: Installation of dependencies
+  pacman:
+    state: present
+    name:
       - libfdk-aac
-      - gst-plugins-good
       - libxcomposite
       - luajit
+      - python
+      - vlc
+    extra_args: --asdeps

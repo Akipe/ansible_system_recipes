@@ -7,6 +7,26 @@
   include_tasks: archlinux/main.yml
   when: ansible_distribution == "Archlinux"
 
+- name: Create automatic configuration loading directory
+  become: yes
+  become_user: "{{ user_name }}"
+  file:
+    path: "/home/{{ user_name }}/.config/fish/conf.d"
+    state: directory
+    owner: "{{ user_name }}"
+    group: "{{ user_name }}"
+    mode: u+rw,g+r,o+r
+
+- name: Set configuration
+  become: yes
+  become_user: "{{ user_name }}"
+  template:
+    src: config/config.fish.j2
+    dest: "/home/{{ user_name }}/.config/fish/config.fish"
+    owner: "{{ user_name }}"
+    group: "{{ user_name }}"
+    mode: u+rw,g+r,o+r
+
 # - name: Check if Oh My Fish is installed
 #   stat:
 #     path: /etc/.omf_installed

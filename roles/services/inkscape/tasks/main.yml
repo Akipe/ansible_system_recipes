@@ -4,9 +4,17 @@
     state: present
     name:
       - inkscape
-      -  gvfs
+
+- name: Installation of dependencies
+  pacman:
+    state: present
+    name:
+      - fig2dev
+      - gvfs
       - pstoedit
       - python2-lxml
       - python2-numpy
-      - python2-scour
+      - scour
       - texlive-core
+    extra_args: --asdeps
+

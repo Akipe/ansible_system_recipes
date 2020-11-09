@@ -6,5 +6,6 @@
       - alsa-utils
       - alsa-firmware
       - alsa-plugins
+      - alsa-tools
       - lib32-alsa-lib
       - lib32-alsa-plugins

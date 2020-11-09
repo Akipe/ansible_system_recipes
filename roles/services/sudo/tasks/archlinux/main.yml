@@ -1,4 +1,5 @@
 ---
+
 - name: Install sudo
   pacman:
     state: present

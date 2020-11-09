@@ -1,6 +1,0 @@
----
-- name: Install
-  pacman:
-    state: present
-    name:
-      - keepassxc

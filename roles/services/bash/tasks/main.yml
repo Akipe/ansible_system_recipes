@@ -1,0 +1,12 @@
+---
+
+- name: Installation
+  pacman:
+    state: present
+    name: bash
+
+- name: Installation of dependencies
+  pacman:
+    state: present
+    name: bash-completion
+    extra_args: --asdeps

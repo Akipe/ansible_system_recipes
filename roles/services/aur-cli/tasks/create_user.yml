@@ -1,8 +1,12 @@
 ---
+
 - name: Create ansible_aur for Ansible
   user:
     name: ansible_aur
     create_home: yes
+  notify:
+    - Remove ansible_aur user
+    - Remove ansible_aur home directory
 
 # - name: Append sudo config for Ansible AUR build
 #   lineinfile:
@@ -20,6 +24,8 @@
     group: root
     mode: u+r,g+r,o-rwx
     validate: /usr/sbin/visudo -cf %s
+  notify:
+    - Remove sudo config for ansible_aur user
 
 - name: disable ability to connect with Ansible AUR user
   shell: "passwd -l ansible_aur"

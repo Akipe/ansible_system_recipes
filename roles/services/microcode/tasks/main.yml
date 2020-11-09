@@ -1,24 +1,16 @@
 ---
 
 - name: Check if processor vendor is Intel
-  command: grep -q Intel /proc/cpuinfo
-  ignore_errors: true
-  register: check_cpu_vendor_is_intel
-
-- name: Set variable check to Intel
-  set_fact:
-    cpu_vendor: intel
-  when: check_cpu_vendor_is_intel is succeeded
+  set_fact: cpu_vendor="intel"
+  when: "'GenuineIntel' in ansible_facts['processor']"
 
 - name: Check if processor vendor is AMD
-  command: grep -q AMD /proc/cpuinfo
-  ignore_errors: true
-  register: check_cpu_vendor_is_amd
+  set_fact: cpu_vendor="amd"
+  when: "'AuthenticAMD' in ansible_facts['processor']"
 
-- name: Set variable check to AMD
-  set_fact:
-    cpu_vendor: amd
-  when: check_cpu_vendor_is_amd is succeeded
+- name: Load tasks for install on Debian & derivate
+  include_tasks: debian/main.yml
+  when: ansible_distribution == "Debian" or ansible_distribution == "Ubuntu"
 
 - name: Include tasks for all Archlinux based distributions
   include_tasks: archlinux_common/main.yml

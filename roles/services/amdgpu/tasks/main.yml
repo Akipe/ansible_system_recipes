@@ -1,4 +1,5 @@
 ---
+  
 - name: Install driver
   pacman:
     name: "{{ amdgpu_app_base_archlinux }}"
@@ -37,17 +38,17 @@
     regexp: '^VDPAU_DRIVER='
     line: 'VDPAU_DRIVER=radeonsi'
 
-- name: Enable ACO compiler globally
-  lineinfile:
-    path: /etc/environment
-    regexp: '^RADV_PERFTEST='
-    line: 'RADV_PERFTEST=aco'
+# - name: Enable ACO compiler globally
+#   lineinfile:
+#     path: /etc/environment
+#     regexp: '^RADV_PERFTEST='
+#     line: 'RADV_PERFTEST=aco'
 
-- name: Enable some AMD debug options globally
-  lineinfile:
-    path: /etc/environment
-    regexp: '^AMD_DEBUG='
-    line: 'AMD_DEBUG="nodma,nongg"'
+# - name: Enable some AMD debug options globally
+#   lineinfile:
+#     path: /etc/environment
+#     regexp: '^AMD_DEBUG='
+#     line: 'AMD_DEBUG="nodma,nongg"'
 
 - name: Enable video acceleration support for the user (libva and vdpau)
   become: yes
@@ -59,23 +60,23 @@
     group: "{{ user_name }}"
     mode: u+rw,g+r,o+r
 
-- name: Add driver environment config to user
-  become: yes
-  become_user: "{{ user_name }}"
-  template:
-    src: environment.d/driver_amdgpu.conf.j2
-    dest: "/home/{{ user_name }}/.config/environment.d/driver_amdgpu.conf"
-    owner: "{{ user_name }}"
-    group: "{{ user_name }}"
-    mode: u+rw,g+r,o+r
+# - name: Add driver environment config to user
+#   become: yes
+#   become_user: "{{ user_name }}"
+#   template:
+#     src: environment.d/driver_amdgpu.conf.j2
+#     dest: "/home/{{ user_name }}/.config/environment.d/driver_amdgpu.conf"
+#     owner: "{{ user_name }}"
+#     group: "{{ user_name }}"
+#     mode: u+rw,g+r,o+r
 
-- name: Add kernel options
-  template:
-    src: modprobe.d/amdgpu.conf.j2
-    dest: /etc/modprobe.d/amdgpu.conf
-    owner: root
-    group: root
-    mode: u+rw,g+r,o+r
+# - name: Add kernel options
+#   template:
+#     src: modprobe.d/amdgpu.conf.j2
+#     dest: /etc/modprobe.d/amdgpu.conf
+#     owner: root
+#     group: root
+#     mode: u+rw,g+r,o+r
 
 - name: Add configuration for Xorg
   template:

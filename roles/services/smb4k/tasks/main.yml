@@ -1,0 +1,6 @@
+---
+
+- name: Installation
+  pacman:
+    state: present
+    name: smb4k

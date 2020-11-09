@@ -9,7 +9,8 @@ shadow: files
 
 publickey: files
 
-hosts: files mymachines myhostname mdns_minimal [NOTFOUND=return] resolve [!UNAVAIL=return] dns
+hosts: files mymachines myhostname mdns [NOTFOUND=return] resolve [!UNAVAIL=return] dns wins
+{# hosts: files mymachines myhostname mdns_minimal [NOTFOUND=return] resolve [!UNAVAIL=return] dns #}
 networks: files
 
 protocols: files

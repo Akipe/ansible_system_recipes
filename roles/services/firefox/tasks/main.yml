@@ -1,11 +1,24 @@
 ---
+
 - name: Installation
   pacman:
     state: present
     name:
       - firefox
       - firefox-i18n-fr
+
+- name: Installation of dependencies
+  pacman:
+    state: present
+    name:
       - libnotify
+    extra_args: --asdeps
+
+- name: Enable video acceleration
+  lineinfile:
+    path: /etc/environment
+    regexp: '^MOZ_X11_EGL='
+    line: 'MOZ_X11_EGL=1'
 
 # - name: Create system wide configuration directory
 #   file:

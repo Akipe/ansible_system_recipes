@@ -1,11 +1,12 @@
 ## {{ ansible_managed }}
 
 # Restricting access to kernel logs without the CAP_SYS_ADMIN
-#kernel.dmesg_restrict = 1
-kernel.dmesg_restrict = 0
+kernel.dmesg_restrict = 1
 # Restricting access to kernel pointers and hide kernel symbol in the proc filesystem
-kernel.kptr_restrict = 2
+kernel.kptr_restrict = 1
 # BPF hardening
 net.core.bpf_jit_harden = 1
 # Disable kexec
 kernel.kexec_load_disabled = 1
+
+kernel.yama.ptrace_scope = 1

@@ -13,8 +13,8 @@ LocalFileSigLevel   = Optional
 #RemoteFileSigLevel = Required
 
 ### OTHERS OPTIONS
-HoldPkg             = pacman glibc {% if ansible_lsb.id == 'ManjaroLinux' %}manjaro-system{% endif %}
-SyncFirst           = archlinux-keyring {% if ansible_lsb.id == 'ManjaroLinux' %}manjaro-system manjaro-keyring{% endif %}
+HoldPkg             = pacman glibc {% if ansible_distribution == 'Manjaro' %}manjaro-system{% endif %}
+SyncFirst           = archlinux-keyring {% if ansible_distribution == 'Manjaro' %}manjaro-system manjaro-keyring{% endif %}
 #XferCommand        = /usr/bin/curl -L -C - -f -o %o %u
 #XferCommand        = /usr/bin/wget --passive-ftp -c -O %o %u
 #CleanMethod        = KeepInstalled

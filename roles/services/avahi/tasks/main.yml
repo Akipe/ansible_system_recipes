@@ -17,3 +17,19 @@
     name: avahi-daemon.service
     enabled: yes
     state: started
+
+- name: Open firewall for sshd for home
+  ansible.posix.firewalld:
+    service: mdns
+    zone: home
+    state: enabled
+    permanent: true
+    immediate: yes
+
+- name: Allow firewall UDP 5353 for home
+  ansible.posix.firewalld:
+    port: 5353/udp
+    zone: home
+    state: enabled
+    permanent: true
+    immediate: yes

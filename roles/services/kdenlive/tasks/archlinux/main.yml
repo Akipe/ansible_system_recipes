@@ -1,12 +1,21 @@
 ---
-- name: Install kdenlive
+
+- name: Installation
   pacman:
     state: present
     name:
       - kdenlive
+
+- name: Installation of dependencies
+  pacman:
+    state: present
+    name:
       - cdrtools
       - dvdauthor
       - dvgrab
       - ffmpeg
+      - opencv
       - vlc
       - xine-ui
+    extra_args: --asdeps
+

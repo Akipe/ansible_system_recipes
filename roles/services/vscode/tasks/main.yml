@@ -1,8 +1,23 @@
 ---
+
 - name: Install Visual Studio Code
   pacman:
     state: present
     name:
       - code
       - libdbusmenu-glib
+
+- name: Installation of dependencies
+  pacman:
+    state: present
+    name:
       - x11-ssh-askpass
+    extra_args: --asdeps
+
+- name: Set user configuration
+  template:
+    src: settings/settings.json.j2
+    dest: "/home/{{ user_name }}/.config/Code - OSS/User/settings.json"
+    owner: "{{ user_name }}"
+    group: "{{ user_name }}"
+    mode: u+rw,g+r,o+r

@@ -1,4 +1,5 @@
 ---
+
 - name: Set language support
   locale_gen:
     name: "{{ item }}"
@@ -20,3 +21,20 @@
     role_language_timeFormat: "{{ language_timeFormat }}"
     role_language_collate: "{{ language_collate }}"
   # notify: Set immediately language
+
+- name: Installation of dictionaries
+  pacman:
+    state: present
+    name:
+      - hunspell
+      - hunspell-en_US
+      - hunspell-fr
+      - aspell
+      - aspell-en
+      - aspell-fr
+      - hyphen
+      - hyphen-en
+      - hyphen-fr
+      - libmythes
+      - mythes-en
+      - mythes-fr

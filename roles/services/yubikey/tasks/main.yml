@@ -11,6 +11,6 @@
 - name: Enable systemd unit pcscd
   become: true
   systemd:
-    name: pcscd.service
+    name: pcscd.socket
     enabled: true
     state: started

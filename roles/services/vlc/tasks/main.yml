@@ -1,9 +1,15 @@
 ---
-- name: Install with dependencies
+
+- name: Installation
   pacman:
     state: present
     name:
       - vlc
+
+- name: Installation of dependencies
+  pacman:
+    state: present
+    name:
       - aalib
       - alsa-lib
       - aom
@@ -12,9 +18,6 @@
       - flac
       - gnu-free-fonts
       - gst-plugins-base-libs
-      - gtk3
-      - jack
-      - kwallet
       - libass
       - libavc1394
       - libbluray
@@ -61,3 +64,4 @@
       - x264
       - x265
       - zvbi
+    extra_args: --asdeps

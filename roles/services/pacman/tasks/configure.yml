@@ -7,7 +7,7 @@
 
 - name: Include tasks for Archlinux
   include_tasks: archlinux/main.yml
-  when: ansible_lsb.id == "Archlinux"
+  when: ansible_os_family == "Archlinux"
 
 - name: Add configuration for pacman
   template:

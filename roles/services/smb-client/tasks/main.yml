@@ -1,0 +1,47 @@
+---
+
+- name: Installation
+  pacman:
+    state: present
+    name:
+      - smbclient
+      - cifs-utils
+
+- name: Create config directory
+  file:
+    path: /etc/samba/
+    state: directory
+    owner: root
+    group: root
+    mode: u+rw,g+r,o+r
+
+- name: Define config
+  template:
+    src: smb.conf.j2
+    dest: /etc/samba/smb.conf
+    owner: root
+    group: root
+    mode: u+rw,g+r,o+r
+
+- name: Open firewall for samba-client
+  ansible.posix.firewalld:
+    service: samba-client
+    zone: home
+    state: enabled
+    permanent: true
+    immediate: yes
+
+
+# - name: Activate winbind service for resolve host names
+#   become: true
+#   systemd:
+#     name: winbind.service
+#     enabled: true
+#     state: started
+
+# - name: Activate nmb service for resolve host names
+#   become: true
+#   systemd:
+#     name: nmb.service
+#     enabled: true
+#     state: started

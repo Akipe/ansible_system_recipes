@@ -1,48 +1,65 @@
 ---
 
-- name: Install KDE and base apps
+- name: Installation of KDE
   pacman:
     state: present
-    name: "{{ kde_appToInstall_base_archlinux }}"
+    name: "{{ item }}"
+  loop:
+    - "{{ kde_app_meta_archlinux }}"
+    - "{{ kde_app_workspace_archlinux }}"
+    - "{{ kde_app_wayland_archlinux }}"
+    - "{{ kde_app_xdguserdirs_archlinux }}"
+    - "{{ kde_app_systemtrayicon_archlinux }}"
+    - "{{ kde_app_dolphin_rawthumbnailer_archlinux }}"
+    - "{{ kde_app_partition_archlinux }}"
+    - "{{ kde_app_wacom_archlinux }}"
+    - "{{ kde_app_utils_theme_archlinux }}"
+    - "{{ kde_app_theme_materia_archlinux }}"
 
-# - name: Install KDE apps (AUR)
-#   become: yes
-#   become_user: ansible_aur
-#   aur:
-#     use: yay
-#     state: present
-#     aur_only: yes
-#     name: "{{ kde_appToInstall_base_archlinux_aur }}"
-
-# - name: Install Thunar
-#   pacman:
-#     state: present
-#     name: "{{ kde_appToInstall_thunar_archlinux }}"
-
-- name: Install Dolphin
+- name: Installation of KDE dependencies
   pacman:
     state: present
-    name: "{{ kde_appToInstall_dolphin_archlinux }}"
+    name: "{{ item }}"
+    extra_args: --asdeps
+  loop:
+    - "{{ kde_app_kdeplasma_optional_archlinux }}"
+    - "{{ kde_app_workspace_optional_archlinux }}"
+    - "{{ kde_app_print_optional_archlinux }}"
+    - "{{ kde_app_kio_optional_archlinux }}"
+    - "{{ kde_app_kdepim_optional_archlinux }}"
+    - "{{ kde_app_dolphin_optional_archlinux }}"
+    - "{{ kde_app_okular_optional_archlinux }}"
+    - "{{ kde_app_kdeconnect_optional_archlinux }}"
+    - "{{ kde_app_theme_materia_optional_archlinux }}"
 
-# - name: Install Dolphin (AUR)
-#   become: yes
-#   become_user: ansible_aur
-#   aur:
-#     use: yay
-#     state: present
-#     aur_only: yes
-#     name:
-#       - resvg
-#       - kde-thumbnailer-apk
-#       - kde-thumbnailer-blender
-#       - kde-thumbnailer-epub
+- name: set Materia theme for gtk2 apps (user)
+  template:
+    src: theme/gtk2/gtkrc-2.0.j2
+    dest: "/home/{{ user_name }}/.gtkrc-2.0"
+    owner: "{{ user_name }}"
+    group: "{{ user_name }}"
+    mode: u+rw,g+r,o+r
 
-- name: Install apps utils for theming
-  pacman:
-    state: present
-    name: "{{ kde_app_utils_theme_archlinux }}"
+- name: set gtk2 theme for root same as user
+  file:
+    state: link
+    src: "/home/{{ user_name }}/.gtkrc-2.0"
+    dest: /etc/gtk-2.0/gtkrc
+    owner: root
+    group: root
 
-- name: Install themes Materia
-  pacman:
-    state: present
-    name: "{{ kde_app_theme_materia_archlinux }}"
+- name: set Materia theme for gtk3 apps (user)
+  template:
+    src: theme/gtk3/settings.ini.j2
+    dest: "/home/{{ user_name }}/.config/gtk-3.0/settings.ini"
+    owner: "{{ user_name }}"
+    group: "{{ user_name }}"
+    mode: u+rw,g+r,o+r
+
+- name: set gtk3 theme for root same as user
+  file:
+    state: link
+    src: "/home/{{ user_name }}/.config/gtk-3.0/settings.ini"
+    dest: /etc/gtk-3.0/settings.ini
+    owner: root
+    group: root

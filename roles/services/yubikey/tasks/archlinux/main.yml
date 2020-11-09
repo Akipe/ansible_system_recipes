@@ -11,6 +11,4 @@
     - yubikey-personalization-gui
     - yubioath-desktop
     - yubikey-full-disk-encryption
-    - pcsclite
     - libu2f-host
-    - libusb-compat

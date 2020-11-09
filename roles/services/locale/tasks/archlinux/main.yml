@@ -1,4 +1,5 @@
 ---
+
 - name: Include categories tasks
   include_tasks: "{{ item }}.yml"
   loop:

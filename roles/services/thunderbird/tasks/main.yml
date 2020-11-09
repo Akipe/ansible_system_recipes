@@ -1,0 +1,8 @@
+---
+
+- name: Installation
+  pacman:
+    state: present
+    name:
+      - thunderbird
+      - thunderbird-i18n-fr

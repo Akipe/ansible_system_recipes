@@ -415,7 +415,7 @@ showtools shell, bootorder, gdisk, memtest, mok_tool, windows_recovery, about, h
 # (extra_kernel_version_strings "") or comment out the option to disable it.
 # Default is no extra version strings
 #
-#extra_kernel_version_strings linux-lts,linux
+extra_kernel_version_strings linux-hardened,linux-zen,linux-lts,linux
 
 # Set the maximum number of tags that can be displayed on the screen at
 # any time. If more loaders are discovered than this value, rEFInd shows
@@ -631,4 +631,4 @@ menuentry "My macOS" {
     disabled
 }
 
-include refind-theme-maia/theme.conf
+include refind-theme-regular/theme.conf

@@ -70,10 +70,26 @@
     owner: root
     group: root
     mode: u+rw,g+r,o+r
+    validate: '/usr/sbin/sshd -t -f %s'
   notify: Restart SSH server
+
+- name: set file permissions
+  file:
+    path: /etc/ssh
+    owner: root
+    group: root
+    mode: 0600
 
 - name: Start and enable SSH server
   systemd:
     name: sshd.service
     enabled: yes
     state: started
+
+- name: Open firewall for sshd 
+  ansible.posix.firewalld:
+    service: ssh
+    zone: home
+    state: enabled
+    permanent: true
+    immediate: yes

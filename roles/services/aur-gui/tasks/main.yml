@@ -6,4 +6,4 @@
     use: yay
     state: present
     name:
-      - pamac-aur
+      - pamac-all

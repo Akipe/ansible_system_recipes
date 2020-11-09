@@ -1,6 +1,6 @@
 ---
 
-- name: Install fish
-  pacman:
-    state: present
-    name: fish
+# - name: Install fish
+#   pacman:
+#     state: present
+#     name: fish

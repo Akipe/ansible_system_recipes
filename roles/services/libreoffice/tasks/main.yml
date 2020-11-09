@@ -1,14 +1,20 @@
 ---
-- name: Installation with somes extensions
+
+- name: Installation
   pacman:
     state: present
     name:
       - libreoffice-fresh
       - libreoffice-fresh-fr
-      - libreoffice-extension-texmaths
-      - libreoffice-extension-writer2latex
 
-- name: Install grammalecte extension
+- name: Installation of dependencies
+  pacman:
+    state: present
+    name:
+      - gst-plugins-base-libs
+    extra_args: --asdeps
+
+- name: Installation of grammalecte extension
   become: yes
   become_user: ansible_aur
   aur:
@@ -16,23 +22,6 @@
     state: present
     name:
       - libreoffice-extension-grammalecte-fr
-
-- name: Installation of dictionaries
-  pacman:
-    state: present
-    name:
-      - hunspell
-      - hunspell-en_US
-      - hunspell-fr
-      - aspell
-      - aspell-en
-      - aspell-fr
-      - hyphen
-      - hyphen-en
-      - hyphen-fr
-      - libmythes
-      - mythes-en
-      - mythes-fr
 
 # - name: Add configuration to use GTK3 theme
 #   lineinfile:
