@@ -43,6 +43,14 @@
   loop:
     - "{{ kde_app_systemtrayicon_archlinux_aur }}"
 
+- name: Open firewall for kdeconnect
+  ansible.posix.firewalld:
+    service: kdeconnect
+    zone: home
+    state: enabled
+    permanent: true
+    immediate: yes
+
 - name: set Materia theme for gtk2 apps (user)
   template:
     src: theme/gtk2/gtkrc-2.0.j2
