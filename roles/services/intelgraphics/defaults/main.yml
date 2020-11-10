@@ -1,0 +1,18 @@
+---
+
+# X.org driver, not recommended to install
+# https://wiki.archlinux.org/index.php/Intel_graphics#Installation
+intelgraphics_install_xorgdriver:       no
+
+# Vulkan
+intelgraphics_install_vulkan:           yes
+
+# Video acceleration, can empty or set:
+# intel-media-driver|libva-intel-driver|libva-intel-driver-hybrid|libva-intel-driver-g45
+intelgraphics_install_video_driver: no
+intelgraphics_install_video_utils:  no
+
+# GPGPU driver, can be empty or set:
+# intel-computer-runtime|beignet|intel-opencl-runtime|
+intelgraphics_install_gpgpu_driver: no
+intelgraphics_install_gpgpu_utils: no

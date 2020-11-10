@@ -2,32 +2,53 @@
 
 intelgraphics_app_base_archlinux:
   - mesa
-  - vulkan-intel
   - lib32-mesa
-  - lib32-vulkan-intel
 
-intelgraphics_app_video_iHD_archlinux:
+intelgraphics_app_vulkan_archlinux:
+  - vulkan-intel
+  - vulkan-mesa-layers
+  - vulkan-icd-loader
+  - lib32-vulkan-intel
+  - lib32-vulkan-mesa-layers
+  - lib32-vulkan-icd-loader
+
+intelgraphics_app_xorgdriver_archlinux:
+  - xf86-video-intel
+
+intelgraphics_app_video_intelmediadriver_archlinux:
   - intel-media-driver
   - libvdpau-va-gl
-  - libva-utils
-  - vdpauinfo
 
-intelgraphics_app_video_i965_archlinux:
+intelgraphics_app_video_libvainteldriver_archlinux:
   - libva-intel-driver
   - lib32-libva-intel-driver
   - libvdpau-va-gl
+
+intelgraphics_app_video_libvainteldriverhybrid_archlinux_aur:
+  - libva-intel-driver-hybrid
+  - intel-hybrid-codec-driver
+  - libvdpau-va-gl
+
+intelgraphics_app_video_libvainteldriver_g45_archlinux_aur:
+  - libva-intel-driver-g45-h264
+  - libvdpau-va-gl
+
+intelgraphics_app_video_utils_archlinux:
   - libva-utils
   - vdpauinfo
 
-intelgraphics_app_gpgpu_beignet_archlinux:
-  - ocl-icd
+intelgraphics_app_gpgpu_intelcomputeruntime_archlinux:
+  - intel-compute-runtime
+
+intelgraphics_app_gpgpu_beignet_archlinux_aur:
   - beignet
-  - clinfo
+
+intelgraphics_app_gpgpu_intelopenclruntime_archlinux_aur:
+  - intel-opencl-runtime
+
+intelgraphics_app_gpgpu_loader_archlinux:
+  - ocl-icd
   - lib32-ocl-icd
 
-intelgraphics_app_gpgpu_intelComputeRuntime_archlinux:
-  - ocl-icd
-  - intel-compute-runtime
-  - libva
+intelgraphics_app_gpgpu_utils_archlinux:
   - clinfo
-  - lib32-ocl-icd
