@@ -18,12 +18,12 @@ adress_akpnet10g1_akpserver01: "{{ vault_adress_akpnet10g1_akpserver01 }}"
 ipv6_akpnet10g1_akpContainers01:          "{{ vault_ipv6_akpnet10g1_akpContainers01 }}"
 ipv6_akpnet10g1_akpContainers01_size:     "{{ vault_ipv6_akpnet10g1_akpContainers01_size }}"
 
-network_akpnet10g1_ipv6:                  "{{ vault_adress_akpnet10g1_akpserver01 }}"
-network_akpnet10g1_akpserver01_ipv6:      "{{ vault_adress_akpnet10g1_akpserver01 }}"
+network_akpnet10g1_ipv6:                  "{{ vault_network_akpnet10g1_ipv6 }}"
+network_akpnet10g1_akpserver01_ipv6:      "{{ vault_network_akpnet10g1_akpserver01_ipv6 }}"
 
-network_akpnet10g2_ipv6:                  "{{ vault_adress_akpnet10g1_akpserver01 }}"
-network_akpnet10g2_akpserver01_ipv6:      "{{ vault_adress_akpnet10g1_akpserver01 }}"
-network_akpnet10g2_akpdesktopbuild_ipv6:  "{{ vault_adress_akpnet10g1_akpserver01 }}"
+network_akpnet10g2_ipv6:                  "{{ vault_network_akpnet10g2_ipv6 }}"
+network_akpnet10g2_akpserver01_ipv6:      "{{ vault_network_akpnet10g2_akpserver01_ipv6 }}"
+network_akpnet10g2_akpdesktopbuild_ipv6:  "{{ vault_network_akpnet10g2_akpdesktopbuild_ipv6 }}"
 
 url_dns_reverse: "{{ vault_url_dns_reverse }}"
 url_akpHome: "{{ vault_url_akpHome }}"
