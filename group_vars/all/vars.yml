@@ -59,7 +59,7 @@ ssh_key:
 
 time_timezone: Europe/Paris
 time_ntpServers:
-  - "{{ vault_ntp_lan_server }}"
+  - "{{ vault_network_ntp_akplan_server }}"
 time_ntpServers_fallback:
   - 0.fr.pool.ntp.fr
   - 1.fr.pool.ntp.fr 
