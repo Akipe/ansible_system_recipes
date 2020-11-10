@@ -33,6 +33,14 @@
     enabled: yes
   when: (role_syncthing_start_as_superuser is defined) or (role_syncthing_start_as_superuser)
 
+- name: Open firewall for syncthing
+  ansible.posix.firewalld:
+    service: syncthing
+    zone: home
+    state: enabled
+    permanent: true
+    immediate: yes
+
 # todo: configure ~/.config/syncthing/config.xml
 
 # 127.0.0.1:8384 > 0.0.0.0:8384
