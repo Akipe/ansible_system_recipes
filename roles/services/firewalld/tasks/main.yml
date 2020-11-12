@@ -20,3 +20,4 @@
     state:      enabled
   with_items:
     - '{{ networks }}'
+  when: networks is defined
