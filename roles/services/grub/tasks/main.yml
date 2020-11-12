@@ -1,1 +1,17 @@
 ---
+
+- name: Installation
+  pacman:
+    state: present
+    name:
+      - grub
+
+- name: Set configuration
+  template:
+    src: default.grub.cfg.j2
+    dest: /etc/default/grub
+    owner: root
+    group: root
+    mode: u+rw,g+r,o+r
+  notify:
+    - Re-generate the Grub configuration
