@@ -50,7 +50,7 @@
     use: yay
     state: present
     aur_only: yes
-    name: "{{ intelgraphics_app_video_libvainteldriver_g45_archlinux_AUR }}"
+    name: libva-intel-driver-g45-h264
   when: intelgraphics_install_video_driver == "libva-intel-driver-g45"
 
 - name: Install video acceleration utils
@@ -104,12 +104,12 @@
 - name: Check if video decode use libva driver
   set_fact:
     video_acceleration_type: "i965"
-  when: "libva" in intelgraphics_install_video_driver
+  when: intelgraphics_install_video_driver == "libva-intel-driver" or intelgraphics_install_video_driver == "libva-intel-driver-hybrid" or intelgraphics_install_video_driver == "libva-intel-driver-g45" 
 
 - name: Check if video decode use Intel Media driver
   set_fact:
     video_acceleration_type: "iHD"
-  when: intelgraphics_install_video_driver == intel-media-driver
+  when: intelgraphics_install_video_driver == "intel-media-driver"
 
 - name: Enable video acceleration support globally (libva)
   lineinfile:
@@ -128,17 +128,17 @@
     path: /etc/environment
     regexp: '^GST_VAAPI_ALL_DRIVERS='
     line: 'GST_VAAPI_ALL_DRIVERS=1'
-  when: intelgraphics_install_video_driver == intel-media-driver
+  when: intelgraphics_install_video_driver == "intel-media-driver"
 
-- name: Enable video acceleration support for the user (libva and vdpau)
-  become: yes
-  become_user: "{{ user_name }}"
-  template:
-    src: environment.d/video_intel.conf.j2
-    dest: "/home/{{ user_name }}/.config/environment.d/video_intel.conf"
-    owner: "{{ user_name }}"
-    group: "{{ user_name }}"
-    mode: u+rw,g+r,o+r
+# - name: Enable video acceleration support for the user (libva and vdpau)
+#   become: yes
+#   become_user: "{{ user_name }}"
+#   template:
+#     src: environment.d/video_intel.conf.j2
+#     dest: "/home/{{ user_name }}/.config/environment.d/video_intel.conf"
+#     owner: "{{ user_name }}"
+#     group: "{{ user_name }}"
+#     mode: u+rw,g+r,o+r
 
 # - name: Create Xorg configuration directory
 #   file:
@@ -149,14 +149,13 @@
 #     group: root
 #     mode: u+rw,g+r,o+r
 
-# - name: Enable options for intel graphic driver
-#   template:
-#     src: modprobe.d/i915.conf.j2
-#     dest: /etc/modprobe.d/i915.conf
-#     owner: root
-#     group: root
-#     mode: u+rwx,g+rx,o+rx
-#   tags: debug
+- name: Enable options for intel graphic driver
+  template:
+    src: modprobe.d/i915.conf.j2
+    dest: /etc/modprobe.d/i915.conf
+    owner: root
+    group: root
+    mode: u+rwx,g+rx,o+rx
 
 # - name: Add configuration for Xorg
 #   template:
