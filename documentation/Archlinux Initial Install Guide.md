@@ -24,8 +24,17 @@ loadkeys fr
 ```
 
 ### Connect to Wifi
+
 ```
-wifi-menu
+iwctl # Then use tab for command helper
+
+wsc list # For listing wifi devices
+wsc $DEVICE push-button # For using WIFI WPS
+wsc $DEVICE scan
+wsc $DEVICE get-networks # List SSID
+wsc $DEVICE connect $SSID
+
+quit
 ```
 
 ### Enable SSH server
@@ -40,10 +49,11 @@ ip addr show # Get ip for ssh connect
 ssh root@IP_COMPUTER
 ```
 
+### (not needed) Set terminal config
+```
 export TERM=xterm-256color
 export TERM=xterm
-
-
+```
 
 ## On computer
 
@@ -130,6 +140,15 @@ sgdisk --zap-all $PATH_DISK && \
     lsblk
 ```
 
+### BIOS (MBR)
+```
+sfdisk $PATH_DISK << EOF
+,1024M,L
+,${SYSTEM_PARTITION_SIZE}G,L
+EOF
+ && lsblk
+```
+
 ## Create boot partition
 
 ### EFI
@@ -137,10 +156,17 @@ sgdisk --zap-all $PATH_DISK && \
 mkfs.vfat -F32 -n "EFI" /dev/disk/by-partlabel/EFI
 ```
 
+### BIOS (MBR)
+```
+mkfs.ext4 -L akpsysboot ${PATH_DISK}1
+```
+
 ## Encrypt root partition
 
 For SSD : `--align-payload=8192`
+
 ```
+# SSD or HDD with 4k bytes sectors
 cryptsetup \
     --type luks2 \
     --use-random \
@@ -149,16 +175,31 @@ cryptsetup \
     --cipher aes-xts-plain64 \
     --key-size 512 \
     --label akpcryptsystem \
-    luksFormat /dev/disk/by-partlabel/akpcryptsystem
+    luksFormat $PATH_PARTITION_SYSENCRYPT
 
-cryptsetup luksOpen --allow-discards /dev/disk/by-partlabel/akpcryptsystem akpsystem
+# HDD or devices with 512 bytes sectors
+cryptsetup \
+    --type luks2 \
+    --use-random \
+    --iter-time 5000 \
+    --cipher aes-xts-plain64 \
+    --key-size 512 \
+    --label akpcryptsystem \
+    luksFormat $PATH_PARTITION_SYSENCRYPT
+
+cryptsetup luksOpen --allow-discards $PATH_PARTITION_SYSENCRYPT akpsystem
 ```
 
 ## Set up LVM2
-For SSD : `--dataalignment 4M`
 ```
-pvcreate --dataalignment 4M /dev/mapper/akpsystem && \
-    vgcreate akpsystem /dev/mapper/akpsystem && \
+# SSD or HDD with 4k bytes sectors
+pvcreate --dataalignment 4M /dev/mapper/akpsystem
+
+# HDD or devices with 512 bytes sectors
+pvcreate /dev/mapper/akpsystem
+
+
+vgcreate akpsystem /dev/mapper/akpsystem && \
     lvcreate --size ${SWAP_PARTITION_SIZE}G akpsystem --name swap && \
     lvcreate -l +100%FREE akpsystem --name root && \
     lvdisplay
@@ -174,7 +215,7 @@ mkfs.ext4 -L akpsysroot /dev/mapper/akpsystem-root && \
 ```
 mount /dev/mapper/akpsystem-root /mnt && \
     mkdir /mnt/boot && \
-    mount -L EFI /mnt/boot && \
+    mount ${PATH_DISK}1 /mnt/boot && \
     swapon /dev/mapper/akpsystem-swap && \
     lsblk
 ```
@@ -212,7 +253,7 @@ arch-chroot /mnt /bin/bash
 ## Configure decryption
 ```
 echo -e "
-akpsystem PARTLABEL=akpcryptsystem none timeout=180,discard
+akpsystem LABEL=akpcryptsystem none timeout=180,discard
 " > /etc/crypttab.initramfs && \
     less /etc/crypttab.initramfs && \
     mkinitcpio -P
@@ -330,7 +371,6 @@ pacman --needed --noconfirm -S refind gptfdisk imagemagick python && \
 
 ## systemd-boot (EFI)
 
-### Install
 ```
 pacman --needed --noconfirm -S refind && \
     bootctl --path=/boot install && \
@@ -358,6 +398,14 @@ options root=/dev/mapper/akpsystem rootflags=subvol=@root rd.luks.options=discar
     less /boot/loader/entries/akpos-lts.conf
 ```
 
+## GRUB (BIOS, MBR)
+```
+pacman --needed --noconfirm -S grub && \
+    grub-install --target=i386-pc --recheck ${PATH_DISK} && \
+    sed -i 's/GRUB_CMDLINE_LINUX=""/GRUB_CMDLINE_LINUX="root=\/dev\/mapper\/akpsystem-root rd.luks.options=discard resume=\/dev\/mapper\/akpsystem-swap quiet rw"/g' /etc/default/grub && \
+    less /etc/default/grub && \
+    grub-mkconfig -o /boot/grub/grub.cfg
+```
 
 # Installer
 
@@ -470,10 +518,27 @@ nmcli --ask dev(ice) wifi connect WIFI_SSID_NAME
 ```
 
 
-
 # Post-Install
 
-## Emergency with Live-CD
+## Install KDE
+```
+sudo pacman -S --needed \
+        plasma-meta \
+        kde-system-meta \
+        kde-pim-meta \
+        kde-accessibility-meta \
+        kde-utilities-meta \
+        kde-network-meta \
+        kde-graphics-meta \
+        kde-multimedia-meta \
+        kde-sdk-meta \
+        phonon-qt5-gstreamer \
+        plasma-workspace && \
+    sudo systemctl enable sddm.service
+```
+
+
+# Emergency with Arch Live-CD
 
 ### Mount the system (to /mnt)
 ```
