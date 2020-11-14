@@ -20,7 +20,7 @@ listUsers:
 
 locale_keyboard_map: fr
 
-encryption_boot_option: "akpsystem PARTLABEL=akpcryptsystem none timeout=180,discard"
+encryption_boot_option: "akpsystem LABEL=akpcryptsystem none timeout=180,discard"
 
 bootloader_timeout: 20
 bootloader_options:
