@@ -22,6 +22,8 @@
     #     role_swap_type:       "file"
     #     role_swap_filesystem: "btrfs"
     #     role_swap_bootloader: "systemd-boot"
+    - { role: bash, tags: bash }
+    - { role: fish, tags: fish }
     - { role: refind, tags: refind }
     - { role: dm-crypt, tags: dm-crypt }
     - { role: plymouth, tags: plymouth }
@@ -67,8 +69,6 @@
     ### Reboot
     # - { role: base-reboot, tags: base-reboot }
     ### CLI apps
-    - { role: bash, tags: bash }
-    - { role: fish, tags: fish }
     - { role: yubikey, tags: yubikey }
     - { role: gnupg, tags: gnupg }
     - { role: git, tags: git }
