@@ -67,6 +67,8 @@ kde_app_kio_optional_archlinux:
   - taglib
   - perl
   - openexr
+  - kio-fuse
+  - icoutils
 
 # kde-pim
 
