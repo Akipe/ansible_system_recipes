@@ -45,3 +45,32 @@
     group: "{{ item.name }}"
     mode: u+rwx,g+rx,o+rx
   loop: "{{ role_user_listUsers }}"
+
+- name: Create systemd user binaries directory
+  file:
+    path: "/home/{{ item.name }}/.local/bin"
+    state: directory
+    owner: "{{ item.name }}"
+    group: "{{ item.name }}"
+    mode: u+rwx,g+rx,o+rx
+  loop: "{{ role_user_listUsers }}"
+
+- name: Add systemd user binaries directory to $PATH for Bash
+  become: yes
+  become_user: "{{ user_name }}"
+  template:
+    src: bash.d/systemd_user_bin.bash.j2
+    dest: "/home/{{ user_name }}/.config/bash/conf.d/systemd_user_bin.bash"
+    owner: "{{ user_name }}"
+    group: "{{ user_name }}"
+    mode: u+rw,g+r,o+r
+
+- name: Add systemd user binaries directory to $PATH for Fish
+  become: yes
+  become_user: "{{ user_name }}"
+  template:
+    src: fish.d/systemd_user_bin.fish.j2
+    dest: "/home/{{ user_name }}/.config/fish/conf.d/systemd_user_bin.fish"
+    owner: "{{ user_name }}"
+    group: "{{ user_name }}"
+    mode: u+rw,g+r,o+r
