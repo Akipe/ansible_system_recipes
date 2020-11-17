@@ -99,6 +99,7 @@
     - { role: obs-studio, tags: obs-studio }
     - { role: scribus, tags: scribus }
     - { role: qbittorrent, tags: qbittorrent }
+    - { role: pcmanfm, tags: pcmanfm }
     ### Development
     - { role: ansible-host, tags: ansible-host }
     ### General
