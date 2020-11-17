@@ -14,3 +14,12 @@
     name: pcscd.socket
     enabled: true
     state: started
+
+- name: Add script for rotate with several Yubikey key for SSH
+  template:
+    src: yk_rotate.bash.j2
+    dest: "/home/{{ item.name }}/.local/bin/yk_rotate.bash"
+    owner: "{{ item.name }}"
+    group: "{{ item.name }}"
+    mode: u+rwx,g+rx,o+rx
+  loop: "{{ role_user_listUsers }}"
