@@ -105,4 +105,4 @@
     # - { role: user-dotnet-config, tags: user-dotnet-config }
     
     ### Remove uncessary AUR builder user
-    # - { role: aur-cli-clean, tags: aur-cli }
+    - { role: aur-cli-clean, tags: aur-cli }
