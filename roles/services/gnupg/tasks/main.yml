@@ -38,20 +38,15 @@
     group: "{{ user_name }}"
     mode: u+rw,g-rwx,o-rwx
 
-- name: Set configuration for SSH authentification in bash.rc
+- name: Set configuration for SSH authentification for bash
   become: yes
   become_user: "{{ user_name }}"
-  blockinfile:
-    path: "/home/{{ user_name }}/.bashrc"
-#    insertafter: .*SSH authentification with GnuPG
-    block: |
-      # SSH authentification with GnuPG
-      export GPG_TTY=$(tty)
-      gpg-connect-agent updatestartuptty /bye > /dev/null
-      unset SSH_AGENT_PID
-      if [ "${gnupg_SSH_AUTH_SOCK_by:-0}" -ne $$ ]; then
-        export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
-      fi
+  template:
+    src: bash/gpg-agent.bash.j2
+    dest: "/home/{{ user_name }}/.config/bash/conf.d/gpg-agent.bash"
+    owner: "{{ user_name }}"
+    group: "{{ user_name }}"
+    mode: u+rw,g+r,o+r
 
 - name: Set configuration for SSH authentification for fish
   become: yes
@@ -62,14 +57,6 @@
     owner: "{{ user_name }}"
     group: "{{ user_name }}"
     mode: u+rw,g+r,o+r
-
-# - name: Autoload fish configuration
-#   become: yes
-#   become_user: "{{ user_name }}"
-#   lineinfile:
-#     path: "/home/{{ user_name }}/.config/fish/config.fish"
-#     regexp: 'gnupg.fish'
-#     line: 'source ~/.config/fish/gnupg.fish'
 
 - name: Enable systemd unit pcscd
   become: true
