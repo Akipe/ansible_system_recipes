@@ -10,3 +10,22 @@
     state: present
     name: bash-completion
     extra_args: --asdeps
+
+- name: Create Bash autoloader directory
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ user_name }}"
+    group: "{{ user_name }}"
+    mode: u+rwx,g+rx,o+rx
+  with_items:
+    - "/home/{{ user_name }}/.config/bash"
+    - "/home/{{ user_name }}/.config/bash/conf.d"
+
+- name: Set main configuration
+  template:
+    src: archlinux/bashrc.j2
+    dest: "/home/{{ user_name }}/.bashrc"
+    owner: "{{ user_name }}"
+    group: "{{ user_name }}"
+    mode: u+rw,g+r,o+r

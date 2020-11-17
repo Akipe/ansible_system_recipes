@@ -1,0 +1,13 @@
+## {{ ansible_managed }}
+#
+# ~/.bashrc
+#
+
+# If not running interactively, don't do anything
+[[ $- != *i* ]] && return
+
+alias ls='ls --color=auto'
+PS1='[\u@\h \W]\$ '
+
+# Autoloader for bash configuration
+source ~/.config/bash/conf.d/*.bash
