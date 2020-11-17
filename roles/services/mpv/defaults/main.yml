@@ -1,0 +1,25 @@
+---
+
+# https://mpv.io/manual/stable/#options
+
+mpv_config_vo:                      gpu
+mpv_config_hwdec:                   auto
+
+# Autodetect number of cores on the machine and use that, up to the maximum of 16
+mpv_config_vd_lavc_threads:         "0"
+
+mpv_config_profile:                 gpu-hq
+mpv_config_scale:                   ewa_lanczossharp
+mpv_config_cscale:                  ewa_lanczossharp
+mpv_config_tscale:                  oversample
+mpv_config_video_sync:              display-resample
+mpv_config_interpolation:           yes
+
+mpv_config_cache:                   auto
+mpv_config_demuxer_max_bytes:       500M
+mpv_config_demuxer_max_back_bytes:  100M
+mpv_config_cache_pause:             "no"
+
+mpv_config_audio_channels:          auto
+
+mpv_config_ytdl_format:             best

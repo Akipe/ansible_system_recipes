@@ -4,19 +4,19 @@
 # video settings #                                                                                                      
 ##################
 
-vo=gpu
+vo={{ mpv_config_vo }}
 
 # Start in fullscreen mode by default.                                                                                  
 #fs=yes                                                                                                                 
                                                                                                                         
 # force starting with centered window                                                                                   
-#geometry=50%:50%                                                                                                       
+geometry=50%:50%                                                                                                       
 
 # don't allow a new window to have a size larger than 90% of the screen size
-#autofit-larger=90%x90%
+autofit-larger=90%x90%
 
 # Do not close the window on exit.
-#keep-open=yes
+keep-open=yes
 
 # Do not wait with showing the video window until it has loaded. (This will
 # resize the window once video is loaded. Also always shows a window with
@@ -31,25 +31,28 @@ vo=gpu
 
 # Specify high quality video rendering preset (for --vo=gpu only)
 # Can cause performance problems with some drivers and GPUs. 
-profile=gpu-hq
+profile={{ mpv_config_profile }}
 
 # Force video to lock on the display's refresh rate, and change video and audio
 # speed to some degree to ensure synchronous playback - can cause problems
 # with some drivers and desktop environments.
-video-sync=display-resample
+video-sync={{ mpv_config_video_sync }}
 
 # Enable hardware decoding if available. Often, this does not work with all
 # video outputs, but should work well with default settings on most systems.
 # If performance or energy usage is an issue, forcing the vdpau or vaapi VOs
 # may or may not help.
-hwdec=vaapi
-hwdec-codecs=all
+hwdec={{ mpv_config_hwdec }}
+
+{%- if mpv_config_interpolation is sameas true -%}
 interpolation
+{%- endif -%}
 
-scale=oversample
-tscale=oversample
+scale={{ mpv_config_scale }}
+cscale={{ mpv_config_cscale }}
+tscale={{ mpv_config_tscale }}
 
-vd-lavc-threads=4
+vd-lavc-threads={{ mpv_config_vd_lavc_threads }}
 
 ##################
 # audio settings #
@@ -67,7 +70,7 @@ vd-lavc-threads=4
 # Disable any automatic remix, _if_ the audio output accepts the audio format.
 # of the currently played file. See caveats mentioned in the manpage.
 # (The default is "auto-safe", see manpage.)
-#audio-channels=auto
+audio-channels={{ mpv_config_audio_channels }}
 
 ##################
 # other settings #
@@ -80,15 +83,15 @@ vd-lavc-threads=4
 # cache settings
 #
 # Use a large seekable RAM cache even for local input.
-cache=auto
+cache={{ mpv_config_cache }}
 #
 # Use extra large RAM cache (needs cache=yes to make it useful).
-#demuxer-max-bytes=500M
-#demuxer-max-back-bytes=100M
+demuxer-max-bytes={{ mpv_config_demuxer_max_bytes }}
+demuxer-max-back-bytes={{ mpv_config_demuxer_max_back_bytes }}
 #
 # Disable the behavior that the player will pause if the cache goes below a
 # certain fill size.
-#cache-pause=no
+cache-pause={{ mpv_config_cache_pause }}
 #
 # Store cache payload on the hard disk instead of in RAM. (This may negatively
 # impact performance unless used for slow input such as network.)
@@ -109,13 +112,7 @@ cache=auto
 # You can also include other configuration files.
 #include=/path/to/the/file/you/want/to/include
 
-cache-default=32768
-cache = 32768
-cache-initial=0
-cache-backbuffer=25000
-cache-secs=20
-
-ytdl-format=best
+ytdl-format={{ mpv_config_ytdl_format }}
 
 ############
 # Profiles #
