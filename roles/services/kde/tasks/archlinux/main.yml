@@ -15,6 +15,7 @@
     - "{{ kde_app_wacom_archlinux }}"
     - "{{ kde_app_utils_theme_archlinux }}"
     - "{{ kde_app_theme_materia_archlinux }}"
+    - "{{ kde_app_kget_archlinux }}"
 
 - name: Installation of KDE dependencies
   pacman:
@@ -31,6 +32,7 @@
     - "{{ kde_app_okular_optional_archlinux }}"
     - "{{ kde_app_kdeconnect_optional_archlinux }}"
     - "{{ kde_app_theme_materia_optional_archlinux }}"
+    - "{{ kde_app_kget_archlinux_optional }}"
 
 # todo: import "gpg --keyserver hkp://keys.gnupg.net:80 --recv-keys 6FC05581A37D71FCECE165DB5BE41E162CD6358E"
 # for libappindicator-sharp
@@ -44,6 +46,7 @@
     name: "{{ item }}"
   loop:
     - "{{ kde_app_systemtrayicon_archlinux_aur }}"
+    - "{{ kde_app_kget_archlinux_aur }}"
 
 - name: Open firewall for kdeconnect
   ansible.posix.firewalld:

@@ -111,6 +111,17 @@ kde_app_wacom_archlinux:
 kde_app_kdeconnect_optional_archlinux:
   - sshfs
 
+# kget
+
+kde_app_kget_archlinux:
+  - kget
+kde_app_kget_archlinux_optional:
+  - libktorrent
+  - libmms
+kde_app_kget_archlinux_aur:
+  - kget-integrator-firefox
+  - kget-integrator-chromium
+
 # themes
 
 kde_app_utils_theme_archlinux:
