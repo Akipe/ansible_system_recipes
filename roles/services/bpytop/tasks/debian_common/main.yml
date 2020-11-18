@@ -1,0 +1,7 @@
+---
+
+- name: Installation
+  ansible.builtin.pip:
+    state: latest
+    name:
+      - bpytop
