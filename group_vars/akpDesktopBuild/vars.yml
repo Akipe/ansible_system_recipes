@@ -38,6 +38,8 @@ bootloader_options:
 # - "audit=1"
 # - "usbhid.quirks=0x1b1c:0x1b55:0x20000408"
 
+bash_configuration_mode: archlinux
+
 networks:
   - name:           akpnet
     conn_name:      my-enp7s0
