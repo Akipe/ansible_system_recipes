@@ -1,4 +1,5 @@
 ---
+
 - name: Load roles concerning akpServer02
   hosts: akpServer02
   become_user: root
@@ -16,8 +17,23 @@
     ### Hardware
     - { role: disk, tags: disk }
     ### Commons rules
-    - { role: base-cli, tags: base-cli }
+    # - { role: base-cli, tags: base-cli }
     ### Apps
+    - { role: bash, tags: bash }
     - { role: fish, tags: fish }
+    - { role: man-page, tags: man-page }
+    - { role: wget, tags: wget }
+    - { role: trash-cli, tags: trash-cli }
+    - { role: top-utils, tags: top-utils }
+    - { role: tmux, tags: tmux }
+    # - { role: rsync, tags: rsync }
+    - { role: neovim, tags: neovim }
+    - { role: lsb-release, tags: lsb-release }
+    - { role: curl, tags: curl }
+    - { role: bpytop, tags: bpytop }
+    - { role: tree, tags: tree }
+    - { role: hwinfo, tags: hwinfo }
+    - { role: dmidecode, tags: dmidecode }
+    - { role: neofetch, tags: neofetch }
     ### Specifics rules
-    - { role: akpserver02, tags: akpserver02 }
+    # - { role: akpserver02, tags: akpserver02 }

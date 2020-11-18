@@ -1,0 +1,8 @@
+---
+
+- name: Load roles concerning akpServer02
+  hosts: akpServer02
+  roles:
+    ### Base
+    - { role: akpserver02_init, tags: akpserver02_init }
+    - { role: sudo, tags: sudo }

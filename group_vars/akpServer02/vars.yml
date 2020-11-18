@@ -4,10 +4,14 @@ ansible_python_interpreter: /usr/bin/python3
 ansible_user:               "{{ user_name }}"
 ansible_become_pass:        "{{ vault_ansible_become_pass }}"
 
+create_user:    "{{ user_name }}"
+
 ssh_port: 22
 ssh_users:
   - name:       "{{ user_name }}"
     public_key: "{{ ssh_public_key }}"
+
+bash_configuration_mode: proxmox
 
 apt:
   unattended_origins_patterns:
