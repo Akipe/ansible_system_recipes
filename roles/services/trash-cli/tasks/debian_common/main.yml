@@ -1,0 +1,7 @@
+---
+
+- name: Installation
+  apt:
+    state: present
+    name:
+      - trash-cli
