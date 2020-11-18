@@ -70,6 +70,7 @@ mkinitcpio_initramfs_modules:
   - sha256
   - sha512
   - crc32c-intel
+  - xhci-hcd
 mkinitcpio_initramfs_hooks:
   - base
   # - udev
