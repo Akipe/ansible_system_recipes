@@ -1,0 +1,8 @@
+---
+
+- name: Installation
+  apt:
+    state: present
+    name:
+      - neovim
+      - xclip
