@@ -1,0 +1,11 @@
+---
+
+- name: Installation
+  apt:
+    state: present
+    name:
+      - htop
+      - iotop
+      - iftop
+      - atop
+      - powertop
