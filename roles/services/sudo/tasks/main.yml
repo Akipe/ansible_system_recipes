@@ -8,6 +8,11 @@
   include_tasks: archlinux/main.yml
   when: ansible_distribution == "Archlinux"
 
+- name: Create wheel group
+  group:
+    name: wheel
+    state: present
+
 - name: Allow wheel group to sudo
   template:
     src: 10-grant-group-wheel-sudo.j2
