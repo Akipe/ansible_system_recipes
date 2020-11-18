@@ -1,0 +1,29 @@
+---
+
+- name: Load tasks for install on Debian & derivate
+  include_tasks: debian_common/main.yml
+  when: ansible_distribution == "Debian" or ansible_distribution == "Ubuntu"
+
+- name: Include tasks for all Archlinux based distributions
+  include_tasks: archlinux_common/main.yml
+  when: ansible_distribution == "Archlinux"
+
+- name: Autostart Neofetch for Bash
+  become: yes
+  become_user: "{{ user_name }}"
+  template:
+    src: bash/config.d/neofetch.bash.j2
+    dest: "/home/{{ user_name }}/.config/bash/conf.d/neofetch.bash"
+    owner: "{{ user_name }}"
+    group: "{{ user_name }}"
+    mode: u+rw,g+r,o+r
+
+- name: Autostart Neofetch for Fish
+  become: yes
+  become_user: "{{ user_name }}"
+  template:
+    src: fish/config.d/neofetch.fish.j2
+    dest: "/home/{{ user_name }}/.config/fish/conf.d/neofetch.fish"
+    owner: "{{ user_name }}"
+    group: "{{ user_name }}"
+    mode: u+rw,g+r,o+r
