@@ -8,6 +8,11 @@
       - repository:
           repo: "deb https://enterprise.proxmox.com/debian/pve buster pve-enterprise"
 
+- name: Remove Proxmox VE enterprise repository file
+  file:
+    state: absent
+    path: /etc/apt/sources.list.d/pve-enterprise.list
+
 - name: Add Proxmox VE no-subscription repository
   include_role:
     name: apt
