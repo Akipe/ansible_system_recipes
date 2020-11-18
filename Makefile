@@ -13,6 +13,9 @@ prepare_vault_password_file:
 prepare_log_directory:
 	mkdir ./log
 
+tf_init:
+	terraform init
+
 run:
 	ansible-playbook $(NODE).yml
 
@@ -35,7 +38,7 @@ run-check:
 get-info:
 	ansible $(NODE) -m setup
 
-init: fetch_git_submodules prepare_vault_password_file prepare_log_directory
+init: fetch_git_submodules prepare_vault_password_file prepare_log_directory tf_init
 
 vault-create:
 ifdef NODE

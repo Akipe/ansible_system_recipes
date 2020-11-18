@@ -1,3 +1,7 @@
+# Project
 .vault_password
 *.retry
 log/*
+
+# Terraform
+**/.terraform/*
