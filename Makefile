@@ -7,8 +7,8 @@ update_git_submodules:
 	git submodule update --remote --merge
 
 prepare_vault_password_file:
-	cp .vault_password.dist .vault_password
-	chmod 660 .vault_password
+	cp .vault_password.env.dist .vault_password.env
+	chmod 600 .vault_password.env
 
 prepare_log_directory:
 	mkdir ./log
