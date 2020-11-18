@@ -85,11 +85,3 @@
     name: sshd.service
     enabled: yes
     state: started
-
-- name: Open firewall for sshd 
-  ansible.posix.firewalld:
-    service: ssh
-    zone: home
-    state: enabled
-    permanent: true
-    immediate: yes
