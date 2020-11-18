@@ -69,6 +69,7 @@
     ### Reboot
     # - { role: base-reboot, tags: base-reboot }
     ### CLI apps
+    - { role: man-page, tags: man-page }
     - { role: yubikey, tags: yubikey }
     - { role: gnupg, tags: gnupg }
     - { role: git, tags: git }
