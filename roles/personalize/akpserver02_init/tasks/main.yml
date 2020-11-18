@@ -1,0 +1,34 @@
+---
+
+- name: Create user
+  user:
+    name: "{{ create_user }}"
+    shell: /bin/bash
+    groups: wheel
+    append: yes
+    create_home: yes
+
+- name: Check if user is already exist in proxmox
+  shell: "pveum user list | grep {{ create_user }}@pam"
+  register: proxmox_init_user_exist
+  ignore_errors: true
+
+- name: Add user to proxmox
+  command: "pveum user add {{ create_user }}@pam"
+  when: proxmox_init_user_exist is failed
+
+- name: Check if user has proxmox permission
+  shell: "pveum user permission {{ create_user }}@pam | grep '/'"
+  register: proxmox_init_user_permission_exist
+  ignore_errors: true
+
+- name: Set user to administrator
+  shell: "pveum aclmod / -user {{ create_user }}@pam -role Administrator"
+  when: proxmox_init_user_permission_exist is failed
+
+- name: Set public key for SSH
+  authorized_key:
+    state: present
+    user: "{{ item.name }}"
+    key: "{{ item.public_key }}"
+  with_items: "{{ ssh_users }}"
