@@ -6,6 +6,22 @@ ansible_become_pass:        "{{ vault_ansible_become_pass }}"
 
 create_user:    "{{ user_name }}"
 
+ssh_firewall_firewalld: no
+
+nut_mode:                                   netclient
+nut_monitor_connect_ups_name:               ups
+nut_monitor_connect_adress:                 "{{ vault_nut_monitor_connect_adress }}"
+nut_monitor_connect_number_power_supplies:  1
+nut_monitor_connect_username:               "{{ vault_nut_monitor_connect_username }}"
+nut_monitor_connect_password:               "{{ vault_nut_monitor_connect_password }}"
+nut_monitor_connect_type:                   slave
+
+akpvmserver_template_name:                akp-vmserver-template
+akpvmserver_template_disk_efi_path:       local-lvm:0
+akpvmserver_template_disk_system_path:    local-lvm:1
+akpvmserver_template_disk_system_size:    "8G"
+akpvmserver_template_archlinux_iso_path:  srv01-iso:iso/archlinux-2020.11.01-x86_64.iso
+
 ssh_port: 22
 ssh_users:
   - name:       "{{ user_name }}"
