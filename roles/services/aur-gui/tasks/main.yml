@@ -1,4 +1,5 @@
 ---
+
 - name: Install Pamac GUI
   become: yes
   become_user: ansible_aur

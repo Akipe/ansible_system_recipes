@@ -1,4 +1,5 @@
 ---
+
 - name: Remove Proxmox VE enterprise repository
   include_role:
     name: apt
