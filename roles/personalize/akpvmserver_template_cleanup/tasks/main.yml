@@ -1,0 +1,21 @@
+---
+
+- name: Cleanup apps
+  pacman:
+    name: 
+      - yay
+      - git
+      - pkgconf
+      - patch
+      - make
+      - autoconf
+      - bison
+      - flex
+      - m4
+      - groff
+      - gcc
+      - automake
+    state: absent
+
+- name: Remove unused dependencies
+  command: pacman -Rsn $(pacman -Qdtq)
