@@ -1,0 +1,212 @@
+---
+
+### Inside Arch live iso
+
+# Time sync
+- name: Fetch date/time
+  shell: |
+    timedatectl set-ntp true
+
+# Prepare Pacman
+- name: Update Pacman cache
+  community.general.pacman:
+    update_cache: yes
+
+- name: Install Reflector
+  community.general.pacman:
+    name: reflector
+    state: present
+
+- name: Edit Pacman mirror list
+  shell: |
+    reflector \
+      --country "{{ pacman_mirror_country }}" \
+      --age 12 \
+      --protocol https \
+      --sort rate \
+      --save /etc/pacman.d/mirrorlist
+
+# Prepare entropy
+- name: Install rng-tools
+  community.general.pacman:
+    name: rng-tools
+    state: present
+
+- name: Start rng-tools
+  ansible.builtin.systemd:
+    name: rngd.service
+    state: started
+
+- name: Get hardware device for entropy
+  command: cat /sys/devices/virtual/misc/hw_random/rng_available
+  register: info_rng_devices
+
+- name: Get entropy available
+  command: cat /proc/sys/kernel/random/entropy_avail
+  register: info_entropy_available
+
+- name: Show hardware device for entropy
+  ansible.builtin.debug:
+    var: info_rng_devices.stdout_lines
+
+- name: Show entropy available
+  ansible.builtin.debug:
+    var: info_entropy_available.stdout_lines
+
+- name: Pause for reading value
+  ansible.builtin.pause:
+    seconds: 5
+
+# Prepare disk & partitions
+- name: Get list disk
+  command: lsblk
+  register: info_disk_list
+
+- name: Show list disk
+  debug:
+    var: info_disk_list.stdout_lines
+
+- name: Pause for reading value
+  ansible.builtin.pause:
+    seconds: 5
+
+- name: Prepare disk size vars
+  shell: echo $(($(blockdev --getsize64 /dev/sda) / 1024 / 1024 / 1024))
+  register: info_disk_size
+
+- name: Prepare disk size vars
+  set_fact:
+    info_disk_system_size: "{{ info_disk_size.stdout | int }}"
+
+- name: Detect if system is EFI or BIOS MBR
+  shell: ls -ld /sys/firmware/efi
+  register: info_is_system_efi
+  ignore_errors: true
+
+- name: Set var for bios type
+  set_fact:
+    info_bios_type: "{{ 'efi' if info_is_system_efi else 'bios' }}"
+
+- name: Show disk to format
+  debug:
+    msg:
+      - "System bios type: {{ info_bios_type }}"
+      - "System disk: {{ archinstall_disk_install_path }} ({{ info_disk_system_size }}G)"
+      - "Boot partition: {{ archinstall_disk_install_path }}1 ({{ archinstall_boot_partition_size }})"
+      - "Root partition: {{ archinstall_disk_install_path }}2 ({{ archinstall_root_partition_size }} of space)"
+
+- name: Are you sure you want continue ? RISK OF DATA LOSES !!!
+  ansible.builtin.pause:
+
+# Create partitions
+- name: Create boot partition (EFI)
+  community.general.parted:
+    device: "{{ archinstall_disk_install_path }}"
+    number: 1
+    state: present
+    label: gpt
+    name: EFI
+    fs_type: fat32
+    part_start: "0%"
+    part_end: "{{ archinstall_boot_partition_size }}"
+  when: info_bios_type == "efi"
+
+- name: Format boot partition (EFI)
+  community.general.filesystem:
+    fstype: vfat
+    dev: "{{ archinstall_disk_install_path }}1"
+    opts: -F32 -n "EFI"
+  when: info_bios_type == "efi"
+
+# - name: Create boot partition (BIOS MBR)
+#   when: info_bios_type == "bios"
+
+# - name: Format boot partition (BIOS MBR)
+#   when: info_bios_type == "bios"
+
+- name: Create root partition
+  community.general.parted:
+    device: "{{ archinstall_disk_install_path }}"
+    number: 2
+    state: present
+    label: gpt
+    name: "{{ archinstall_root_partition_label }}"
+    part_start: "{{ archinstall_boot_partition_size }}"
+    part_end: "{{ archinstall_root_partition_size }}"
+
+- name: Format root partition
+  community.general.filesystem:
+    fstype: ext4
+    dev: "{{ archinstall_disk_install_path }}2"
+    opts: "-L {{ archinstall_root_partition_label }}"
+
+# Mount partitions
+- name: Mount root partition
+  shell: "mount {{ archinstall_root_partition_path }} /mnt"
+
+- name: Create boot partition directory
+  file:
+    path: /mnt/boot
+    state: directory
+
+- name: Mount boot partition
+  shell: "mount {{ archinstall_boot_partition_path }} /mnt/boot"
+
+- name: Get list disk
+  command: lsblk
+  register: info_disk_list
+
+- name: Show list disk
+  debug:
+    var: info_disk_list.stdout_lines
+
+- name: Pause for reading value
+  ansible.builtin.pause:
+    seconds: 5
+
+# Install archlinux
+- name: Install base system
+  shell: |
+    pacstrap /mnt \
+      base \
+      linux-lts \
+      linux-firmware \
+      neovim \
+      sudo
+
+- name: Generate fstab
+  shell: genfstab -pU /mnt >> /mnt/etc/fstab
+
+- name: Copy pacman mirror list
+  ansible.builtin.copy:
+    src: /etc/pacman.d/mirrorlist
+    dest: /mnt/etc/pacman.d/mirrorlist
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
+
+### Inside chroot Arch installed
+# https://www.reddit.com/r/ansible/comments/8kc59a/how_to_use_the_chroot_connection_plugin/
+
+# - name: Chroot to Arch
+# - name: Configure date/time
+# - name: Increase entropy
+# - name: Configure language
+# - name: Set hostname
+# - name: Configure keyboard
+# - name: Configure root user
+# - name: Enable sudo for wheel group
+# - name: mkinitcpio
+# - name: Bootloader
+# - name: systemd-boot (EFI)
+# - name: refind (EFI)
+# - name: GRUB (BIOS, MBR)
+# - name: Pacman
+# - name: yay (AUR)
+# - name: qemu-agent
+# - name: Install cloud-init
+# - name: Config watchdog
+# - name: Enable OpenSSH server
+# - name: Set NTP options
+# - name: Network
+# - name: Reboot
