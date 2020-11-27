@@ -1,4 +1,5 @@
 ---
+
 - name: Blacklist watchdog module kernel
   template:
     src: modprobe.d/disable_watchdog.conf.j2

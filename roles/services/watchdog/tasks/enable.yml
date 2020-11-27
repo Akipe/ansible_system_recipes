@@ -1,2 +1,24 @@
 ---
-# https://pve.proxmox.com/wiki/High_Availability_Cluster_4.x#Hardware_Watchdogs
+
+- name: Installation
+  become: yes
+  become_user: ansible_aur
+  aur:
+    use: yay
+    state: present
+    name:
+      - watchdog
+
+- name: Set configuration
+  template:
+    src: "watchdog/watchdog.conf.j2"
+    dest: "/etc/watchdog.conf"
+    owner: "root"
+    group: "root"
+    mode: u+rw,g+r,o+r
+
+- name: Start and enable systemd service
+  service:
+    name: watchdog.service
+    state: started
+    enabled: yes
