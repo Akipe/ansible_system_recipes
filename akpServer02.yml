@@ -12,7 +12,12 @@
     - { role: apt, tags: apt }
     - { role: linux-kernel, tags: linux-kernel }
     - { role: irqbalance, tags: irqbalance }
+    - { role: tpm2, tags: tpm2 }
     - { role: rngd, tags: rngd }
+    - { role: systemd-journald, tags: systemd-journald }
+    - { role: ipmitool, tags: ipmitool }
+    - { role: nut, tags: nut }
+    # - { role: locale, tags: locale } # todo: do it
     - { role: proxmox, tags: proxmox }
     ### Hardware
     - { role: disk, tags: disk }
@@ -36,4 +41,4 @@
     - { role: dmidecode, tags: dmidecode }
     - { role: neofetch, tags: neofetch }
     ### Specifics rules
-    # - { role: akpserver02, tags: akpserver02 }
+    - { role: akpserver02, tags: akpserver02 }

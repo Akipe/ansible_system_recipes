@@ -6,6 +6,13 @@ ansible_become_pass:        "{{ vault_ansible_become_pass }}"
 
 create_user:    "{{ user_name }}"
 
+user_api_terraform_username:  "{{ vault_user_api_terraform_username }}"
+user_api_terraform_password:  "{{ vault_user_api_terraform_password }}"
+user_api_terraform_publickey: "{{ ssh_public_key }}"
+
+terraform_openstack_image_storage_path:   /mnt/pve/srv01-iso/template/iso
+terraform_openstack_image_url_archlinux:  https://linuximages.de/openstack/arch/arch-openstack-LATEST-image-bootstrap.qcow2
+
 ssh_firewall_firewalld: no
 
 nut_mode:                                   netclient
@@ -25,6 +32,8 @@ akpvmserver_template_archlinux_iso_path:  srv01-iso:iso/archlinux-2020.11.01-x86
 ssh_port: 22
 ssh_users:
   - name:       "{{ user_name }}"
+    public_key: "{{ ssh_public_key }}"
+  - name:       "{{ user_api_terraform_username }}"
     public_key: "{{ ssh_public_key }}"
 
 bash_configuration_mode: proxmox
