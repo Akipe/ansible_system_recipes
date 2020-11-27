@@ -1,0 +1,27 @@
+---
+
+- name: Load tasks for install on Debian & derivate
+  include_tasks: debian/main.yml
+  when: ansible_distribution == "Debian" or ansible_distribution == "Ubuntu"
+
+- name: Load tasks for install on Archlinux
+  include_tasks: archlinux/main.yml
+  when: ansible_distribution == "Archlinux"
+
+- name: Enable cloud-init
+  service:
+    name: cloud-init.service
+    state: started
+    enabled: yes
+
+- name: Enable cloud-init (config)
+  service:
+    name: cloud-config.service
+    state: started
+    enabled: yes
+
+- name: Enable cloud-init (final)
+  service:
+    name: cloud-final.service
+    state: started
+    enabled: yes

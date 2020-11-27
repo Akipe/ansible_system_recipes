@@ -1,0 +1,9 @@
+---
+
+- name: Installation
+  apt:
+    state: present
+    name:
+      - cloud-init
+      - cloud-guest-utils
+      - cloud-initramfs-growroot
