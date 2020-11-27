@@ -1,0 +1,15 @@
+---
+
+- name: Load tasks for install on Debian & derivate
+  include_tasks: debian/main.yml
+  when: ansible_distribution == "Debian" or ansible_distribution == "Ubuntu"
+
+- name: Load tasks for install on Archlinux
+  include_tasks: archlinux/main.yml
+  when: ansible_distribution == "Archlinux"
+
+- name: Enable Logrotate timer
+  service:
+    name: logrotate.timer
+    state: started
+    enabled: yes
