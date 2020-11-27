@@ -1,5 +1,7 @@
 ---
 
+#ssh_firewall_firewalld: no
+
 ssh_port: 22
 ssh_keys_rsa_size: 4096
 ssh_keys_ecdsa_size: 521

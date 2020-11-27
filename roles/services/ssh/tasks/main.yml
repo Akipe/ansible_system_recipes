@@ -14,6 +14,15 @@
   include_tasks: archlinux/main.yml
   when: ansible_distribution == "Archlinux"
 
+- name: Open firewall for sshd 
+  ansible.posix.firewalld:
+    service: ssh
+    zone: home
+    state: enabled
+    permanent: true
+    immediate: yes
+  when: ssh_firewall_firewalld
+
 - name: Check if SSH key have being regenerate
   stat:
     path: /etc/ssh/.ansible_has_generate_keys

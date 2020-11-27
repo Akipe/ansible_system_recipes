@@ -1,13 +1,6 @@
 ---
+
 - name: Install SSH server
   pacman:
     state: present
     name: "{{ ssh_appToInstall_archlinux }}"
-
-- name: Open firewall for sshd 
-  ansible.posix.firewalld:
-    service: ssh
-    zone: home
-    state: enabled
-    permanent: true
-    immediate: yes
