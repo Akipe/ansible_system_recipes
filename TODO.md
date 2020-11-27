@@ -1,4 +1,5 @@
-
+# Connection without inventory file :
+# https://stackoverflow.com/questions/17188147/how-to-run-ansible-without-specifying-the-inventory-but-the-host-directly
 
 
 # ## Share theme KDE/GTK
