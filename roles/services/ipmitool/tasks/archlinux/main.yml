@@ -1,0 +1,7 @@
+---
+
+- name: Installation
+  pacman:
+    name: 
+      - ipmitool
+    state: present
