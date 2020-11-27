@@ -1,5 +1,7 @@
 ---
 
+# todo: https://github.com/Neo23x0/auditd/blob/master/audit.rules
+
 - name: Installation
   pacman:
     state: present
