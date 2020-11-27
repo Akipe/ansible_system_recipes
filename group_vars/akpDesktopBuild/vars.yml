@@ -37,6 +37,8 @@ bootloader_options:
 # - "apparmor=1 lsm=lockdown,yama,apparmor"
 # - "audit=1"
 # - "usbhid.quirks=0x1b1c:0x1b55:0x20000408"
+refind_os_boot_type: gui
+refind_is_dual_boot_with_windows: yes
 
 bash_configuration_mode: archlinux
 
