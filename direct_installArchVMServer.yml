@@ -1,0 +1,14 @@
+---
+
+- name: Playbook for installing an Archlinux server to the device
+  hosts: "{{ target }}"
+  vars:
+    archinstall_disk_install_path:    /dev/sda
+    archinstall_boot_partition_path:  "{{ archinstall_disk_install_path }}1"
+    archinstall_boot_partition_size:  256MiB
+    archinstall_root_partition_path:  "{{ archinstall_disk_install_path }}2"
+    archinstall_root_partition_size:  "100%"
+    archinstall_root_partition_label: "akpsystem"
+    pacman_mirror_country:  France
+  roles:
+    - { role: install-archlinux }
