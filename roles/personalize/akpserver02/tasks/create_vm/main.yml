@@ -1,0 +1,17 @@
+---
+
+# todo: only create one time
+- name: Check if template is already create
+  shell: "qm status 9000 | grep 'status'"
+  register: proxmox_arch_template_exist
+  ignore_errors: true
+
+- name: Load task for prepare Archlinux template
+  include_tasks: create_akp_vmserver.yml
+  when: proxmox_arch_template_exist is failed
+
+# - name: Load task for creating akpContainers01
+#   include_tasks: create/akpcontainers01.yml
+
+# - name: Load task for creating akpSync01
+#   include_tasks: create/akpsync01.yml

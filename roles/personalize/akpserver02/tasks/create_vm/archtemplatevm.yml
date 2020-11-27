@@ -1,0 +1,127 @@
+---
+
+# https://yetiops.net/posts/proxmox-terraform-cloudinit-saltstack-prometheus/
+
+# - name: Download Archlinux Openstack image
+#   get_url:
+#     url:  "{{ terraform_openstack_image_url_archlinux }}"
+#     dest: "{{ terraform_openstack_image_storage_path }}"
+#     mode: '775'
+
+- name: Download Archlinux Openstack image
+  get_url:
+    url:  http://cdimage.debian.org/cdimage/openstack/current-10/debian-10-openstack-amd64.qcow2
+    dest: "{{ terraform_openstack_image_storage_path }}"
+    mode: '775'
+
+# todo: check if vm template 9000 exist
+
+- name: Create Archlinux template from Openstack image
+  shell: |
+    qm create 9000 \
+      --name archlinux-cloudinit \
+      --machine q35 \
+      --ostype l26 \
+      --sockets 1 \
+      --cores 1 \
+      --vcpus 1
+      --memory 1024 \
+      --bios seabios \
+      --net0 virtio,bridge=vmbr0 \
+      --serial0 socket \
+      --agent 1 \
+      --hotplug disk,network,usb \
+      --vga qxl \
+      --ide2 local-lvm:cloudinit \
+      --rng0 source=/dev/urandom
+    qm importdisk 9000 /mnt/pve/srv01-iso/template/iso/debian-10-openstack-amd64.qcow2 local-lvm
+    qm set 9000 -scsihw virtio-scsi-single \
+                -scsi0 local-lvm:vm-9000-disk-0
+    qm set 9000 -boot c \
+                -bootdisk scsi0
+    qm resize 9000 scsi0 +8G
+    qm template 9000
+
+# - name: Create Archlinux template from Openstack image
+#   shell: |
+#     qm create 9000 \
+#       --name archlinux-cloudinit \
+#       --machine q35 \
+#       --ostype l26 \
+#       --sockets 1 \
+#       --cores 1 \
+#       --vcpus 1
+#       --memory 1024 \
+#       --bios ovmf \
+#       --efidisk0 local-lvm:0,format=raw \
+#       --net0 virtio,bridge=vmbr0 \
+#       --serial0 socket \
+#       --agent 1 \
+#       --hotplug disk,network,usb \
+#       --vga qxl \
+#       --ide2 local-lvm:cloudinit \
+#       --rng0 source=/dev/urandom
+#     qm importdisk 9000 /mnt/pve/srv01-iso/template/iso/arch-openstack-LATEST-image-bootstrap.qcow2 local-lvm
+#     qm set 9000 -scsihw virtio-scsi-single \
+#                 -scsi0 local-lvm:vm-9000-disk-0
+#     qm set 9000 -boot c \
+#                 -bootdisk scsi0
+#     qm resize 9000 scsi0 +8G
+#     qm template 9000
+
+
+
+
+
+
+
+
+
+# This step adds another 8G of disk space, but change this as you need to
+# - name: Resize the primary boot disk (otherwise it will be around 2G by default)
+#   shell: qm resize 9000 scsi0 +8G
+
+# - name: Convert the VM to the template
+#   shell: qm template 9000
+
+
+
+
+
+
+
+
+
+# - name: Import the OpenStack disk image to Proxmox storage
+# qm importdisk 9000 debian-10-openstack-amd64.qcow2 local-lvm
+
+# - name: Attach the disk to the virtual machine
+# qm set 9000 -scsihw virtio-scsi-pci -virtio0 local-lvm:vm-9000-disk-0
+
+# - name: Add a serial output
+# qm set 9000 -serial0 socket
+
+# - name: Set the bootdisk to the imported Openstack disk
+# qm set 9000 -boot c -bootdisk virtio0
+
+# - name: Enable the Qemu agent
+# qm set 9000 -agent 1
+
+# - name: Allow hotplugging of network, USB and disks
+# qm set 9000 -hotplug disk,network,usb
+
+# - name: Add a single vCPU (for now)
+# qm set 9000 -vcpus 1
+
+# - name: Add a video output
+# qm set 9000 -vga qxl
+
+# - name: Set a second hard drive, using the inbuilt cloudinit drive
+# qm set 9000 -ide2 local-lvm:cloudinit
+
+# -name: Resize the primary boot disk (otherwise it will be around 2G by default)
+# # This step adds another 8G of disk space, but change this as you need to
+# qm resize 9000 virtio0 +8G
+
+# -name: Convert the VM to the template
+# qm template 9000
