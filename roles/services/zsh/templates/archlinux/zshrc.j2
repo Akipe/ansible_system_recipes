@@ -1,0 +1,13 @@
+## {{ ansible_managed }}
+
+HISTFILE=~/.histfile
+HISTSIZE=1000
+SAVEHIST=1000
+setopt autocd extendedglob nomatch notify
+unsetopt beep
+bindkey -e
+
+zstyle :compinstall filename '/home/akp/.zshrc'
+
+autoload -Uz compinit
+compinit

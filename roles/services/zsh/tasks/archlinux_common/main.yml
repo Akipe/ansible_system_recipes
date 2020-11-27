@@ -1,0 +1,15 @@
+---
+
+- name: Installation
+  pacman:
+    state: present
+    name:
+      - zsh
+      - zsh-completions
+      - zsh-autosuggestions
+      - zsh-syntax-highlighting
+      - zsh-history-substring-search
+
+# source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+# source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+# zsh-theme-powerlevel10k
