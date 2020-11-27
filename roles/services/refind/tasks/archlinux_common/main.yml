@@ -14,12 +14,12 @@
 - name: Define microcode path for Intel processor
   set_fact:
     microcode_path: "intel-ucode.img"
-  when: cpu_vendor == "intel"
+  when: refind_load_microcode and cpu_vendor == "intel"
 
 - name: Define microcode path for AMD processor
   set_fact:
     microcode_path: "amd-ucode.img"
-  when: cpu_vendor == "amd"
+  when: refind_load_microcode and cpu_vendor == "amd"
 
 - name: Installation of Regular theme
   become: yes

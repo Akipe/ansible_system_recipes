@@ -1,0 +1,5 @@
+---
+
+refind_os_boot_type: gui # gui|console|serial
+refind_is_dual_boot_with_windows: no
+refind_load_microcode:  yes
