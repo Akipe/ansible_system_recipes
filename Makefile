@@ -29,6 +29,16 @@ run-local:
 		--extra-vars "@./group_vars/$(NODE)/vars.yml" \
 		--extra-vars "@./group_vars/$(NODE)/vault.yml"
 
+run-direct:
+	ansible-playbook $(PLAYBOOK).yml \
+		--connection "ssh" \
+		--user "root" \
+		--ask-pass \
+		--extra-vars "{target: $(ADDRESS)}" \
+		--inventory $(ADDRESS), \
+		--extra-vars "@./group_vars/$(PLAYBOOK)/vars.yml" \
+		--extra-vars "@./group_vars/$(PLAYBOOK)/vault.yml"
+
 run-debug:
 	ansible-playbook $(NODE).yml -vvv
 
@@ -38,7 +48,14 @@ run-check:
 get-info:
 	ansible $(NODE) -m setup
 
-init: fetch_git_submodules prepare_vault_password_file prepare_log_directory tf_init
+get-info-direct:
+	ansible all \
+		--connection "ssh" \
+		--user "root" \
+		--ask-pass \
+		--inventory $(ADDRESS), \
+		--module-name setup
+
 
 vault-create:
 ifdef NODE

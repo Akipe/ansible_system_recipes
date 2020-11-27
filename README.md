@@ -13,8 +13,10 @@ make init
 make run NODE=nameNode
 make run-init NODE=nameNode
 make run-local NODE=nameNode
+make run-direct ADDRESS=192.168.0.1 PLAYBOOK=playbookName # For devices not in inventory
 make run-debug NODE=nameNode
 make run-check NODE=nameNode
+make get-info-direct ADDRESS=192.168.0.1 # For devices not in inventory
 ```
 
 # Generate encrypt var
