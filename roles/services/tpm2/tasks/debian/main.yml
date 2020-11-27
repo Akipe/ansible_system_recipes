@@ -1,0 +1,8 @@
+---
+
+- name: Installation
+  apt:
+    state: present
+    name:
+      - tpm2-abrmd
+      - tpm2-tools
