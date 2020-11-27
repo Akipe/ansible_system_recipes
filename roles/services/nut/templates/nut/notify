@@ -1,0 +1,2 @@
+#! /bin/sh
+echo "$*" | mailx -s "Proxmox: UPS notice" <name@domain>

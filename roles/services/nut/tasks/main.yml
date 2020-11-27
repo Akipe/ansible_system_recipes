@@ -1,0 +1,31 @@
+---
+
+- name: Load tasks for install on Debian & derivate
+  include_tasks: debian/main.yml
+  when: ansible_distribution == "Debian" or ansible_distribution == "Ubuntu"
+
+- name: Load tasks for install on Archlinux
+  include_tasks: archlinux/main.yml
+  when: ansible_distribution == "Archlinux"
+
+- name: Set configurations
+  template:
+    src: "nut/{{ item }}.j2"
+    dest: "/etc/nut/{{ item }}"
+    owner: root
+    group: nut
+    mode: u+rw,g+r,o-xrw
+  loop:
+    - nut.conf
+    - upsd.conf
+    - upsmon.conf
+  notify:
+    - Restart nut-monitor
+    - Restart nut-driver
+
+- name: Disable nut-driver.service if set client mode
+  service:
+    name: nut-driver.service
+    state: stopped
+    enabled: no
+  when: nut_mode == "netclient"

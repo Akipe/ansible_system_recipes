@@ -1,0 +1,9 @@
+---
+
+nut_mode:                         none # none|standalone|netserver|netclient
+nut_monitor_connect_device_name:  ups
+nut_monitor_connect_adress:       localhost:3493
+nut_monitor_connect_device_id:    1
+nut_monitor_connect_username:     user
+nut_monitor_connect_password:     password
+nut_monitor_connect_type:         slave

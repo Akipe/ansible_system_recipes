@@ -1,0 +1,7 @@
+---
+
+- name: Installation
+  pacman:
+    name: 
+      - nut
+    state: present

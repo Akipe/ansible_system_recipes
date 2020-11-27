@@ -1,0 +1,12 @@
+---
+
+- name: Restart nut-monitor
+  systemd:
+    name: nut-monitor.service
+    state: restarted
+
+- name: Restart nut-driver
+  systemd:
+    name: nut-driver.service
+    state: restarted
+  when: nut_mode != "netclient"
