@@ -1,0 +1,28 @@
+---
+
+- name: Set main configuration
+  template:
+    src: journald.conf.j2
+    dest: /etc/systemd/journald.conf
+    owner: root
+    group: root
+    mode: u+rw,g+r,o+r
+
+- name: Create configuration directory
+  file:
+    path: /etc/systemd/journald.conf.d
+    state: directory
+    owner: root
+    group: root
+    mode: u+rwx,g+rx,o+rx
+
+- name: Add others configurations
+  template:
+    src: "journald.conf.d/{{ item }}.conf.j2"
+    dest: "/etc/systemd/journald.conf.d/{{ item }}.conf"
+    owner: root
+    group: root
+    mode: u+rw,g+r,o+r
+  loop:
+    - 00-journal-storage
+    - 00-journal-limits

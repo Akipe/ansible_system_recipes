@@ -1,0 +1,10 @@
+## {{ ansible_managed }}
+
+# todo: https://superuser.com/questions/1202771/how-to-logrotate-with-systemd
+
+[Journal]
+MaxRetentionSec={{ systemd_journald_all_logs_retention_time_max }}
+SystemMaxUse={{ systemd_journald_all_logs_max_size }}
+SystemMaxFiles={{ systemd_journald_all_logs_max_files_to_keep }}
+MaxFileSec={{ systemd_journald_file_retention_time_max }}
+SystemMaxFileSize={{ systemd_journald_file_log_max_size }}

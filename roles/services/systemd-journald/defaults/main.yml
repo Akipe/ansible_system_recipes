@@ -1,0 +1,10 @@
+---
+
+systemd_journald_storage_type:                      persistent # persistent|volatile
+systemd_journald_compression:                       "yes" # "yes"|"no"
+systemd_journald_seal:                              "yes" # "yes"|"no"
+systemd_journald_all_logs_retention_time_max:       year # year|month|week|day|h|m
+systemd_journald_all_logs_max_size:                 500M
+systemd_journald_all_logs_max_files_to_keep:        365days
+systemd_journald_file_retention_time_max:           day # year|month|week|day|h|m
+systemd_journald_file_log_max_size:                 100M
