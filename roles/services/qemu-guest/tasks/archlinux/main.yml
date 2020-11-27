@@ -1,0 +1,7 @@
+---
+
+- name: Installation
+  pacman:
+    name: 
+      - qemu-guest-agent
+    state: present

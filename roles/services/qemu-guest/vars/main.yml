@@ -1,5 +1,0 @@
----
-
-qemuGuest_appToInstall_debian:
-  - qemu-guest-agent
-  - cloud-init
