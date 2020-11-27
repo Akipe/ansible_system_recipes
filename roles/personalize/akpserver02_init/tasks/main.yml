@@ -1,5 +1,7 @@
 ---
 
+# todo: set password to user
+
 - name: Create user
   user:
     name: "{{ create_user }}"
