@@ -46,7 +46,6 @@ mkinitcpio_initramfs_modules:
   - virtio_input
   - virtio_crypto
   - virtiofs
-  - virtio_raw
   - ext4
   - vfat
   - i6300esb

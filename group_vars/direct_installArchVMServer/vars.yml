@@ -1,3 +1,24 @@
 ---
 
-test: test
+archinstall_disk_install_path:    /dev/sda
+archinstall_boot_partition_path:  "{{ archinstall_disk_install_path }}1"
+archinstall_boot_partition_size:  256M
+archinstall_root_partition_path:  "{{ archinstall_disk_install_path }}2"
+archinstall_root_partition_size:  "100%"
+archinstall_root_partition_label: "akpsystem"
+
+archinstall_locale_timezone: Europe/Paris
+archinstall_locale_language: fr_FR
+archinstall_locale_language_eng_enable: yes
+archinstall_locale_keymap: fr-latin9
+
+archinstall_hostname: akphostname
+
+archinstall_users_root_password: sW$d!:#9bgo{GIDe,m`n&/E{XP
+
+pacman_mirror_country:  France
+archinstall_pacman_ignore_package_update: linux linux-headers linux-hardened linux-hardened-headers linux-lts linux-lts-headers
+pacman_ignore_package_update: "{{ archinstall_pacman_ignore_package_update }}"
+
+archinstall_ntp_servers: npt.akpnet.lan
+archinstall_ntp_fallback_servers: "0.fr.pool.ntp.org 1.fr.pool.ntp.org 2.fr.pool.ntp.org 3.fr.pool.ntp.org"
