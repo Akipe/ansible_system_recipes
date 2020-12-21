@@ -15,3 +15,4 @@
     aur_only: yes
     name:
       - growpart # For auto resizing partition
+  when: archlinux_use_aur
