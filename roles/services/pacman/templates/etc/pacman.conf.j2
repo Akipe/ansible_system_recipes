@@ -29,7 +29,11 @@ CacheDir           = /var/cache/pacman/pkg/
 #HookDir            = /etc/pacman.d/hooks/
 
 ### IGNORE SOME PACKAGES
-#IgnorePkg          =
+{% if pacman_ignore_package_update is defined -%}
+IgnorePkg          = {{ pacman_ignore_package_update }}
+{%- else -%}
+#IgnorePkg          = 
+{%- endif %}
 #IgnoreGroup        =
 #NoUpgrade          =
 #NoExtract          =
