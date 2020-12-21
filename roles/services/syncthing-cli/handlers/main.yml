@@ -1,0 +1,6 @@
+---
+
+- name: Restart Syncthing for builtin user
+  systemd:
+    name: syncthing@syncthing.service
+    state: restarted

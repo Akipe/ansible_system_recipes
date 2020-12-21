@@ -1,6 +1,6 @@
 ---
 
-- name: Add Syncthing official repository
+- name: Add official repository
   include_role:
     name: apt
     tasks_from: add_repository
@@ -13,7 +13,7 @@
           repo: "deb https://apt.syncthing.net/ syncthing stable"
           filename: syncthing
 
-- name: Install Syncthing
+- name: Installation
   apt:
     state: present
     update_cache: yes
