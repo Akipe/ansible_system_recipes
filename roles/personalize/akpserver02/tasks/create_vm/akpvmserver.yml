@@ -30,22 +30,22 @@
 
 - name: Create akpVMServer template
   shell: |
-    qm create 9000 \
+    qm create {{ akpvmserver_template_id }} \
       --name {{ akpvmserver_template_name }} \
       --machine q35 \
       --ostype l26 \
       --cpu cputype=kvm64 \
       --sockets 1 \
-      --cores 1 \
+      --cores {{ akpvmserver_template_cpu_cores }} \
       --vcpus 1 \
-      --memory 1024 \
+      --memory {{ akpvmserver_template_memory }} \
       --bios ovmf \
       --vga serial0 \
       --serial0 socket \
       --scsihw virtio-scsi-single \
       --scsi0 {{ akpvmserver_template_disk_system_path }},aio=threads,discard=on,iothread=1,ssd=1, \
       --efidisk0 {{ akpvmserver_template_disk_efi_path }},format=raw \
-      --cdrom {{ akpvmserver_template_archlinux_iso_path }} \
+      --cdrom {{ vm_commons_archlinux_iso_path }} \
       --boot dc \
       --bootdisk scsi0 \
       --net0 virtio,bridge=vmbr0 \
@@ -54,7 +54,7 @@
       --tablet 0 \
       --watchdog model=i6300esb,action=reset \
       --rng0 source=/dev/urandom && \
-    qm resize 9000 scsi0 {{ akpvmserver_template_disk_system_size }}
+    qm resize {{ akpvmserver_template_id }} scsi0 {{ akpvmserver_template_disk_system_size }}
 
 # todo:
 # - replace gpu to serial
