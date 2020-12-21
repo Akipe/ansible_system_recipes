@@ -1,0 +1,5 @@
+## {{ ansible_managed }}
+
+"Boot with standard options"    "initrd=initramfs-%v.img root=/dev/disk/by-label/akpsystem console=tty0 console=ttyS0,115200 rw"
+"Boot using fallback initramfs" "initrd=initramfs-%v-fallback.imgs root=/dev/disk/by-label/akpsystem console=tty0 console=ttyS0,115200 rw"
+"Boot with read only"           "initrd=initramfs-%v.img root=/dev/disk/by-label/akpsystem console=tty0 console=ttyS0,115200 ro"

@@ -1,0 +1,8 @@
+## {{ ansible_managed }}
+
+[Time]
+NTP={{ archinstall_ntp_servers }}
+FallbackNTP={{ archinstall_ntp_fallback_servers }}
+RootDistanceMaxSec=5
+PollIntervalMinSec=32
+PollIntervalMaxSec=2048

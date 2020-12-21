@@ -1,0 +1,6 @@
+## {{ ansible_managed }}
+
+title {{ archinstall_systemdboot_config_name_cool }}
+linux /vmlinuz-linux-lts
+initrd /initramfs-linux-lts.img
+options root=/dev/disk/by-label/akpsystem console=tty0 console=ttyS0,115200 rw
