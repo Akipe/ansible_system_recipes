@@ -11,6 +11,14 @@
     name: "{{ refind_app_archlinux_common }}"
     extra_args: --asdeps
 
+- name: Configure rEFInd Pacman hook update
+  template:
+    src: pacman_hook/refind.hook.j2
+    dest: /etc/pacman.d/hooks/refind.hook
+    owner: root
+    group: root
+    mode: "u=rwx,g=rx,o=rx"
+
 - name: Define microcode path for Intel processor
   set_fact:
     microcode_path: "intel-ucode.img"

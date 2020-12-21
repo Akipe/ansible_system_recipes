@@ -4,14 +4,6 @@
   include_tasks: archlinux_common/main.yml
   when: ansible_distribution == "Archlinux"
 
-- name: Configure rEFInd Pacman hook update
-  template:
-    src: pacman_hook/refind.hook.j2
-    dest: /etc/pacman.d/hooks/refind.hook
-    owner: root
-    group: root
-    mode: "u=rwx,g=rx,o=rx"
-
 - name: Add general configuration
   template:
     src: config/refind.conf.j2
