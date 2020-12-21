@@ -1,9 +1,16 @@
 ---
 
-- name: Include categories tasks
+- name: Load tasks for terminal
   include_tasks: "{{ item }}.yml"
   loop:
     - 'timesyncd'
     - 'timezone'
-    - 'keyboard'
+    - 'keyboard-cli'
     - 'language'
+
+- name: Load tasks for gui
+  include_tasks: "{{ item }}.yml"
+  loop:
+    - 'keyboard-gui'
+    - 'dictionary'
+  when: locale_is_gui

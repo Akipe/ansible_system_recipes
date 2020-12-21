@@ -1,5 +1,19 @@
 ---
 
+- name: Check cloud-init bug for locale.gen
+  shell: cat /etc/locale.gen | grep -i "cloud-init"
+  register: locale_is_cloud_init_bug
+  ignore_errors: true
+
+- name: Fix cloud-init bug for locale.gen
+  template:
+    src: locale.gen.j2
+    dest: /etc/locale.gen
+    owner: root
+    group: root
+    mode: u+rw,g+r,o+r
+  when: locale_is_cloud_init_bug
+
 - name: Set language support
   locale_gen:
     name: "{{ item }}"
@@ -21,20 +35,3 @@
     role_language_timeFormat: "{{ language_timeFormat }}"
     role_language_collate: "{{ language_collate }}"
   # notify: Set immediately language
-
-- name: Installation of dictionaries
-  pacman:
-    state: present
-    name:
-      - hunspell
-      - hunspell-en_US
-      - hunspell-fr
-      - aspell
-      - aspell-en
-      - aspell-fr
-      - hyphen
-      - hyphen-en
-      - hyphen-fr
-      - libmythes
-      - mythes-en
-      - mythes-fr
