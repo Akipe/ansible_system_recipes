@@ -1,14 +1,28 @@
 ---
+
 - name: Load roles concerning akpSync01
   hosts: akpSync01
   become_user: root
   become: yes
   roles:
     - { role: ansible-guest }
-    - { role: user }
+    - { role: ssh}
+    - { role: pacman, tags: pacman }
+    - { role: qemu-guest, tags: qemu-guest }
+    - { role: cloud-init, tags: cloud-init }
+    - { role: bash, tags: bash }
+    - { role: refind, tags: refind }
+    - { role: rngd, tags: rngd }
+    - { role: systemd-resolved, tags: systemd-resolved }
+    - { role: auditd, tags: auditd }
+    - { role: systemd-journald, tags: systemd-journald }
+    - { role: host, tags: host }
+    - { role: locale, tags: locale }
     - { role: sudo }
-    - { role: ssh }
-    - { role: apt }
-    - { role: base-cli }
-    - { role: syncthing-cli, vars: { role_syncthing_start_as_superuser: yes}  }
-    
+    - { role: mkinitcpio, tags: mkinitcpio }
+    - { role: linux-kernel, tags: linux-kernel }
+    - { role: irqbalance, tags: irqbalance }
+    - { role: man-page, tags: man-page }
+    - { role: neovim, tags: neovim }
+    - { role: bashtop, tags: bashtop }
+    - { role: syncthing-cli }
