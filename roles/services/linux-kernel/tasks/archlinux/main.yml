@@ -1,6 +1,31 @@
 ---
 
-- name: Install kernel
+- name: Install LTS kernel
   pacman:
     state: present
-    name: "{{ linux_kernel_kernels_archlinux }}"
+    name: linux-lts
+  when:
+    - linux_kernel_install_lts
+
+- name: Install LTS kernel
+  pacman:
+    state: present
+    name: linux-lts-headers
+  when:
+    - linux_kernel_install_lts
+    - linux_kernel_install_modules
+
+- name: Install Zen kernel
+  pacman:
+    state: present
+    name: linux-zen
+  when:
+    - linux_kernel_install_zen
+
+- name: Install Zen kernel
+  pacman:
+    state: present
+    name: linux-zen-headers
+  when:
+    - linux_kernel_install_zen
+    - linux_kernel_install_modules

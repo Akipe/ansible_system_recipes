@@ -1,0 +1,6 @@
+---
+
+linux_kernel_install_lts: yes
+linux_kernel_install_zen: yes
+linux_kernel_install_modules: yes
+linux_kernel_install_utils: yes

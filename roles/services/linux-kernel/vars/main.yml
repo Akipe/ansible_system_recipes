@@ -3,12 +3,6 @@
 linux_kernel_apps_debian:
   - procps
 
-linux_kernel_kernels_archlinux:
-  - linux-zen
-  - linux-zen-headers
-  - linux-lts
-  - linux-lts-headers
-
 linux_kernel_compileTools_archlinux_common:
   - dkms
   - kmod

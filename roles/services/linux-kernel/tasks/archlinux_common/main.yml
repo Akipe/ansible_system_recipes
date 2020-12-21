@@ -4,8 +4,10 @@
   pacman:
     state: present
     name: "{{ linux_kernel_compileTools_archlinux_common }}"
+  when: linux_kernel_install_modules
 
 - name: App usefull for Linux kernel
   pacman:
     state: present
     name: "{{ linux_kernel_usefullTools_archlinux_common }}"
+  when: linux_kernel_install_utils
