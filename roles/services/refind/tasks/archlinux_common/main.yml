@@ -37,6 +37,7 @@
     state: present
     name:
       - refind-theme-regular-git
+  when: refind_os_boot_type == "gui"
 
 - name: Set dark mode for Regular theme
   template:
@@ -45,3 +46,4 @@
     owner: root
     group: root
     mode: "u=rwx,g=rx,o=x"
+  when: refind_os_boot_type == "gui"
