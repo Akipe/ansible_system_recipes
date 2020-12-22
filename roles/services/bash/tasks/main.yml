@@ -10,29 +10,48 @@
 
 - name: Create Bash autoloader directory
   file:
-    path: "{{ item }}"
+    path: "/home/{{ item.username }}/.config/bash/conf.d"
     state: directory
-    owner: "{{ user_name }}"
-    group: "{{ user_name }}"
+    recurse: yes
+    owner: "{{ item.username }}"
+    group: "{{ item.username }}"
     mode: u+rwx,g+rx,o+rx
-  with_items:
-    - "/home/{{ user_name }}/.config/bash"
-    - "/home/{{ user_name }}/.config/bash/conf.d"
+  loop: "{{ bash_users }}"
 
 - name: Set main configuration (Archlinux)
   template:
-    src: archlinux/bashrc.j2
-    dest: "/home/{{ user_name }}/.bashrc"
-    owner: "{{ user_name }}"
-    group: "{{ user_name }}"
+    src: bash.rc/archlinux/bashrc.j2
+    dest: "/home/{{ item.username }}/.bashrc"
+    owner: "{{ item.username }}"
+    group: "{{ item.username }}"
     mode: u+rw,g+r,o+r
+  loop: "{{ bash_users }}"
   when: bash_configuration_mode == "archlinux"
 
 - name: Set main configuration (Proxmox)
   template:
-    src: proxmox/bashrc.j2
-    dest: "/home/{{ user_name }}/.bashrc"
-    owner: "{{ user_name }}"
-    group: "{{ user_name }}"
+    src: bash.rc/proxmox/bashrc.j2
+    dest: "/home/{{ item.username }}/.bashrc"
+    owner: "{{ item.username }}"
+    group: "{{ item.username }}"
     mode: u+rw,g+r,o+r
+  loop: "{{ bash_users }}"
   when: bash_configuration_mode == "proxmox"
+
+- name: Create systemd user binaries directory
+  file:
+    path: "/home/{{ item.username }}/.local/bin"
+    state: directory
+    owner: "{{ item.username }}"
+    group: "{{ item.username }}"
+    mode: u+rwx,g+rx,o+rx
+  loop: "{{ bash_users }}"
+
+- name: Add systemd user binaries directory to $PATH for Bash
+  template:
+    src: conf.d/systemd_user_bin.bash.j2
+    dest: "/home/{{ item.username }}/.config/bash/conf.d/systemd_user_bin.bash"
+    owner: "{{ item.username }}"
+    group: "{{ item.username }}"
+    mode: u+rw,g+r,o+r
+  loop: "{{ bash_users }}"
