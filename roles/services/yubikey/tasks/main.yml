@@ -22,4 +22,4 @@
     owner: "{{ item.name }}"
     group: "{{ item.name }}"
     mode: u+rwx,g+rx,o+rx
-  loop: "{{ role_user_listUsers }}"
+  loop: "{{ yubikey_list_users }}"
