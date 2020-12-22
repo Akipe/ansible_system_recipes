@@ -20,7 +20,9 @@ terraform_openstack_image_url_archlinux:  https://linuximages.de/openstack/arch/
 
 ssh_firewall_firewalld: no
 
-vm_commons_archlinux_iso_path: local:iso/archlinux-2020.12.01-x86_64.iso
+vm_commons_archlinux_iso_path:          local:iso/archlinux-2020.12.01-x86_64.iso
+lxc_commons_ubuntu_2004_template_path:  local:vztmpl/ubuntu-20.04-standard_20.04-1_amd64.tar.gz
+lxc_commons_debian_10_template_path:    local:vztmpl/debian-10-standard_10.7-1_amd64.tar.gz
 
 nut_mode:                                   netclient
 nut_monitor_connect_ups_name:               ups
@@ -38,15 +40,15 @@ akpvmserver_template_disk_system_size:    "8G"
 akpvmserver_template_cpu_cores:           "1"
 akpvmserver_template_memory:              "1024"
 
-vm_akpsync01_name:                akpsync01
-vm_akpsync01_id:                  1000
-vm_akpsync01_disk_efi_path:       local-lvm:0
-vm_akpsync01_disk_system_path:    local-lvm:1
-vm_akpsync01_disk_system_size:    "20G"
-vm_akpsync01_cpu_cores:           "2"
-vm_akpsync01_memory:              "1024"
-vm_akpsync01_net0_macaddress:     "{{ akpSync01_hardware_network_net0_mac }}"
-vm_akpsync01_net1_macaddress:     "{{ akpSync01_hardware_network_net1_mac }}"
+lxc_akpsync01_root_password:      "{{ vault_lxc_akpsync01_root_password }}"
+lxc_akpsync01_name:                akpsync01
+lxc_akpsync01_id:                  "2000"
+lxc_akpsync01_disk_system_size_gb: "4"
+lxc_akpsync01_cpu_cores:           "2"
+lxc_akpsync01_cpu_units:           "1024"
+lxc_akpsync01_memory:              "512"
+lxc_akpsync01_net0_macaddress:     "{{ akpSync01_hardware_network_net0_mac }}"
+lxc_akpsync01_net1_macaddress:     "{{ akpSync01_hardware_network_net1_mac }}"
 
 ssh_port: 22
 ssh_users:
@@ -56,6 +58,13 @@ ssh_users:
     public_key: "{{ ssh_public_key }}"
 
 bash_configuration_mode: proxmox
+bash_users:
+  - username: root
+  - username: "{{ personal_user_name }}"
+
+fish_users:
+  - username: root
+  - username: "{{ personal_user_name }}"
 
 apt:
   unattended_origins_patterns:
