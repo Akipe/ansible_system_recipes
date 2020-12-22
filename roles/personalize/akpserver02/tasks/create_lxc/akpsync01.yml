@@ -1,0 +1,46 @@
+---
+
+# - name: Create akpSync01 as LXC container
+#   community.general.proxmox:
+#     proxmox_default_behavior: no_defaults
+#     vmid:         "{{ vm_akpsync01_id }}"
+#     api_user:     "{{ user_api_terraform_username }}"
+#     api_password: '6}.[sy`FHW-1X^CMXOyT2iQ+f5'
+#     api_host:     akpserver02
+#     node:         akpserver02
+#     hostname:     "{{ vm_akpsync01_name }}"
+#     password:     "Y3pwRkDccMQ*U3~c3s9I4Qu-oE"
+#     pubkey:       "{{ ssh_public_key }}"
+#     cpus:         1
+#     cores:        "{{ vm_akpsync01_cpu_cores }}"
+#     memory:       "{{ vm_akpsync01_memory }}"
+#     swap:         "{{ vm_akpsync01_memory }}"
+#     storage:      local
+#     disk:         "{{ vm_akpsync01_disk_system_size }}"
+#     netif: '{ "net0" : "name=eth0,hwaddr={{ vm_akpsync01_net0_macaddress }},ip=dhcp,ip6=dhcp,bridge=vmbr0,mtu=9000", "net1" : "name=eth1,hwaddr={{ vm_akpsync01_net1_macaddress }},ip=dhcp,ip6=dhcp,bridge=vmbr1,mtu=9000" }'
+#     ostemplate:   'local:vztmpl/ubuntu-20.04-x86_64.tar.gz'
+#     unprivileged: yes
+#     onboot:       yes
+#     state:        present
+
+- name: Create akpSync01 as LXC container
+  shell: |
+    pct create {{ lxc_akpsync01_id }} {{ lxc_commons_ubuntu_2004_template_path }} \
+      --arch            amd64 \
+      --hostname        {{ lxc_akpsync01_name }} \
+      --cores           {{ lxc_akpsync01_cpu_cores }} \
+      --cpuunits        {{ lxc_akpsync01_cpu_units }} \
+      --memory          {{ lxc_akpsync01_memory }} \
+      --swap            {{ lxc_akpsync01_memory }} \
+      --rootfs          local-lvm:{{ lxc_akpsync01_disk_system_size_gb }} \
+      --net0            name=eth0,hwaddr={{ lxc_akpsync01_net0_macaddress }},bridge=vmbr0,ip=dhcp,firewall=1 \
+      --onboot          1 \
+      --password        {{ lxc_akpsync01_root_password }} \
+      --ssh-public-keys /etc/pub_keys/akpkey.ssh.pub \
+      --features        mount=nfs
+
+# - name: Set apparmor rule for allowing NFS mount
+#   lineinfile:
+#     dest: "/etc/pve/lxc/{{ lxc_akpsync01_id }}.conf"
+#     line: "lxc.apparmor.profile: lxc-container-default-with-nfs"
+#   notify: Restart akpSync01

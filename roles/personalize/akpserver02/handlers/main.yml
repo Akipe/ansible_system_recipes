@@ -1,0 +1,4 @@
+---
+
+- name: Restart akpSync01
+  shell: pct shutdown {{ lxc_akpsync01_id }} && pct start {{ lxc_akpsync01_id }}

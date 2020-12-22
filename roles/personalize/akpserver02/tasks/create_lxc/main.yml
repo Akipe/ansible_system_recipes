@@ -1,0 +1,4 @@
+---
+
+- name: Load task for prepare akpSync01
+  include_tasks: akpsync01.yml
