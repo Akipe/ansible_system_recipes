@@ -48,6 +48,8 @@ language_timeFormat:  "fr_FR.UTF-8"
 language_collate:     "C"
 
 user_name: "{{ vault_user_name }}"
+personal_user_name: "{{ vault_user_name }}"
+personal_user_password: "{{ vault_user_password }}"
 
 ssh_port: 22
 ssh_users: 
