@@ -1,12 +1,14 @@
 ---
 
-ansible_python_interpreter: /usr/bin/python
+ansible_python_interpreter: /usr/bin/python3
 ansible_user:               "{{ user_name }}"
 ansible_become_pass:        "{{ vault_ansible_become_pass }}"
 
 hostname_name: akpsync01
 
-archlinux_use_aur: no
+personal_user_password_hashed:  "{{ vault_personal_user_password_hashed }}"
+user_syncthing_name:            "{{ vault_user_syncthing_name }}"
+user_syncthing_password_hashed: "{{ vault_user_syncthing_password_hashed }}"
 
 users_create:
   - username:         "{{ personal_user_name }}"
@@ -20,73 +22,40 @@ users_create:
     groups:           users
     public_key:       "{{ ssh_public_key }}"
 
+bash_users:
+  - username: root
+  - username: "{{ personal_user_name }}"
+  - username: "{{ user_syncthing_name }}"
+
 ssh_firewall_firewalld: no
 ssh_users:
+  - name:       syncthing
+    public_key: "{{ ssh_public_key }}"
   - name:       "{{ user_name }}"
     public_key: "{{ ssh_public_key }}"
 
 locale_is_gui: no
 
-listUsers:
-  - name: "{{ user_name }}"
-    shell: /bin/bash
-    groups: users,wheel,storage,power,network
-    public_key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDQF05BaRNIo6+CL5lYFSKSljMDRyE+vDPr3+IQYiHJ613cEo2TYQAK2vDv/gIZsDXAsVxnzUogQ1f7Jp4USceQ//d/QUdWAZkQfHH6Mvg5i30In8/YHVulSe1ENc6XGmVkmmc75mcd6CXWVEh0liQB6SwDRBO42rU4uhOUr77vs+wodCCSh6vF0whloOtm4jQhECAmnccnNKgBDkc35wfG3ugrfLFwRzhhvUDA0+CJG09yNT3Zg1Vx9OXasU0e+AoL722UN0UWuWtgAqNURgJiD4DQhsVZTLeS6HyL8o69bY6OOeAPxf1vE1vN9C1jvT+CSNsqYyPm5q2Putiiks8Pe8ZB0zDUF0qgIeOyJ+FuidMDJSzYJf7DGmzQQ90Pas9G3vUpWvkkJ1xMvtnnX2VcUBwKq52WvQfJkULYSqUJYwvk4XQ9uH1rqnkNtDPR08iyTaoQrjQgjGvaikm0v4jTjlweQjfW+Tivta51VSwhMDwKsAJthiV+F1iaBs5VU3psh28gv9fTKkOXhR+V7n2D3Pv4VKPsaww8PmMAZpEJGTDgXwim86XBkuRK0p2oWqbRx0eYG67It/A7Yo8MOxGlK3TXLJyC18z1iiwtDr37NnKfl/1NBpFVSe063Egu6XDmYpINwyha+v8Dm+ZdzFMtoGqQPZHn+FrdHfIr4/I10Q== cardno:000607318198"
+apt:
+  unattended_origins_patterns:
+  - 'origin=Debian,codename=${distro_codename}-updates'
+  - 'origin=Debian,codename=${distro_codename}-proposed-updates'
+  - 'origin=Debian,codename=${distro_codename},label=Debian'
+  - 'origin=Debian,codename=${distro_codename},label=Debian-Security'
+  - 'origin=Debian,archive=stable'
+  - 'origin=Debian,archive=stable-updates'
+  - 'origin=Debian,archive=proposed-updates'
+  - 'origin=apt.syncthing.net'
 
 locale_keyboard_map: fr
 
-bootloader_timeout: "5"
-bootloader_options:
-  - "root=/dev/disk/by-label/akpsystem"
-  - "audit=1"
-refind_os_boot_type: serial
-refind_load_microcode: no
+bash_configuration_mode: debian
 
-#watchdog_activate: yes
+nfs_client_fstab_mounts:
+  - address_path:     "{{ adress_akpnet_akpserver01 }}:/mnt/assVolumePool01/aspAkpData/sync"
+    destination_path: /srv
+    options:          defaults
 
-bash_configuration_mode: archlinux
-
-pacman_ignore_package_update: linux linux-headers linux-hardened linux-hardened-headers linux-lts linux-lts-headers
-
-linux_kernel_install_lts: yes
-linux_kernel_install_zen: no
-linux_kernel_install_modules: no
-linux_kernel_install_utils: no
-
-mkinitcpio_initramfs_modules:
-  - virtio
-  - virtio_scsi
-  - virtio_pci
-  - virtio_net
-  - virtio_balloon
-  - virtio_rng
-  - virtio_blk
-  - virtio_console
-  - virtio_rpmsg_bus
-  - virtio_console
-  - virtio_input
-  - virtio_crypto
-  - virtiofs
-  - ext4
-  - vfat
-  - i6300esb
-mkinitcpio_initramfs_hooks:
-  - base
-  - systemd
-  - autodetect
-  - keyboard
-  - sd-vconsole
-  - modconf
-  - block
-  - filesystems
-  - fsck
-mkinitcpio_initramfs_compression: lz4
-
-earlyoom_config_memory_minimum_percent: "2"
-earlyoom_config_swap_minimum_percent:   "2"
-
-makepkg_build_from_tmp: false
-
-exfat_use_kernel_driver: yes
-
-syncthing_cli_use_builtin_user: yes
+syncthing_cli_users:
+  - username:                 syncthing
+    allow_external_web_access: yes
