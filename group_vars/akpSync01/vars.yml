@@ -8,6 +8,18 @@ hostname_name: akpsync01
 
 archlinux_use_aur: no
 
+users_create:
+  - username:         "{{ personal_user_name }}"
+    password_hashed:  "{{ personal_user_password_hashed }}"
+    shell:            /bin/bash
+    groups:           users,wheel
+    public_key:       "{{ ssh_public_key }}"
+  - username:         "{{ user_syncthing_name }}"
+    password_hashed:  "{{ user_syncthing_password_hashed }}"
+    shell:            /bin/bash
+    groups:           users
+    public_key:       "{{ ssh_public_key }}"
+
 ssh_firewall_firewalld: no
 ssh_users:
   - name:       "{{ user_name }}"

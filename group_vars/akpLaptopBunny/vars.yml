@@ -12,8 +12,8 @@ ssh_users:
   - name:       "{{ user_name }}"
     public_key: "{{ ssh_public_key }}"
 
-listUsers:
-  - name: "{{ user_name }}"
+users_create:
+  - username: "{{ user_name }}"
     shell: /bin/bash
     groups: users,wheel,storage,power,network
     public_key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDQF05BaRNIo6+CL5lYFSKSljMDRyE+vDPr3+IQYiHJ613cEo2TYQAK2vDv/gIZsDXAsVxnzUogQ1f7Jp4USceQ//d/QUdWAZkQfHH6Mvg5i30In8/YHVulSe1ENc6XGmVkmmc75mcd6CXWVEh0liQB6SwDRBO42rU4uhOUr77vs+wodCCSh6vF0whloOtm4jQhECAmnccnNKgBDkc35wfG3ugrfLFwRzhhvUDA0+CJG09yNT3Zg1Vx9OXasU0e+AoL722UN0UWuWtgAqNURgJiD4DQhsVZTLeS6HyL8o69bY6OOeAPxf1vE1vN9C1jvT+CSNsqYyPm5q2Putiiks8Pe8ZB0zDUF0qgIeOyJ+FuidMDJSzYJf7DGmzQQ90Pas9G3vUpWvkkJ1xMvtnnX2VcUBwKq52WvQfJkULYSqUJYwvk4XQ9uH1rqnkNtDPR08iyTaoQrjQgjGvaikm0v4jTjlweQjfW+Tivta51VSwhMDwKsAJthiV+F1iaBs5VU3psh28gv9fTKkOXhR+V7n2D3Pv4VKPsaww8PmMAZpEJGTDgXwim86XBkuRK0p2oWqbRx0eYG67It/A7Yo8MOxGlK3TXLJyC18z1iiwtDr37NnKfl/1NBpFVSe063Egu6XDmYpINwyha+v8Dm+ZdzFMtoGqQPZHn+FrdHfIr4/I10Q== cardno:000607318198"

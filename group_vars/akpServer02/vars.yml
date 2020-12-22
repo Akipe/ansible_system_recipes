@@ -4,7 +4,12 @@ ansible_python_interpreter: /usr/bin/python3
 ansible_user:               "{{ user_name }}"
 ansible_become_pass:        "{{ vault_ansible_become_pass }}"
 
-create_user:    "{{ user_name }}"
+users_create:
+  - username:         "{{ personal_user_name }}"
+    password_hashed:  "{{ vault_personal_user_password_hashed }}"
+    shell:            /bin/bash
+    groups:           users,wheel
+    public_key:       "{{ ssh_public_key }}"
 
 user_api_terraform_username:  "{{ vault_user_api_terraform_username }}"
 user_api_terraform_password:  "{{ vault_user_api_terraform_password }}"
