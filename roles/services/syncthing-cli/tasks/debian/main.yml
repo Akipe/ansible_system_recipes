@@ -13,6 +13,14 @@
           repo: "deb https://apt.syncthing.net/ syncthing stable"
           filename: syncthing
 
+- name: Set official repository priority
+  template:
+    src: apt/preferences.d/syncthing.j2
+    dest: /etc/apt/preferences.d/syncthing
+    owner: root
+    group: root
+    mode: u+rw,g+r,o+r
+
 - name: Installation
   apt:
     state: present

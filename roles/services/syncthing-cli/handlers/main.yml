@@ -1,6 +1,7 @@
 ---
 
-- name: Restart Syncthing for builtin user
+- name: Restart Syncthing
   systemd:
-    name: syncthing@syncthing.service
+    name: "syncthing@{{ item.username }}.service"
     state: restarted
+  loop: "{{ syncthing_cli_users }}"

@@ -1,4 +1,4 @@
 ---
 
-syncthing_cli_use_builtin_user: no
-syncthing_cli_open_firewall:    no
+syncthing_cli_allow_external_web_access:  no
+syncthing_cli_open_firewall:              no
