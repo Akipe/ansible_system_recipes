@@ -1,4 +1,5 @@
 ---
+
 - name: Load tasks for install on Debian & derivate
   include_tasks: debian/main.yml
   when: ansible_distribution == "Debian" or ansible_distribution == "Ubuntu"
@@ -9,23 +10,44 @@
 
 - name: Create automatic configuration loading directory
   become: yes
-  become_user: "{{ user_name }}"
+  become_user: "{{ item.username }}"
   file:
-    path: "/home/{{ user_name }}/.config/fish/conf.d"
+    path: "/home/{{ item.username }}/.config/fish/conf.d"
     state: directory
-    owner: "{{ user_name }}"
-    group: "{{ user_name }}"
+    owner: "{{ item.username }}"
+    group: "{{ item.username }}"
     mode: u+rw,g+r,o+r
+  loop: "{{ fish_users }}"
 
 - name: Set configuration
   become: yes
-  become_user: "{{ user_name }}"
+  become_user: "{{ item.username }}"
   template:
-    src: config/config.fish.j2
-    dest: "/home/{{ user_name }}/.config/fish/config.fish"
-    owner: "{{ user_name }}"
-    group: "{{ user_name }}"
+    src: config.fish.j2
+    dest: "/home/{{ item.username }}/.config/fish/config.fish"
+    owner: "{{ item.username }}"
+    group: "{{ item.username }}"
     mode: u+rw,g+r,o+r
+  loop: "{{ fish_users }}"
+
+- name: Create systemd user binaries directory
+  file:
+    path: "/home/{{ item.username }}/.local/bin"
+    state: directory
+    owner: "{{ item.username }}"
+    group: "{{ item.username }}"
+    mode: u+rwx,g+rx,o+rx
+  loop: "{{ fish_users }}"
+
+- name: Add systemd user binaries directory to $PATH for Fish
+  template:
+    src: conf.d/systemd_user_bin.fish.j2
+    dest: "/home/{{ item.username }}/.config/fish/conf.d/systemd_user_bin.fish"
+    owner: "{{ item.username }}"
+    group: "{{ item.username }}"
+    mode: u+rw,g+r,o+r
+  loop: "{{ fish_users }}"
+
 
 # - name: Check if Oh My Fish is installed
 #   stat:
