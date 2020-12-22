@@ -26,3 +26,8 @@
 - name: Reload systemd configuration
   systemd: 
     daemon_reload: yes
+
+- name: Reload apparmor
+  service:
+    name: apparmor.service
+    state: restarted

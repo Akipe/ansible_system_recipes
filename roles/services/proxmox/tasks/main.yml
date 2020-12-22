@@ -65,6 +65,28 @@
     enabled: yes
     state: started
 
+- name: Create directory for store public key
+  file:
+    path: /etc/pub_keys
+    state: directory
+    owner: root
+    group: www-data
+    mode: u+rwx,g+rx,o+rx
+
+- name: Add akpKey public key
+  copy:
+    src: pubkey/akpkey/ssh.public.key
+    dest: /etc/pub_keys/akpkey.ssh.pub
+
+- name: Allow LXC containers to mount NFS
+  template:
+    src: apparmor.d/lxc-default-with-nfs.j2
+    dest: /etc/apparmor.d/lxc/lxc-default-with-nfs
+    owner: root
+    group: root
+    mode: u+rw,g+r,o+r
+  notify: Restart apparmor
+
 - name: Include web interface proxy tasks
   include_tasks: web_interface_proxy.yml
 
