@@ -1,0 +1,8 @@
+---
+
+users_create:
+  - username: an_username
+    password_hashed: a_secure_password_hashed
+    shell: /bin/bash
+    groups: users
+    public_key: "ssh-rsa example"

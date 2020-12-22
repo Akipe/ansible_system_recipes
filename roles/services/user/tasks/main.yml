@@ -1,17 +1,5 @@
 ---
 
-- name: Load tasks for install on Debian & derivate
-  include_tasks: debian/main.yml
-  when: ansible_distribution == "Debian" or ansible_distribution == "Ubuntu"
-
-- name: Load tasks for install on Archlinux
-  include_tasks: archlinux/main.yml
-  when: ansible_distribution == "Archlinux"
-
-- name: Set users variables
-  set_fact:
-    role_user_listUsers: "{{ listUsers }}"
-
 - name: Create group wheel for sudo
   group:
     state: present
@@ -19,58 +7,47 @@
 
 - name: Creates users
   user:
-    state: present
-    name: "{{ item.name }}"
-    shell: "{{ item.shell }}"
+    state:        present
+    name:         "{{ item.username }}"
+    password:     "{{ user_syncthing_password_hashed }}"
+    create_home:  yes
+    shell:        "{{ item.shell }}"
     groups: 
       - "{{ item.groups }}"
     append: yes
-  loop: "{{ role_user_listUsers }}"
+  loop: "{{ users_create }}"
 
 - name: Append public key for SSH
   authorized_key:
-    user: "{{ item.name }}"
+    user: "{{ item.username }}"
     state: present
     manage_dir: yes
-    key: "{{ role_user_sshPublicKey }}"
-  loop: "{{ role_user_listUsers }}"
-  vars:
-    role_user_sshPublicKey: "{{ ssh_public_key }}"
+    key: "{{ item.public_key }}"
+  loop: "{{ users_create }}"
 
 - name: Create systemd user environment variables directory
   file:
-    path: "/home/{{ item.name }}/.config/environment.d"
+    path: "/home/{{ item.username }}/.config/environment.d"
     state: directory
-    owner: "{{ item.name }}"
-    group: "{{ item.name }}"
+    owner: "{{ item.username }}"
+    group: "{{ item.username }}"
     mode: u+rwx,g+rx,o+rx
-  loop: "{{ role_user_listUsers }}"
+  loop: "{{ users_create }}"
 
 - name: Create systemd user binaries directory
   file:
-    path: "/home/{{ item.name }}/.local/bin"
+    path: "/home/{{ item.username }}/.local/bin"
     state: directory
-    owner: "{{ item.name }}"
-    group: "{{ item.name }}"
+    owner: "{{ item.username }}"
+    group: "{{ item.username }}"
     mode: u+rwx,g+rx,o+rx
-  loop: "{{ role_user_listUsers }}"
+  loop: "{{ users_create }}"
 
-- name: Add systemd user binaries directory to $PATH for Bash
-  become: yes
-  become_user: "{{ user_name }}"
-  template:
-    src: bash.d/systemd_user_bin.bash.j2
-    dest: "/home/{{ user_name }}/.config/bash/conf.d/systemd_user_bin.bash"
-    owner: "{{ user_name }}"
-    group: "{{ user_name }}"
-    mode: u+rw,g+r,o+r
-
-- name: Add systemd user binaries directory to $PATH for Fish
-  become: yes
-  become_user: "{{ user_name }}"
-  template:
-    src: fish.d/systemd_user_bin.fish.j2
-    dest: "/home/{{ user_name }}/.config/fish/conf.d/systemd_user_bin.fish"
-    owner: "{{ user_name }}"
-    group: "{{ user_name }}"
-    mode: u+rw,g+r,o+r
+- name: Fix home directory owner
+  file:
+    dest: "/home/{{ item.username }}"
+    owner: "{{ item.username }}"
+    group: "{{ item.username }}"
+    mode: u=rwx,g=rx,o=rx
+    recurse: yes
+  loop: "{{ users_create }}"
