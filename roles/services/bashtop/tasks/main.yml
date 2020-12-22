@@ -1,7 +1,9 @@
 ---
 
-- name: Installation
-  pacman:
-    state: present
-    name:
-      - bashtop
+- name: Load tasks for install on Debian & derivate
+  include_tasks: debian/main.yml
+  when: ansible_distribution == "Debian"
+
+- name: Include tasks for all Archlinux based distributions
+  include_tasks: archlinux_common/main.yml
+  when: ansible_distribution == "Archlinux"
