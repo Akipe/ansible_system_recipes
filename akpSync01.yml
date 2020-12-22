@@ -6,23 +6,15 @@
   become: yes
   roles:
     - { role: ansible-guest }
+    - { role: user }
+    - { role: bash }
     - { role: ssh}
-    - { role: pacman, tags: pacman }
-    - { role: qemu-guest, tags: qemu-guest }
-    - { role: cloud-init, tags: cloud-init }
-    - { role: bash, tags: bash }
-    - { role: refind, tags: refind }
-    - { role: rngd, tags: rngd }
-    - { role: systemd-resolved, tags: systemd-resolved }
-    - { role: auditd, tags: auditd }
-    - { role: systemd-journald, tags: systemd-journald }
-    - { role: host, tags: host }
-    - { role: locale, tags: locale }
+
     - { role: sudo }
-    - { role: mkinitcpio, tags: mkinitcpio }
-    - { role: linux-kernel, tags: linux-kernel }
-    - { role: irqbalance, tags: irqbalance }
-    - { role: man-page, tags: man-page }
-    - { role: neovim, tags: neovim }
-    - { role: bashtop, tags: bashtop }
+    - { role: apt }
+    # - { role: rngd }
+    # - { role: locale }
+    - { role: systemd-journald }
+
+    - { role: nfs-client }
     - { role: syncthing-cli }

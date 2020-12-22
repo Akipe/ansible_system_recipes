@@ -1,11 +1,15 @@
 ---
+
 - name: Load roles for initialize akpSync01
   hosts: akpSync01
   become_user: root
   become: yes
+  vars:
+    ansible_user: root
   roles:
-    - { role: ansible-guest, vars: { ansible_user: root} }
-    - { role: user, vars: { ansible_user: root} }
-    - { role: sudo, vars: { ansible_user: root} }
-    - { role: ssh, vars: { ansible_user: root} }
-    - { role: apt, vars: { ansible_user: root} }
+    - { role: ansible-guest,  vars: { ansible_user: root} }
+    - { role: user,           vars: { ansible_user: root} }
+    - { role: bash,           vars: { ansible_user: root} }
+    - { role: ssh,            vars: { ansible_user: root} }
+    - { role: sudo,           vars: { ansible_user: root} }
+    - { role: apt,            vars: { ansible_user: root} }
