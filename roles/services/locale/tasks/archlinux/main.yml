@@ -3,7 +3,6 @@
 - name: Load tasks for terminal
   include_tasks: "{{ item }}.yml"
   loop:
-    - 'timesyncd'
     - 'timezone'
     - 'keyboard-cli'
     - 'language'

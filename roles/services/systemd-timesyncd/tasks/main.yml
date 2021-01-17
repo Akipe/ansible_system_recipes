@@ -1,0 +1,20 @@
+---
+
+- name: Start and active the service
+  systemd:
+    name: systemd-timesyncd.service
+    enabled: yes
+    state: started
+
+- name: Add configuration
+  template:
+    src: timesyncd.conf.j2
+    dest: /etc/systemd/timesyncd.conf
+    owner: root
+    group: root
+    mode: 0644
+  notify:
+    - Restart timedatectl
+
+# todo: add script to fetch ntp server from dhcp
+# https://wiki.archlinux.org/index.php/systemd-timesyncd
