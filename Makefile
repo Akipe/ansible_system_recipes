@@ -17,20 +17,20 @@ tf_init:
 	terraform init
 
 run:
-	ansible-playbook $(NODE).yml
+	ansible-playbook ./playbooks/$(NODE).yml
 
 run-init:
-	ansible-playbook $(NODE)_init.yml -i inventory_init.ini
+	ansible-playbook ./playbooks/$(NODE)_init.yml -i inventory_init.ini
 
 run-local:
-	ansible-playbook $(NODE).yml \
+	ansible-playbook ./playbooks/$(NODE).yml \
 		--connection=local \
 		--inventory $(NODE), \
 		--extra-vars "@./group_vars/$(NODE)/vars.yml" \
 		--extra-vars "@./group_vars/$(NODE)/vault.yml"
 
 run-direct:
-	ansible-playbook $(PLAYBOOK).yml \
+	ansible-playbook ./playbooks/$(PLAYBOOK).yml \
 		--connection "ssh" \
 		--user "root" \
 		--ask-pass \
@@ -40,10 +40,10 @@ run-direct:
 		--extra-vars "@./group_vars/$(PLAYBOOK)/vault.yml"
 
 run-debug:
-	ansible-playbook $(NODE).yml -vvv
+	ansible-playbook ./playbooks/$(NODE).yml -vvv
 
 run-check:
-	ansible-playbook $(NODE).yml --check --diff
+	ansible-playbook ./playbooks/$(NODE).yml --check --diff
 
 get-info:
 	ansible $(NODE) -m setup
