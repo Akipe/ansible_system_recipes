@@ -57,6 +57,11 @@ get-info-direct:
 		--inventory $(ADDRESS), \
 		--module-name setup
 
+init: fetch_git_submodules \
+		prepare_vault_password_file \
+		prepare_log_directory \
+		tf_init \
+		tf_prepare_credential_file
 
 vault-create:
 ifdef NODE
