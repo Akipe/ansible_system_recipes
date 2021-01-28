@@ -10,7 +10,7 @@
     driver_options:
       type:   nfs4
       device: "{{ akpCloud_volume_config_nfsPath }}"
-      o:      "{{ containers_nfs_akpContainers01_options }}"
+      o:      "{{ containers_nfs_asvcontainers01_options }}"
 
 - name: Create akpCloud volume for /data
   # become: yes
@@ -22,7 +22,7 @@
     driver_options:
       type:   nfs4
       device: "{{ akpCloud_volume_data_nfsPath }}"
-      o:      "{{ containers_nfs_akpContainers01_options }}"
+      o:      "{{ containers_nfs_asvcontainers01_options }}"
 
 - name: Create akpCloud container
   # become:       yes

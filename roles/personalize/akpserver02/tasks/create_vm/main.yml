@@ -9,17 +9,17 @@
 #   include_tasks: akpvmserver.yml
 #   when: proxmox_arch_template_exist is failed
 
-# - name: Check if akpSync01 is already create
-#   shell: "qm status {{ vm_akpsync01_id }} | grep 'status'"
-#   register: proxmox_akpsync01_exist
+# - name: Check if asvsync01 is already create
+#   shell: "qm status {{ vm_asvsync01_id }} | grep 'status'"
+#   register: proxmox_asvsync01_exist
 #   ignore_errors: true
 
 # - name: Load task for prepare Archlinux template
-#   include_tasks: akpsync01.yml
-#   when: proxmox_akpsync01_exist is failed
+#   include_tasks: asvsync01.yml
+#   when: proxmox_asvsync01_exist is failed
 
-# - name: Load task for creating akpContainers01
-#   include_tasks: create/akpcontainers01.yml
+# - name: Load task for creating asvContainers01
+#   include_tasks: create/asvContainers01.yml
 
-# - name: Load task for creating akpSync01
-#   include_tasks: create/akpsync01.yml
+# - name: Load task for creating asvsync01
+#   include_tasks: create/asvsync01.yml

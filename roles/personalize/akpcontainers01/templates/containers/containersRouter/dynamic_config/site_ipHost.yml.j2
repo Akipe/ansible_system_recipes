@@ -8,7 +8,7 @@
 #       entryPoints:
 #       - http
 #       service: IP_Address
-#       rule: "Host(`{{ ipv4_wan }}`, `{{ ipv4_lan_akpContainers01 }}`, `{{ url_dns_reverse }}`)"
+#       rule: "Host(`{{ ipv4_wan }}`, `{{ ipv4_lan_asvcontainers01 }}`, `{{ url_dns_reverse }}`)"
 #       middlewares:
 #       - SecureMiddlewares
 
@@ -16,7 +16,7 @@
 #       entryPoints:
 #       - https
 #       service: IP_Address
-#       rule: "Host(`{{ ipv4_wan }}`, `{{ ipv4_lan_akpContainers01 }}`, `{{ url_dns_reverse }}`)"
+#       rule: "Host(`{{ ipv4_wan }}`, `{{ ipv4_lan_asvcontainers01 }}`, `{{ url_dns_reverse }}`)"
 #       middlewares:
 #       - SecureMiddlewares
 #       tls:

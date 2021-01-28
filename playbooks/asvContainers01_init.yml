@@ -1,0 +1,10 @@
+---
+- name: Load roles for initialize asvContainers01
+  hosts: asvContainers01
+  become_user: root
+  become: yes
+  roles:
+    - { role: ansible-guest }
+    - { role: ssh }
+    - { role: apt }
+    - { role: qemu-guest }

@@ -1,0 +1,78 @@
+---
+
+ansible_python_interpreter: /usr/bin/python3
+ansible_user:               "{{ user_name }}"
+ansible_become_pass:        "{{ vault_ansible_become_pass }}"
+
+users_create:
+  - username:         "{{ personal_user_name }}"
+    password_hashed:  "{{ vault_personal_user_password_hashed }}"
+    shell:            /bin/bash
+    groups:           users,wheel
+    public_key:       "{{ ssh_public_key }}"
+
+user_api_terraform_username:  "{{ vault_user_api_terraform_username }}"
+user_api_terraform_password:  "{{ vault_user_api_terraform_password }}"
+user_api_terraform_publickey: "{{ ssh_public_key }}"
+
+terraform_openstack_image_storage_path:   /mnt/pve/srv01-iso/template/iso
+terraform_openstack_image_url_archlinux:  https://linuximages.de/openstack/arch/arch-openstack-LATEST-image-bootstrap.qcow2
+
+ssh_firewall_firewalld: no
+
+vm_commons_archlinux_iso_path:          local:iso/archlinux-2020.12.01-x86_64.iso
+lxc_commons_ubuntu_2004_template_path:  local:vztmpl/ubuntu-20.04-standard_20.04-1_amd64.tar.gz
+lxc_commons_debian_10_template_path:    local:vztmpl/debian-10-standard_10.7-1_amd64.tar.gz
+
+nut_mode:                                   netclient
+nut_monitor_connect_ups_name:               ups
+nut_monitor_connect_adress:                 "{{ vault_nut_monitor_connect_adress }}"
+nut_monitor_connect_number_power_supplies:  1
+nut_monitor_connect_username:               "{{ vault_nut_monitor_connect_username }}"
+nut_monitor_connect_password:               "{{ vault_nut_monitor_connect_password }}"
+nut_monitor_connect_type:                   slave
+
+akpvmserver_template_name:                akp-vmserver-template
+akpvmserver_template_id:                  9000
+akpvmserver_template_disk_efi_path:       local-lvm:0
+akpvmserver_template_disk_system_path:    local-lvm:1
+akpvmserver_template_disk_system_size:    "8G"
+akpvmserver_template_cpu_cores:           "1"
+akpvmserver_template_memory:              "1024"
+
+lxc_asvSync01_root_password:      "{{ vault_lxc_asvSync01_root_password }}"
+lxc_asvSync01_name:                asvSync01
+lxc_asvSync01_id:                  "2000"
+lxc_asvSync01_disk_system_size_gb: "4"
+lxc_asvSync01_cpu_cores:           "2"
+lxc_asvSync01_cpu_units:           "1024"
+lxc_asvSync01_memory:              "512"
+lxc_asvSync01_net0_macaddress:     "{{ asvSync01_hardware_network_net0_mac }}"
+lxc_asvSync01_net1_macaddress:     "{{ asvSync01_hardware_network_net1_mac }}"
+
+ssh_port: 22
+ssh_users:
+  - name:       "{{ user_name }}"
+    public_key: "{{ ssh_public_key }}"
+  - name:       "{{ user_api_terraform_username }}"
+    public_key: "{{ ssh_public_key }}"
+
+bash_configuration_mode: proxmox
+bash_users:
+  - username: root
+  - username: "{{ personal_user_name }}"
+
+fish_users:
+  - username: root
+  - username: "{{ personal_user_name }}"
+
+apt:
+  unattended_origins_patterns:
+  - 'origin=Debian,codename=${distro_codename}-updates'
+  - 'origin=Debian,codename=${distro_codename}-proposed-updates'
+  - 'origin=Debian,codename=${distro_codename},label=Debian'
+  - 'origin=Debian,codename=${distro_codename},label=Debian-Security'
+  - 'origin=Debian,archive=stable'
+  - 'origin=Debian,archive=stable-updates'
+  - 'origin=Debian,archive=proposed-updates'
+  - 'origin=Proxmox,archive=stable'

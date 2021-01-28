@@ -12,7 +12,7 @@
 #     driver_options:
 #       type:   nfs4
 #       device: "{{ akpBag_volume_image_nfsPath }}"
-#       o:      "{{ containers_nfs_akpContainers01_options }}"
+#       o:      "{{ containers_nfs_asvcontainers01_options }}"
 
 - name: Create akpBag volume for data
   docker_volume:
@@ -22,7 +22,7 @@
     driver_options:
       type:   nfs4
       device: "{{ akpBag_volume_data_nfsPath }}"
-      o:      "{{ containers_nfs_akpContainers01_options }}"
+      o:      "{{ containers_nfs_asvcontainers01_options }}"
 
 # Doc: https://doc.wallabag.org/en/developer/docker.html
 

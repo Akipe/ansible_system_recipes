@@ -1,25 +1,25 @@
 ---
 
-- name: Create akpSync01 virtual machine
+- name: Create asvsync01 virtual machine
   shell: |
-    qm create {{ vm_akpsync01_id }} \
-      --name {{ vm_akpsync01_name }} \
+    qm create {{ vm_asvsync01_id }} \
+      --name {{ vm_asvsync01_name }} \
       --machine q35 \
       --ostype l26 \
       --cpu cputype=kvm64 \
       --sockets 1 \
-      --cores {{ vm_akpsync01_cpu_cores }} \
+      --cores {{ vm_asvsync01_cpu_cores }} \
       --vcpus 1 \
-      --memory {{ vm_akpsync01_memory }} \
+      --memory {{ vm_asvsync01_memory }} \
       --bios ovmf \
       --vga serial0 \
       --serial0 socket \
       --scsihw virtio-scsi-single \
-      --efidisk0 {{ vm_akpsync01_disk_efi_path }},format=raw \
-      --scsi0 {{ vm_akpsync01_disk_system_path }},ssd=1,discard=on,aio=threads,iothread=1 \
+      --efidisk0 {{ vm_asvsync01_disk_efi_path }},format=raw \
+      --scsi0 {{ vm_asvsync01_disk_system_path }},ssd=1,discard=on,aio=threads,iothread=1 \
       --cdrom {{ vm_commons_archlinux_iso_path }} \
-      --net0 virtio={{ vm_akpsync01_net0_macaddress }},bridge=vmbr0,firewall=1,queues={{ vm_akpsync01_cpu_cores }} \
-      --net1 virtio={{ vm_akpsync01_net1_macaddress }},bridge=vmbr1,firewall=1,queues={{ vm_akpsync01_cpu_cores }} \
+      --net0 virtio={{ vm_asvsync01_net0_macaddress }},bridge=vmbr0,firewall=1,queues={{ vm_asvsync01_cpu_cores }} \
+      --net1 virtio={{ vm_asvsync01_net1_macaddress }},bridge=vmbr1,firewall=1,queues={{ vm_asvsync01_cpu_cores }} \
       --boot dc \
       --bootdisk scsi0 \
       --onboot 1 \
@@ -28,4 +28,4 @@
       --tablet 0 \
       --watchdog model=i6300esb,action=reset \
       --rng0 source=/dev/urandom && \
-    qm resize {{ vm_akpsync01_id }} scsi0 {{ vm_akpsync01_disk_system_size }}
+    qm resize {{ vm_asvsync01_id }} scsi0 {{ vm_asvsync01_disk_system_size }}

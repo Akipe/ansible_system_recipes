@@ -10,7 +10,7 @@
     driver_options:
       type:   nfs4
       device: "{{ akpCode_volume_data_nfsPath }}"
-      o:      "{{ containers_nfs_akpContainers01_options }}"
+      o:      "{{ containers_nfs_asvcontainers01_options }}"
 
 - name: Create akpCode container
   # become:       yes

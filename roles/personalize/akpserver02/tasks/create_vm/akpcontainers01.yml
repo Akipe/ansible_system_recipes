@@ -1,14 +1,14 @@
 ---
 # https://pve.proxmox.com/wiki/Qemu/KVM_Virtual_Machines
-- name: Create akpContainers01
+- name: Create asvContainers01
   proxmox_kvm:
     api_user:     root@pam
-    api_password: "{{ akpServer02_proxmox_root_password }}"
-    api_host:     akpserver02
+    api_password: "{{ assdonkey_proxmox_root_password }}"
+    api_host:     assdonkey
     state:        present
     vmid:         200
-    name:         akpContainers01
-    node:         akpserver02
+    name:         asvContainers01
+    node:         assdonkey
     description:  Machine executant les conteneurs de l'hebergement akpNetwork
     onboot:       yes
     acpi:         yes
@@ -23,7 +23,7 @@
     memory:       12288
     balloon:      6144
     vga:          std
-    net:          '{ "net0" : "virtio={{ akpContainers01_hardware_network_net0_mac }},bridge=vmbr0,firewall=1,queues=8", "net1" : "virtio={{ akpContainers01_hardware_network_net1_mac }},bridge=vmbr1,queues=8" }'
+    net:          '{ "net0" : "virtio={{ asvContainers01_hardware_network_net0_mac }},bridge=vmbr0,firewall=1,queues=8", "net1" : "virtio={{ asvContainers01_hardware_network_net1_mac }},bridge=vmbr1,queues=8" }'
     scsihw:       virtio-scsi-single
     scsi:         '{"scsi0":"local-lvm:112"}'
     agent:        yes

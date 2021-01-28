@@ -1,0 +1,10 @@
+---
+- name: Load roles for initialize asvTestArch
+  hosts: asvTestArch
+  become_user: root
+  become: yes
+  roles:
+    - { role: ansible-guest }
+    - { role: ssh }
+    - { role: makepkg, tags: makepkg }
+    - { role: pacman, tags: pacman }
