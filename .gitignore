@@ -2,6 +2,3 @@
 .vault_password.env
 *.retry
 log/*
-
-# Terraform
-**/.terraform/*
