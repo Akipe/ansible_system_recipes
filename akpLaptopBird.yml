@@ -20,6 +20,7 @@
         role_swap_bootloader: "systemd-boot"
     - { role: systemd-boot, tags: systemd-boot }
     - { role: systemd-resolved, tags: systemd-resolved }
+    - { role: systemd-timesyncd, tags: systemd-timesyncd }
     - { role: avahi, tags: avahi }
     - { role: host, tags: host }
     - { role: earlyoom, tags: earlyoom }
@@ -79,6 +80,7 @@
     - { role: handbrake, tags: handbrake }
     - { role: obs-studio, tags: obs-studio }
     - { role: scribus, tags: scribus }
+    - { role: wireshark, tags: wireshark }
     ### Development
     - { role: ansible-host, tags: ansible-host }
     ### General
