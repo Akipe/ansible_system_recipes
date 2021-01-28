@@ -70,6 +70,9 @@ time_ntpServers_fallback:
   - 2.fr.pool.ntp.fr
   - 3.fr.pool.ntp.fr
 
+systemd_timesyncd_ntp_servers: "{{ time_ntpServers }}"
+systemd_timesyncd_ntp_servers_fallback: "{{ time_ntpServers_fallback }}"
+
 pgp_key_id: "{{ vault_pgp_key_id }}"
 gpg_primary_mail: "{{ vault_gpg_primary_mail }}"
 
