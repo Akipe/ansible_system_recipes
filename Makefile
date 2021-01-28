@@ -17,7 +17,8 @@ run:
 	ansible-playbook ./playbooks/$(NODE).yml
 
 run-init:
-	ansible-playbook ./playbooks/$(NODE)_init.yml -i inventory_init.ini
+	ansible-playbook ./playbooks/$(NODE)_init.yml \
+		--inventory inventory_init.ini
 
 run-local:
 	ansible-playbook ./playbooks/$(NODE).yml \
