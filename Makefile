@@ -13,9 +13,6 @@ prepare_vault_password_file:
 prepare_log_directory:
 	mkdir ./log
 
-tf_init:
-	terraform init
-
 run:
 	ansible-playbook ./playbooks/$(NODE).yml
 
