@@ -31,6 +31,7 @@
     - { role: plymouth, tags: plymouth }
     # - { role: systemd-boot, tags: systemd-boot }t
     - { role: systemd-resolved, tags: systemd-resolved }
+    - { role: systemd-timesyncd, tags: systemd-timesyncd }
     - { role: avahi, tags: avahi }
     - { role: host, tags: host }
     - { role: earlyoom, tags: earlyoom }
@@ -116,6 +117,7 @@
     - { role: scribus, tags: scribus }
     - { role: qbittorrent, tags: qbittorrent }
     - { role: pcmanfm, tags: pcmanfm }
+    - { role: wireshark, tags: wireshark }
     ### Development
     - { role: ansible-host, tags: ansible-host }
     - { role: terraform, tags: terraform }
