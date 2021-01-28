@@ -23,6 +23,8 @@ run-local:
 	ansible-playbook ./playbooks/$(NODE).yml \
 		--connection=local \
 		--inventory $(NODE), \
+		--extra-vars "@./group_vars/all/vars.yml" \
+		--extra-vars "@./group_vars/all/vault.yml" \
 		--extra-vars "@./group_vars/$(NODE)/vars.yml" \
 		--extra-vars "@./group_vars/$(NODE)/vault.yml"
 
@@ -33,6 +35,8 @@ run-direct:
 		--ask-pass \
 		--extra-vars "{target: $(ADDRESS)}" \
 		--inventory $(ADDRESS), \
+		--extra-vars "@./group_vars/all/vars.yml" \
+		--extra-vars "@./group_vars/all/vault.yml" \
 		--extra-vars "@./group_vars/$(PLAYBOOK)/vars.yml" \
 		--extra-vars "@./group_vars/$(PLAYBOOK)/vault.yml"
 
