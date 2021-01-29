@@ -60,9 +60,7 @@ get-info-direct:
 
 init: fetch_git_submodules \
 		prepare_vault_password_file \
-		prepare_log_directory \
-		tf_init \
-		tf_prepare_credential_file
+		prepare_log_directory
 
 vault-create:
 ifdef NODE
