@@ -1,8 +1,0 @@
----
-- name: Include tasks for Ubuntu
-  include_tasks: ubuntu/main.yml
-  when: ansible_distribution == "Ubuntu"
-
-- name: Include tasks for Archlinux
-  include_tasks: archlinux/main.yml
-  when: ansible_distribution == "Archlinux"

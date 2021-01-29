@@ -1,2 +1,0 @@
-#!/bin/bash 
-echo "$(cat)" | formail -k -X From: | sendxmpp -t -n -s "$MATCH" -f /etc/mail2xmpp.conf email@email.com

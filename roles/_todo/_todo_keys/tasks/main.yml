@@ -1,7 +1,0 @@
----
-- name: Append public key for Ssh
-  authorized_key:
-    user: "{{ user_name }}"
-    state: present
-    manage_dir: yes
-    key: "{{ own.ssh_public_key }}"

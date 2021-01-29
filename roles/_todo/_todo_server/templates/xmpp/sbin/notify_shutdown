@@ -1,3 +1,0 @@
-#!/bin/bash
-
-/bin/echo "Server is shutting down" | sendxmpp -t -n -f /root/.sendxmpprc email@email.com

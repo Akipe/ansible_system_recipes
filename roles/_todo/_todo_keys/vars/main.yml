@@ -1,3 +1,0 @@
----
-own:
-  ssh_public_key: "{{ lookup('file', '../files/ssh.public.key') }}"

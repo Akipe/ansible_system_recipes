@@ -1,3 +1,0 @@
----
-- name: Include upgrade tasks
-  include_tasks: upgrade.yml
