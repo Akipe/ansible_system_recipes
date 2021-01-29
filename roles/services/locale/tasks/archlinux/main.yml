@@ -1,14 +1,14 @@
 ---
 
 - name: Load tasks for terminal
-  include_tasks: "{{ item }}.yml"
+  ansible.builtin.include_tasks: "{{ item }}.yml"
   loop:
     - 'timezone'
     - 'keyboard-cli'
     - 'language'
 
 - name: Load tasks for gui
-  include_tasks: "{{ item }}.yml"
+  ansible.builtin.include_tasks: "{{ item }}.yml"
   loop:
     - 'keyboard-gui'
     - 'dictionary'

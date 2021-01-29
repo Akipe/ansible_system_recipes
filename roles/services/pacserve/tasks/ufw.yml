@@ -1,6 +1,7 @@
 ---
+
 - name: Add Pacserve rule
-  template:
+  ansible.builtin.template:
     src: ufw/rule/pacserve
     dest: /etc/ufw/applications.d/pacserve
     owner: root
@@ -8,7 +9,7 @@
     mode: u+rw,g+r,o+r
     
 - name: Allow Pacserve rule
-  ufw:
+  community.general.ufw:
     rule: allow
     name: Pacserve
   notify: reload ufw

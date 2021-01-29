@@ -1,16 +1,17 @@
 ---
+
 - name: Load tasks for Archlinux
-  include_tasks: archlinux/main.yml
+  ansible.builtin.include_tasks: archlinux/main.yml
   when: ansible_distribution == "Archlinux"
 
 - name: Start and enable Uncomplicated Firewall
-  systemd:
+  ansible.builtin.systemd:
     name: ufw.service
     state: started
     enabled: yes
 
 - name: Add UFW config
-  template:
+  ansible.builtin.template:
     src: etc/ufw.conf.j2
     dest: /etc/ufw/ufw.conf
     owner: root
@@ -22,81 +23,81 @@
 
 # todo
 # - name: Set logging
-#   ufw:
+#   community.general.ufw:
 #     logging: 'on'
 
 - name: Enable UFW
-  ufw:
+  community.general.ufw:
     state: enabled
   notify: reload ufw
 
 - name: Disallow all incoming
-  ufw:
+  community.general.ufw:
     policy: deny
     direction: incoming
   notify: reload ufw
 
 - name: Allow all outcoming
-  ufw:
+  community.general.ufw:
     policy: allow
     direction: outgoing
   notify: reload ufw
 
 # - name: Allow Http
-#   ufw:
+#   community.general.ufw:
 #     rule: allow
 #     port: 80
 #     proto: tcp
 #   notify: reload ufw
 
 # - name: Allow Https
-#   ufw:
+#   community.general.ufw:
 #     rule: allow
 #     port: 443
 #     proto: tcp
 #   notify: reload ufw
 
 - name: Add SSH rule
-  ufw:
+  community.general.ufw:
     rule: allow
     name: ssh
   notify: reload ufw
 
 # - name: Add mdns rule
-#   ufw:
+#   community.general.ufw:
 #     rule: allow
 #     name: mdns
 #   notify: reload ufw
 
 # - name: Connection rate limiting for SSH (deny connections IP if attempted to initiate 6 or more connection in the last 30 seconds)
-#   ufw:
+#   community.general.ufw:
 #     rule: limit
 #     port: ssh
 #     proto: tcp
 #   notify: reload ufw
 
 # - name: Allow Syncthing
-#   ufw:
+#   community.general.ufw:
 #     rule: allow
 #     name: syncthing
 #   notify: reload ufw
 
 # - name: Allow Syncthing (Sync Protocol Listen Address)
-#   ufw:
+#   community.general.ufw:
 #     rule: allow
 #     port: 22000
 #     proto: tcp
 #   notify: reload ufw
 
 # - name: Allow Syncthing (discovery broadcasts on IPv4 and multicasts on IPv6)
-#   ufw:
+#   community.general.ufw:
 #     rule: allow
 #     port: 21027
 #     proto: udp
 #   notify: reload ufw
 
 # - name: Add Syncthing rule
-#   template:
+#   ansible.builtin.template:
 #     src: rules/ufw_rule.j2
 #     dest: /etc/ufw/applications.d/syncthing
 #     owner: root
@@ -110,7 +111,7 @@
 #       ports: 
 
 # - name: Add Samba rule
-#   copy:
+#   ansible.builtin.copy:
 #     src: rules/samba
 #     dest: /etc/ufw/applications.d/samba
 #     owner: root
@@ -118,13 +119,13 @@
 #     mode: u+rw,g+r,o+r
     
 # - name: Allow Samba rule
-#   ufw:
+#   community.general.ufw:
 #     rule: allow
 #     name: Samba
 #   notify: reload ufw
 
 # - name: Add Librespot rule
-#   copy:
+#   ansible.builtin.copy:
 #     src: rules/librespot
 #     dest: /etc/ufw/applications.d/librespot
 #     owner: root
@@ -132,13 +133,13 @@
 #     mode: u+rw,g+r,o+r
     
 # - name: Allow Librespot rule
-#   ufw:
+#   community.general.ufw:
 #     rule: allow
 #     name: Librespot
 #   notify: reload ufw
 
 # - name: Add Prosody rule
-#   copy:
+#   ansible.builtin.copy:
 #     src: rules/prosody
 #     dest: /etc/ufw/applications.d/prosody
 #     owner: root
@@ -146,7 +147,7 @@
 #     mode: u+rw,g+r,o+r
     
 # - name: Allow Prosody rule
-#   ufw:
+#   community.general.ufw:
 #     rule: allow
 #     name: Prosody
 #   notify: reload ufw

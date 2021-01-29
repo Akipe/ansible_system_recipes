@@ -1,4 +1,5 @@
 ---
+
 - name: Install Yay
   become: yes
   become_user: ansible_aur
@@ -9,6 +10,6 @@
       - yay
 
 - name: Remove old makepkg directory
-  file:
+  ansible.builtin.file:
     path: /tmp/makepkg/
     state: absent

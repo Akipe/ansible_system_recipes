@@ -1,10 +1,11 @@
 ---
+
 - name: Load tasks for install on Archlinux
-  include_tasks: archlinux/main.yml
+  ansible.builtin.include_tasks: archlinux/main.yml
   when: ansible_distribution == "Archlinux"
 
 - name: Install Windows 10 fonts
-  copy:
+  ansible.builtin.copy:
     src: windows_10_fonts/
     dest: /usr/share/fonts/WindowsFonts/
     owner: root

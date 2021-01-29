@@ -1,13 +1,13 @@
 ---
 
 - name: Installation
-  pacman:
+  community.general.pacman:
     state: present
     name:
       - hplip
 
 - name: Installation of dependencies
-  pacman:
+  community.general.pacman:
     state: present
     name:
       - cups
@@ -21,7 +21,7 @@
     extra_args: --asdeps
 
 - name: Installation of a scanner gui
-  pacman:
+  community.general.pacman:
     state: present
     name:
       - simple-scan
@@ -36,13 +36,13 @@
       - hplip-plugin
 
 - name: Enable and start CUPS service
-  systemd:
+  ansible.builtin.systemd:
     name: org.cups.cupsd.service
     enabled: yes
     state: started
 
 - name: Add role for the user
-  user:
+  ansible.builtin.user:
     name: "{{ user_name }}"
     groups: 
       - cups
@@ -52,7 +52,7 @@
 
 - name: Open firewall for ipp
   ansible.posix.firewalld:
-    service: ipp
+    ansible.builtin.service: ipp
     zone: home
     state: enabled
     permanent: true
@@ -60,7 +60,7 @@
 
 - name: Open firewall for ipp-client
   ansible.posix.firewalld:
-    service: ipp-client
+    ansible.builtin.service: ipp-client
     zone: home
     state: enabled
     permanent: true

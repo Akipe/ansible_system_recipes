@@ -1,14 +1,14 @@
 ---
 
 - name: Installation
-  pacman:
+  community.general.pacman:
     state: present
     name:
       - man-db
       - man-pages
 
 - name: Installation of dependencies
-  pacman:
+  community.general.pacman:
     state: present
     name:
       - man-pages-fr

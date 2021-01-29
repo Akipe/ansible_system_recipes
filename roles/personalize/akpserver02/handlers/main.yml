@@ -1,4 +1,4 @@
 ---
 
 - name: Restart asvSync01
-  shell: pct shutdown {{ lxc_asvsync01_id }} && pct start {{ lxc_asvsync01_id }}
+  ansible.builtin.shell: pct shutdown {{ lxc_asvsync01_id }} && pct start {{ lxc_asvsync01_id }}

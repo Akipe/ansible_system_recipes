@@ -1,6 +1,7 @@
 ---
+
 - name: Start and active Pacserve service
-  systemd:
+  ansible.builtin.systemd:
     name: pacserve.service
     enabled: yes
     state: started

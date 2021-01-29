@@ -1,7 +1,7 @@
 ---
 
-- name: Install
-  pacman:
+- name: Installation
+  community.general.pacman:
     state: present
     name:
       - pamac-flatpak-plugin

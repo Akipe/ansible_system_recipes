@@ -1,7 +1,7 @@
 ---
 
 - name: Installation of dictionaries
-  pacman:
+  community.general.pacman:
     state: present
     name:
       - hunspell

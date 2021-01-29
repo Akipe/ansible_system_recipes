@@ -3,20 +3,20 @@
 # https://www.cyberciti.biz/tips/linux-unix-bsd-openssh-server-best-practices.html
 
 - name: Load tasks for Debian & derivate
-  include_tasks: debian/main.yml
+  ansible.builtin.include_tasks: debian/main.yml
   when: ansible_distribution == "Debian" or ansible_distribution == "Ubuntu"
 
 - name: Load tasks for Fedora
-  include_tasks: fedora/main.yml
+  ansible.builtin.include_tasks: fedora/main.yml
   when: ansible_distribution == "Fedora"
 
 - name: Load tasks for Archlinux
-  include_tasks: archlinux/main.yml
+  ansible.builtin.include_tasks: archlinux/main.yml
   when: ansible_distribution == "Archlinux"
 
 - name: Open firewall for sshd 
   ansible.posix.firewalld:
-    service: ssh
+    ansible.builtin.service: ssh
     zone: home
     state: enabled
     permanent: true
@@ -68,7 +68,7 @@
 - name: Set public key for SSH
   ansible.posix.authorized_key:
     state: present
-    user: "{{ item.name }}"
+    ansible.builtin.user: "{{ item.name }}"
     key: "{{ item.public_key }}"
   with_items: "{{ ssh_users }}"
 

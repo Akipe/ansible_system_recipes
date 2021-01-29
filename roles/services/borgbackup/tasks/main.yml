@@ -1,24 +1,23 @@
 ---
+
 - name: Add repository for Borg
-  apt_repository:
+  ansible.builtin.apt_repository:
     repo: ppa:costamagnagianfranco/borgbackup
     filename: borgbackup
 
 - name: Install Borg
-  apt:
+  ansible.builtin.apt:
     update_cache: yes
     name: borgbackup
     state: present
 
 - name: Install Python Pip
-  apt:
+  ansible.builtin.apt:
     name: python3-pip
     state: present
 
 - name: Install Borgmatic wrapper for Borg
-  pip:
+  ansible.builtin.pip:
     executable: pip3
     name: borgmatic
     state: present
-
-# todo: https://borgbackup.readthedocs.io/en/stable/deployment/automated-local.html?highlight=exclude

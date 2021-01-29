@@ -1,6 +1,6 @@
 ---
 
-- name: Install
-  pacman:
+- name: Installation
+  community.general.pacman:
     state: present
     name: "{{ earlyoom_app_archlinux }}"

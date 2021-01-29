@@ -1,9 +1,9 @@
 ---
 
 - name: Include tasks for all Archlinux based distributions
-  include_tasks: archlinux_common/main.yml
+  ansible.builtin.include_tasks: archlinux_common/main.yml
   when: ansible_os_family == "Archlinux"
 
 - name: Include tasks for Manjaro
-  include_tasks: manjaro/main.yml
+  ansible.builtin.include_tasks: manjaro/main.yml
   when: ansible_distribution == "Manjaro"

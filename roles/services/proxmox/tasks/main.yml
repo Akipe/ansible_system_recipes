@@ -1,7 +1,7 @@
 ---
 
 - name: Remove Proxmox VE enterprise repository
-  include_role:
+  ansible.builtin.include_role:
     name: apt
     tasks_from: remove_repository
   vars:
@@ -10,12 +10,12 @@
           repo: "deb https://enterprise.proxmox.com/debian/pve buster pve-enterprise"
 
 - name: Remove Proxmox VE enterprise repository file
-  file:
+  ansible.builtin.file:
     state: absent
     path: /etc/apt/sources.list.d/pve-enterprise.list
 
 - name: Add Proxmox VE no-subscription repository
-  include_role:
+  ansible.builtin.include_role:
     name: apt
     tasks_from: add_repository
   vars:
@@ -28,13 +28,13 @@
           filename: proxmox-ve_no-subscription
 
 - name: Remove unused Proxmox packages
-  apt:
+  ansible.builtin.apt:
     name:
       - os-prober
     state: absent
 
 - name: Install Proxmox VE and related packages
-  apt:
+  ansible.builtin.apt:
     name:
       - proxmox-ve
       - open-iscsi
@@ -42,14 +42,14 @@
     state: present
 
 - name: Install dependencies for Ansible
-  pip:
+  ansible.builtin.pip:
     name:
       - requests
       - proxmoxer
     state: present
 
 - name: Add kernel config for Proxmox
-  template:
+  ansible.builtin.template:
     src: "sysctl.d/{{ item }}.conf.j2"
     dest: "/etc/sysctl.d/{{ item }}.conf"
     owner: root
@@ -60,26 +60,26 @@
     - pve
 
 - name: Active automatic update of LXC templates
-  systemd:
+  ansible.builtin.systemd:
     name: pve-daily-update.timer
     enabled: yes
     state: started
 
 - name: Create directory for store public key
-  file:
+  ansible.builtin.file:
     path: /etc/pub_keys
     state: directory
     owner: root
-    group: www-data
+    ansible.builtin.group: www-data
     mode: u+rwx,g+rx,o+rx
 
 - name: Add akpKey public key
-  copy:
+  ansible.builtin.copy:
     src: pubkey/akpkey/ssh.public.key
     dest: /etc/pub_keys/akpkey.ssh.pub
 
 - name: Allow LXC containers to mount NFS
-  template:
+  ansible.builtin.template:
     src: apparmor.d/lxc-default-with-nfs.j2
     dest: /etc/apparmor.d/lxc/lxc-default-with-nfs
     owner: root
@@ -88,10 +88,10 @@
   notify: Restart apparmor
 
 - name: Include web interface proxy tasks
-  include_tasks: web_interface_proxy.yml
+  ansible.builtin.include_tasks: web_interface_proxy.yml
 
 # - name: setup IPV4 forwarding for NAT
-#   lineinfile: "state=present dest=/etc/sysctl.conf
+#   ansible.builtin.lineinfile: "state=present dest=/etc/sysctl.conf
 #   regexp='^#?net.ipv4.ip_forward'
 #   line=net.ipv4.ip_forward=1"
 #   tags:
@@ -135,7 +135,7 @@
 
 # - block:
 #   - name: Remove automatically installed PVE Enterprise repo configuration
-#     apt_repository:
+#     ansible.builtin.apt_repository:
 #       repo: "{{ item }}"
 #       filename: pve-enterprise
 #       state: absent
@@ -188,7 +188,7 @@
 #   when: "not pve_cluster_enabled | bool or (pve_cluster_enabled and inventory_hostname == groups[pve_group][0])"
 
 # - name: Setup open-iscsi configuration
-#   template:
+#   ansible.builtin.template:
 #     src="{{ proxmox_isci_config_template }}"
 #     dest="{{ proxmox_isci_config_path }}"
 #   notify: open-iscsi restart
@@ -202,7 +202,7 @@
 #     - after-reboot
 
 # - name: Configure network interfaces (need reboot if changes)
-#   template:
+#   ansible.builtin.template:
 #     src:  "{{ proxmox_interfaces_template }}"
 #     dest: "{{ proxmox_interfaces_file }}"
 #   when: proxmox_interfaces_template | length

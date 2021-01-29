@@ -3,7 +3,7 @@
 # todo: set password to user
 
 - name: Create user
-  user:
+  ansible.builtin.user:
     name: "{{ user_api_terraform_username }}"
     shell: /bin/bash
     groups: root
@@ -17,21 +17,21 @@
     key: "{{ user_api_terraform_publickey }}"
 
 - name: Check if Terraform user is already exist in proxmox
-  shell: "pveum user list | grep {{ user_api_terraform_username }}@pam"
+  ansible.builtin.shell: "pveum user list | grep {{ user_api_terraform_username }}@pam"
   register: proxmox_init_user_exist
   ignore_errors: true
 
 - name: Add Terraform user to proxmox
-  command: "pveum user add {{ user_api_terraform_username }}@pam --password {{ user_api_terraform_password }}"
+  ansible.builtin.command: "pveum user add {{ user_api_terraform_username }}@pam --password {{ user_api_terraform_password }}"
   when: proxmox_init_user_exist is failed
 
 - name: Check if user has proxmox permission
-  shell: "pveum user permission {{ user_api_terraform_username }}@pam | grep '/'"
+  ansible.builtin.shell: "pveum user permission {{ user_api_terraform_username }}@pam | grep '/'"
   register: proxmox_init_user_permission_exist
   ignore_errors: true
 
 - name: Set user to administrator
-  shell: "pveum aclmod / -user {{ user_api_terraform_username }}@pam -role Administrator"
+  ansible.builtin.shell: "pveum aclmod / -user {{ user_api_terraform_username }}@pam -role Administrator"
   when: proxmox_init_user_permission_exist is failed
 
 - name: Allow group root to write at /var/lib/vz/snippets

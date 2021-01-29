@@ -1,6 +1,7 @@
 ---
+
 - name: Installation
-  pacman:
+  community.general.pacman:
     state: present
     name:
       - bluez
@@ -22,7 +23,7 @@
       - bluez-firmware
 
 - name: Audio bluetooth
-  pacman:
+  community.general.pacman:
     state: present
     name:
       - pulseaudio-alsa
@@ -40,13 +41,13 @@
       - libldac
 
 - name: Adding user to audit group to get notification
-  user:
+  ansible.builtin.user:
     name: "{{ user_name }}"
     groups: lp
     append: yes
 
 - name: Enable and start Bluetooth service
-  systemd:
+  ansible.builtin.systemd:
     name: bluetooth.service
     enabled: yes
     state: started

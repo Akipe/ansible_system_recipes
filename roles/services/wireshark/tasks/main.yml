@@ -1,11 +1,11 @@
 ---
 
 - name: Include tasks for all Archlinux based distributions
-  include_tasks: archlinux_common/main.yml
+  ansible.builtin.include_tasks: archlinux_common/main.yml
   when: ansible_distribution == "Archlinux"
 
 - name: Add wireshark group to users
-  user:
+  ansible.builtin.user:
     name: "{{ item.username }}"
     groups: wireshark
     append: yes

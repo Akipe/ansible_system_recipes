@@ -1,18 +1,18 @@
 ---
 
 - name: Load tasks for install on Archlinux
-  include_tasks: archlinux/main.yml
+  ansible.builtin.include_tasks: archlinux/main.yml
   when: ansible_distribution == "Archlinux"
 
 - name: Start and enable service
-  systemd:
+  ansible.builtin.systemd:
     name: earlyoom.service
     state: started
     daemon_reload: yes
     enabled: yes
 
 - name: Add configuration
-  template:
+  ansible.builtin.template:
     src: earlyoom.j2
     dest: /etc/default/earlyoom
     owner: root

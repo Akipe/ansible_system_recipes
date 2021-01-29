@@ -1,5 +1,6 @@
 ---
+
 - name: Upgrade all packages with Pacman
-  pacman:
+  community.general.pacman:
     update_cache: yes
     upgrade: yes

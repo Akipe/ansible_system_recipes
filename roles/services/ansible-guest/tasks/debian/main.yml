@@ -1,6 +1,7 @@
 ---
-- name: Install Python 3 and pip
-  apt:
+
+- name: Installation
+  ansible.builtin.apt:
     state: present
     update_cache: yes
     name: "{{ role_appToInstall_debian }}"

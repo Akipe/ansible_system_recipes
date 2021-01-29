@@ -1,22 +1,22 @@
 ---
 
 - name: Load tasks for Fedora
-  include_tasks: fedora/main.yml
+  ansible.builtin.include_tasks: fedora/main.yml
   when: ansible_distribution == "Fedora"
 
 - name: Load tasks for Archlinux
-  include_tasks: archlinux/main.yml
+  ansible.builtin.include_tasks: archlinux/main.yml
   when: ansible_distribution == "Archlinux"
 
 - name: Enable systemd unit pcscd
   become: true
-  systemd:
+  ansible.builtin.systemd:
     name: pcscd.socket
     enabled: true
     state: started
 
 - name: Add script for rotate with several Yubikey key for SSH
-  template:
+  ansible.builtin.template:
     src: yk_rotate.bash.j2
     dest: "/home/{{ item.name }}/.local/bin/yk_rotate.bash"
     owner: "{{ item.name }}"

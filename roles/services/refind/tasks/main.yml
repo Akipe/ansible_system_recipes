@@ -1,11 +1,11 @@
 ---
 
 - name: Include tasks for all Archlinux based distributions
-  include_tasks: archlinux_common/main.yml
+  ansible.builtin.include_tasks: archlinux_common/main.yml
   when: ansible_distribution == "Archlinux"
 
 - name: Add general configuration
-  template:
+  ansible.builtin.template:
     src: config/refind.conf.j2
     dest: /boot/EFI/refind/refind.conf
     owner: root
@@ -14,7 +14,7 @@
   notify: Reinstall rEFInd
 
 - name: Add Linux kernel configuration
-  template:
+  ansible.builtin.template:
     src: config/refind_linux.conf.j2
     dest: /boot/refind_linux.conf
     owner: root

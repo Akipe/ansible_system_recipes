@@ -1,4 +1,4 @@
 ---
 
 - name: Reinstall rEFInd
-  shell: "refind-install"
+  ansible.builtin.shell: "refind-install"

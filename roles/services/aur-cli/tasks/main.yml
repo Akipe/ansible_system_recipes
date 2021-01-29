@@ -1,6 +1,7 @@
 ---
+
 - name: Load tasks for enable Ansible AUR user
-  include_tasks: create_user.yml
+  ansible.builtin.include_tasks: create_user.yml
 
 - name: Load tasks for install yay
-  include_tasks: install_yay.yml
+  ansible.builtin.include_tasks: install_yay.yml

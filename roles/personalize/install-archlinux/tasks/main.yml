@@ -4,7 +4,7 @@
 
 # Time sync
 - name: Fetch date/time
-  shell: |
+  ansible.builtin.shell: |
     timedatectl set-ntp true
 
 # Prepare Pacman
@@ -18,7 +18,7 @@
     state: present
 
 - name: Edit Pacman mirror list
-  shell: |
+  ansible.builtin.shell: |
     reflector \
       --country "{{ pacman_mirror_country }}" \
       --age 12 \
@@ -38,11 +38,11 @@
     state: started
 
 - name: Get hardware device for entropy
-  command: cat /sys/devices/virtual/misc/hw_random/rng_available
+  ansible.builtin.command: cat /sys/devices/virtual/misc/hw_random/rng_available
   register: info_rng_devices
 
 - name: Get entropy available
-  command: cat /proc/sys/kernel/random/entropy_avail
+  ansible.builtin.command: cat /proc/sys/kernel/random/entropy_avail
   register: info_entropy_available
 
 - name: Show hardware device for entropy
@@ -59,7 +59,7 @@
 
 # Prepare disk & partitions
 - name: Get list disk
-  command: lsblk
+  ansible.builtin.command: lsblk
   register: info_disk_list
 
 - name: Show list disk
@@ -71,20 +71,20 @@
     seconds: 5
 
 - name: Prepare disk size vars
-  shell: echo $(($(blockdev --getsize64 /dev/sda) / 1024 / 1024 / 1024))
+  ansible.builtin.shell: echo $(($(blockdev --getsize64 /dev/sda) / 1024 / 1024 / 1024))
   register: info_disk_size
 
 - name: Prepare disk size vars
-  set_fact:
+  ansible.builtin.set_fact:
     info_disk_system_size: "{{ info_disk_size.stdout | int }}"
 
 - name: Detect if system is EFI or BIOS MBR
-  shell: ls -ld /sys/firmware/efi
+  ansible.builtin.shell: ls -ld /sys/firmware/efi
   register: info_is_system_efi
   ignore_errors: true
 
 - name: Set var for bios type
-  set_fact:
+  ansible.builtin.set_fact:
     info_bios_type: "{{ 'efi' if info_is_system_efi else 'bios' }}"
 
 - name: Show disk to format
@@ -101,26 +101,26 @@
 # TRIM the entire SSD
 
 - name: TRIM the entire SSD
-  shell: "blkdiscard {{ archinstall_disk_install_path }}"
+  ansible.builtin.shell: "blkdiscard {{ archinstall_disk_install_path }}"
   when: archinstall_is_disk_ssd == "yes"
 
 # Create partitions
 
 - name: Format disk
-  shell: "sgdisk --zap-all {{ archinstall_disk_install_path }}"
+  ansible.builtin.shell: "sgdisk --zap-all {{ archinstall_disk_install_path }}"
 
 # todo: check if encryption or not, change label name
 - name: Create disk partitions
-  shell: "sgdisk --clear --new=1:0:+{{ archinstall_boot_partition_size }} --typecode=1:ef00 --change-name=1:EFI --new=2:0: --typecode=2:8300 --change-name=2:{{ archinstall_root_partition_label }} {{ archinstall_disk_install_path }}"
+  ansible.builtin.shell: "sgdisk --clear --new=1:0:+{{ archinstall_boot_partition_size }} --typecode=1:ef00 --change-name=1:EFI --new=2:0: --typecode=2:8300 --change-name=2:{{ archinstall_root_partition_label }} {{ archinstall_disk_install_path }}"
 
 - name: Verify disk
-  shell: "sgdisk --verify {{ archinstall_disk_install_path }}"
+  ansible.builtin.shell: "sgdisk --verify {{ archinstall_disk_install_path }}"
 
 # Encryption
 # todo: ask password for encryption/decryption (use vars)
 
 - name: Encrypt (for SSD or 4k sectors HDD)
-  shell: |
+  ansible.builtin.shell: |
     cryptsetup \
       --type luks2 \
       --use-random \
@@ -135,7 +135,7 @@
     - archinstall_is_disk_ssd     == "yes" or archinstall_is_disk_4k_sectors == "yes"
 
 - name: Encrypt (for classic HDD)
-  shell: |
+  ansible.builtin.shell: |
     cryptsetup \
       --type luks2 \
       --use-random \
@@ -149,32 +149,32 @@
     - archinstall_is_disk_ssd     == "no"
 
 - name: Mount encryption system partition
-  shell: "cryptsetup luksOpen --allow-discards {{ archinstall_disk_install_path }}2 {{ archinstall_lvm_system_group_label }}"
+  ansible.builtin.shell: "cryptsetup luksOpen --allow-discards {{ archinstall_disk_install_path }}2 {{ archinstall_lvm_system_group_label }}"
 
 # LVM
 - name: Set physical LVM volume (for SSD or 4k sector HDD)
-  shell: "pvcreate --dataalignment 4M /dev/mapper/{{ archinstall_lvm_system_group_label }}"
+  ansible.builtin.shell: "pvcreate --dataalignment 4M /dev/mapper/{{ archinstall_lvm_system_group_label }}"
 
 - name: Set physical LVM volume (512 byte HDD)
-  shell: "pvcreate /dev/mapper/{{ archinstall_lvm_system_group_label }}"
+  ansible.builtin.shell: "pvcreate /dev/mapper/{{ archinstall_lvm_system_group_label }}"
 
 - name: Set LVM volume group
-  shell: "vgcreate {{ archinstall_lvm_system_group_label }} /dev/mapper/{{ archinstall_lvm_system_group_label }}"
+  ansible.builtin.shell: "vgcreate {{ archinstall_lvm_system_group_label }} /dev/mapper/{{ archinstall_lvm_system_group_label }}"
 
 # Swap partition
 # todo: define swap partition size
 - name: Create LVM swap partition
-  shell: "lvcreate --size ${SWAP_PARTITION_SIZE}G {{ archinstall_lvm_system_group_label }} --name {{ archinstall_lvm_swap_partition_label }}"
+  ansible.builtin.shell: "lvcreate --size ${SWAP_PARTITION_SIZE}G {{ archinstall_lvm_system_group_label }} --name {{ archinstall_lvm_swap_partition_label }}"
   when: archinstall_has_swap == "yes"
 
 - name: Format swap partition
-  shell: "mkswap -L akpsysswap /dev/mapper/{{ archinstall_lvm_system_group_label }}-{{ archinstall_lvm_swap_partition_label }}"
+  ansible.builtin.shell: "mkswap -L akpsysswap /dev/mapper/{{ archinstall_lvm_system_group_label }}-{{ archinstall_lvm_swap_partition_label }}"
   when: archinstall_has_swap == "yes"
 
 # Root partition
 
 - name: Create LVM root partition
-  shell: "lvcreate -l +100%FREE {{ archinstall_lvm_system_group_label }} --name {{ archinstall_lvm_root_partition_label }}"
+  ansible.builtin.shell: "lvcreate -l +100%FREE {{ archinstall_lvm_system_group_label }} --name {{ archinstall_lvm_root_partition_label }}"
 
 - name: Format root partition
   community.general.filesystem:
@@ -193,18 +193,18 @@
 
 # Mount partitions
 - name: Mount root partition
-  shell: "mount /dev/mapper/{{ archinstall_lvm_system_group_label }}-{{ archinstall_lvm_root_partition_label }} /mnt"
+  ansible.builtin.shell: "mount /dev/mapper/{{ archinstall_lvm_system_group_label }}-{{ archinstall_lvm_root_partition_label }} /mnt"
 
 - name: Create boot partition directory
-  file:
+  ansible.builtin.file:
     path: /mnt/boot
     state: directory
 
 - name: Mount boot partition
-  shell: "mount {{ archinstall_boot_partition_path }} /mnt/boot"
+  ansible.builtin.shell: "mount {{ archinstall_boot_partition_path }} /mnt/boot"
 
 - name: Get list disk
-  command: lsblk
+  ansible.builtin.command: lsblk
   register: info_disk_list
 
 - name: Show list disk
@@ -217,7 +217,7 @@
 
 # Install archlinux
 - name: Install base system
-  shell: |
+  ansible.builtin.shell: |
     pacstrap /mnt \
       base \
       linux-lts \
@@ -226,7 +226,7 @@
       sudo
 
 - name: Generate fstab
-  shell: genfstab -pU /mnt >> /mnt/etc/fstab
+  ansible.builtin.shell: genfstab -pU /mnt >> /mnt/etc/fstab
 
 - name: Copy pacman mirror list
   ansible.builtin.copy:
@@ -242,36 +242,36 @@
 # Configure date/time
 
 - name: Set timezone
-  shell: "arch-chroot /mnt ln -sf /usr/share/zoneinfo/{{ archinstall_locale_timezone }} /etc/localtime"
+  ansible.builtin.shell: "arch-chroot /mnt ln -sf /usr/share/zoneinfo/{{ archinstall_locale_timezone }} /etc/localtime"
 
 - name: Set hardware clock to UTC
-  shell: arch-chroot /mnt hwclock --systohc --utc
+  ansible.builtin.shell: arch-chroot /mnt hwclock --systohc --utc
 
 - name: Enable NTP
-  shell: arch-chroot /mnt timedatectl set-ntp true
+  ansible.builtin.shell: arch-chroot /mnt timedatectl set-ntp true
 
 # Increase entropy
 
 - name: Install rng-tool
-  shell: arch-chroot /mnt pacman --needed --noconfirm -Syy rng-tools
+  ansible.builtin.shell: arch-chroot /mnt pacman --needed --noconfirm -Syy rng-tools
 
 - name: Enable rng service
-  shell: systemctl enable rngd.service
+  ansible.builtin.shell: systemctl enable rngd.service
 
 # Configure language
 
 - name: Configure language
-  shell: "arch-chroot /mnt sed -i 's/#{{ archinstall_locale_language }}.UTF-8/{{ archinstall_locale_language }}.UTF-8/g' /etc/locale.gen"
+  ansible.builtin.shell: "arch-chroot /mnt sed -i 's/#{{ archinstall_locale_language }}.UTF-8/{{ archinstall_locale_language }}.UTF-8/g' /etc/locale.gen"
 
 - name: Configure language
-  shell: arch-chroot /mnt sed -i 's/#en_US.UTF-8/en_US.UTF-8/g' /etc/locale.gen
+  ansible.builtin.shell: arch-chroot /mnt sed -i 's/#en_US.UTF-8/en_US.UTF-8/g' /etc/locale.gen
   when: archinstall_locale_language_eng_enable
 
 - name: Configure language
-  shell: arch-chroot /mnt locale-gen
+  ansible.builtin.shell: arch-chroot /mnt locale-gen
 
 - name: Configure language
-  template:
+  ansible.builtin.template:
     src: locale/locale.conf.j2
     dest: /mnt/etc/locale.conf
     owner: root
@@ -281,10 +281,10 @@
 # Set hostname
 
 - name: Set hostname
-  shell: "arch-chroot /mnt hostnamectl set-hostname {{ archinstall_hostname }}"
+  ansible.builtin.shell: "arch-chroot /mnt hostnamectl set-hostname {{ archinstall_hostname }}"
 
 - name: Set hostname
-  template:
+  ansible.builtin.template:
     src: hostname/hostname.j2
     dest: /mnt/etc/hostname
     owner: root
@@ -292,7 +292,7 @@
     mode:  u+rw,g+r,o+r
 
 - name: Set hostname
-  template:
+  ansible.builtin.template:
     src: hostname/hosts.j2
     dest: /mnt/etc/hosts
     owner: root
@@ -300,18 +300,18 @@
     mode:  u+rw,g+r,o+r
 
 - name: Set hostname
-  shell: arch-chroot /mnt pacman --needed --noconfirm -S inetutils
+  ansible.builtin.shell: arch-chroot /mnt pacman --needed --noconfirm -S inetutils
 
 - name: Set hostname
-  shell: "arch-chroot /mnt hostname {{ archinstall_hostname }}"
+  ansible.builtin.shell: "arch-chroot /mnt hostname {{ archinstall_hostname }}"
   
 # Configure keyboard
 
 - name: Configure keyboard
-  shell: "arch-chroot /mnt loadkeys {{ archinstall_locale_keymap }}"
+  ansible.builtin.shell: "arch-chroot /mnt loadkeys {{ archinstall_locale_keymap }}"
 
 - name: Configure keyboard
-  template:
+  ansible.builtin.template:
     src: locale/vconsole.conf.j2
     dest: /mnt/etc/vconsole.conf
     owner: root
@@ -321,12 +321,12 @@
 # Configure root user
 
 - name: Configure root user
-  shell: "echo 'root:{{ archinstall_users_root_password }}' | chpasswd --root /mnt"
+  ansible.builtin.shell: "echo 'root:{{ archinstall_users_root_password }}' | chpasswd --root /mnt"
 
 # Enable sudo for wheel group
 
 - name: Enable sudo for wheel group
-  template:
+  ansible.builtin.template:
     src: sudo/10-grant-group-wheel-sudo.j2
     dest: /mnt/etc/sudoers.d/10-grant-group-wheel-sudo
     owner: root
@@ -336,25 +336,25 @@
 # mkinitcpio
 
 - name: mkinitcpio
-  shell: arch-chroot /mnt sed -i 's/MODULES=()/MODULES=(virtio virtio_scsi virtio_pci virtio_net virtio_balloon virtio_rng virtio_blk virtio_console virtio_rpmsg_bus virtio_console virtio_input virtio_crypto virtiofs ext4 vfat i6300esb)/g' /etc/mkinitcpio.conf
+  ansible.builtin.shell: arch-chroot /mnt sed -i 's/MODULES=()/MODULES=(virtio virtio_scsi virtio_pci virtio_net virtio_balloon virtio_rng virtio_blk virtio_console virtio_rpmsg_bus virtio_console virtio_input virtio_crypto virtiofs ext4 vfat i6300esb)/g' /etc/mkinitcpio.conf
 
 - name: mkinitcpio
-  shell: arch-chroot /mnt sed -i 's/HOOKS=(base udev autodetect modconf block filesystems keyboard fsck)/HOOKS=(base systemd autodetect keyboard sd-vconsole modconf block filesystems fsck)/g' /etc/mkinitcpio.conf
+  ansible.builtin.shell: arch-chroot /mnt sed -i 's/HOOKS=(base udev autodetect modconf block filesystems keyboard fsck)/HOOKS=(base systemd autodetect keyboard sd-vconsole modconf block filesystems fsck)/g' /etc/mkinitcpio.conf
 
 - name: mkinitcpio
-  shell: arch-chroot /mnt sed -i 's/#COMPRESSION="lz4"/COMPRESSION="lz4"/g' /etc/mkinitcpio.conf
+  ansible.builtin.shell: arch-chroot /mnt sed -i 's/#COMPRESSION="lz4"/COMPRESSION="lz4"/g' /etc/mkinitcpio.conf
 
 - name: mkinitcpio
-  shell: arch-chroot /mnt mkinitcpio -P
+  ansible.builtin.shell: arch-chroot /mnt mkinitcpio -P
 
 # Bootloader
 # systemd-boot
 
 # - name: Systemd-boot
-#   shell: arch-chroot /mnt bootctl --path=/boot install
+#   ansible.builtin.shell: arch-chroot /mnt bootctl --path=/boot install
 
 # - name: Systemd-boot
-#   template:
+#   ansible.builtin.template:
 #     src: systemdboot/loader.conf.j2
 #     dest: /mnt/boot/loader/loader.conf
 #     owner: root
@@ -362,7 +362,7 @@
 #     mode:  u+rw,g+r,o+r
 
 # - name: Systemd-boot
-#   template:
+#   ansible.builtin.template:
 #     src: systemdboot/entries/normal.conf.j2
 #     dest: "/mnt/boot/loader/entries/{{ archinstall_systemdboot_config_name }}.conf"
 #     owner: root
@@ -370,7 +370,7 @@
 #     mode:  u+rw,g+r,o+r
 
 # - name: Systemd-boot
-#   template:
+#   ansible.builtin.template:
 #     src: systemdboot/entries/fallback.conf.j2
 #     dest: /mnt/boot/loader/entries/{{ archinstall_systemdboot_config_name }}_fallback.conf
 #     owner: root
@@ -378,7 +378,7 @@
 #     mode:  u+rw,g+r,o+r
 
 # - name: Systemd-boot
-#   template:
+#   ansible.builtin.template:
 #     src: systemdboot/entries/fallback_ro.conf.j2
 #     dest: /mnt/boot/loader/entries/{{ archinstall_systemdboot_config_name }}_fallback_ro.conf
 #     owner: root
@@ -388,13 +388,13 @@
 # refind (EFI)
 
 - name: refind
-  shell: arch-chroot /mnt pacman --needed --noconfirm -Syy refind
+  ansible.builtin.shell: arch-chroot /mnt pacman --needed --noconfirm -Syy refind
 
 - name: refind
-  shell: arch-chroot /mnt refind-install
+  ansible.builtin.shell: arch-chroot /mnt refind-install
 
 - name: refind
-  template:
+  ansible.builtin.template:
     src: refind/refind_linux.conf.j2
     dest: /mnt/boot/refind_linux.conf
     owner: root
@@ -402,77 +402,77 @@
     mode:  u+rw,g+r,o+r
 
 - name: refind
-  shell: sed -i 's/#textonly/textonly/g' /mnt/boot/EFI/refind/refind.conf
+  ansible.builtin.shell: sed -i 's/#textonly/textonly/g' /mnt/boot/EFI/refind/refind.conf
 
 - name: refind
-  shell: sed -i 's/#extra_kernel_version_strings linux-lts,linux/extra_kernel_version_strings linux-hardened,linux-zen,linux-lts,linux/g' /mnt/boot/EFI/refind/refind.conf
+  ansible.builtin.shell: sed -i 's/#extra_kernel_version_strings linux-lts,linux/extra_kernel_version_strings linux-hardened,linux-zen,linux-lts,linux/g' /mnt/boot/EFI/refind/refind.conf
 
 # GRUB (BIOS, MBR)
 
 # Pacman
 
 - name: Pacman
-  shell: arch-chroot /mnt pacman --needed --noconfirm -S pacman-contrib pacman-mirrorlist reflector
+  ansible.builtin.shell: arch-chroot /mnt pacman --needed --noconfirm -S pacman-contrib pacman-mirrorlist reflector
 
 - name: Pacman
-  shell: arch-chroot /mnt sed -i 's/#TotalDownload/TotalDownload/g' /etc/pacman.conf
+  ansible.builtin.shell: arch-chroot /mnt sed -i 's/#TotalDownload/TotalDownload/g' /etc/pacman.conf
 
 - name: Pacman
-  shell: arch-chroot /mnt sed -i 's/#Color/Color/g' /etc/pacman.conf
+  ansible.builtin.shell: arch-chroot /mnt sed -i 's/#Color/Color/g' /etc/pacman.conf
 
 - name: Pacman
-  shell: arch-chroot /mnt sed -i 's/#\[multilib\]/[multilib]\nInclude = \/etc\/pacman.d\/mirrorlist/g' /etc/pacman.conf
+  ansible.builtin.shell: arch-chroot /mnt sed -i 's/#\[multilib\]/[multilib]\nInclude = \/etc\/pacman.d\/mirrorlist/g' /etc/pacman.conf
 
 - name: Pacman
-  shell: arch-chroot /mnt pacman -Syy
+  ansible.builtin.shell: arch-chroot /mnt pacman -Syy
 
 # yay (AUR)
 
 # qemu-agent
 
 - name: Pacman
-  shell: arch-chroot /mnt pacman --needed --noconfirm -S qemu-guest-agent
+  ansible.builtin.shell: arch-chroot /mnt pacman --needed --noconfirm -S qemu-guest-agent
 
 - name: Pacman
-  shell: arch-chroot /mnt systemctl enable qemu-guest-agent.service
+  ansible.builtin.shell: arch-chroot /mnt systemctl enable qemu-guest-agent.service
 
 # Install cloud-init
 
 - name: cloud-init
-  shell: arch-chroot /mnt pacman --needed --noconfirm -S cloud-init
+  ansible.builtin.shell: arch-chroot /mnt pacman --needed --noconfirm -S cloud-init
 
 - name: cloud-init
-  shell: arch-chroot /mnt systemctl enable cloud-init.service
+  ansible.builtin.shell: arch-chroot /mnt systemctl enable cloud-init.service
 
 - name: cloud-init
-  shell: arch-chroot /mnt systemctl enable cloud-config.service
+  ansible.builtin.shell: arch-chroot /mnt systemctl enable cloud-config.service
 
 - name: cloud-init
-  shell: arch-chroot /mnt systemctl enable cloud-final.service
+  ansible.builtin.shell: arch-chroot /mnt systemctl enable cloud-final.service
 
 # - name: cloud-init
-#   shell: arch-chroot /mnt yay -S growpart
+#   ansible.builtin.shell: arch-chroot /mnt yay -S growpart
 
 - name: cloud-init
-  shell: cp /mnt/etc/cloud/templates/hosts.debian.tmpl /mnt/etc/cloud/templates/hosts.arch.tmpl
+  ansible.builtin.shell: cp /mnt/etc/cloud/templates/hosts.debian.tmpl /mnt/etc/cloud/templates/hosts.arch.tmpl
 
 # Config watchdog
 
 # Enable OpenSSH server
 
 - name: OpenSSH
-  shell: arch-chroot /mnt pacman --needed --noconfirm -S openssh
+  ansible.builtin.shell: arch-chroot /mnt pacman --needed --noconfirm -S openssh
 
 - name: OpenSSH
-  shell: arch-chroot /mnt systemctl enable sshd.service
+  ansible.builtin.shell: arch-chroot /mnt systemctl enable sshd.service
 
 - name: OpenSSH
-  shell: sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/g' /mnt/etc/ssh/sshd_config
+  ansible.builtin.shell: sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/g' /mnt/etc/ssh/sshd_config
 
 # Set NTP options
 
 - name: Set NTP options
-  template:
+  ansible.builtin.template:
     src: ntp/timesyncd.conf.j2
     dest: /mnt/etc/systemd/timesyncd.conf
     owner: root
@@ -480,14 +480,14 @@
     mode:  u+rw,g+r,o+r
 
 - name: Set NTP options
-  shell: arch-chroot /mnt timedatectl set-ntp true
+  ansible.builtin.shell: arch-chroot /mnt timedatectl set-ntp true
 
 # Network
 
 - name: Network
-  shell: arch-chroot /mnt systemctl enable systemd-networkd.service
+  ansible.builtin.shell: arch-chroot /mnt systemctl enable systemd-networkd.service
 
 - name: Network
-  shell: arch-chroot /mnt systemctl enable systemd-resolved.service
+  ansible.builtin.shell: arch-chroot /mnt systemctl enable systemd-resolved.service
 
 # Reboot

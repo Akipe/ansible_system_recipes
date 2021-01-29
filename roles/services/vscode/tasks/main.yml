@@ -1,21 +1,21 @@
 ---
 
-- name: Install Visual Studio Code
-  pacman:
+- name: Installation
+  community.general.pacman:
     state: present
     name:
       - code
       - libdbusmenu-glib
 
 - name: Installation of dependencies
-  pacman:
+  community.general.pacman:
     state: present
     name:
       - x11-ssh-askpass
     extra_args: --asdeps
 
 - name: Set user configuration
-  template:
+  ansible.builtin.template:
     src: settings/settings.json.j2
     dest: "/home/{{ user_name }}/.config/Code - OSS/User/settings.json"
     owner: "{{ user_name }}"

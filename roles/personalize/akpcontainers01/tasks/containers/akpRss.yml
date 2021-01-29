@@ -3,7 +3,7 @@
 - name: Create akpRssBridge networks
   # become:       yes
   # become_user:  "{{ containerUser.name }}"
-  docker_network:
+  community.general.docker_network:
     name: "{{ akpRssBridge_network_name }}"
     enable_ipv6: yes
     ipam_config:
@@ -13,26 +13,26 @@
 - name: Create akpRssBridge directory
   # become: yes
   # become_user: "{{ containerUser.name }}"
-  file:
+  ansible.builtin.file:
     path:     "{{ akpRssBridge_volumePath }}"
     state:    directory
     mode:     u+rwx,g+xr,o+x
     owner:    root
-    group:    root
+    ansible.builtin.group:    root
     recurse:  yes
 
 - name: Add akpRssBridge whitlist files
-  template:
+  ansible.builtin.template:
     src:    "containers/akpRssBridge/whitelist.txt.j2"
     dest:   "{{ akpRssBridge_volumePath }}/whitelist.txt"
     owner:  root
-    group:  root
+    ansible.builtin.group:  root
     mode:   u+rw,g+r,o+r
 
 - name: Create akpRssBridge container
   # become:       yes
   # become_user:  "{{ containerUser.name }}"
-  docker_container:
+  community.general.docker_container:
     networks_cli_compatible: yes
     state:          started
     restart_policy: unless-stopped
@@ -65,7 +65,7 @@
 - name: Create akpRss volume for /data
   # become: yes
   # become_user: "{{ containerUser.name }}"
-  docker_volume:
+  community.general.docker_volume:
     name:   "{{ akpRss_volume_data_name }}"
     state:  present
     driver: local
@@ -77,7 +77,7 @@
 - name: Create akpRss container
   # become:       yes
   # become_user:  "{{ containerUser.name }}"
-  docker_container:
+  community.general.docker_container:
     networks_cli_compatible: yes
     state:          started
     restart_policy: unless-stopped

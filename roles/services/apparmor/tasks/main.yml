@@ -1,33 +1,34 @@
 ---
-- name: Install
-  pacman:
+
+- name: Installation
+  community.general.pacman:
     state: present
     name: apparmor
 
 - name: Enable and start AppArmor service
-  systemd:
+  ansible.builtin.systemd:
     name: apparmor.service
     enabled: yes
     state: started
 
 - name: Install Audit framework
-  pacman:
+  community.general.pacman:
     state: present
     name: audit
 
 - name: Create group audit for notification
-  group:
+  ansible.builtin.group:
     name: audit
     state: present
 
 - name: Adding user to audit group to get notification
-  user:
+  ansible.builtin.user:
     name: "{{ user_name }}"
     groups: audit
     append: yes
 
 - name: Add Audit framework configuration
-  template:
+  ansible.builtin.template:
     src: audit/auditd.conf.j2
     dest: /etc/audit/auditd.conf
     owner: root
@@ -35,13 +36,13 @@
     mode: u+rw,g+r,o+r
 
 - name: Enable and start Audit framework service
-  systemd:
+  ansible.builtin.systemd:
     name: auditd.service
     enabled: yes
     state: started
 
 - name: Create autostart configuration directory
-  file:
+  ansible.builtin.file:
     path: "/home/{{ user_name }}/.config/autostart"
     state: directory
     recurse: yes
@@ -50,7 +51,7 @@
     mode: u+rw,g+r,o+r
 
 - name: Create autostart desktop audit notification
-  template:
+  ansible.builtin.template:
     src: autostart/apparmor-notify.desktop.j2
     dest: "/home/{{ user_name }}/.config/autostart/apparmor-notify.desktop"
     owner: root
@@ -58,7 +59,7 @@
     mode: u+rw,g+r,o+r
 
 - name: Enable caching profiles
-  template:
+  ansible.builtin.template:
     src: apparmor/parser.conf.j2
     dest: /etc/apparmor/parser.conf
     owner: root

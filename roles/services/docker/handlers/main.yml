@@ -1,15 +1,16 @@
 ---
+
 - name: Reload Docker
-  systemd:
+  ansible.builtin.systemd:
     name: docker
     state: reloaded
 
 - name: Restart Docker
-  systemd:
+  ansible.builtin.systemd:
     name: docker
     state: restarted
 
 - name: Restart Ndppd
-  service:
+  ansible.builtin.service:
     name: ndppd
     state: restarted

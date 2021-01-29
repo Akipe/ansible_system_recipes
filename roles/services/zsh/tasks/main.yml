@@ -1,15 +1,15 @@
 ---
 
 - name: Load tasks for install on Debian & derivate
-  include_tasks: debian_common/main.yml
+  ansible.builtin.include_tasks: debian_common/main.yml
   when: ansible_distribution == "Debian" or ansible_distribution == "Ubuntu"
 
 - name: Include tasks for all Archlinux based distributions
-  include_tasks: archlinux_common/main.yml
+  ansible.builtin.include_tasks: archlinux_common/main.yml
   when: ansible_distribution == "Archlinux"
 
 - name: Create autoloader directory
-  file:
+  ansible.builtin.file:
     path: "{{ item }}"
     state: directory
     owner: "{{ user_name }}"
@@ -20,7 +20,7 @@
     - "/home/{{ user_name }}/.config/zsh/conf.d"
 
 - name: Set some configurations (Archlinux)
-  template:
+  ansible.builtin.template:
     src: "archlinux/conf.d/{{ item }}.j2"
     dest: "/home/{{ user_name }}/.config/zsh/conf.d/{{ item }}"
     owner: "{{ user_name }}"
@@ -32,7 +32,7 @@
   when: zsh_configuration_mode == "archlinux"
 
 - name: Set main configuration (Archlinux)
-  template:
+  ansible.builtin.template:
     src: archlinux/zshrc.j2
     dest: "/home/{{ user_name }}/.zshrc"
     owner: "{{ user_name }}"

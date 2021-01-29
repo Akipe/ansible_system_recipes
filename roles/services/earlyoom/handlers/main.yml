@@ -1,6 +1,6 @@
 ---
 
 - name: Restart earlyoom
-  systemd:
+  ansible.builtin.systemd:
     state: restarted
     name: earlyoom.service

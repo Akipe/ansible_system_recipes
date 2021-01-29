@@ -1,10 +1,11 @@
 ---
+
 - name: Include tasks for Archlinux
-  include_tasks: archlinux/main.yml
+  ansible.builtin.include_tasks: archlinux/main.yml
   when: ansible_distribution == "Archlinux"
 
 - name: Add hostname resolution
-  template:
+  ansible.builtin.template:
     src: etc/nsswitch.conf.j2
     dest: /etc/nsswitch.conf
     owner: root
@@ -13,14 +14,14 @@
   notify: Restart Avahi
 
 - name: Start and enable Avahi
-  systemd:
+  ansible.builtin.systemd:
     name: avahi-daemon.service
     enabled: yes
     state: started
 
 - name: Open firewall for sshd for home
   ansible.posix.firewalld:
-    service: mdns
+    ansible.builtin.service: mdns
     zone: home
     state: enabled
     permanent: true

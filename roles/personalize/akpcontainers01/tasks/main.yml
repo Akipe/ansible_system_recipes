@@ -1,6 +1,7 @@
 ---
+
 - name: Configure 10Gbit Network interface
-  template:
+  ansible.builtin.template:
     src: systemd_network/ens19-10gbnet.network.j2
     dest: /etc/systemd/network/ens19-10gbnet.network
     owner: root
@@ -9,9 +10,9 @@
   notify: Restart network service
 
 - name: Define fish shell to user
-  user:
+  ansible.builtin.user:
     name: "{{ user_name }}"
     shell: /usr/bin/fish
 
 - name: Load Docker rules
-  include_tasks: docker.yml
+  ansible.builtin.include_tasks: docker.yml

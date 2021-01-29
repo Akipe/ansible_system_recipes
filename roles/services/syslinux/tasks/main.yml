@@ -1,6 +1,7 @@
 ---
+
 - name: Add configuration
-  template:
+  ansible.builtin.template:
     src: syslinux.cfg.j2
     dest: /boot/syslinux/syslinux.cfg
     owner: root
@@ -8,7 +9,7 @@
     mode: "u=rw,g=r,o=r"
 
 - name: Remove basic Linux package (replace with linux-zen)
-  pacman:
+  community.general.pacman:
     state: absent
     name: 
       - linux

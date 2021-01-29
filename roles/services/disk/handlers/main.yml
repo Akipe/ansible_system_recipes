@@ -1,6 +1,7 @@
 ---
+
 - name: Reload udev
-  command: udevadm control --reload
+  ansible.builtin.command: udevadm control --reload
 
 - name: Force udev to trigger rules
-  command: udevadm trigger
+  ansible.builtin.command: udevadm trigger

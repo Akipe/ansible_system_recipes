@@ -1,6 +1,6 @@
 ---
 
 - name: App usefull for Linux kernel
-  apt:
+  ansible.builtin.apt:
     state: present
     name: "{{ linux_kernel_apps_debian }}"

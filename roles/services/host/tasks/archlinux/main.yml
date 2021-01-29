@@ -1,5 +1,6 @@
 ---
-- name: Install tool for hostname command
-  pacman:
+
+- name: Installation
+  community.general.pacman:
     state: present
     name: inetutils

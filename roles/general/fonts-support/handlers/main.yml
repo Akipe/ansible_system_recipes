@@ -1,3 +1,4 @@
 ---
+
 - name: Regenerate the fontconfig cache
-  command: fc-cache -f
+  ansible.builtin.command: fc-cache -f

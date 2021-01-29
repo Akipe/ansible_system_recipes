@@ -1,13 +1,13 @@
 ---
 
 - name: Install Intel CPU microcode
-  pacman:
+  community.general.pacman:
     name: "{{ microcode_intel_archlinux_common }}"
     state: present
   when: cpu_vendor == "intel"
 
 - name: Install AMD CPU microcode
-  pacman:
+  community.general.pacman:
     name: "{{ microcode_amd_archlinux_common }}"
     state: present
   when: cpu_vendor == "amd"

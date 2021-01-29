@@ -10,17 +10,17 @@
     name: "{{ surfaceGo_appToInstall_archlinux_aur }}"
 
 - name: Install for Microsoft Surface Go (pacman)
-  pacman:
+  community.general.pacman:
     state: present
     name: "{{ surfaceGo_appToInstall_archlinux }}"
 
 - name: Remove not working firmware (fix wifi for Qualcomm Atheros QCA6174)
-  file:
+  ansible.builtin.file:
     state: absent
     path: /usr/lib/firmware/ath10k/QCA6174/hw3.0/board-2.bin
 
 - name: Replace firmware from killernetworking.com (fix wifi for Qualcomm Atheros QCA6174)
-  copy:
+  ansible.builtin.copy:
     src: ath10k_firmware/QCA6174/hw3.0/board.bin
     dest: /usr/lib/firmware/ath10k/QCA6174/hw3.0/board.bin
     owner: root
@@ -28,7 +28,7 @@
     mode: u=rw,g=r,o=r
 
 - name: Configure Qualcomm Atheros QCA6174
-  template:
+  ansible.builtin.template:
     src: modprobe.d/ath10k.conf.j2
     dest: /etc/modprobe.d/ath10k.conf
     owner: root

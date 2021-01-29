@@ -10,7 +10,7 @@
     name: zram-generator
 
 - name: Set configuration
-  template:
+  ansible.builtin.template:
     src: config/zram-generator.conf.j2
     dest: /etc/systemd/zram-generator.conf
     owner: root
@@ -18,7 +18,7 @@
     mode: "u=rwx,g=rx,o=rx"
 
 - name: Add zram kernel module
-  template:
+  ansible.builtin.template:
     src: modules-load.d/zram.conf.j2
     dest: /etc/modules-load.d/zram.conf
     owner: root

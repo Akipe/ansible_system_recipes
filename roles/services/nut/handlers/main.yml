@@ -1,12 +1,12 @@
 ---
 
 - name: Restart nut-monitor
-  systemd:
+  ansible.builtin.systemd:
     name: nut-monitor.service
     state: restarted
 
 - name: Restart nut-driver
-  systemd:
+  ansible.builtin.systemd:
     name: nut-driver.service
     state: restarted
   when: nut_mode != "netclient"

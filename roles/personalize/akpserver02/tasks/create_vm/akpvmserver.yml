@@ -1,7 +1,7 @@
 ---
 
 # - name: Create akpVMServer template
-#   shell: |
+#   ansible.builtin.shell: |
 #     qm create 9000 \
 #       --name {{ akpvmserver_template_name }} \
 #       --machine q35 \
@@ -29,7 +29,7 @@
 #     qm resize 9000 scsi0 {{ akpvmserver_template_disk_system_size }}
 
 - name: Create akpVMServer template
-  shell: |
+  ansible.builtin.shell: |
     qm create {{ akpvmserver_template_id }} \
       --name {{ akpvmserver_template_name }} \
       --machine q35 \

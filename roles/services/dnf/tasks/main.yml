@@ -1,11 +1,12 @@
 ---
+
 - name: Install basics plugins
-  dnf:
+  ansible.builtin.dnf:
     state: present
     name: "{{ dnf_appToInstall_fedora }}"
 
 - name: Add configuration
-  template:
+  ansible.builtin.template:
     src: dnf.conf.j2
     dest: /etc/dnf/dnf.conf
     owner: root

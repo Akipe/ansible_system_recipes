@@ -1,12 +1,12 @@
 ---
 
 - name: Installation
-  pacman:
+  community.general.pacman:
     state: present
     name: fwupd
 
 - name: Installation of dependencies
-  pacman:
+  community.general.pacman:
     state: present
     name:
       - modemmanager

@@ -1,7 +1,7 @@
 ---
 
 - name: Blacklist watchdog module kernel
-  template:
+  ansible.builtin.template:
     src: modprobe.d/disable_watchdog.conf.j2
     dest: /etc/modprobe.d/disable_watchdog.conf
     owner: root
@@ -10,7 +10,7 @@
   notify: Restart modules loaded
 
 - name: Disable NMI watchdog
-  template:
+  ansible.builtin.template:
     src: sysctl.d/disable_nmi_watchdog.conf.j2
     dest: /etc/sysctl.d/disable_nmi_watchdog.conf
     owner: root

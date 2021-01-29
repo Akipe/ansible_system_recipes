@@ -1,13 +1,13 @@
 ---
 
 - name: Installation (QT version)
-  pacman:
+  community.general.pacman:
     state: present
     name:
       - pcmanfm-qt
 
 - name: Installation of dependencies
-  pacman:
+  community.general.pacman:
     state: present
     name:
       - gvfs

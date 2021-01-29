@@ -1,18 +1,18 @@
 ---
 
 - name: Installation
-  pacman:
+  community.general.pacman:
     name: "{{ refind_app_archlinux_common }}"
     state: present
 
 - name: Installation of dependencies
-  pacman:
+  community.general.pacman:
     state: present
     name: "{{ refind_app_archlinux_common }}"
     extra_args: --asdeps
 
 - name: Configure rEFInd Pacman hook update
-  template:
+  ansible.builtin.template:
     src: pacman_hook/refind.hook.j2
     dest: /etc/pacman.d/hooks/refind.hook
     owner: root
@@ -20,12 +20,12 @@
     mode: "u=rwx,g=rx,o=rx"
 
 - name: Define microcode path for Intel processor
-  set_fact:
+  ansible.builtin.set_fact:
     microcode_path: "intel-ucode.img"
   when: refind_load_microcode and cpu_vendor == "intel"
 
 - name: Define microcode path for AMD processor
-  set_fact:
+  ansible.builtin.set_fact:
     microcode_path: "amd-ucode.img"
   when: refind_load_microcode and cpu_vendor == "amd"
 
@@ -40,7 +40,7 @@
   when: refind_os_boot_type == "gui"
 
 - name: Set dark mode for Regular theme
-  template:
+  ansible.builtin.template:
     src: theme_regular/theme.conf.j2
     dest: /boot/EFI/refind/refind-theme-regular/theme.conf
     owner: root

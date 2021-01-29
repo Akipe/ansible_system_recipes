@@ -1,7 +1,7 @@
 ---
 
 - name: Create asvsync01 virtual machine
-  shell: |
+  ansible.builtin.shell: |
     qm create {{ vm_asvsync01_id }} \
       --name {{ vm_asvsync01_name }} \
       --machine q35 \

@@ -1,11 +1,11 @@
 ---
 
 - name: Load tasks for Fedora
-  include_tasks: fedora/main.yml
+  ansible.builtin.include_tasks: fedora/main.yml
   when: ansible_distribution == "Fedora"
 
 - name: Load tasks for Archlinux
-  include_tasks: archlinux/main.yml
+  ansible.builtin.include_tasks: archlinux/main.yml
   when: ansible_distribution == "Archlinux"
 
 # smplayer

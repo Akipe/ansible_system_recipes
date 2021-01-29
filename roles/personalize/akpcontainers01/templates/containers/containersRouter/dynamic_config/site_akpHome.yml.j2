@@ -7,7 +7,7 @@
 #     akpHome:
 #       entryPoints:
 #        - http
-#       service: akpHome
+#       ansible.builtin.service: akpHome
 #       rule: "Host(`{{ url_akpHome }}`)"
 #       middlewares:
 #        - SecureMiddlewares
@@ -15,7 +15,7 @@
 #     akpHome_secure:
 #       entryPoints:
 #        - https
-#       service: akpHome
+#       ansible.builtin.service: akpHome
 #       rule: "Host(`{{ url_akpHome }}`)"
 #       middlewares:
 #        - SecureMiddlewares

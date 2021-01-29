@@ -1,6 +1,7 @@
 ---
-- name: Install TLP
-  pacman:
+
+- name: Installation
+  community.general.pacman:
     state: present
     name:
       - tlp
@@ -8,8 +9,8 @@
       # - tlp-rdw
   tags: debug
 
-- name: Add configuration for TLP
-  template:
+- name: Add configuration
+  ansible.builtin.template:
     src: etc/tlp.j2
     dest:  /etc/default/tlp
     owner: root
@@ -19,15 +20,15 @@
     - Restart TLP
   tags: debug
 
-- name: Start and enable TLP
-  systemd:
+- name: Start and enable service
+  ansible.builtin.systemd:
     name: tlp.service
     enabled: yes
     state: started
   tags: debug
 
 # - name: Start and enable NetworkManager dispatcher for tlp-rdw
-#   systemd:
+#   ansible.builtin.systemd:
 #     name: NetworkManager-dispatcher.service
 #     enabled: yes
 #     state: started

@@ -1,6 +1,7 @@
 ---
+
 - name: Install Cockpit
-  dnf:
+  ansible.builtin.dnf:
     state: present
     name:
       - cockpit-ws

@@ -1,14 +1,14 @@
 ---
 
-- name: Install virtualbox
-  pacman:
+- name: Installation
+  community.general.pacman:
     state: present
     name:
       - virtualbox
       - virtualbox-host-dkms
 
 - name: Installation of dependencies
-  pacman:
+  community.general.pacman:
     state: present
     name:
       - vde2
@@ -27,7 +27,7 @@
       - virtualbox-ext-oracle
 
 - name: Allow user to share usb devices in Virtualbox
-  user:
+  ansible.builtin.user:
     name: "{{ user_name }}"
     groups: vboxusers
     append: yes

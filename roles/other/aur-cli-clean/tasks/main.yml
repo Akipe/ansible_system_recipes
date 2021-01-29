@@ -1,3 +1,4 @@
 ---
+
 - name: Load tasks for remove Ansible AUR user
-  include_tasks: delete_user.yml
+  ansible.builtin.include_tasks: delete_user.yml

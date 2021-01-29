@@ -17,7 +17,7 @@
 # todo: check if vm template 9000 exist
 
 - name: Create Archlinux template from Openstack image
-  shell: |
+  ansible.builtin.shell: |
     qm create 9000 \
       --name archlinux-cloudinit \
       --machine q35 \
@@ -43,7 +43,7 @@
     qm template 9000
 
 # - name: Create Archlinux template from Openstack image
-#   shell: |
+#   ansible.builtin.shell: |
 #     qm create 9000 \
 #       --name archlinux-cloudinit \
 #       --machine q35 \
@@ -79,10 +79,10 @@
 
 # This step adds another 8G of disk space, but change this as you need to
 # - name: Resize the primary boot disk (otherwise it will be around 2G by default)
-#   shell: qm resize 9000 scsi0 +8G
+#   ansible.builtin.shell: qm resize 9000 scsi0 +8G
 
 # - name: Convert the VM to the template
-#   shell: qm template 9000
+#   ansible.builtin.shell: qm template 9000
 
 
 

@@ -1,4 +1,5 @@
 ---
+
 # Wait for Ansible v2.8 for snap
 #- name: Install livepatch
 #  snap:
@@ -7,7 +8,7 @@
 #  register: livepatch_installed
 
 #- name: Active livepatch
-#  command: "canonical-livepatch enable {{ canonical_livepatch_token }}"
+#  ansible.builtin.command: "canonical-livepatch enable {{ canonical_livepatch_token }}"
 #  when: livepatch_installed.changed
 
 # todo: add "canonical-livepatch status --verbose" and add "/snap/bin" to PATH

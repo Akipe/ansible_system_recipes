@@ -1,12 +1,12 @@
 ---
 
 - name: Installation
-  pacman:
+  community.general.pacman:
     state: present
     name: firewalld
 
 - name: Start and enable service
-  systemd:
+  ansible.builtin.systemd:
     name: firewalld.service
     state: started
     daemon_reload: yes

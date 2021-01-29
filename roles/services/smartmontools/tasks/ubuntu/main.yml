@@ -1,18 +1,19 @@
 ---
+
 - name: Installation
-  apt:
+  ansible.builtin.apt:
     state: present
     name: smartmontools
 
 - name: Start and enable service
-  systemd:
+  ansible.builtin.systemd:
     name: smartmontools
     state: started
     enabled: yes
   notify: Restart smartmontools (Ubuntu)
 
 - name: Add default configuration
-  template:
+  ansible.builtin.template:
     src: etc/default/smartmontools.j2
     dest: /etc/default/smartmontools
     owner: root
@@ -21,7 +22,7 @@
   notify: Restart smartmontools (Ubuntu)
 
 - name: Add configuration
-  template:
+  ansible.builtin.template:
     src: etc/smartd.conf.j2
     dest: /etc/smartd.conf
     owner: root

@@ -1,7 +1,7 @@
 ---
 
-- name: Install YubiKey tools
-  dnf:
+- name: Installation
+  ansible.builtin.dnf:
     state: present
     name:
     - pam_yubico

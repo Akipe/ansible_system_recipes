@@ -1,6 +1,7 @@
 ---
-- name: Install dvdbackup
-  pacman:
+
+- name: Installation
+  community.general.pacman:
     state: present
     name:
       - dvdbackup

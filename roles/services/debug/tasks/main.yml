@@ -1,4 +1,5 @@
 ---
+
 - name: Print some debug information 
   vars: 
     msg: |

@@ -1,6 +1,7 @@
 ---
+
 - name: Add configuration
-  template:
+  ansible.builtin.template:
     src: systemd/resolved.conf.j2
     dest: /etc/systemd/resolved.conf
     owner: root
@@ -8,7 +9,7 @@
     mode: u+rw,g+r,o+r
 
 - name: Start and enable systemd-resolved
-  systemd:
+  ansible.builtin.systemd:
     name: systemd-resolved.service
     state: started
     enabled: yes

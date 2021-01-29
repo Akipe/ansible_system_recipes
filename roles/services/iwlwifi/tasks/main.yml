@@ -1,6 +1,7 @@
 ---
+
 - name: Add configuration for Intel wireless cards
-  template:
+  ansible.builtin.template:
     src: modprobe.d/iwlwifi.conf.j2
     dest: /etc/modprobe.d/iwlwifi.conf
     owner: root

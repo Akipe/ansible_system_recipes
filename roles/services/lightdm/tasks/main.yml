@@ -1,13 +1,14 @@
 ---
-- name: Install Lightdm
-  pacman:
+
+- name: Installation
+  community.general.pacman:
     state: present
     name:
       - lightdm
       - lightdm-gtk-greeter
 
 # - name: Add reflector.service
-#   template:
+#   ansible.builtin.template:
 #     src: systemd/reflector.service.j2
 #     dest: /etc/systemd/system/reflector.service
 #     owner: root
@@ -15,7 +16,7 @@
 #     mode: u+rw,g+r,o+r
 
 # - name: Add reflector.timer
-#   template:
+#   ansible.builtin.template:
 #     src: systemd/reflector.timer.j2
 #     dest: /etc/systemd/system/reflector.timer
 #     owner: root

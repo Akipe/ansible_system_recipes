@@ -24,7 +24,7 @@
 #     state:        present
 
 - name: Create asvsync01 as LXC container
-  shell: |
+  ansible.builtin.shell: |
     pct create {{ lxc_asvsync01_id }} {{ lxc_commons_ubuntu_2004_template_path }} \
       --arch            amd64 \
       --hostname        {{ lxc_asvsync01_name }} \
@@ -40,7 +40,7 @@
       --features        mount=nfs
 
 # - name: Set apparmor rule for allowing NFS mount
-#   lineinfile:
+#   ansible.builtin.lineinfile:
 #     dest: "/etc/pve/lxc/{{ lxc_asvsync01_id }}.conf"
 #     line: "lxc.apparmor.profile: lxc-container-default-with-nfs"
 #   notify: Restart asvsync01

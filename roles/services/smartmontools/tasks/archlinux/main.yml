@@ -1,17 +1,18 @@
 ---
-- name: Install (Archlinux)
-  pacman:
+
+- name: Installation
+  community.general.pacman:
     state: present
     name: smartmontools
 
 - name: Start and enable service
-  systemd:
+  ansible.builtin.systemd:
     name: smartd.service
     state: started
     enabled: yes
 
 - name: Add configuration
-  template:
+  ansible.builtin.template:
     src: etc/smartd.conf
     dest: /etc/smartd.conf
     owner: root

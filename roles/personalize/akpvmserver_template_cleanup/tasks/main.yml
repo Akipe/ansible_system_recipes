@@ -1,7 +1,7 @@
 ---
 
 - name: Cleanup apps
-  pacman:
+  community.general.pacman:
     name: 
       - yay
       - git
@@ -18,4 +18,4 @@
     state: absent
 
 - name: Remove unused dependencies
-  command: pacman -Rsn $(pacman -Qdtq)
+  ansible.builtin.command: pacman -Rsn $(pacman -Qdtq)

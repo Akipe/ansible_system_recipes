@@ -1,6 +1,7 @@
 ---
-- name: Install tools for recent Thinkpad
-  pacman:
+
+- name: Installation
+  community.general.pacman:
     state: present
     name:
       - acpi_call-dkms

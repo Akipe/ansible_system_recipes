@@ -1,6 +1,7 @@
 ---
+
 - name: Install Avahi and dependencies
-  pacman:
+  community.general.pacman:
     name:
       - avahi
       - nss-mdns 

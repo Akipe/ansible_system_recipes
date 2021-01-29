@@ -1,6 +1,7 @@
 ---
-- name: Install Android accessing app
-  pacman:
+
+- name: Installation
+  community.general.pacman:
     state: present
     name:
       - android-udev

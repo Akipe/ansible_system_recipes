@@ -1,14 +1,14 @@
 ---
 
 - name: Install LTS kernel
-  pacman:
+  community.general.pacman:
     state: present
     name: linux-lts
   when:
     - linux_kernel_install_lts
 
 - name: Install LTS kernel
-  pacman:
+  community.general.pacman:
     state: present
     name: linux-lts-headers
   when:
@@ -16,14 +16,14 @@
     - linux_kernel_install_modules
 
 - name: Install Zen kernel
-  pacman:
+  community.general.pacman:
     state: present
     name: linux-zen
   when:
     - linux_kernel_install_zen
 
 - name: Install Zen kernel
-  pacman:
+  community.general.pacman:
     state: present
     name: linux-zen-headers
   when:

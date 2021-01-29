@@ -1,11 +1,11 @@
 ---
 
-- name: Install GDM
-  pacman:
+- name: Installation
+  community.general.pacman:
     state: present
     name: "{{ gdm_appToInstall_base_archlinux }}"
 
 - name: Enable GDM at boot time
-  systemd:
+  ansible.builtin.systemd:
     name: gdm.service
     enabled: yes

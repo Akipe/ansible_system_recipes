@@ -1,7 +1,7 @@
 ---
 
 - name: Set configuration inside daemon.json
-  template:
+  ansible.builtin.template:
     src: docker/daemon.json.j2
     dest: /etc/docker/daemon.json
     owner: root
@@ -10,7 +10,7 @@
   notify: Restart Docker
 
 #- name: Create Docker web network
-#  docker_network:
+#  community.general.docker_network:
 #    name: web
 #    driver: bridge
 #    driver_options:

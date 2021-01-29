@@ -1,7 +1,7 @@
 ---
 
 - name: Restart Syncthing
-  systemd:
+  ansible.builtin.systemd:
     name: "syncthing@{{ item.username }}.service"
     state: restarted
   loop: "{{ syncthing_cli_users }}"

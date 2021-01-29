@@ -1,6 +1,6 @@
 ---
 
-- name: Install server
-  apt:
+- name: Installation
+  ansible.builtin.apt:
     state: present
     name: "{{ ssh_appToInstall_debian }}"

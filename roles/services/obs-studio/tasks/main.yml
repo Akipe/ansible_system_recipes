@@ -1,13 +1,13 @@
 ---
 
 - name: Installation
-  pacman:
+  community.general.pacman:
     state: present
     name:
       - obs-studio
 
 - name: Installation of dependencies
-  pacman:
+  community.general.pacman:
     state: present
     name:
       - libfdk-aac

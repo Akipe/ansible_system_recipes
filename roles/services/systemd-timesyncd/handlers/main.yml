@@ -1,9 +1,9 @@
 ---
 
 - name: Restart systemd-timesyncd
-  systemd:
+  ansible.builtin.systemd:
     name: systemd-timesyncd.service
     state: restarted
 
 - name: Run timedatectl
-  command: timedatectl set-ntp true
+  ansible.builtin.command: timedatectl set-ntp true

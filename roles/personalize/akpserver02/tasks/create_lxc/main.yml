@@ -1,4 +1,4 @@
 ---
 
 - name: Load task for prepare asvsync01
-  include_tasks: asvsync01.yml
+  ansible.builtin.include_tasks: asvsync01.yml

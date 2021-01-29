@@ -1,11 +1,12 @@
 ---
+
 # wget -O btrfs_map_physical.c https://raw.githubusercontent.com/osandov/osandov-linux/master/scripts/btrfs_map_physical.c && \
 # gcc -O2 -o btrfs_map_physical btrfs_map_physical.c && \
 # export SWAP_FILE_OFFSET=$(($(./btrfs_map_physical /swap/file | awk '{print $9}' | sed -n 2p)/$(getconf PAGESIZE))) && \
 # echo "Swap file offset: $SWAP_FILE_OFFSET" && \
 
 - name: Save Swap file offset in a variable
-  shell: |
+  ansible.builtin.shell: |
     filefrag -v /swap/file | awk '{ if($1=="0:"){print $5} }' | sed 's/.$//'
   register: swap_file_offset_command
   changed_when: false

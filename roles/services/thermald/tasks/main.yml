@@ -1,13 +1,13 @@
 ---
 
 - name: Installation
-  pacman:
+  community.general.pacman:
     state: present
     name:
       - thermald
 
 - name: Create directory for surchage Thermald service
-  file:
+  ansible.builtin.file:
     path: /etc/systemd/system/thermald.service.d
     state: directory
     owner: root
@@ -16,7 +16,7 @@
   tags: debug
 
 - name: Ignore cpuid check for Thermald
-  template:
+  ansible.builtin.template:
     src: thermald.service.d/ignore_cpuid_check.conf.j2
     dest:  /etc/systemd/system/thermald.service.d/ignore_cpuid_check.conf
     owner: root
@@ -25,7 +25,7 @@
   tags: debug
 
 - name: Start and enable Thermald service
-  systemd:
+  ansible.builtin.systemd:
     name: thermald.service
     daemon_reload: yes
     enabled: yes

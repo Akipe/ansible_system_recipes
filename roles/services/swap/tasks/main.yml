@@ -1,5 +1,5 @@
 ---
 
 - name: Load tasks for install for BTRFS & Systemd-Boot
-  include_tasks: file_btrfs_systemdboot.yml
+  ansible.builtin.include_tasks: file_btrfs_systemdboot.yml
   when: role_swap_type == "file" and role_swap_filesystem == "btrfs" and role_swap_bootloader == "systemd-boot"

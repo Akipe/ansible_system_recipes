@@ -3,7 +3,7 @@
 - name: Create mariadb01 networks for dbMariadb01
   # become:       yes
   # become_user:  "{{ containerUser.name }}"
-  docker_network:
+  community.general.docker_network:
     name: "{{ dbMariadb01_network_name }}"
     enable_ipv6: yes
     ipam_config:
@@ -13,7 +13,7 @@
 - name: Create dbMariadb01 volume for /data
   # become: yes
   # become_user: "{{ containerUser.name }}"
-  docker_volume:
+  community.general.docker_volume:
     name:   "{{ dbMariadb01_volume_data_name }}"
     state:  present
     driver: local
@@ -23,7 +23,7 @@
       o:      "{{ containers_nfs_asvcontainers01_options }}"
 
 - name: Create mariadb configuration directory
-  file:
+  ansible.builtin.file:
     path:     "{{ dbMariadb01_mariadbConfigPath }}"
     state:    directory
     mode:     u+rwx,g+rwx,o+x
@@ -32,7 +32,7 @@
     recurse:  yes
 
 - name: Create mariadb secrets directory
-  file:
+  ansible.builtin.file:
     path:     "{{ dbMariadb01_mariadbSecretsPath }}"
     state:    directory
     mode:     u+r,g-rwx,g-rwx
@@ -41,7 +41,7 @@
     recurse:  yes
 
 - name: Add mariadb configuration files
-  template:
+  ansible.builtin.template:
     src:    "containers/dbMariadb01/config/mysqlconf.cnf.j2"
     dest:   "{{ dbMariadb01_mariadbConfigPath }}/mysqlconf.cnf"
     owner:  root
@@ -49,7 +49,7 @@
     mode:   u+rw,g+r,o+r
 
 - name: Add mariadb root password secret files
-  template:
+  ansible.builtin.template:
     src:    "containers/dbMariadb01/secrets/mysql_root_pass.j2"
     dest:   "{{ dbMariadb01_mariadbSecretsPath }}/.mysql_root_pass"
     owner:  root
@@ -61,7 +61,7 @@
 - name: Create dbMariadb01 container
   # become:       yes
   # become_user:  "{{ containerUser.name }}"
-  docker_container:
+  community.general.docker_container:
     networks_cli_compatible: yes
     state:          started
     restart_policy: unless-stopped
@@ -77,7 +77,7 @@
     env:
       TZ:                   "Europe/Paris"
 #      MYSQL_ROOT_PASSWORD_FILE:  "/run/secrets/.mysql_root_pass"
-    command:
+    ansible.builtin.command:
       --max_allowed_packet=32505856
       --character-set-server=utf8mb4
       --collation-server=utf8mb4_unicode_ci

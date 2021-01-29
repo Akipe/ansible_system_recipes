@@ -1,7 +1,7 @@
 ---
 
 - name: Installation
-  pacman:
+  community.general.pacman:
     name: 
       - cloud-init
     state: present

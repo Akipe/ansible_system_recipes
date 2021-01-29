@@ -1,7 +1,7 @@
 ---
 
 - name: Installation
-  pacman:
+  community.general.pacman:
     state: present
     name:
       - htop
@@ -12,7 +12,7 @@
       - powertop
 
 # - name: Installation of dependencies
-#   pacman:
+#   community.general.pacman:
 #     state: present
 #     name:
 #       - lsof

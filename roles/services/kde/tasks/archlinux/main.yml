@@ -1,7 +1,7 @@
 ---
 
-- name: Installation of KDE
-  pacman:
+- name: Installation
+  community.general.pacman:
     state: present
     name: "{{ item }}"
   loop:
@@ -17,8 +17,8 @@
     - "{{ kde_app_theme_materia_archlinux }}"
     - "{{ kde_app_kget_archlinux }}"
 
-- name: Installation of KDE dependencies
-  pacman:
+- name: Installation of dependencies
+  community.general.pacman:
     state: present
     name: "{{ item }}"
     extra_args: --asdeps
@@ -50,14 +50,14 @@
 
 - name: Open firewall for kdeconnect
   ansible.posix.firewalld:
-    service: kdeconnect
+    ansible.builtin.service: kdeconnect
     zone: home
     state: enabled
     permanent: true
     immediate: yes
 
 - name: set Materia theme for gtk2 apps (user)
-  template:
+  ansible.builtin.template:
     src: theme/gtk2/gtkrc-2.0.j2
     dest: "/home/{{ user_name }}/.gtkrc-2.0"
     owner: "{{ user_name }}"
@@ -65,7 +65,7 @@
     mode: u+rw,g+r,o+r
 
 - name: set gtk2 theme for root same as user
-  file:
+  ansible.builtin.file:
     state: link
     src: "/home/{{ user_name }}/.gtkrc-2.0"
     dest: /etc/gtk-2.0/gtkrc
@@ -73,7 +73,7 @@
     group: root
 
 - name: set Materia theme for gtk3 apps (user)
-  template:
+  ansible.builtin.template:
     src: theme/gtk3/settings.ini.j2
     dest: "/home/{{ user_name }}/.config/gtk-3.0/settings.ini"
     owner: "{{ user_name }}"
@@ -81,7 +81,7 @@
     mode: u+rw,g+r,o+r
 
 - name: set gtk3 theme for root same as user
-  file:
+  ansible.builtin.file:
     state: link
     src: "/home/{{ user_name }}/.config/gtk-3.0/settings.ini"
     dest: /etc/gtk-3.0/settings.ini

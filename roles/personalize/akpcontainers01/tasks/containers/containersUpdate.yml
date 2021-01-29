@@ -3,7 +3,7 @@
 - name: Create the container
   # become: yes
   # become_user: "{{ containerUser.name }}"
-  docker_container:
+  community.general.docker_container:
     networks_cli_compatible: yes
     name:           "{{ containersUpdate_name }}"
     state:          started

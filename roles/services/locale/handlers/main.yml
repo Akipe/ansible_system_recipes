@@ -1,9 +1,10 @@
 ---
+
 - name: Execute localectl for update keymap
-  command: localectl set-keymap --no-convert fr
+  ansible.builtin.command: localectl set-keymap --no-convert fr
 
 - name: Update initramfs
-  command: mkinitcpio -P
+  ansible.builtin.command: mkinitcpio -P
 
 - name: Set immediately language
-  command: "export LANG={{ role_language_default }}"
+  ansible.builtin.command: "export LANG={{ role_language_default }}"

@@ -10,7 +10,7 @@
       - watchdog
 
 - name: Set configuration
-  template:
+  ansible.builtin.template:
     src: "watchdog/watchdog.conf.j2"
     dest: "/etc/watchdog.conf"
     owner: "root"
@@ -18,7 +18,7 @@
     mode: u+rw,g+r,o+r
 
 - name: Start and enable systemd service
-  service:
+  ansible.builtin.service:
     name: watchdog.service
     state: started
     enabled: yes

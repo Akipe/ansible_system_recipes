@@ -1,4 +1,4 @@
 ---
 
 - name: Re-generate the Grub configuration
-  command:  "grub-mkconfig -o /boot/grub/grub.cfg"
+  ansible.builtin.command:  "grub-mkconfig -o /boot/grub/grub.cfg"

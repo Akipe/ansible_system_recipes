@@ -10,7 +10,7 @@
     name: preload
 
 - name: Enable and start Preload service
-  systemd:
+  ansible.builtin.systemd:
     name: preload.service
     daemon_reload: yes
     enabled: yes

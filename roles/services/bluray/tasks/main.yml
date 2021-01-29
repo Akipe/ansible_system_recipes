@@ -1,6 +1,7 @@
 ---
+
 - name: Install packages for decode Blueray
-  pacman:
+  community.general.pacman:
     state: present
     name:
       - libbluray
@@ -16,9 +17,8 @@
       - aacskeys
       - libbdplus
 
-
 - name: Copy the keydb
-   copy:
+  ansible.builtin.copy:
     src: aacs/
     dest: "/home/{{ user_name }}/.config/aacs"
     owner: "{{ user_name }}"

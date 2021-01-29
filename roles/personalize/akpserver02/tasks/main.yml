@@ -1,10 +1,10 @@
 ---
 
 # - name: Load task for prepare support for Terraform
-#   include_tasks: terraform.yml
+#   ansible.builtin.include_tasks: terraform.yml
 
 - name: Load task for creating all LXC containers
-  include_tasks: create_lxc/main.yml
+  ansible.builtin.include_tasks: create_lxc/main.yml
 
 - name: Load task for creating all VMs
-  include_tasks: create_vm/main.yml
+  ansible.builtin.include_tasks: create_vm/main.yml

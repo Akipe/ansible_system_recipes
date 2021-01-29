@@ -1,33 +1,33 @@
 ---
 
 - name: Installation
-  pacman:
+  community.general.pacman:
     state: present
     name:
       - firefox
       - firefox-i18n-fr
 
 - name: Installation of dependencies
-  pacman:
+  community.general.pacman:
     state: present
     name:
       - libnotify
     extra_args: --asdeps
 
 - name: Enable video acceleration
-  lineinfile:
+  ansible.builtin.lineinfile:
     path: /etc/environment
     regexp: '^MOZ_X11_EGL='
     line: 'MOZ_X11_EGL=1'
 
 # - name: Create system wide configuration directory
-#   file:
+#   ansible.builtin.file:
 #     path: /etc/firefox
 #     state: directory
 #     mode: u+rw,g+r,o+r
 
 # - name: Add system wide configuration
-#   template:
+#   ansible.builtin.template:
 #     src: etc/syspref.js
 #     dest: /etc/firefox/syspref.js
 #     owner: root
@@ -35,7 +35,7 @@
 #     mode: u+rw,g+r,o+r
 
 # - name: Add link to load system wide configuration
-#   file:
+#   ansible.builtin.file:
 #     src: /etc/firefox/syspref.js
 #     dest: /usr/lib/firefox/browser/defaults/preferences/syspref.js
 #     state: link

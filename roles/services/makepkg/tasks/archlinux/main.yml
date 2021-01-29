@@ -1,7 +1,7 @@
 ---
 
 - name: Add configuration
-  template:
+  ansible.builtin.template:
       src: makepkg.conf.j2
       dest: /etc/makepkg.conf
       owner: root
@@ -9,6 +9,6 @@
       mode: "u=rw,g=r,o=r"
 
 - name: Install base packages for compile
-  pacman:
+  community.general.pacman:
     name: "base-devel"
     state: present

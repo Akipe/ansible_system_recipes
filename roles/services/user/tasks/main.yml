@@ -1,12 +1,12 @@
 ---
 
 - name: Create group wheel for sudo
-  group:
+  ansible.builtin.group:
     state: present
     name: wheel
 
 - name: Creates users
-  user:
+  ansible.builtin.user:
     state:        present
     name:         "{{ item.username }}"
     password:     "{{ user_syncthing_password_hashed }}"
@@ -19,14 +19,14 @@
 
 - name: Append public key for SSH
   authorized_key:
-    user: "{{ item.username }}"
+    ansible.builtin.user: "{{ item.username }}"
     state: present
     manage_dir: yes
     key: "{{ item.public_key }}"
   loop: "{{ users_create }}"
 
 - name: Create systemd user environment variables directory
-  file:
+  ansible.builtin.file:
     path: "/home/{{ item.username }}/.config/environment.d"
     state: directory
     owner: "{{ item.username }}"
@@ -35,7 +35,7 @@
   loop: "{{ users_create }}"
 
 - name: Create systemd user binaries directory
-  file:
+  ansible.builtin.file:
     path: "/home/{{ item.username }}/.local/bin"
     state: directory
     owner: "{{ item.username }}"
@@ -44,7 +44,7 @@
   loop: "{{ users_create }}"
 
 - name: Fix home directory owner
-  file:
+  ansible.builtin.file:
     dest: "/home/{{ item.username }}"
     owner: "{{ item.username }}"
     group: "{{ item.username }}"

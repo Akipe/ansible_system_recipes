@@ -1,6 +1,6 @@
 ---
 
-- name: Install sudo
-  apt:
+- name: Installation
+  ansible.builtin.apt:
     state: present
     name: sudo

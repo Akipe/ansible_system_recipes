@@ -1,6 +1,6 @@
 ---
 
-- name: Install ASUS WMI sensors kernel module
+- name: Installation
   become: yes
   become_user: ansible_aur
   aur:

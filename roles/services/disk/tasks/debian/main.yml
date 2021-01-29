@@ -1,6 +1,7 @@
 ---
-- name: Install packages
-  apt:
+
+- name: Installation
+  ansible.builtin.apt:
     state: present
     name:
       - nvme-cli

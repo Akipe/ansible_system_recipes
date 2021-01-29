@@ -1,6 +1,7 @@
 ---
-- name: Install package for guest client
-  pacman:
+
+- name: Installation
+  community.general.pacman:
     state: present
     name:
       - virtualbox-guest-dkms
@@ -9,13 +10,13 @@
       # - virtualbox-guest-utils-nox
 
 - name: Enable and start VirtualBox kernel modules service
-  systemd:
+  ansible.builtin.systemd:
     name: vboxservice.service
     state: started
     enabled: yes
 
 - name: Add user to Virtualbox group vboxsf
-  user:
+  ansible.builtin.user:
     name: "{{ user_name }}"
     groups: vboxsf
     append: yes

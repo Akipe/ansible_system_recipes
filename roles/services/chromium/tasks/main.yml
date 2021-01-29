@@ -1,12 +1,12 @@
 ---
 
 - name: Installation
-  pacman:
+  community.general.pacman:
     state: present
     name: chromium
 
 - name: Installation of dependencies
-  pacman:
+  community.general.pacman:
     state: present
     name:
       - libpipewire02
@@ -24,7 +24,7 @@
       - chromium-widevine
 
 # - name: Add flags configuration
-#   template:
+#   ansible.builtin.template:
 #     src: chromium-flags.conf.j2
 #     dest: "/home/{{ user_name }}/.config/chromium-flags.conf"
 #     owner: "{{ user_name }}"
@@ -33,7 +33,7 @@
 
 # See https://www.chromium.org/administrators/policy-list-3
 # - name: Create Chromium policies directory for all users
-#   file:
+#   ansible.builtin.file:
 #     path: /etc/chromium/policies/managed
 #     state: directory
 #     owner: root
@@ -41,7 +41,7 @@
 #     mode: u+rwx,g+rx,o+rx
 
 # - name: Create Chromium JSON policy file to force settings for all users
-#   template:
+#   ansible.builtin.template:
 #     src: policy.json.j2
 #     dest: "/etc/chromium/policies/managed/policy.json"
 #     owner: root

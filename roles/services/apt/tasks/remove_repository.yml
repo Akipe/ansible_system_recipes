@@ -1,6 +1,7 @@
 ---
+
 - name: "Remove repository config"
-  apt_repository:
+  ansible.builtin.apt_repository:
     repo: "{{ item.repository.repo }}"
     state: absent
   notify: Update APT cache

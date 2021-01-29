@@ -3,18 +3,18 @@
 # List of Intel generation : https://en.wikipedia.org/wiki/List_of_Intel_CPU_microarchitectures
 
 - name: Installation of base driver
-  pacman:
+  community.general.pacman:
     state: present
     name: "{{ intelgraphics_app_base_archlinux }}"
 
 - name: Installation of Vulkan
-  pacman:
+  community.general.pacman:
     state: present
     name: "{{ intelgraphics_app_vulkan_archlinux }}"
   when: intelgraphics_install_vulkan
 
 - name: Installation of X.org driver
-  pacman:
+  community.general.pacman:
     state: present
     name: "{{ intelgraphics_app_xorgdriver_archlinux }}"
   when: intelgraphics_install_xorgdriver
@@ -22,13 +22,13 @@
 # For right choosing the video driver : https://wiki.archlinux.org/index.php/Hardware_video_acceleration#Intel
 
 - name: Install video acceleration support with Intel Media driver
-  pacman:
+  community.general.pacman:
     state: present
     name: "{{ intelgraphics_app_video_intelmediadriver_archlinux }}"
   when: intelgraphics_install_video_driver == "intel-media-driver"
 
 - name: Install video acceleration support with Libva Intel Driver
-  pacman:
+  community.general.pacman:
     state: present
     name: "{{ intelgraphics_app_video_libvainteldriver_archlinux }}"
   when: intelgraphics_install_video_driver == "libva-intel-driver"
@@ -54,7 +54,7 @@
   when: intelgraphics_install_video_driver == "libva-intel-driver-g45"
 
 - name: Install video acceleration utils
-  pacman:
+  community.general.pacman:
     state: present
     name: "{{ intelgraphics_app_video_utils_archlinux }}"
   when: intelgraphics_install_video_utils
@@ -62,7 +62,7 @@
 # For right choosing the GPGPU driver : https://wiki.archlinux.org/index.php/GPGPU#Intel
 
 - name: Install GPGPU driver Intel Compute Runtime
-  pacman:
+  community.general.pacman:
     state: present
     name: "{{ intelgraphics_app_gpgpu_intelcomputeruntime_archlinux }}"
   when: intelgraphics_install_gpgpu_driver == "intel-computer-runtime"
@@ -88,13 +88,13 @@
   when: intelgraphics_install_gpgpu_driver == "intel-opencl-runtime"
 
 - name: Install GPGPU driver loader
-  pacman:
+  community.general.pacman:
     state: present
     name: "{{ intelgraphics_app_gpgpu_loader_archlinux }}"
   when: intelgraphics_install_gpgpu_driver
 
 - name: Install GPGPU driver utils
-  pacman:
+  community.general.pacman:
     state: present
     name: "{{ intelgraphics_app_gpgpu_utils_archlinux }}"
   when: intelgraphics_install_gpgpu_utils
@@ -102,29 +102,29 @@
 # Set environment
 
 - name: Check if video decode use libva driver
-  set_fact:
+  ansible.builtin.set_fact:
     video_acceleration_type: "i965"
   when: intelgraphics_install_video_driver == "libva-intel-driver" or intelgraphics_install_video_driver == "libva-intel-driver-hybrid" or intelgraphics_install_video_driver == "libva-intel-driver-g45" 
 
 - name: Check if video decode use Intel Media driver
-  set_fact:
+  ansible.builtin.set_fact:
     video_acceleration_type: "iHD"
   when: intelgraphics_install_video_driver == "intel-media-driver"
 
 - name: Enable video acceleration support globally (libva)
-  lineinfile:
+  ansible.builtin.lineinfile:
     path: /etc/environment
     regexp: '^LIBVA_DRIVER_NAME='
     line: 'LIBVA_DRIVER_NAME={{ video_acceleration_type }}'
 
 - name: Enable video acceleration support globally (vdpau)
-  lineinfile:
+  ansible.builtin.lineinfile:
     path: /etc/environment
     regexp: '^VDPAU_DRIVER='
     line: 'VDPAU_DRIVER=va_gl'
 
 - name: Enable GST vaapi for the iHD drivers
-  lineinfile:
+  ansible.builtin.lineinfile:
     path: /etc/environment
     regexp: '^GST_VAAPI_ALL_DRIVERS='
     line: 'GST_VAAPI_ALL_DRIVERS=1'
@@ -133,7 +133,7 @@
 # - name: Enable video acceleration support for the user (libva and vdpau)
 #   become: yes
 #   become_user: "{{ user_name }}"
-#   template:
+#   ansible.builtin.template:
 #     src: environment.d/video_intel.conf.j2
 #     dest: "/home/{{ user_name }}/.config/environment.d/video_intel.conf"
 #     owner: "{{ user_name }}"
@@ -141,7 +141,7 @@
 #     mode: u+rw,g+r,o+r
 
 # - name: Create Xorg configuration directory
-#   file:
+#   ansible.builtin.file:
 #     path: /etc/X11/xorg.conf.d
 #     state: directory
 #     recurse: yes
@@ -150,7 +150,7 @@
 #     mode: u+rw,g+r,o+r
 
 - name: Enable options for intel graphic driver
-  template:
+  ansible.builtin.template:
     src: modprobe.d/i915.conf.j2
     dest: /etc/modprobe.d/i915.conf
     owner: root
@@ -158,7 +158,7 @@
     mode: u+rwx,g+rx,o+rx
 
 # - name: Add configuration for Xorg
-#   template:
+#   ansible.builtin.template:
 #     src: xorg.conf.d/20-intel.conf.j2
 #     dest: /etc/X11/xorg.conf.d/20-intel.conf
 #     owner: root

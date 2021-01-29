@@ -1,6 +1,6 @@
 ---
 
 - name: Installation
-  pacman:
+  community.general.pacman:
     state: present
     name: "{{ sddm_appToInstall_archlinux }}"

@@ -1,24 +1,25 @@
 ---
+
 - name: Load tasks for install on Debian & derivate
-  include_tasks: debian/main.yml
+  ansible.builtin.include_tasks: debian/main.yml
   when: ansible_distribution == "Debian" or ansible_distribution == "Ubuntu"
 
 - name: Include tasks for all Archlinux based distributions
-  include_tasks: archlinux_common/main.yml
+  ansible.builtin.include_tasks: archlinux_common/main.yml
   when: ansible_distribution == "Archlinux"
 
 - name: Include tasks for Manjaro
-  include_tasks: manjaro/main.yml
+  ansible.builtin.include_tasks: manjaro/main.yml
   when: ansible_distribution == "Manjaro"
 
 - name: Active periodic TRIM for SSD
-  systemd:
+  ansible.builtin.systemd:
     name: fstrim.timer
     state: started
     enabled: yes
 
 - name: Set I/O scheduler
-  template:
+  ansible.builtin.template:
     src: rules.d/60-ioschedulers.rules.j2
     dest: /etc/udev/rules.d/60-ioschedulers.rules
     backup: yes

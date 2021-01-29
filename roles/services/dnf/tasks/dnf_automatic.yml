@@ -1,13 +1,13 @@
 ---
 
 - name: Install DNF Automatic
-  dnf:
+  ansible.builtin.dnf:
     state: present
     name:
       - dnf-automatic
 
 - name: Start and enable auto upgrade
-  systemd:
+  ansible.builtin.systemd:
     name: dnf-automatic.timer
     daemon_reload: yes
     enabled: yes

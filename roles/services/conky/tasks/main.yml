@@ -1,12 +1,13 @@
 ---
-- name: Install
-  pacman:
+
+- name: Installation
+  community.general.pacman:
     state: present
     name:
       - conky
 
 # - name: Set autostarting for conky
-#   template:
+#   ansible.builtin.template:
 #     src: autostart/conky.desktop.j2
 #     dest: /home/akipe/.config/autostart/conky.desktop
 #     owner: "{{ user_name }}"

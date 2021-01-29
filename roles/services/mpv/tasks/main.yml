@@ -1,19 +1,19 @@
 ---
 
 - name: Installation
-  pacman:
+  community.general.pacman:
     state: present
     name:
       - mpv
 
 - name: Installation of SMPlayer
-  pacman:
+  community.general.pacman:
     state: present
     name:
       - smplayer
 
 - name: Installation of SMPlayer dependencies
-  pacman:
+  community.general.pacman:
     state: present
     name:
       - smplayer-skins
@@ -22,7 +22,7 @@
     extra_args: --asdeps
 
 - name: Create user MPV configuration directory
-  file:
+  ansible.builtin.file:
     path: "/home/{{ user_name }}/.config/mpv"
     state: directory
     owner: "{{ user_name }}"
@@ -30,7 +30,7 @@
     mode: u+rwx,g+rx,o+rx
 
 - name: Add MPV configuration
-  template:
+  ansible.builtin.template:
     src: "{{ item }}.conf.j2"
     dest: "/home/{{ user_name }}/.config/mpv/{{ item }}.conf"
     owner: "{{ user_name }}"

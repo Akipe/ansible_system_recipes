@@ -3,7 +3,7 @@
 - name: Create webrouter networks for containersRouter
   # become:       yes
   # become_user:  "{{ containerUser.name }}"
-  docker_network:
+  community.general.docker_network:
     name: "{{ containersRouter_network_name }}"
     enable_ipv6: yes
     ipam_config:
@@ -13,7 +13,7 @@
 - name: Create containersRouter Treafik directories
   # become: yes
   # become_user: "{{ containerUser.name }}"
-  file:
+  ansible.builtin.file:
     path:     "{{ item }}"
     state:    directory
     mode:     u+rwx,g+rwx,o+x
@@ -27,7 +27,7 @@
     - "{{ containersRouter_TraefikLogsPath }}"
 
 - name: Add Treafik configuration files
-  template:
+  ansible.builtin.template:
     src:    "containers/containersRouter/{{ item }}.j2"
     dest:   "{{ containersRouter_traefikPath }}/{{ item }}"
     owner:  root
@@ -46,12 +46,12 @@
     # - dynamic_config/site_ipHost.yml
 
 - name: Verify if acme.json exist
-  stat:
+  ansible.builtin.stat:
     path: "{{ containersRouter_acmePath }}"
   register: acmejson_path
 
 - name: Create acme.json if it doesn't exist
-  file:
+  ansible.builtin.file:
     path:   "{{ containersRouter_acmePath }}"
     state:  touch
     owner:  root
@@ -60,33 +60,33 @@
   when: acmejson_path.stat.exists == false
 
 - name: Fix permission for acme.json
-  file:
+  ansible.builtin.file:
     path:   "{{ containersRouter_acmePath }}"
     owner:  root
     group:  root
     mode:   '0600'
 
 - name: Verify if self signed private key exist
-  stat:
+  ansible.builtin.stat:
     path: "{{ containersRouter_selfSigned_PrivateKeyPath }}"
   register: selfsigned_privatekey_path
 
 - name: Generate self-signed private key for containersRouter
-  openssl_privatekey:
+  community.crypto.openssl_privatekey:
     path:   "{{ containersRouter_selfSigned_PrivateKeyPath }}"
     size:   4096
     type:   RSA
   when: selfsigned_privatekey_path.stat.exists == false
 
 - name: Generate self-signed CSR for containersRouter
-  openssl_csr:
+  community.crypto.openssl_csr:
     path:             "{{ containersRouter_selfSigned_CsrPath }}"
     privatekey_path:  "{{ containersRouter_selfSigned_PrivateKeyPath }}"
     common_name:      "*.akpnet.lan"
   when: selfsigned_privatekey_path.stat.exists == false
 
 - name: Generate self-signed certificat for containersRouter
-  openssl_certificate:
+  community.crypto.openssl_certificate:
     path:             "{{ containersRouter_selfSigned_CertificatePath }}"
     privatekey_path:  "{{ containersRouter_selfSigned_PrivateKeyPath }}"
     csr_path:         "{{ containersRouter_selfSigned_CsrPath }}"
@@ -96,7 +96,7 @@
 - name: Create containersRouter container
   # become:       yes
   # become_user:  "{{ containerUser.name }}"
-  docker_container:
+  community.general.docker_container:
     networks_cli_compatible: yes
     name:           "{{ containersRouter_name }}"
     state:          started

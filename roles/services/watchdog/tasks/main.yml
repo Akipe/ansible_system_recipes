@@ -1,9 +1,9 @@
 ---
 
 - name: Load tasks for disable watchdog
-  include_tasks: disable.yml
+  ansible.builtin.include_tasks: disable.yml
   when: not watchdog_activate
 
 - name: Load tasks for enable watchdog
-  include_tasks: enable.yml
+  ansible.builtin.include_tasks: enable.yml
   when: watchdog_activate

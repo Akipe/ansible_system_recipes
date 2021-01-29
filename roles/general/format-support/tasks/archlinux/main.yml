@@ -1,11 +1,11 @@
 ---
 
 - name: Install multimedia file support
-  pacman:
+  community.general.pacman:
     state: present
     name: "{{ formatsupport_multimedia_appToInstall_archlinux }}"
 
 - name: Install archive file support
-  pacman:
+  community.general.pacman:
     state: present
     name: "{{ formatsupport_archive_appToInstall_archlinux }}"

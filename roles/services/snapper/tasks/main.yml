@@ -1,8 +1,8 @@
 ---
-# Todo: https://wiki.archlinux.org/index.php/Snapper
 
+# Todo: https://wiki.archlinux.org/index.php/Snapper
 - name: Install
-  pacman:
+  community.general.pacman:
     state: present
     name:
       - snapper

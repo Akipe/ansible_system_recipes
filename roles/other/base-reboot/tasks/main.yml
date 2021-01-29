@@ -1,6 +1,7 @@
 ---
+
 - name: Reboot the computer (timeout after 1h)
-  reboot:
+  ansible.builtin.reboot:
     reboot_timeout: 3600
     msg: "Reboot initiated by Ansible"
   when: ansible_connection != "local"

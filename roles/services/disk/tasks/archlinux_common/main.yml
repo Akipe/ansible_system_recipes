@@ -1,6 +1,7 @@
 ---
-- name: Install tools for disks
-  pacman:
+
+- name: Installation
+  community.general.pacman:
     state: present
     name:
       - util-linux

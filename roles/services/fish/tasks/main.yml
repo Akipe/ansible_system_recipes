@@ -1,17 +1,17 @@
 ---
 
 - name: Load tasks for install on Debian & derivate
-  include_tasks: debian/main.yml
+  ansible.builtin.include_tasks: debian/main.yml
   when: ansible_distribution == "Debian" or ansible_distribution == "Ubuntu"
 
 - name: Load tasks for install on Archlinux
-  include_tasks: archlinux/main.yml
+  ansible.builtin.include_tasks: archlinux/main.yml
   when: ansible_distribution == "Archlinux"
 
 - name: Create automatic configuration loading directory
   become: yes
   become_user: "{{ item.username }}"
-  file:
+  ansible.builtin.file:
     path: "/home/{{ item.username }}/.config/fish/conf.d"
     state: directory
     owner: "{{ item.username }}"
@@ -22,7 +22,7 @@
 - name: Set configuration
   become: yes
   become_user: "{{ item.username }}"
-  template:
+  ansible.builtin.template:
     src: config.fish.j2
     dest: "/home/{{ item.username }}/.config/fish/config.fish"
     owner: "{{ item.username }}"
@@ -31,7 +31,7 @@
   loop: "{{ fish_users }}"
 
 - name: Create systemd user binaries directory
-  file:
+  ansible.builtin.file:
     path: "/home/{{ item.username }}/.local/bin"
     state: directory
     owner: "{{ item.username }}"
@@ -40,7 +40,7 @@
   loop: "{{ fish_users }}"
 
 - name: Add systemd user binaries directory to $PATH for Fish
-  template:
+  ansible.builtin.template:
     src: conf.d/systemd_user_bin.fish.j2
     dest: "/home/{{ item.username }}/.config/fish/conf.d/systemd_user_bin.fish"
     owner: "{{ item.username }}"
@@ -50,7 +50,7 @@
 
 
 # - name: Check if Oh My Fish is installed
-#   stat:
+#   ansible.builtin.stat:
 #     path: /etc/.omf_installed
 #   register: omf
 
@@ -64,16 +64,16 @@
 # - name: Install Oh My Fish
 #   become: true
 #   become_user: "{{ user_name }}"
-#   command: /tmp/omf/bin/install -y --offline --noninteractive
+#   ansible.builtin.command: /tmp/omf/bin/install -y --offline --noninteractive
 #   when: not omf.stat.exists
 
 # - name: Mark Oh My Fish installed with /etc/.omf_installed
-#   file:
+#   ansible.builtin.file:
 #     path: /etc/omf.installed
 #     state: touch
 
 # - name: Check if fish theme bobthefish is installed
-#   stat:
+#   ansible.builtin.stat:
 #     path: "/home/{{ user_name }}/.local/share/omf/themes/bobthefish"
 #   register: omf_bobthefish
 #  # .local/share/omf/themes/bobthefish
@@ -81,5 +81,5 @@
 # - name: Install bobthefish fish theme
 #   become: true
 #   become_user: "{{ user_name }}"
-#   command: fish -c "omf install bobthefish"
+#   ansible.builtin.command: fish -c "omf install bobthefish"
 #   when: not omf_bobthefish.stat.exists

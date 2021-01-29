@@ -1,12 +1,12 @@
 ---
 
 - name: Check cloud-init bug for locale.gen
-  shell: cat /etc/locale.gen | grep -i "cloud-init"
+  ansible.builtin.shell: cat /etc/locale.gen | grep -i "cloud-init"
   register: locale_is_cloud_init_bug
   ignore_errors: true
 
 - name: Fix cloud-init bug for locale.gen
-  template:
+  ansible.builtin.template:
     src: locale.gen.j2
     dest: /etc/locale.gen
     owner: root
@@ -23,7 +23,7 @@
     role_language_list: "{{ language_list }}"
 
 - name: Set locale configuration
-  template:
+  ansible.builtin.template:
     src: locale.conf.j2
     dest: /etc/locale.conf
     owner: root

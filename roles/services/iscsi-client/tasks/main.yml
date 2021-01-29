@@ -1,6 +1,7 @@
 ---
-- name: Install Open-iSCSI client
-  apt:
+
+- name: Installation
+  ansible.builtin.apt:
     state: present
     name:
       - open-iscsi

@@ -1,5 +1,6 @@
 ---
-- name: Install SSH server
-  dnf:
+
+- name: Installation
+  ansible.builtin.dnf:
     state: present
     name: "{{ ssh_appToInstall_fedora }}"

@@ -1,33 +1,33 @@
 ---
 
 - name: restart pvedaemon
-  service:
+  ansible.builtin.service:
     name: pvedaemon
     state: restarted
 
 - name: restart pveproxy
-  service:
+  ansible.builtin.service:
     name: pveproxy
     state: restarted
 
 - name: open-iscsi restart
-  service:
+  ansible.builtin.service:
     name: 'open-iscsi'
     state: 'restarted'
 
 - name: Restart Nginx
-  service:
+  ansible.builtin.service:
     name: nginx
     state: restarted
 
 - name: Reload kernel config
-  shell: sysctl --system
+  ansible.builtin.shell: sysctl --system
 
 - name: Reload systemd configuration
-  systemd: 
+  ansible.builtin.systemd: 
     daemon_reload: yes
 
 - name: Reload apparmor
-  service:
+  ansible.builtin.service:
     name: apparmor.service
     state: restarted

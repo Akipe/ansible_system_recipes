@@ -1,13 +1,13 @@
 ---
 
 - name: Load tasks for install on Archlinux
-  include_tasks: archlinux/main.yml
+  ansible.builtin.include_tasks: archlinux/main.yml
   when: ansible_distribution == "Archlinux"
 
 - name: Configure Qt theme
   become: yes
   become_user: "{{ user_name }}"
-  template:
+  ansible.builtin.template:
     src: environment.d/qt_theme.conf.j2
     dest: "/home/{{ user_name }}/.config/environment.d/qt_theme.conf"
     owner: "{{ user_name }}"

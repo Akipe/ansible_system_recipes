@@ -1,16 +1,16 @@
 ---
 
 - name: Intall utilities for pacman
-  pacman:
+  community.general.pacman:
     name: "{{ pacman_app_archlinux_common }}"
     state: present
 
 - name: Include tasks for Archlinux
-  include_tasks: archlinux/main.yml
+  ansible.builtin.include_tasks: archlinux/main.yml
   when: ansible_os_family == "Archlinux"
 
 - name: Add configuration for pacman
-  template:
+  ansible.builtin.template:
     src: etc/pacman.conf.j2
     dest: /etc/pacman.conf
     owner: root
@@ -18,13 +18,13 @@
     mode: u+rw,g+r,o+r
 
 - name: Active auto remove package cache
-  systemd:
+  ansible.builtin.systemd:
     name: paccache.timer
     enabled: yes
     state: started
 
 - name: Create hook directory
-  file:
+  ansible.builtin.file:
     path: /etc/pacman.d/hooks
     state: directory
     owner: root

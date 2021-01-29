@@ -1,13 +1,13 @@
 ---
 
-- name: Install GnuPG packages
-  dnf:
+- name: Installation
+  ansible.builtin.dnf:
     state: present
     name:
       - gnupg
 
 - name: Install packages for Smartcards
-  dnf:
+  ansible.builtin.dnf:
     state: present
     name:
       - ccid

@@ -1,7 +1,7 @@
 ---
 
 - name: Add encryption boot configuration
-  template:
+  ansible.builtin.template:
     src: crypttab.j2
     dest: /etc/crypttab.initramfs
     owner: root

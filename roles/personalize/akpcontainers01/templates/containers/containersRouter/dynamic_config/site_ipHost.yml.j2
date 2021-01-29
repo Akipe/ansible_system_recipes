@@ -7,7 +7,7 @@
 #     IP_Address:
 #       entryPoints:
 #       - http
-#       service: IP_Address
+#       ansible.builtin.service: IP_Address
 #       rule: "Host(`{{ ipv4_wan }}`, `{{ ipv4_lan_asvcontainers01 }}`, `{{ url_dns_reverse }}`)"
 #       middlewares:
 #       - SecureMiddlewares
@@ -15,7 +15,7 @@
 #     IP_Address_secure:
 #       entryPoints:
 #       - https
-#       service: IP_Address
+#       ansible.builtin.service: IP_Address
 #       rule: "Host(`{{ ipv4_wan }}`, `{{ ipv4_lan_asvcontainers01 }}`, `{{ url_dns_reverse }}`)"
 #       middlewares:
 #       - SecureMiddlewares

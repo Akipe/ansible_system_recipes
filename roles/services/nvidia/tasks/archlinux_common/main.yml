@@ -1,17 +1,17 @@
 ---
 
 - name: Install driver
-  pacman:
+  community.general.pacman:
     name: "{{ nvidia_app_base_archlinux_common }}"
     state: present
 
 - name: Install GPU decoding libraries
-  pacman:
+  community.general.pacman:
     name: "{{ nvidia_app_video_archlinux_common }}"
     state: present
 
 - name: Configure Pacman hook for update initramfs after an NVIDIA driver upgrade
-  template:
+  ansible.builtin.template:
     src: archlinux_common/pacman_hook/nvidia.hook.j2
     dest: /etc/pacman.d/hooks/nvidia.hook
     owner: root
@@ -19,7 +19,7 @@
     mode: "u=rwx,g=rx,o=rx"
 
 - name: Add kernel configuration
-  template:
+  ansible.builtin.template:
     src: archlinux_common/modprobe.d/nvidia.conf.j2
     dest: /etc/modprobe.d/nvidia.conf
     owner: root
@@ -27,7 +27,7 @@
     mode: "u=rwx,g=rx,o=rx"
 
 - name: Add xorg configuration
-  template:
+  ansible.builtin.template:
     src: archlinux_common/xorg.conf.d/20-nvidia.conf.j2
     dest: /etc/X11/xorg.conf.d/20-nvidia.conf
     owner: root

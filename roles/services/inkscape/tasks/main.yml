@@ -1,12 +1,13 @@
 ---
-- name: Install
-  pacman:
+
+- name: Installation
+  community.general.pacman:
     state: present
     name:
       - inkscape
 
 - name: Installation of dependencies
-  pacman:
+  community.general.pacman:
     state: present
     name:
       - fig2dev
@@ -17,4 +18,3 @@
       - scour
       - texlive-core
     extra_args: --asdeps
-

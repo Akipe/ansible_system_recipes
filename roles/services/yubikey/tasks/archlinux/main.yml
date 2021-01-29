@@ -1,7 +1,7 @@
 ---
 
-- name: Install YubiKey tools
-  pacman:
+- name: Installation
+  community.general.pacman:
     state: present
     name:
     - yubico-pam

@@ -3,7 +3,7 @@
 - name: Create networkAdmin volume for /config
   # become: yes
   # become_user: "{{ containerUser.name }}"
-  docker_volume:
+  community.general.docker_volume:
     name:   "{{ networkAdmin_volume_config_name }}"
     state:  present
     driver: local
@@ -15,7 +15,7 @@
 - name: Create containersAdmin container
   # become:       yes
   # become_user:  "{{ containerUser.name }}"
-  docker_container:
+  community.general.docker_container:
     name:   "{{ networkAdmin_name }}"
     state:  started
     networks_cli_compatible: yes

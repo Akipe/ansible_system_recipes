@@ -1,10 +1,11 @@
 ---
+
 - name: Restart sysctl
-  systemd:
+  ansible.builtin.systemd:
     name: systemd-sysctl.service
     state: restarted
 
 - name: Restart modules loaded
-  systemd:
+  ansible.builtin.systemd:
     name: systemd-modules-load.service
     state: restarted

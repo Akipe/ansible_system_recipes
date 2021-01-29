@@ -1,6 +1,7 @@
 ---
+
 - name: Load tasks for install on Archlinux
-  include_tasks: archlinux/main.yml
+  ansible.builtin.include_tasks: archlinux/main.yml
   when: ansible_distribution == "Archlinux"
 
 - name: Change hostname
@@ -11,7 +12,7 @@
   notify: Execute hostnamectl command
 
 - name: Define /etc/hostname
-  template:
+  ansible.builtin.template:
     src: hostname.j2
     dest: /etc/hostname
     owner: root
@@ -22,7 +23,7 @@
   notify: Execute hostnamectl command
 
 - name: Define /etc/hosts
-  template:
+  ansible.builtin.template:
     src: hosts.j2
     dest: /etc/hosts
     owner: root

@@ -1,7 +1,7 @@
 ---
 
 - name: Load installation task
-  include_tasks: install.yml
+  ansible.builtin.include_tasks: install.yml
 
 - name: Load user management task
-  include_tasks: user_management.yml
+  ansible.builtin.include_tasks: user_management.yml

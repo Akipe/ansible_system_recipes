@@ -1,7 +1,7 @@
 ---
 
 - name: Define keyboard map for decryption boot
-  template:
+  ansible.builtin.template:
     src: vconsole.conf.j2
     dest: /etc/vconsole.conf
     owner: root
@@ -12,12 +12,12 @@
   - Update initramfs
 
 - name: Check if Xorg exist
-  stat:
+  ansible.builtin.stat:
     path: /etc/X11/xorg.conf.d
   register: locale_xorg_exist
 
 - name: Define keyboard map for xorg
-  template:
+  ansible.builtin.template:
     src: xorg.conf.d/00-keyboard.conf.j2
     dest: /etc/X11/xorg.conf.d/00-keyboard.conf
     owner: root

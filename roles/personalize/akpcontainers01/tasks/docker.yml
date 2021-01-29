@@ -1,17 +1,17 @@
 ---
 
 - name: Install Docker
-  include_role:
+  ansible.builtin.include_role:
     name: docker
     tasks_from: install
 
 - name: Preparation for configuring users with Docker
-  include_role:
+  ansible.builtin.include_role:
     name: docker
     tasks_from: user_management
 
 - name: Set Docker configuration
-  include_role:
+  ansible.builtin.include_role:
     name: docker
     tasks_from: set_configuration
   vars:
@@ -35,7 +35,7 @@
             size:   "{{ docker_network_default_pools_ipv6_size }}"
 
 - name: Create an user for manage containers
-  user:
+  ansible.builtin.user:
     state:    present
     name:     "{{ containerUser.name }}"
     comment:  "{{ containerUser.comment }}"
@@ -45,7 +45,7 @@
     append:   yes
 
 - name: Add containers management group to the user
-  user:
+  ansible.builtin.user:
     name: "{{ user_name }}"
     groups:
       - "{{ containerUser.name }}"
@@ -57,12 +57,12 @@
     key: containers
 
 - name: Set uid and gid variables for user container
-  set_fact:
+  ansible.builtin.set_fact:
     containerUser_uid: "{{ getent_passwd[containerUser.name][1] }}"
     containerUser_gid: "{{ getent_passwd[containerUser.name][2] }}"
 
 - name: Create containers directories
-  file:
+  ansible.builtin.file:
     path:     "{{ item }}"
     state:    directory
     mode:     u+rwx,g+xwr,o-xwr
@@ -78,7 +78,7 @@
 ## Containers
 
 - name: "Include all tasks for create containers"
-  include_tasks: "containers/{{ item }}.yml"
+  ansible.builtin.include_tasks: "containers/{{ item }}.yml"
   loop:
     - dbMariadb01
     - containersRouter

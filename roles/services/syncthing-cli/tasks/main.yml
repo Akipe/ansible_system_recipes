@@ -1,22 +1,22 @@
 ---
 
 - name: Load tasks for Debian & derivate
-  include_tasks: debian/main.yml
+  ansible.builtin.include_tasks: debian/main.yml
   when: ansible_distribution == "Debian" or ansible_distribution == "Ubuntu"
 
 - name: Load tasks for Archlinux
-  include_tasks: archlinux/main.yml
+  ansible.builtin.include_tasks: archlinux/main.yml
   when: ansible_distribution == "Archlinux"
 
 - name: Start and active Syncthing service for users
-  systemd:
+  ansible.builtin.systemd:
     name: "syncthing@{{ item.username }}.service"
     state: started
     enabled: yes
   loop: "{{ syncthing_cli_users }}"
 
 - name: Allow external web access
-  lineinfile: 
+  ansible.builtin.lineinfile: 
     path: "/home/{{ item.username }}/.config/syncthing/config.xml"
     regexp: '^(.*)<address>127.0.0.1:(.*)$' 
     line: '        <address>0.0.0.0:8384</address>'
@@ -26,7 +26,7 @@
   notify: Restart Syncthing
 
 - name: Set ssl for external web access
-  lineinfile: 
+  ansible.builtin.lineinfile: 
     path: "/home/{{ item.username }}/.config/syncthing/config.xml"
     regexp: '<gui enabled="true" tls="false" debugging="false">' 
     line: '    <gui enabled="true" tls="true" debugging="false">'
@@ -37,7 +37,7 @@
 
 - name: Open firewall for syncthing
   ansible.posix.firewalld:
-    service: syncthing
+    ansible.builtin.service: syncthing
     zone: home
     state: enabled
     permanent: true

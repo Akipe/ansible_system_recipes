@@ -3,12 +3,12 @@
 # todo: https://github.com/Neo23x0/auditd/blob/master/audit.rules
 
 - name: Installation
-  pacman:
+  community.general.pacman:
     state: present
     name: audit
 
 - name: Start and enable service
-  systemd:
+  ansible.builtin.systemd:
     name: auditd.service
     state: started
     daemon_reload: yes

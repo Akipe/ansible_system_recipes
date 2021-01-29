@@ -1,5 +1,5 @@
 ---
 
 - name: Generate mkinitcpio
-  command: mkinitcpio -P
+  ansible.builtin.command: mkinitcpio -P
   tags: [ "mkinitcpio" ]

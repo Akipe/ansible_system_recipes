@@ -1,15 +1,15 @@
 ---
 
 - name: Load tasks for install on Debian & derivate
-  include_tasks: debian_common/main.yml
+  ansible.builtin.include_tasks: debian_common/main.yml
   when: ansible_distribution == "Debian" or ansible_distribution == "Ubuntu"
 
 - name: Include tasks for all Archlinux based distributions
-  include_tasks: archlinux_common/main.yml
+  ansible.builtin.include_tasks: archlinux_common/main.yml
   when: ansible_distribution == "Archlinux"
 
 - name: Create Bash autoloader directory
-  file:
+  ansible.builtin.file:
     path: "/home/{{ item.username }}/.config/bash/conf.d"
     state: directory
     recurse: yes
@@ -19,7 +19,7 @@
   loop: "{{ bash_users }}"
 
 - name: Set main configuration (Archlinux)
-  template:
+  ansible.builtin.template:
     src: bash.rc/archlinux/bashrc.j2
     dest: "/home/{{ item.username }}/.bashrc"
     owner: "{{ item.username }}"
@@ -29,7 +29,7 @@
   when: bash_configuration_mode == "archlinux"
 
 - name: Set main configuration (Proxmox)
-  template:
+  ansible.builtin.template:
     src: bash.rc/proxmox/bashrc.j2
     dest: "/home/{{ item.username }}/.bashrc"
     owner: "{{ item.username }}"
@@ -39,7 +39,7 @@
   when: bash_configuration_mode == "proxmox"
 
 - name: Create systemd user binaries directory
-  file:
+  ansible.builtin.file:
     path: "/home/{{ item.username }}/.local/bin"
     state: directory
     owner: "{{ item.username }}"
@@ -48,7 +48,7 @@
   loop: "{{ bash_users }}"
 
 - name: Add systemd user binaries directory to $PATH for Bash
-  template:
+  ansible.builtin.template:
     src: conf.d/systemd_user_bin.bash.j2
     dest: "/home/{{ item.username }}/.config/bash/conf.d/systemd_user_bin.bash"
     owner: "{{ item.username }}"

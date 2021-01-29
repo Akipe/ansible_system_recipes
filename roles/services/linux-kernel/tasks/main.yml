@@ -1,19 +1,19 @@
 ---
 
 - name: Load tasks for install on Debian & derivate
-  include_tasks: debian/main.yml
+  ansible.builtin.include_tasks: debian/main.yml
   when: ansible_os_family == "Debian"
 
 - name: Include tasks for all Archlinux based distributions
-  include_tasks: archlinux_common/main.yml
+  ansible.builtin.include_tasks: archlinux_common/main.yml
   when: ansible_os_family == "Archlinux"
 
 - name: Include tasks for Archlinux
-  include_tasks: archlinux/main.yml
+  ansible.builtin.include_tasks: archlinux/main.yml
   when: ansible_distribution == "Archlinux"
 
 - name: Add kernel config
-  template:
+  ansible.builtin.template:
     src: "sysctl.d/{{ item }}.conf.j2"
     dest: "/etc/sysctl.d/{{ item }}.conf"
     owner: root
@@ -27,7 +27,7 @@
     - 10-magic_system_request_key
 
 - name: Add kernel config
-  template:
+  ansible.builtin.template:
     src: "modules-load.d/{{ item }}.conf.j2"
     dest: "/etc/modules-load.d/{{ item }}.conf"
     owner: root

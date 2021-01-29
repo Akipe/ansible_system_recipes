@@ -1,14 +1,14 @@
 ---
 
 - name: Installation
-  pacman:
+  community.general.pacman:
     state: present
     name:
       - libreoffice-fresh
       - libreoffice-fresh-fr
 
 - name: Installation of dependencies
-  pacman:
+  community.general.pacman:
     state: present
     name:
       - gst-plugins-base-libs
@@ -24,13 +24,13 @@
       - libreoffice-extension-grammalecte-fr
 
 # - name: Add configuration to use GTK3 theme
-#   lineinfile:
+#   ansible.builtin.lineinfile:
 #     path: /etc/environment
 #     regexp: '^SAL_USE_VCLPLUGIN='
 #     line: 'SAL_USE_VCLPLUGIN=gtk3'
 
 - name: Add configuration to properly define icons with dark theme
-  lineinfile:
+  ansible.builtin.lineinfile:
     path: /etc/environment
     regexp: '^VCL_ICONS_FOR_DARK_THEME='
     line: 'VCL_ICONS_FOR_DARK_THEME=1'
@@ -38,7 +38,7 @@
 # - name: Define environment variables
 #   become: yes
 #   become_user: "{{ user_name }}"
-#   template:
+#   ansible.builtin.template:
 #     src: environment.d/libreoffice.conf.j2
 #     dest: "/home/{{ user_name }}/.config/environment.d/libreoffice.conf"
 #     owner: "{{ user_name }}"

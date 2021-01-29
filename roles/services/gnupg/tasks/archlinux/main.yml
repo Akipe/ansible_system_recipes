@@ -1,7 +1,7 @@
 ---
 
-- name: Install GnuPG packages
-  pacman:
+- name: Installation
+  community.general.pacman:
     state: present
     name:
       - gnupg
@@ -10,7 +10,7 @@
       - pcsc-tools
 
 - name: Installation of dependencies
-  pacman:
+  community.general.pacman:
     state: present
     name:
       - libusb-compat

@@ -1,7 +1,7 @@
 ---
 
 - name: Installation
-  pacman:
+  community.general.pacman:
     state: present
     name: "{{ gnome_appToInstall_base_archlinux }}"
 
@@ -15,6 +15,6 @@
     name: "{{ gnome_appToInstall_theme_archlinux_aur }}"
 
 - name: Installation of apps for Qt theme
-  pacman:
+  community.general.pacman:
     state: present
     name: "{{ gnome_appToInstall_qtTheme_archlinux }}"

@@ -38,7 +38,7 @@ providers:
     #tls:
       #cert: /etc/certs/lan_ssl.cert
       #key: /etc/certs/lan_ssl.key
-  file:
+  ansible.builtin.file:
     directory: "/etc/traefik/dynamic_config"
     #filename: "/etc/traefik/dynamic_conf.yml"
     watch: true

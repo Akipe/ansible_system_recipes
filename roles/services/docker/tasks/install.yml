@@ -1,10 +1,10 @@
 ---
 
 - name: Load tasks for install on Debian & derivate
-  include_tasks: debian/main.yml
+  ansible.builtin.include_tasks: debian/main.yml
   when: ansible_distribution == "Debian" or ansible_distribution == "Ubuntu"
 
 - name: Install Docker Python library
-  pip:
+  ansible.builtin.pip:
     state: present
     name: "{{ docker_pip_libraries_toInstall }}"

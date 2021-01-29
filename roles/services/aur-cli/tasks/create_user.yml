@@ -1,7 +1,7 @@
 ---
 
 - name: Create ansible_aur for Ansible
-  user:
+  ansible.builtin.user:
     name: ansible_aur
     create_home: yes
   notify:
@@ -9,7 +9,7 @@
     - Remove ansible_aur home directory
 
 # - name: Append sudo config for Ansible AUR build
-#   lineinfile:
+#   ansible.builtin.lineinfile:
 #     path: /etc/sudoers.d/aur_builder-allow-to-sudo-pacman
 #     state: present
 #     line: "ansible_aur ALL=(ALL) NOPASSWD: /usr/bin/pacman"
@@ -17,7 +17,7 @@
 #     create: yes
 
 - name: Append sudo config for Ansible AUR build
-  template:
+  ansible.builtin.template:
     src: 10-ansible_aur-allow-pacman.j2
     dest: /etc/sudoers.d/10-ansible_aur-allow-pacman
     owner: root
@@ -28,6 +28,6 @@
     - Remove sudo config for ansible_aur user
 
 - name: disable ability to connect with Ansible AUR user
-  shell: "passwd -l ansible_aur"
+  ansible.builtin.shell: "passwd -l ansible_aur"
 
 # Todo: create service to check if Ansible aur user existe, each boot, and delete i

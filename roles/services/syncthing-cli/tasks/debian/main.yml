@@ -1,7 +1,7 @@
 ---
 
 - name: Add official repository
-  include_role:
+  ansible.builtin.include_role:
     name: apt
     tasks_from: add_repository
   vars:
@@ -14,7 +14,7 @@
           filename: syncthing
 
 - name: Set official repository priority
-  template:
+  ansible.builtin.template:
     src: apt/preferences.d/syncthing.j2
     dest: /etc/apt/preferences.d/syncthing
     owner: root
@@ -22,7 +22,7 @@
     mode: u+rw,g+r,o+r
 
 - name: Installation
-  apt:
+  ansible.builtin.apt:
     state: present
     update_cache: yes
     name: syncthing

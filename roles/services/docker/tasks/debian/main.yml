@@ -1,6 +1,7 @@
 ---
+
 - name: Add Docker official repository
-  include_role:
+  ansible.builtin.include_role:
     name: apt
     tasks_from: add_repository
   vars:
@@ -13,18 +14,18 @@
           filename: "{{ role_repository_ubuntu_filename }}"
 
 - name: Install Docker CE
-  apt:
+  ansible.builtin.apt:
     name: "{{ role_appToInstall_debian }}"
     state: present
     update_cache: yes
 
 # - name: Install NDP Proxy Daemon
-#   apt:
+#   ansible.builtin.apt:
 #     name: ndppd
 #     state: present
 
 # - name: Configure NDP Proxy Daemon
-#   copy:
+#   ansible.builtin.copy:
 #     src: ndppd/ndppd.conf
 #     dest: /etc/ndppd.conf
 #     owner: root
@@ -33,7 +34,7 @@
 #   notify: Restart Ndppd
 
 # - name: Enable proxy_ndp for public adapter
-#   sysctl:
+#   ansible.posix.sysctl:
 #     name: net.ipv6.conf.enp6s0.proxy_ndp
 #     value: 1
 #     state: present

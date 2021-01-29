@@ -1,16 +1,17 @@
 ---
+
 - name: Define microcode path (Intel)
-  set_fact:
+  ansible.builtin.set_fact:
     role_systemdBoot_microcode_path: "/intel-ucode.img"
   when: hardware_cpu_vendor == 'Intel'
 
 - name: Define microcode path (AMD)
-  set_fact:
+  ansible.builtin.set_fact:
     role_systemdBoot_microcode_path: "/amd-ucode.img"
   when: hardware_cpu_vendor == 'AMD'
 
 - name: Configure bootloader
-  template:
+  ansible.builtin.template:
     src: loader.conf.j2
     dest: /boot/loader/loader.conf
     owner: root
@@ -22,7 +23,7 @@
   notify: Restart sysctl
 
 - name: Configure entries
-  template:
+  ansible.builtin.template:
     src: entries/entry.conf.j2
     dest: "/boot/loader/entries/{{ item.role_systemdBoot_filename }}.conf"
     owner: root

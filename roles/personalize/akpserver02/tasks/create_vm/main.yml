@@ -1,25 +1,25 @@
 ---
 
 # - name: Check if template is already create
-#   shell: "qm status {{ akpvmserver_template_id }} | grep 'status'"
+#   ansible.builtin.shell: "qm status {{ akpvmserver_template_id }} | grep 'status'"
 #   register: proxmox_arch_template_exist
 #   ignore_errors: true
 
 # - name: Load task for prepare Archlinux template
-#   include_tasks: akpvmserver.yml
+#   ansible.builtin.include_tasks: akpvmserver.yml
 #   when: proxmox_arch_template_exist is failed
 
 # - name: Check if asvsync01 is already create
-#   shell: "qm status {{ vm_asvsync01_id }} | grep 'status'"
+#   ansible.builtin.shell: "qm status {{ vm_asvsync01_id }} | grep 'status'"
 #   register: proxmox_asvsync01_exist
 #   ignore_errors: true
 
 # - name: Load task for prepare Archlinux template
-#   include_tasks: asvsync01.yml
+#   ansible.builtin.include_tasks: asvsync01.yml
 #   when: proxmox_asvsync01_exist is failed
 
 # - name: Load task for creating asvContainers01
-#   include_tasks: create/asvContainers01.yml
+#   ansible.builtin.include_tasks: create/asvContainers01.yml
 
 # - name: Load task for creating asvsync01
-#   include_tasks: create/asvsync01.yml
+#   ansible.builtin.include_tasks: create/asvsync01.yml

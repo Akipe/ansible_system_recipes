@@ -1,17 +1,17 @@
 ---
 
 - name: Load tasks for Fedora
-  include_tasks: fedora/main.yml
+  ansible.builtin.include_tasks: fedora/main.yml
   when: ansible_distribution == "Fedora"
 
 - name: Load tasks for Archlinux
-  include_tasks: archlinux/main.yml
+  ansible.builtin.include_tasks: archlinux/main.yml
   when: ansible_distribution == "Archlinux"
 
 - name: Create GnuPG user directory
   become: yes
   become_user: "{{ user_name }}"
-  file:
+  ansible.builtin.file:
     path: "/home/{{ user_name }}/.gnupg"
     state: directory
     owner: "{{ user_name }}"
@@ -21,7 +21,7 @@
 - name: Set GPG configuration
   become: yes
   become_user: "{{ user_name }}"
-  template:
+  ansible.builtin.template:
     src: user_gnupg/gpg.conf.j2
     dest: "/home/{{ user_name }}/.gnupg/gpg.conf"
     owner: "{{ user_name }}"
@@ -31,7 +31,7 @@
 - name: Set GPG agent configuration
   become: yes
   become_user: "{{ user_name }}"
-  template:
+  ansible.builtin.template:
     src: user_gnupg/gpg-agent.conf.j2
     dest: "/home/{{ user_name }}/.gnupg/gpg-agent.conf"
     owner: "{{ user_name }}"
@@ -41,7 +41,7 @@
 - name: Set configuration for SSH authentification for bash
   become: yes
   become_user: "{{ user_name }}"
-  template:
+  ansible.builtin.template:
     src: bash/gpg-agent.bash.j2
     dest: "/home/{{ user_name }}/.config/bash/conf.d/gpg-agent.bash"
     owner: "{{ user_name }}"
@@ -51,7 +51,7 @@
 - name: Set configuration for SSH authentification for fish
   become: yes
   become_user: "{{ user_name }}"
-  template:
+  ansible.builtin.template:
     src: fish/gpg-agent.fish.j2
     dest: "/home/{{ user_name }}/.config/fish/conf.d/gpg-agent.fish"
     owner: "{{ user_name }}"
@@ -60,7 +60,7 @@
 
 - name: Enable systemd unit pcscd
   become: true
-  systemd:
+  ansible.builtin.systemd:
     name: pcscd.socket
     enabled: true
     state: started

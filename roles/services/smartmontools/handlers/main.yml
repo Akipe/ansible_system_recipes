@@ -1,10 +1,11 @@
 ---
+
 - name: Restart smartmontools (Ubuntu)
-  systemd:
+  ansible.builtin.systemd:
     name: smartmontools
     state: restarted
 
 - name: Restart smartmontools (Archlinux)
-  systemd:
+  ansible.builtin.systemd:
     name: smartd.service
     state: restarted

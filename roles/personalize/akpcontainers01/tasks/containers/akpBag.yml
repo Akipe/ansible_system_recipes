@@ -5,7 +5,7 @@
 # - name: Create akpBag volume for image
 #   become: yes
 #   become_user: "{{ containerUser.name }}"
-#   docker_volume:
+#   community.general.docker_volume:
 #     name:   "{{ akpBag_volume_image_name }}"
 #     state:  present
 #     driver: local
@@ -15,7 +15,7 @@
 #       o:      "{{ containers_nfs_asvcontainers01_options }}"
 
 - name: Create akpBag volume for data
-  docker_volume:
+  community.general.docker_volume:
     name:   "{{ akpBag_volume_data_name }}"
     state:  present
     driver: local
@@ -27,18 +27,18 @@
 # Doc: https://doc.wallabag.org/en/developer/docker.html
 
 - name: Create akpBag image directory
-  file:
+  ansible.builtin.file:
     path:     "{{ akpBag_imagePath }}"
     state:    directory
     mode:     u+rwx,g+rwx,o+x
     owner:    root
-    group:    "{{ containerUser.name }}"
+    ansible.builtin.group:    "{{ containerUser.name }}"
     # recurse:  yes
 
 - name: Create akpBag container
   # become:       yes
   # become_user:  "{{ containerUser.name }}"
-  docker_container:
+  community.general.docker_container:
     networks_cli_compatible: yes
     state:          started
     restart_policy: unless-stopped

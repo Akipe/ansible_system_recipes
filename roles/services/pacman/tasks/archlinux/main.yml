@@ -1,12 +1,12 @@
 ---
 
 - name: Intall utilities for pacman
-  pacman:
+  community.general.pacman:
     name: "{{ pacman_app_archlinux }}"
     state: present
 
 - name: Add reflector.service
-  template:
+  ansible.builtin.template:
     src: systemd/reflector.service.j2
     dest: /etc/systemd/system/reflector.service
     owner: root
@@ -14,7 +14,7 @@
     mode: u+rw,g+r,o+r
 
 - name: Add reflector.timer
-  template:
+  ansible.builtin.template:
     src: systemd/reflector.timer.j2
     dest: /etc/systemd/system/reflector.timer
     owner: root
@@ -22,7 +22,7 @@
     mode: u+rw,g+r,o+r
 
 - name: Enable and active reflector.timer service
-  systemd:
+  ansible.builtin.systemd:
     name: reflector.timer
     daemon_reload: yes
     enabled: yes

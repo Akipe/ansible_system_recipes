@@ -1,6 +1,6 @@
 ---
 
 - name: Install driver
-  pacman:
+  community.general.pacman:
     name: "{{ nvidia_app_base_archlinux }}"
     state: present

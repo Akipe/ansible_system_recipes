@@ -1,7 +1,7 @@
 ---
 
 - name: Set main configuration
-  template:
+  ansible.builtin.template:
     src: journald.conf.j2
     dest: /etc/systemd/journald.conf
     owner: root
@@ -9,7 +9,7 @@
     mode: u+rw,g+r,o+r
 
 - name: Create configuration directory
-  file:
+  ansible.builtin.file:
     path: /etc/systemd/journald.conf.d
     state: directory
     owner: root
@@ -17,7 +17,7 @@
     mode: u+rwx,g+rx,o+rx
 
 - name: Add others configurations
-  template:
+  ansible.builtin.template:
     src: "journald.conf.d/{{ item }}.conf.j2"
     dest: "/etc/systemd/journald.conf.d/{{ item }}.conf"
     owner: root

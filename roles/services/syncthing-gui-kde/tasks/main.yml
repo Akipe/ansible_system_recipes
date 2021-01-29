@@ -1,6 +1,6 @@
 ---
 
-- name: Install tray app
+- name: Installation
   become: yes
   become_user: ansible_aur
   aur:

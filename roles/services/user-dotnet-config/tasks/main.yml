@@ -1,13 +1,14 @@
---- 
+---
+
 - name: Check if user directory has dotnet config
-  stat:
+  ansible.builtin.stat:
     path: "/home/{{ user_name }}/.git/"
   register: role_dotnet_config_path
 
 - name: Add dotnet config
   become: yes
   become_user: "{{ user_name }}"
-  command: "{{ item }}"
+  ansible.builtin.command: "{{ item }}"
   with_items:
     - "/usr/bin/git -C /home/{{ user_name }} init"
     - "/usr/bin/git -C /home/{{ user_name }} remote add origin https://code.akipe.fr/akp/dotfiles.git"

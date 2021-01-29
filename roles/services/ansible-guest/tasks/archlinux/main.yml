@@ -1,5 +1,6 @@
 ---
-- name: Install Python 3 and pip
-  pacman:
+
+- name: Installation
+  community.general.pacman:
     state: present
     name: "{{ role_appToInstall_archlinux }}"

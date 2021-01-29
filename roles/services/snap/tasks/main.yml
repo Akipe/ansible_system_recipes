@@ -1,32 +1,32 @@
 ---
 
 - name: Include tasks for all Archlinux based distributions
-  include_tasks: archlinux_common/main.yml
+  ansible.builtin.include_tasks: archlinux_common/main.yml
   when: ansible_os_family == "Archlinux"
     
 - name: Include tasks for Archlinux
-  include_tasks: archlinux/main.yml
+  ansible.builtin.include_tasks: archlinux/main.yml
   when: ansible_distribution == "Archlinux"
 
 - name: Include tasks for Manjaro
-  include_tasks: manjaro/main.yml
+  ansible.builtin.include_tasks: manjaro/main.yml
   when: ansible_distribution == "Manjaro"
 
 # - name: Start and enable snapd with AppArmor
-#   systemd:
+#   ansible.builtin.systemd:
 #     name: snapd.apparmor.service
 #     enabled: yes
 #     state: started
 
 - name: Start and enable snapd
-  systemd:
+  ansible.builtin.systemd:
     name: snapd.socket
     enabled: yes
     state: started
 
 - name: Create /snap symlink for old-style snaps
   become: true
-  file:
+  ansible.builtin.file:
     src: /var/lib/snapd/snap
     dest: /snap
     state: link

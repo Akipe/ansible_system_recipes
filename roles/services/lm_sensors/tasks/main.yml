@@ -1,6 +1,7 @@
 ---
-- name: Install lm_sensors
-  pacman:
+
+- name: Installation
+  community.general.pacman:
     state: present
     name:
       - lm_sensors

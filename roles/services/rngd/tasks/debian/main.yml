@@ -1,12 +1,12 @@
 ---
 
-- name: Install
-  apt:
+- name: Installation
+  ansible.builtin.apt:
     state: present
     name: rng-tools
 
 - name: Enable and start rngd.service
-  systemd:
+  ansible.builtin.systemd:
     name: rng-tools
     enabled: yes
     state: started

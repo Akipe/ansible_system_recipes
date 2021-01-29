@@ -1,5 +1,6 @@
 ---
+
 - name: Execute hostnamectl command
-  command: "hostnamectl set-hostname {{ role_hostname_name }}"
+  ansible.builtin.command: "hostnamectl set-hostname {{ role_hostname_name }}"
   vars:
     role_hostname_name: "{{ hostname_name }}"

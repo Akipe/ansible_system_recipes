@@ -1,7 +1,7 @@
 ---
 
 - name: Install NetworkManager and extensions
-  pacman:
+  community.general.pacman:
     state: present
     name:
       - networkmanager
@@ -12,7 +12,7 @@
       - networkmanager-strongswan
 
 - name: Installation of dependencies
-  pacman:
+  community.general.pacman:
     state: present
     name:
       - modemmanager
@@ -22,14 +22,14 @@
     extra_args: --asdeps
 
 - name: Active and enable NetworkManager
-  systemd:
+  ansible.builtin.systemd:
     name: NetworkManager.service
     state: started
     enabled: yes
 
 - name: Open firewall for dhcpv6-client 
   ansible.posix.firewalld:
-    service: dhcpv6-client
+    ansible.builtin.service: dhcpv6-client
     state: enabled
     permanent: true
     immediate: yes
