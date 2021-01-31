@@ -1,7 +1,12 @@
 ---
 
-- name: Restart Syncthing
+- name: Restart Syncthing with Linux
   ansible.builtin.systemd:
     name: "syncthing@{{ item.username }}.service"
     state: restarted
   loop: "{{ syncthing_cli_users }}"
+
+- name: Restart Syncthing with BSD
+  ansible.builtin.service:
+    name: "syncthing"
+    state: restarted

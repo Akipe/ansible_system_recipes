@@ -1,5 +1,13 @@
 ---
 
+- name: Add user
+  ansible.builtin.include_tasks:
+    file: add_user.yml
+  vars:
+    user_to_create: "{{ item }}"
+  loop: "{{ users_create }}"
+  when: users_create is defined
+
 - name: Remove Proxmox VE enterprise repository
   ansible.builtin.include_role:
     name: apt
@@ -70,7 +78,7 @@
     path: /etc/pub_keys
     state: directory
     owner: root
-    ansible.builtin.group: www-data
+    group: www-data
     mode: u+rwx,g+rx,o+rx
 
 - name: Add akpKey public key

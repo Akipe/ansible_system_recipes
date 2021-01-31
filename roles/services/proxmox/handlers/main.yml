@@ -27,7 +27,7 @@
   ansible.builtin.systemd: 
     daemon_reload: yes
 
-- name: Reload apparmor
+- name: Restart apparmor
   ansible.builtin.service:
     name: apparmor.service
     state: restarted

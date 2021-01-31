@@ -9,7 +9,7 @@ ansible_become_pass:        "{{ vault_ansible_become_pass }}"
 hostname_name: asdbuild
 
 ssh_users:
-  - name:       "{{ personal_user_name }}"
+  - username:   "{{ personal_user_name }}"
     public_key: "{{ ssh_public_key }}"
 ssh_firewall_firewalld: no
 

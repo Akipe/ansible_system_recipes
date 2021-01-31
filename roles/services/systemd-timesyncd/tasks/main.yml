@@ -14,7 +14,7 @@
     group: root
     mode: 0644
   notify:
-    - Restart timedatectl
+    - Restart systemd-timesyncd
 
 # todo: add script to fetch ntp server from dhcp
 # https://wiki.archlinux.org/index.php/systemd-timesyncd

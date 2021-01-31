@@ -79,3 +79,19 @@ gpg_primary_mail: "{{ vault_gpg_primary_mail }}"
 git_name:         "{{ vault_git_name }}"
 git_email:        "{{ vault_git_email }}"
 git_signing_key:  "{{ pgp_key_id }}"
+
+linux_os_family:
+  - Alpine
+  - Altlinux
+  - Archlinux
+  - Debian
+  - Gentoo
+  - Mandrake
+  - RedHat
+  - SGML
+  - Slackware
+  - Solaris
+  - Suse
+
+bsd_os_family:
+  - FreeBSD

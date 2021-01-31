@@ -1,8 +1,0 @@
----
-
-- name: Load roles concerning assDonkey
-  hosts: assDonkey
-  roles:
-    ### Base
-    - { role: assDonkey_init, tags: assDonkey_init }
-    - { role: sudo, tags: sudo }

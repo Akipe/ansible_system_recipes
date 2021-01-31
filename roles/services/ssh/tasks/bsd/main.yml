@@ -1,0 +1,30 @@
+---
+
+- name: Enable to config
+  ansible.builtin.lineinfile:
+    path: /etc/rc.conf
+    regexp: '^sshd_enable='
+    line: 'sshd_enable="YES"'
+
+- name: Add config for SSH server
+  ansible.builtin.template:
+    src: ssh/sshd_config.j2
+    dest: /etc/ssh/sshd_config
+    owner: root
+    group: wheel
+    mode: u+rw,g+r,o+r
+    validate: '/usr/sbin/sshd -t -f %s'
+  notify:
+    - Restart SSH server with BSD
+
+- name: set file permissions
+  ansible.builtin.file:
+    path: /etc/ssh
+    owner: root
+    group: wheel
+    mode: 0755
+
+- name: Start
+  ansible.builtin.service:
+    name: sshd
+    state: started

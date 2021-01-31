@@ -1,40 +1,5 @@
 ---
 
-- name: Load tasks for Debian & derivate
-  ansible.builtin.include_tasks: debian/main.yml
-  when: ansible_distribution == "Debian" or ansible_distribution == "Ubuntu"
-
-- name: Load tasks for Archlinux
-  ansible.builtin.include_tasks: archlinux/main.yml
-  when: ansible_distribution == "Archlinux"
-
-- name: Start and active Syncthing service for users
-  ansible.builtin.systemd:
-    name: "syncthing@{{ item.username }}.service"
-    state: started
-    enabled: yes
-  loop: "{{ syncthing_cli_users }}"
-
-- name: Allow external web access
-  ansible.builtin.lineinfile: 
-    path: "/home/{{ item.username }}/.config/syncthing/config.xml"
-    regexp: '^(.*)<address>127.0.0.1:(.*)$' 
-    line: '        <address>0.0.0.0:8384</address>'
-    backrefs: yes
-  when: item.allow_external_web_access
-  loop: "{{ syncthing_cli_users }}"
-  notify: Restart Syncthing
-
-- name: Set ssl for external web access
-  ansible.builtin.lineinfile: 
-    path: "/home/{{ item.username }}/.config/syncthing/config.xml"
-    regexp: '<gui enabled="true" tls="false" debugging="false">' 
-    line: '    <gui enabled="true" tls="true" debugging="false">'
-    backrefs: yes
-  when: item.allow_external_web_access
-  loop: "{{ syncthing_cli_users }}"
-  notify: Restart Syncthing
-
 - name: Open firewall for syncthing
   ansible.posix.firewalld:
     ansible.builtin.service: syncthing
@@ -43,5 +8,13 @@
     permanent: true
     immediate: yes
   when: syncthing_cli_open_firewall
+
+- name: Load tasks for Linux distributions
+  ansible.builtin.include_tasks: linux/main.yml
+  when: ansible_distribution in linux_os_family
+
+- name: Load tasks for BSD distributions
+  ansible.builtin.include_tasks: bsd/main.yml
+  when: ansible_distribution in bsd_os_family
 
 # todo: configure ~/.config/syncthing/config.xml

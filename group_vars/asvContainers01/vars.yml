@@ -6,7 +6,7 @@ ansible_become_pass:        "{{ vault_ansible_become_pass }}"
 
 ssh_port: 2222
 ssh_users:
-  - name:       "{{ user_name }}"
+  - username:   "{{ user_name }}"
     public_key: "{{ ssh_public_key }}"
 
 apt:

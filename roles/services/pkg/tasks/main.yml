@@ -1,0 +1,23 @@
+---
+
+- name: Set package stage to install to Latest
+  ansible.builtin.replace:
+    path: /etc/pkg/FreeBSD.conf
+    regexp: 'quarterly'
+    replace: 'latest'
+
+- name: Upgrade all packages
+  community.general.pkgng:
+    name: "*"
+    state: latest
+
+- name: Add automatic package upgrade
+  ansible.builtin.cron:
+    name: pkg auto update
+    weekday: "5"
+    minute: "0"
+    hour: "8"
+    user: root
+    job: "env ASSUME_ALWAYS_YES=YES pkg upgrade"
+    cron_file: ansible_pkg_auto_update
+  when: pkg_enable_packages_auto_update == yes

@@ -9,7 +9,7 @@
   ansible.builtin.user:
     state:        present
     name:         "{{ item.username }}"
-    password:     "{{ user_syncthing_password_hashed }}"
+    password:     "{{ item.password_hashed }}"
     create_home:  yes
     shell:        "{{ item.shell }}"
     groups: 
@@ -18,8 +18,8 @@
   loop: "{{ users_create }}"
 
 - name: Append public key for SSH
-  authorized_key:
-    ansible.builtin.user: "{{ item.username }}"
+  ansible.posix.authorized_key:
+    user: "{{ item.username }}"
     state: present
     manage_dir: yes
     key: "{{ item.public_key }}"

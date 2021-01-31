@@ -1,0 +1,19 @@
+---
+
+- name: Check if user is already exist in proxmox
+  ansible.builtin.shell: "pveum user list | grep {{ user_to_create.username }}@pam"
+  register: proxmox_init_user_exist
+  ignore_errors: true
+
+- name: Add user to proxmox
+  ansible.builtin.command: "pveum user add {{ user_to_create.username }}@pam"
+  when: proxmox_init_user_exist is failed
+
+- name: Check if user has proxmox permission
+  ansible.builtin.shell: "pveum user permission {{ user_to_create.username }}@pam | grep '/'"
+  register: proxmox_init_user_permission_exist
+  ignore_errors: true
+
+- name: Set user to administrator
+  ansible.builtin.shell: "pveum aclmod / -user {{ user_to_create.username }}@pam -role Administrator"
+  when: proxmox_init_user_permission_exist is failed

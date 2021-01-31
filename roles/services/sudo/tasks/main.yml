@@ -1,22 +1,14 @@
 ---
 
-- name: Load tasks for install on Debian & derivate
-  ansible.builtin.include_tasks: debian/main.yml
-  when: ansible_distribution == "Debian" or ansible_distribution == "Ubuntu"
-
-- name: Load tasks for install on Archlinux
-  ansible.builtin.include_tasks: archlinux/main.yml
-  when: ansible_distribution == "Archlinux"
-
 - name: Create wheel group
   ansible.builtin.group:
     name: wheel
     state: present
 
-- name: Allow wheel group to sudo
-  ansible.builtin.template:
-    src: 10-grant-group-wheel-sudo.j2
-    dest: /etc/sudoers.d/10-grant-group-wheel-sudo
-    owner: root
-    group: root
-    mode: u+r,g+r,o-rwx
+- name: Load tasks for Linux distributions
+  ansible.builtin.include_tasks: linux/main.yml
+  when: ansible_distribution in linux_os_family
+
+- name: Load tasks for BSD distributions
+  ansible.builtin.include_tasks: bsd/main.yml
+  when: ansible_distribution in bsd_os_family

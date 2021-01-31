@@ -1,8 +1,8 @@
 ## {{ ansible_managed }}
 
 [Time]
-NTP={% for server in role_systemdTimedatectl_ntpServers %}{{ server }} {% endfor %} 
-FallbackNTP={% for server in role_systemdTimedatectl_ntpServers_fallback %}{{ server }} {% endfor %} 
+NTP={% for server in systemd_timesyncd_ntp_servers %}{{ server }} {% endfor %} 
+FallbackNTP={% for server in systemd_timesyncd_ntp_servers_fallback %}{{ server }} {% endfor %} 
 RootDistanceMaxSec=5
 PollIntervalMinSec=32
 PollIntervalMaxSec=2048

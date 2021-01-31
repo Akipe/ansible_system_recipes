@@ -1,0 +1,11 @@
+---
+
+- name: Load roles concerning asvSync01
+  hosts: asvSync01
+  become_user: root
+  become: yes
+  roles:
+    - { role: ansible-guest }
+    - { role: ssh}
+    - { role: pkg }
+    - { role: syncthing-cli }

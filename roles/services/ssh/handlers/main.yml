@@ -1,6 +1,13 @@
 ---
 
-- name: Restart SSH server
+- name: Restart SSH server with Linux
   ansible.builtin.systemd:
     name: sshd.service
     state: restarted
+  when: ansible_distribution in linux_os_family
+
+- name: Restart SSH server with BSD
+  ansible.builtin.service:
+    name: sshd.service
+    state: restarted
+  when: ansible_distribution in bsd_os_family

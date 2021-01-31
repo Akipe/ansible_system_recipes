@@ -11,7 +11,7 @@
     create_home: yes
 
 - name: Set public key for SSH
-  authorized_key:
+  ansible.posix.authorized_key:
     state: present
     user: "{{ user_api_terraform_username }}"
     key: "{{ user_api_terraform_publickey }}"

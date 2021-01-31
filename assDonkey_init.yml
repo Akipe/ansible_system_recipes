@@ -1,0 +1,11 @@
+---
+
+- name: Load roles concerning assDonkey
+  hosts: assDonkey
+  roles:
+    ### Base
+    - { role: ansible-guest, tags: ansible-guest }
+    - { role: user, tags: user }
+    - { role: proxmox, tags: proxmox }
+    - { role: sudo, tags: sudo }
+    - { role: ssh, tags: ssh }

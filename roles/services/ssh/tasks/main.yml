@@ -1,18 +1,7 @@
 ---
+
 # https://infosec.mozilla.org/guidelines/openssh
 # https://www.cyberciti.biz/tips/linux-unix-bsd-openssh-server-best-practices.html
-
-- name: Load tasks for Debian & derivate
-  ansible.builtin.include_tasks: debian/main.yml
-  when: ansible_distribution == "Debian" or ansible_distribution == "Ubuntu"
-
-- name: Load tasks for Fedora
-  ansible.builtin.include_tasks: fedora/main.yml
-  when: ansible_distribution == "Fedora"
-
-- name: Load tasks for Archlinux
-  ansible.builtin.include_tasks: archlinux/main.yml
-  when: ansible_distribution == "Archlinux"
 
 - name: Open firewall for sshd 
   ansible.posix.firewalld:
@@ -67,30 +56,15 @@
 
 - name: Set public key for SSH
   ansible.posix.authorized_key:
-    state: present
-    ansible.builtin.user: "{{ item.name }}"
-    key: "{{ item.public_key }}"
+    state:  present
+    user:   "{{ item.username }}"
+    key:    "{{ item.public_key }}"
   with_items: "{{ ssh_users }}"
 
-- name: Add config for SSH server
-  ansible.builtin.template:
-    src: ssh/sshd_config.j2
-    dest: /etc/ssh/sshd_config
-    owner: root
-    group: root
-    mode: u+rw,g+r,o+r
-    validate: '/usr/sbin/sshd -t -f %s'
-  notify: Restart SSH server
+- name: Load tasks for Linux distributions
+  ansible.builtin.include_tasks: linux/main.yml
+  when: ansible_distribution in linux_os_family
 
-- name: set file permissions
-  ansible.builtin.file:
-    path: /etc/ssh
-    owner: root
-    group: root
-    mode: 0755
-
-- name: Start and enable SSH server
-  ansible.builtin.systemd:
-    name: sshd.service
-    enabled: yes
-    state: started
+- name: Load tasks for BSD distributions
+  ansible.builtin.include_tasks: bsd/main.yml
+  when: ansible_distribution in bsd_os_family

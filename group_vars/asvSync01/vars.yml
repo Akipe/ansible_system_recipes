@@ -1,61 +1,25 @@
 ---
 
-ansible_python_interpreter: /usr/bin/python3
-ansible_user:               "{{ user_name }}"
-ansible_become_pass:        "{{ vault_ansible_become_pass }}"
+ansible_python_interpreter: /usr/local/bin/python3.7
+
+asvsync01_ansible_user:       "{{ vault_asvsync01_ansible_user }}"
+asvsync01_ansible_user_pass:  "{{ vault_asvsync01_ansible_user_pass }}"
+
+ansible_user:               "{{ asvsync01_ansible_user }}"
+ansible_become_pass:        "{{ asvsync01_ansible_user_pass }}"
+
+ansible_ssh_pass:           "{{ asvsync01_ansible_user_pass }}"
+ssh_pass:                   "{{ asvsync01_ansible_user_pass }}"
 
 hostname_name: asvsync01
 
-personal_user_password_hashed:  "{{ vault_personal_user_password_hashed }}"
-user_syncthing_name:            "{{ vault_user_syncthing_name }}"
-user_syncthing_password_hashed: "{{ vault_user_syncthing_password_hashed }}"
-
-users_create:
-  - username:         "{{ personal_user_name }}"
-    password_hashed:  "{{ personal_user_password_hashed }}"
-    shell:            /bin/bash
-    groups:           users,wheel
-    public_key:       "{{ ssh_public_key }}"
-  - username:         "{{ user_syncthing_name }}"
-    password_hashed:  "{{ user_syncthing_password_hashed }}"
-    shell:            /bin/bash
-    groups:           users
-    public_key:       "{{ ssh_public_key }}"
-
-bash_users:
-  - username: root
-  - username: "{{ personal_user_name }}"
-  - username: "{{ user_syncthing_name }}"
-
-ssh_firewall_firewalld: no
+ssh_port: 22
 ssh_users:
-  - name:       syncthing
+  - username:   "{{ ansible_user }}"
     public_key: "{{ ssh_public_key }}"
-  - name:       "{{ user_name }}"
-    public_key: "{{ ssh_public_key }}"
-
-locale_is_gui: no
-
-apt:
-  unattended_origins_patterns:
-  - 'origin=Debian,codename=${distro_codename}-updates'
-  - 'origin=Debian,codename=${distro_codename}-proposed-updates'
-  - 'origin=Debian,codename=${distro_codename},label=Debian'
-  - 'origin=Debian,codename=${distro_codename},label=Debian-Security'
-  - 'origin=Debian,archive=stable'
-  - 'origin=Debian,archive=stable-updates'
-  - 'origin=Debian,archive=proposed-updates'
-  - 'origin=apt.syncthing.net'
-
-locale_keyboard_map: fr
-
-bash_configuration_mode: debian
-
-nfs_client_fstab_mounts:
-  - address_path:     "{{ adress_akpnet_akpserver01 }}:/mnt/assVolumePool01/aspAkpData/sync"
-    destination_path: /srv
-    options:          defaults
 
 syncthing_cli_users:
-  - username:                 syncthing
+  - username:                 "{{ ansible_user }}"
     allow_external_web_access: yes
+
+pkg_enable_packages_auto_update: yes

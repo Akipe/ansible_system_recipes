@@ -9,12 +9,15 @@
     - { role: ansible-guest, tags: ansible-guest }
     - { role: ssh, tags: ssh }
     ### System
+    - { role: user, tags: user }
+    - { role: sudo, tags: sudo }
     - { role: apt, tags: apt }
     - { role: linux-kernel, tags: linux-kernel }
     - { role: irqbalance, tags: irqbalance }
     - { role: tpm2, tags: tpm2 }
     - { role: rngd, tags: rngd }
     - { role: systemd-journald, tags: systemd-journald }
+    - { role: systemd-timesyncd, tags: systemd-timesyncd }
     - { role: ipmitool, tags: ipmitool }
     - { role: nut, tags: nut }
     # - { role: locale, tags: locale } # todo: do it
@@ -41,4 +44,4 @@
     - { role: dmidecode, tags: dmidecode }
     - { role: neofetch, tags: neofetch }
     ### Specifics rules
-    - { role: assDonkey, tags: assDonkey }
+    # - { role: assdonkey, tags: assdonkey }

@@ -1,11 +1,11 @@
 ---
 
-#ssh_firewall_firewalld: no
+ssh_firewall_firewalld: no
 
 ssh_port: 22
 ssh_keys_rsa_size: 4096
 ssh_keys_ecdsa_size: 521
 
 # ssh_users:
-#   - name: an_user
+#   - username: an_user
 #     public_key: ...

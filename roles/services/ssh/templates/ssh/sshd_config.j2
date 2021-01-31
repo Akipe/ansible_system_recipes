@@ -4,7 +4,7 @@ Protocol 2
 Port {{ ssh_port }}
 {% if ssh_users is defined %}
 
-AllowUsers {% for user in ssh_users %}{{ user.name }} {% endfor %}
+AllowUsers {% for user in ssh_users %}{{ user.username }} {% endfor %}
 
 {% endif %}
 

@@ -1,0 +1,6 @@
+---
+
+- name: Installation
+  community.general.pkgng:
+    state: present
+    name: sudo

@@ -1,22 +1,26 @@
 ---
 
-ansible_python_interpreter: /usr/bin/python3
-ansible_user:               "{{ user_name }}"
-ansible_become_pass:        "{{ vault_ansible_become_pass }}"
+ansible_python_interpreter:   /usr/bin/python3
+
+# init vars is for post-installing proxmox
+# normal vars is for connection with normal user
+normal_ansible_user:          "{{ vault_normal_ansible_user }}"
+normal_ansible_become_pass:   "{{ vault_normal_ansible_become_pass }}"
+init_ansible_user:            "{{ vault_init_ansible_user }}"
+init_ansible_ssh_pass:        "{{ vault_init_ansible_ssh_pass }}"
+
+personal_user_name:             "{{ vault_personal_user_name }}"
+personal_user_password_hashed:  "{{ vault_personal_user_password_hashed }}"
 
 users_create:
   - username:         "{{ personal_user_name }}"
-    password_hashed:  "{{ vault_personal_user_password_hashed }}"
+    password_hashed:  "{{ personal_user_password_hashed }}"
     shell:            /bin/bash
     groups:           users,wheel
     public_key:       "{{ ssh_public_key }}"
 
-user_api_terraform_username:  "{{ vault_user_api_terraform_username }}"
-user_api_terraform_password:  "{{ vault_user_api_terraform_password }}"
-user_api_terraform_publickey: "{{ ssh_public_key }}"
-
-terraform_openstack_image_storage_path:   /mnt/pve/srv01-iso/template/iso
-terraform_openstack_image_url_archlinux:  https://linuximages.de/openstack/arch/arch-openstack-LATEST-image-bootstrap.qcow2
+proxmox_users: 
+  - username:         "{{ personal_user_name }}"
 
 ssh_firewall_firewalld: no
 
@@ -52,9 +56,7 @@ lxc_asvSync01_net1_macaddress:     "{{ asvSync01_hardware_network_net1_mac }}"
 
 ssh_port: 22
 ssh_users:
-  - name:       "{{ user_name }}"
-    public_key: "{{ ssh_public_key }}"
-  - name:       "{{ user_api_terraform_username }}"
+  - username:   "{{ personal_user_name }}"
     public_key: "{{ ssh_public_key }}"
 
 bash_configuration_mode: proxmox

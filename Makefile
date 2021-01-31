@@ -14,14 +14,18 @@ prepare_log_directory:
 	mkdir ./log
 
 run:
-	ansible-playbook ./playbooks/$(NODE).yml
+	ansible-playbook $(NODE).yml
 
 run-init:
-	ansible-playbook ./playbooks/$(NODE)_init.yml \
+	ansible-playbook $(NODE)_init.yml \
 		--inventory inventory_init.ini
+		# --extra-vars "@./group_vars/all/vars.yml" \
+		# --extra-vars "@./group_vars/all/vault.yml" \
+		# --extra-vars "@./group_vars/$(NODE)/vars.yml" \
+		# --extra-vars "@./group_vars/$(NODE)/vault.yml"
 
 run-local:
-	ansible-playbook ./playbooks/$(NODE).yml \
+	ansible-playbook $(NODE).yml \
 		--connection=local \
 		--inventory $(NODE), \
 		--extra-vars "@./group_vars/all/vars.yml" \
@@ -30,7 +34,7 @@ run-local:
 		--extra-vars "@./group_vars/$(NODE)/vault.yml"
 
 run-direct:
-	ansible-playbook ./playbooks/$(PLAYBOOK).yml \
+	ansible-playbook $(PLAYBOOK).yml \
 		--connection "ssh" \
 		--user "root" \
 		--ask-pass \
@@ -42,10 +46,10 @@ run-direct:
 		--extra-vars "@./group_vars/$(PLAYBOOK)/vault.yml"
 
 run-debug:
-	ansible-playbook ./playbooks/$(NODE).yml -vvv
+	ansible-playbook $(NODE).yml -vvv
 
 run-check:
-	ansible-playbook ./playbooks/$(NODE).yml --check --diff
+	ansible-playbook $(NODE).yml --check --diff
 
 get-info:
 	ansible $(NODE) -m setup

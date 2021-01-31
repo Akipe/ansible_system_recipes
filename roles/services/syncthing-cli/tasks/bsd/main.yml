@@ -1,0 +1,43 @@
+---
+
+- name: Installation
+  community.general.pkgng:
+    name: syncthing
+    state: present
+
+- name: Enable to config
+  ansible.builtin.lineinfile:
+    path: /etc/rc.conf
+    regexp: '^syncthing_enable='
+    line: 'syncthing_enable="YES"'
+
+- name: Create default folder for storage
+  ansible.builtin.file:
+    path:   /Sync
+    state:  directory
+    owner:  syncthing
+    group:  syncthing
+    mode:   u+rwx,g+rwx,o-rwx
+
+- name: Start
+  ansible.builtin.service:
+    name: syncthing
+    state: started
+
+- name: Allow external web access
+  ansible.builtin.replace: 
+    path:     "/usr/local/etc/syncthing/config.xml"
+    regexp:   '<address>127.0.0.1:8384</address>'
+    replace:  '<address>0.0.0.0:8384</address>'
+  when: item.allow_external_web_access
+  loop: "{{ syncthing_cli_users }}"
+  notify: Restart Syncthing with BSD
+
+- name: Set ssl for external web access
+  ansible.builtin.replace: 
+    path:     "/usr/local/etc/syncthing/config.xml"
+    regexp:   '<gui enabled="true" tls="false" debugging="false">'
+    replace:  '<gui enabled="true" tls="true" debugging="false">'
+  when: item.allow_external_web_access
+  loop: "{{ syncthing_cli_users }}"
+  notify: Restart Syncthing with BSD

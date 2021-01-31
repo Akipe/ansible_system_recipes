@@ -9,7 +9,7 @@ ansible_become_pass:        "{{ vault_ansible_become_pass }}"
 hostname_name: asltabstrong
 
 ssh_users:
-  - name:       "{{ user_name }}"
+  - username:   "{{ user_name }}"
     public_key: "{{ ssh_public_key }}"
 
 users_create:
