@@ -1,0 +1,20 @@
+---
+
+root_password:  "{{ vault_root_password }}"
+
+user_username:        "{{ vault_user_username }}"
+user_password:        "{{ vault_user_password }}"
+user_password_hashed: "{{ vault_user_password_hashed }}"
+
+users_create:
+  - username:         "{{ user_username }}"
+    password_hashed:  "{{ user_password_hashed }}"
+    shell:            /bin/bash
+    groups:           users,wheel
+    public_key:       "{{ ssh_public_key }}"
+
+ssh_port: 22
+ssh_firewall_firewalld: no
+ssh_users:
+  - username:   "{{ user_username }}"
+    public_key: "{{ ssh_public_key }}"

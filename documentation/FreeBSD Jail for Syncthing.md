@@ -28,8 +28,5 @@ service sshd start
 
 ## Prepare jail for Ansible
 ```
-pkg install python37 sudo
-visudo
-# Uncomment the line:
-# %wheel ALL=(ALL) ALL
+pkg install python37
 ```

@@ -1,0 +1,11 @@
+---
+
+- name: Load roles for initialize asvNetworkController
+  hosts: asvNetworkController
+  vars:
+    ansible_user: root
+  roles:
+    - { role: ansible-guest, }
+    - { role: user, tags: user }
+    - { role: ssh, }
+    - { role: sudo, }

@@ -47,6 +47,7 @@
       - proxmox-ve
       - open-iscsi
       - ksm-control-daemon
+      - ifupdown2
     state: present
 
 - name: Install dependencies for Ansible

@@ -19,14 +19,13 @@ users_create:
     groups:           users,wheel
     public_key:       "{{ ssh_public_key }}"
 
-proxmox_users: 
+proxmox_users:
   - username:         "{{ personal_user_name }}"
 
-ssh_firewall_firewalld: no
-
-vm_commons_archlinux_iso_path:          local:iso/archlinux-2020.12.01-x86_64.iso
-lxc_commons_ubuntu_2004_template_path:  local:vztmpl/ubuntu-20.04-standard_20.04-1_amd64.tar.gz
-lxc_commons_debian_10_template_path:    local:vztmpl/debian-10-standard_10.7-1_amd64.tar.gz
+vm_commons_archlinux_iso_path:  local:iso/archlinux-2020.12.01-x86_64.iso
+lxc_template_ubuntu_1804_path:  squirrel-templates:vztmpl/ubuntu-18.04-standard_18.04.1-1_amd64.tar.gz
+lxc_template_ubuntu_2004_path:  squirrel-templates:vztmpl/ubuntu-20.04-standard_20.04-1_amd64.tar.gz
+lxc_template_debian_10_path:    squirrel-templates:vztmpl/debian-10-standard_10.7-1_amd64.tar.gz
 
 nut_mode:                                   netclient
 nut_monitor_connect_ups_name:               ups
@@ -52,9 +51,19 @@ lxc_asvSync01_cpu_cores:           "2"
 lxc_asvSync01_cpu_units:           "1024"
 lxc_asvSync01_memory:              "512"
 lxc_asvSync01_net0_macaddress:     "{{ asvSync01_hardware_network_net0_mac }}"
-lxc_asvSync01_net1_macaddress:     "{{ asvSync01_hardware_network_net1_mac }}"
+
+lxc_asvNetworkController:
+  name:                 asvNetworkController
+  id:                   "2000"
+  disk_system_size_gb:  "20"
+  cpu_cores:            "4"
+  cpu_units:            "1024"
+  memory:               "2046"
+  net0_macaddress:      "{{ vault_lxc_asvnetworkcontroller_hardware_network_net0_mac }}"
+  root_password:        "{{ vault_lxc_asvnetworkcontroller_root_password }}"
 
 ssh_port: 22
+ssh_firewall_firewalld: no
 ssh_users:
   - username:   "{{ personal_user_name }}"
     public_key: "{{ ssh_public_key }}"

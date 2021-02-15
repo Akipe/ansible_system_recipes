@@ -19,10 +19,6 @@ run:
 run-init:
 	ansible-playbook $(NODE)_init.yml \
 		--inventory inventory_init.ini
-		# --extra-vars "@./group_vars/all/vars.yml" \
-		# --extra-vars "@./group_vars/all/vault.yml" \
-		# --extra-vars "@./group_vars/$(NODE)/vars.yml" \
-		# --extra-vars "@./group_vars/$(NODE)/vault.yml"
 
 run-local:
 	ansible-playbook $(NODE).yml \

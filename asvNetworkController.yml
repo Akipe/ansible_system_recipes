@@ -1,0 +1,19 @@
+---
+
+- name: Load roles concerning asvNetworkController
+  hosts: asvNetworkController
+  become: yes
+  become_method: su
+  become_user: root
+  vars:
+    ansible_user: "{{ user_username }}"
+    ansible_become_pass: "{{ root_password }}"
+  roles:
+    ### Base
+    - { role: ansible-guest }
+    - { role: user, tags: user }
+    - { role: ssh }
+    ### System
+    - { role: apt }
+    - { role: sudo, tags: sudo }
+    - { role: unifi-controller, tags: unifi-controller }

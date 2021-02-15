@@ -6,5 +6,5 @@
 - name: Load task for creating all LXC containers
   ansible.builtin.include_tasks: create_lxc/main.yml
 
-- name: Load task for creating all VMs
-  ansible.builtin.include_tasks: create_vm/main.yml
+# - name: Load task for creating all VMs
+#   ansible.builtin.include_tasks: create_vm/main.yml

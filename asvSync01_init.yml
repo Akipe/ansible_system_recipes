@@ -2,11 +2,13 @@
 
 - name: Load roles for initialize asvSync01
   hosts: asvSync01
-  become_user: root
   become: yes
+  become_method: su
+  become_user: root
   vars:
-    ansible_user: root
+    ansible_user: "{{ login_username }}"
+    ansible_ssh_pass: "{{ login_password }}"
+    ansible_become_pass: "{{ root_password }}"
   roles:
-    - { role: ansible-guest,  vars: { ansible_user: root} }
-    - { role: ssh,            vars: { ansible_user: root} }
-    - { role: sudo,           vars: { ansible_user: root} }
+    - { role: ansible-guest }
+    - { role: ssh }

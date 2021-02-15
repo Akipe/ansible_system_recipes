@@ -8,6 +8,6 @@
 
 - name: Restart SSH server with BSD
   ansible.builtin.service:
-    name: sshd.service
+    name: sshd
     state: restarted
   when: ansible_distribution in bsd_os_family

@@ -1,0 +1,45 @@
+---
+
+# - name: Create asvsync01 as LXC container
+#   community.general.proxmox:
+#     proxmox_default_behavior: no_defaults
+#     vmid:         "{{ vm_asvsync01_id }}"
+#     api_user:     "{{ user_api_terraform_username }}"
+#     api_password: '6}.[sy`FHW-1X^CMXOyT2iQ+f5'
+#     api_host:     assDonkey
+#     node:         assDonkey
+#     hostname:     "{{ vm_asvsync01_name }}"
+#     password:     "Y3pwRkDccMQ*U3~c3s9I4Qu-oE"
+#     pubkey:       "{{ ssh_public_key }}"
+#     cpus:         1
+#     cores:        "{{ vm_asvsync01_cpu_cores }}"
+#     memory:       "{{ vm_asvsync01_memory }}"
+#     swap:         "{{ vm_asvsync01_memory }}"
+#     storage:      local
+#     disk:         "{{ vm_asvsync01_disk_system_size }}"
+#     netif: '{ "net0" : "name=eth0,hwaddr={{ vm_asvsync01_net0_macaddress }},ip=dhcp,ip6=dhcp,bridge=vmbr0,mtu=9000", "net1" : "name=eth1,hwaddr={{ vm_asvsync01_net1_macaddress }},ip=dhcp,ip6=dhcp,bridge=vmbr1,mtu=9000" }'
+#     ostemplate:   'local:vztmpl/ubuntu-20.04-x86_64.tar.gz'
+#     unprivileged: yes
+#     onboot:       yes
+#     state:        present
+
+- name: Create asvsync01 as LXC container
+  ansible.builtin.shell: |
+    pct create {{ lxc_asvNetworkController.id }} {{ lxc_template_ubuntu_1804_path }} \
+      --arch            amd64 \
+      --hostname        {{ lxc_asvNetworkController.name }} \
+      --cores           {{ lxc_asvNetworkController.cpu_cores }} \
+      --cpuunits        {{ lxc_asvNetworkController.cpu_units }} \
+      --memory          {{ lxc_asvNetworkController.memory }} \
+      --swap            {{ lxc_asvNetworkController.memory }} \
+      --rootfs          local-lvm:{{ lxc_asvNetworkController.disk_system_size_gb }} \
+      --net0            name=eth0,hwaddr={{ lxc_asvNetworkController.net0_macaddress }},bridge=vmbr0,ip=dhcp,firewall=1 \
+      --onboot          1 \
+      --password        {{ lxc_asvNetworkController.root_password }} \
+      --ssh-public-keys /etc/pub_keys/akpkey.ssh.pub
+
+# - name: Set apparmor rule for allowing NFS mount
+#   ansible.builtin.lineinfile:
+#     dest: "/etc/pve/lxc/{{ lxc_asvsync01_id }}.conf"
+#     line: "lxc.apparmor.profile: lxc-container-default-with-nfs"
+#   notify: Restart asvsync01

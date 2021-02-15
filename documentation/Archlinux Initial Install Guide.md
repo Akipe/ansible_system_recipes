@@ -344,7 +344,7 @@ echo "%wheel ALL=(ALL) ALL" > /etc/sudoers.d/10-grant-group-wheel-sudo
 
 ```
 sed -i 's/MODULES=()/MODULES=(dm_mod dm_crypt ext4 vfat sha256 sha512 crc32c-intel)/g' /etc/mkinitcpio.conf && \
-sed -i 's/HOOKS=(base udev autodetect modconf block filesystems keyboard fsck)/HOOKS=(base systemd autodetect keyboard sd-vconsole modconf block sd-encrypt sd-lvm2 filesystems fsck)/g' /etc/mkinitcpio.conf && \
+sed -i 's/HOOKS=(base udev autodetect modconf block filesystems keyboard fsck)/HOOKS=(base systemd autodetect keyboard sd-vconsole modconf block sd-encrypt lvm2 filesystems fsck)/g' /etc/mkinitcpio.conf && \
 sed -i 's/#COMPRESSION="lz4"/COMPRESSION="lz4"/g' /etc/mkinitcpio.conf && \
 less /etc/mkinitcpio.conf && \
 mkinitcpio -P

@@ -1,4 +1,10 @@
 ---
 
-- name: Load task for prepare asvsync01
-  ansible.builtin.include_tasks: asvsync01.yml
+- name: Check if asvNetworkController exist
+  ansible.builtin.shell: "pct status {{ asvnetworkcontroller_id }} | grep 'status'"
+  register: asvnetworkcontroller_not_exist
+  ignore_errors: true
+
+- name: Load task for create asvNetworkController
+  ansible.builtin.include_tasks: asvnetworkcontroller.yml
+  when: asvnetworkcontroller_not_exist is failed

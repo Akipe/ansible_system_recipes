@@ -1,19 +1,28 @@
 ---
 
-- name: "Add apt key"
+- name: "Add apt key from file"
   ansible.builtin.apt_key:
     id: "{{ item.key.id }}"
     url: "{{ item.key.url }}"
     state: present
   notify: Update APT cache
-  when: item.key is defined
+  when: item.key.url is defined
+  with_items: "{{ add_repository }}"
+
+- name: "Add apt key from keyserver"
+  ansible.builtin.apt_key:
+    id: "{{ item.key.id }}"
+    keyserver: "{{ item.key.keyserver }}"
+    state: present
+  notify: Update APT cache
+  when: item.key.keyserver is defined
   with_items: "{{ add_repository }}"
 
 - name: "Verify repository key"
   ansible.builtin.apt_key:
     id: "{{ item.key.id }}"
     state: present
-  when: item.key is defined
+  when: item.key.url is defined
   with_items: "{{ add_repository }}"
 
 - name: "Add repository config"

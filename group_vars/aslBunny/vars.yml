@@ -86,8 +86,7 @@ mkinitcpio_initramfs_hooks:
   - block
   # - encrypt
   - sd-encrypt
-  # - lvm2
-  - sd-lvm2
+  - lvm2
   - filesystems
   # - resume
   - fsck

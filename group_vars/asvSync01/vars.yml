@@ -2,14 +2,9 @@
 
 ansible_python_interpreter: /usr/local/bin/python3.7
 
-asvsync01_ansible_user:       "{{ vault_asvsync01_ansible_user }}"
-asvsync01_ansible_user_pass:  "{{ vault_asvsync01_ansible_user_pass }}"
-
-ansible_user:               "{{ asvsync01_ansible_user }}"
-ansible_become_pass:        "{{ asvsync01_ansible_user_pass }}"
-
-ansible_ssh_pass:           "{{ asvsync01_ansible_user_pass }}"
-ssh_pass:                   "{{ asvsync01_ansible_user_pass }}"
+login_username: "{{ vault_asvsync01_ansible_user }}"
+login_password: "{{ vault_asvsync01_ansible_user_pass }}"
+root_password:  "{{ vault_root_password }}"
 
 hostname_name: asvsync01
 

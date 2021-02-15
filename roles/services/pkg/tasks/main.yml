@@ -20,4 +20,4 @@
     user: root
     job: "env ASSUME_ALWAYS_YES=YES pkg upgrade"
     cron_file: ansible_pkg_auto_update
-  when: pkg_enable_packages_auto_update == yes
+  when: pkg_enable_packages_auto_update

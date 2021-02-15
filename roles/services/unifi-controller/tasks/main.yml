@@ -1,0 +1,33 @@
+---
+
+- name: Add official Unifi controller repository
+  ansible.builtin.include_role:
+    name: apt
+    tasks_from: add_repository
+  vars:
+    add_repository:
+      - key:
+          id:         06E85760C0A52C50
+          keyserver:  keyserver.ubuntu.com
+        repository:
+          repo:     "deb https://www.ui.com/downloads/unifi/debian stable ubiquiti"
+          filename: "ubnt-unifi"
+
+- name: Add official MongoDB 3.4 repository
+  ansible.builtin.include_role:
+    name: apt
+    tasks_from: add_repository
+  vars:
+    add_repository:
+      - key:
+          id:         0C49F3730359A14518585931BC711F9BA15703C6
+          keyserver:  https://www.mongodb.org/static/pgp/server-3.4.asc
+        repository:
+          repo:     "deb https://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/3.4 multiverse"
+          filename: "mongodb-3.4"
+
+- name: Installation
+  ansible.builtin.apt:
+    state: present
+    name:
+      - unifi

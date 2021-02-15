@@ -44,4 +44,4 @@
     - { role: dmidecode, tags: dmidecode }
     - { role: neofetch, tags: neofetch }
     ### Specifics rules
-    # - { role: assdonkey, tags: assdonkey }
+    - { role: assdonkey, tags: assdonkey }
