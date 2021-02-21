@@ -22,23 +22,25 @@
     name:
       - bluez-firmware
 
-- name: Audio bluetooth
-  community.general.pacman:
-    state: present
-    name:
-      - pulseaudio-alsa
-      # - pulseaudio-bluetooth # Replace with pulseaudio-modules-bt-git
+# Replace with Pipewire
+# - name: Audio bluetooth
+#   community.general.pacman:
+#     state: present
+#     name:
+#       - pulseaudio-alsa
+#       # - pulseaudio-bluetooth # Replace with pulseaudio-modules-bt-git
 
-- name: Audio bluetooth (AUR)
-  become: yes
-  become_user: ansible_aur
-  aur:
-    use: yay
-    state: present
-    aur_only: yes
-    name:
-      - pulseaudio-modules-bt-git
-      - libldac
+# Replace with Pipewire
+# - name: Audio bluetooth (AUR)
+#   become: yes
+#   become_user: ansible_aur
+#   aur:
+#     use: yay
+#     state: present
+#     aur_only: yes
+#     name:
+#       - pulseaudio-modules-bt-git
+#       - libldac
 
 - name: Adding user to audit group to get notification
   ansible.builtin.user:

@@ -48,7 +48,7 @@
     - { role: libinput, tags: libinput }
     - { role: watchdog, vars: { watchdog_activate: no}, tags: watchdog }
     - { role: android-client, tags: android-client }
-    - { role: alsa, tags: alsa }
+    - { role: pipewire, tags: pipewire }
     - { role: lm_sensors, tags: lm_sensors }
     # - { role: bluetooth, tags: bluetooth }
     ### Desktop environment

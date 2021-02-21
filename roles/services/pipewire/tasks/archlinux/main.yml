@@ -1,0 +1,19 @@
+---
+
+- name: Installation
+  community.general.pacman:
+    state: present
+    name:
+      - pipewire
+
+- name: Installation of dependencies
+  community.general.pacman:
+    state: present
+    name:
+      - pipewire-pulse
+      - pipewire-alsa
+      - alsa-plugins
+      - alsa-firmware
+      - pipewire-jack
+      - gst-plugin-pipewire
+    extra_args: --asdeps
