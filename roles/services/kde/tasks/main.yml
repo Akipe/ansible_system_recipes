@@ -9,8 +9,16 @@
     path:   "/home/{{ user_name }}/Images/Wallpapers/"
     state:  directory
     owner:  "{{ user_name }}"
-    ansible.builtin.group:  "{{ user_name }}"
+    group:  "{{ user_name }}"
     mode:   u=rwx,g=rx,o=rx
+
+- name: Copy wallpapers to the system
+  ansible.builtin.copy:
+    src:    wallpapers/wallpapers-hires
+    dest:   "/home/{{ user_name }}/Images/Wallpapers/"
+    owner:  "{{ user_name }}"
+    group:  "{{ user_name }}"
+    mode:   u=rw,g=r,o=r
 
 - name: Include firewall tasks
   ansible.builtin.include_tasks: firewall.yml
