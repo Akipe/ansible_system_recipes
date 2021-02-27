@@ -4,6 +4,11 @@
   ansible.builtin.include_tasks: archlinux_common/main.yml
   when: ansible_distribution == "Archlinux"
 
+- name: Create wireshark group
+  ansible.builtin.group:
+    name: wireshark
+    state: present
+
 - name: Add wireshark group to users
   ansible.builtin.user:
     name: "{{ item.username }}"
