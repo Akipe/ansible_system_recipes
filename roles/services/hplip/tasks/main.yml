@@ -37,7 +37,7 @@
 
 - name: Enable and start CUPS service
   ansible.builtin.systemd:
-    name: org.cups.cupsd.service
+    name: cups.service
     enabled: yes
     state: started
 
