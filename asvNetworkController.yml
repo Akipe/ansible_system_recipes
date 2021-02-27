@@ -8,9 +8,13 @@
   vars:
     ansible_user: "{{ user_username }}"
     ansible_become_pass: "{{ root_password }}"
+  pre_tasks:
+    - ansible.builtin.include_role:
+        name: ansible-guest
+      tags:
+        - always
   roles:
     ### Base
-    - { role: ansible-guest }
     - { role: user, tags: user }
     - { role: ssh }
     ### System

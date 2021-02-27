@@ -9,6 +9,10 @@
     ansible_user: "{{ login_username }}"
     ansible_ssh_pass: "{{ login_password }}"
     ansible_become_pass: "{{ root_password }}"
+  pre_tasks:
+    - ansible.builtin.include_role:
+        name: ansible-guest
+      tags:
+        - always
   roles:
-    - { role: ansible-guest }
     - { role: ssh }

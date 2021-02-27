@@ -3,9 +3,13 @@
   hosts: asvContainers01
   become_user: root
   become: yes
+  pre_tasks:
+    - ansible.builtin.include_role:
+        name: ansible-guest
+      tags:
+        - always
   roles:
     ### Base
-    - { role: ansible-guest }
     - { role: ssh }
     - { role: qemu-guest }
     ### System

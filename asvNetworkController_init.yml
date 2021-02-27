@@ -4,8 +4,12 @@
   hosts: asvNetworkController
   vars:
     ansible_user: root
+  pre_tasks:
+    - ansible.builtin.include_role:
+        name: ansible-guest
+      tags:
+        - always
   roles:
-    - { role: ansible-guest, }
     - { role: user, tags: user }
     - { role: ssh, }
     - { role: sudo, }

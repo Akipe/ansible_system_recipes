@@ -4,16 +4,18 @@
   hosts: asdBuild
   remote_user: root
   become: yes
-
-  # pre_tasks:
-  #   - ansible.builtin.include_role:
-  #       name: ansible-guest
-  #     tags:
-  #       - always
-
+  pre_tasks:
+    - ansible.builtin.include_role:
+        name: ansible-guest
+      tags:
+        - always
+  post_tasks:
+    - ansible.builtin.include_role:
+        name: aur-cli-clean
+      tags:
+        - always
   roles:
     ### Base
-    - { role: ansible-guest, tags: ansible-guest }
     - { role: ssh, tags: ssh }
     ### Package manager
     # - { role: dnf, tags: dnf }
@@ -133,8 +135,4 @@
     # - { role: base-cli, tags: base-cli }
     # - { role: user-dotnet-config, tags: user-dotnet-config }
 
-  post_tasks:
-    - ansible.builtin.include_role:
-        name: aur-cli-clean
-      tags:
-        - always
+

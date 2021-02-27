@@ -2,9 +2,13 @@
 
 - name: Load roles concerning assDonkey
   hosts: assDonkey
+  pre_tasks:
+    - ansible.builtin.include_role:
+        name: ansible-guest
+      tags:
+        - always
   roles:
     ### Base
-    - { role: ansible-guest, tags: ansible-guest }
     - { role: user, tags: user }
     - { role: proxmox, tags: proxmox }
     - { role: sudo, tags: sudo }

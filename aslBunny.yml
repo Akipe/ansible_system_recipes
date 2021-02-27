@@ -4,6 +4,11 @@
   hosts: aslBunny
   remote_user: root
   become: yes
+  pre_tasks:
+    - ansible.builtin.include_role:
+        name: ansible-guest
+      tags:
+        - always
   post_tasks:
     - ansible.builtin.include_role:
         name: aur-cli-clean
@@ -11,8 +16,6 @@
         - always
   roles:
     ### Base
-    - { role: ansible-guest, tags: ansible-guest }
-    - { role: firewalld, tags: firewalld }
     - { role: ssh, tags: ssh }
     ### Package manager
     - { role: makepkg, tags: makepkg }
@@ -100,5 +103,3 @@
     # - { role: base-cli, tags: base-cli }
     # - { role: user-dotnet-config, tags: user-dotnet-config }
     
-    ### Remove uncessary AUR builder user
-    - { role: aur-cli-clean, tags: aur-cli }

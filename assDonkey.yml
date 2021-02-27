@@ -4,9 +4,13 @@
   hosts: assDonkey
   become_user: root
   become: yes
+  pre_tasks:
+    - ansible.builtin.include_role:
+        name: ansible-guest
+      tags:
+        - always
   roles:
     ### Base
-    - { role: ansible-guest, tags: ansible-guest }
     - { role: ssh, tags: ssh }
     ### System
     - { role: user, tags: user }
