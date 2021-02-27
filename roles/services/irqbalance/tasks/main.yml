@@ -4,6 +4,7 @@
 - name: Installation (Ubuntu/Debian)
   ansible.builtin.apt:
     update_cache: yes
+    cache_valid_time: "{{apt_unattended_cache_valid_time}}"
     name: irqbalance
     state: latest
   when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'

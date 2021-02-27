@@ -15,14 +15,17 @@
 
 - name: Install Docker CE
   ansible.builtin.apt:
-    name: "{{ role_appToInstall_debian }}"
-    state: present
     update_cache: yes
+    cache_valid_time: "{{apt_unattended_cache_valid_time}}"
+    state: present
+    name: "{{ role_appToInstall_debian }}"
 
 # - name: Install NDP Proxy Daemon
 #   ansible.builtin.apt:
-#     name: ndppd
+#     update_cache: yes
+#     cache_valid_time: "{{apt_unattended_cache_valid_time}}"
 #     state: present
+#     name: ndppd
 
 # - name: Configure NDP Proxy Daemon
 #   ansible.builtin.copy:

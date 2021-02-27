@@ -2,16 +2,16 @@
 
 - name: Update & upgrade systeme
   ansible.builtin.apt:
+    update_cache: yes
+    cache_valid_time: "{{apt_unattended_cache_valid_time}}"
     name: "*"
     state: latest
-    update_cache: yes
-    cache_valid_time: "{{ unattended_cache_valid_time }}"
 
 - name: Install dependencies for allow apt with HTTPS repository
   ansible.builtin.apt:
-    state: present
     update_cache: yes
-    cache_valid_time: "{{ unattended_cache_valid_time }}"
+    cache_valid_time: "{{apt_unattended_cache_valid_time}}"
+    state: present
     name: "{{ role_appToInstall_debian }}"
 
 - name: Load tasks for setting auto-update

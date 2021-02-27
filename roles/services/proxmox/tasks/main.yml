@@ -37,12 +37,16 @@
 
 - name: Remove unused Proxmox packages
   ansible.builtin.apt:
+    update_cache: yes
+    cache_valid_time: "{{apt_unattended_cache_valid_time}}"
     name:
       - os-prober
     state: absent
 
 - name: Install Proxmox VE and related packages
   ansible.builtin.apt:
+    update_cache: yes
+    cache_valid_time: "{{apt_unattended_cache_valid_time}}"
     name:
       - proxmox-ve
       - open-iscsi

@@ -1,6 +1,6 @@
 ---
 
-unattended_cache_valid_time: 3600
+apt_unattended_cache_valid_time: 3600
 
 bootloader_defaultEntry:  akpos-zen.conf
 

@@ -2,5 +2,7 @@
 
 - name: App usefull for Linux kernel
   ansible.builtin.apt:
+    update_cache: yes
+    cache_valid_time: "{{apt_unattended_cache_valid_time}}"
     state: present
     name: "{{ linux_kernel_apps_debian }}"

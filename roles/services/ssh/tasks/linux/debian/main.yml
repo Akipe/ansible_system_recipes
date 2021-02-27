@@ -2,5 +2,7 @@
 
 - name: Installation
   ansible.builtin.apt:
+    update_cache: yes
+    cache_valid_time: "{{apt_unattended_cache_valid_time}}"
     state: present
     name: "{{ ssh_appToInstall_debian }}"
