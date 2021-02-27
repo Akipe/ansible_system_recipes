@@ -4,17 +4,20 @@
   ansible.builtin.include_tasks: archlinux/main.yml
   when: ansible_distribution == "Archlinux"
 
-# - name: Enable SDDM at startup
-#   ansible.builtin.systemd:
-#     name: sddm.service
-#     enabled: yes
+- name: Enable SDDM at startup
+  ansible.builtin.systemd:
+    name: sddm.service
+    enabled: yes
+  when: not plymouth_is_enable
 
 - name: Disable SDDM at startup
   ansible.builtin.systemd:
     name: sddm.service
     enabled: no
+  when: plymouth_is_enable
 
 - name: Enable SDDM with Plymouth at startup
   ansible.builtin.systemd:
     name: sddm-plymouth.service
     enabled: yes
+  when: plymouth_is_enable
