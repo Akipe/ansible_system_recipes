@@ -43,7 +43,7 @@
 #     state:      present
 #   when: item.ipv4 and item.gw4 and item.ipv6 and item.gw6
 #   with_items:
-#     - '{{ networks }}'
+#     - '{{ create_networks }}'
 
 # - name: Configure network interfaces
 #   community.general.nmcli:
@@ -55,7 +55,7 @@
 #     state:      present
 #   when: not item.ipv4 and not item.gw4 and item.ipv6 and not item.gw6
 #   with_items:
-#     - '{{ networks }}'
+#     - '{{ create_networks }}'
 
 # - name: Configure network interfaces
 #   community.general.nmcli:
@@ -66,4 +66,4 @@
 #     state:      present
 #   when: not item.ipv4 and not item.gw4 and not item.ipv6 and not item.gw6
 #   with_items:
-#     - '{{ networks }}'
+#     - '{{ create_networks }}'

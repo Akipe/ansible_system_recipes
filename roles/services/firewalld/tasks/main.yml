@@ -19,5 +19,7 @@
     permanent:  yes
     state:      enabled
   with_items:
-    - '{{ networks }}'
-  when: networks is defined
+    - '{{ create_networks }}'
+  when:
+    create_networks is defined and create_networks != ""
+

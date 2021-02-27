@@ -44,7 +44,7 @@ refind_is_dual_boot_with_windows: yes
 
 bash_configuration_mode: archlinux
 
-networks:
+create_networks:
   - name:           akpnet
     conn_name:      my-enp7s0
     ifname:         enp7s0
