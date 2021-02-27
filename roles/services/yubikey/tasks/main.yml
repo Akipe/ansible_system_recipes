@@ -18,8 +18,8 @@
 - name: Add script for rotate with several Yubikey key for SSH
   ansible.builtin.template:
     src: yk_rotate.bash.j2
-    dest: "/home/{{ item.name }}/.local/bin/yk_rotate.bash"
-    owner: "{{ item.name }}"
-    group: "{{ item.name }}"
+    dest: "/home/{{ item.username }}/.local/bin/yk_rotate.bash"
+    owner: "{{ item.username }}"
+    group: "{{ item.username }}"
     mode: u+rwx,g+rx,o+rx
   loop: "{{ yubikey_list_users }}"
