@@ -7,3 +7,10 @@
 - name: Load tasks for install on Archlinux
   ansible.builtin.include_tasks: archlinux/main.yml
   when: ansible_distribution == "Archlinux"
+
+- name: Start and enable tcsd service
+  ansible.builtin.systemd:
+    name: tcsd.service
+    state: started
+    daemon_reload: yes
+    enabled: yes
