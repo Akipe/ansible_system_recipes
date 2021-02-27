@@ -1,13 +1,7 @@
 ---
 
-- name: Open firewall for syncthing
-  ansible.posix.firewalld:
-    ansible.builtin.service: syncthing
-    zone: home
-    state: enabled
-    permanent: true
-    immediate: yes
-  when: syncthing_cli_open_firewall
+- name: Include firewall tasks
+  ansible.builtin.include_tasks: firewall.yml
 
 - name: Load tasks for Linux distributions
   ansible.builtin.include_tasks: linux/main.yml

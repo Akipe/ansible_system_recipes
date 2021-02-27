@@ -27,13 +27,8 @@
     state: started
     enabled: yes
 
-- name: Open firewall for dhcpv6-client 
-  ansible.posix.firewalld:
-    ansible.builtin.service: dhcpv6-client
-    state: enabled
-    permanent: true
-    immediate: yes
-
+- name: Include firewall tasks
+  ansible.builtin.include_tasks: firewall.yml
 
 # - name: Configure network interfaces 
 #   community.general.nmcli:

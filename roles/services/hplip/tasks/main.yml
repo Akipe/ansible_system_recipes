@@ -50,18 +50,5 @@
       - sys
     append: yes
 
-- name: Open firewall for ipp
-  ansible.posix.firewalld:
-    ansible.builtin.service: ipp
-    zone: home
-    state: enabled
-    permanent: true
-    immediate: yes
-
-- name: Open firewall for ipp-client
-  ansible.posix.firewalld:
-    ansible.builtin.service: ipp-client
-    zone: home
-    state: enabled
-    permanent: true
-    immediate: yes
+- name: Include firewall tasks
+  ansible.builtin.include_tasks: firewall.yml

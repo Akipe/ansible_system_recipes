@@ -1,0 +1,10 @@
+---
+
+- name: Open firewall for kdeconnect
+  ansible.posix.firewalld:
+    service: kdeconnect
+    zone: home
+    state: enabled
+    permanent: true
+    immediate: yes
+  when: firewalld_is_enable

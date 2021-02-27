@@ -23,13 +23,8 @@
     group: root
     mode: u+rw,g+r,o+r
 
-- name: Open firewall for samba-client
-  ansible.posix.firewalld:
-    ansible.builtin.service: samba-client
-    zone: home
-    state: enabled
-    permanent: true
-    immediate: yes
+- name: Include firewall tasks
+  ansible.builtin.include_tasks: firewall.yml
 
 # - name: Activate winbind service for resolve host names
 #   become: true

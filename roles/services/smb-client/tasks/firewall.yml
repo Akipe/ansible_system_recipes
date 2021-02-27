@@ -1,0 +1,10 @@
+---
+
+- name: Open firewall for samba-client
+  ansible.posix.firewalld:
+    service: samba-client
+    zone: home
+    state: enabled
+    permanent: true
+    immediate: yes
+  when: firewalld_is_enable

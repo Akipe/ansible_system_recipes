@@ -1,0 +1,19 @@
+---
+
+- name: Open firewall for ipp
+  ansible.posix.firewalld:
+    service: ipp
+    zone: home
+    state: enabled
+    permanent: true
+    immediate: yes
+  when: firewalld_is_enable
+
+- name: Open firewall for ipp-client
+  ansible.posix.firewalld:
+    service: ipp-client
+    zone: home
+    state: enabled
+    permanent: true
+    immediate: yes
+  when: firewalld_is_enable

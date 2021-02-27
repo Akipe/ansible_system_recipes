@@ -1,0 +1,9 @@
+---
+
+- name: Open firewall for dhcpv6-client 
+  ansible.posix.firewalld:
+    service: dhcpv6-client
+    state: enabled
+    permanent: true
+    immediate: yes
+  when: firewalld_is_enable

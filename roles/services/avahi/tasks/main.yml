@@ -19,18 +19,5 @@
     enabled: yes
     state: started
 
-- name: Open firewall for sshd for home
-  ansible.posix.firewalld:
-    ansible.builtin.service: mdns
-    zone: home
-    state: enabled
-    permanent: true
-    immediate: yes
-
-- name: Allow firewall UDP 5353 for home
-  ansible.posix.firewalld:
-    port: 5353/udp
-    zone: home
-    state: enabled
-    permanent: true
-    immediate: yes
+- name: Include firewall tasks
+  ansible.builtin.include_tasks: firewall.yml

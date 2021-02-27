@@ -3,14 +3,8 @@
 # https://infosec.mozilla.org/guidelines/openssh
 # https://www.cyberciti.biz/tips/linux-unix-bsd-openssh-server-best-practices.html
 
-- name: Open firewall for sshd 
-  ansible.posix.firewalld:
-    ansible.builtin.service: ssh
-    zone: home
-    state: enabled
-    permanent: true
-    immediate: yes
-  when: ssh_firewall_firewalld
+- name: Include firewall tasks
+  ansible.builtin.include_tasks: firewall.yml
 
 - name: Check if SSH key have being regenerate
   ansible.builtin.stat:

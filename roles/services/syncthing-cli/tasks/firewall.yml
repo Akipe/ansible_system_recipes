@@ -1,0 +1,10 @@
+---
+
+- name: Open firewall for syncthing
+  ansible.posix.firewalld:
+    service: syncthing
+    zone: home
+    state: enabled
+    permanent: true
+    immediate: yes
+  when: syncthing_cli_open_firewall or firewalld_is_enable

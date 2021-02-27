@@ -1,0 +1,19 @@
+---
+
+- name: Open firewall for mdns
+  ansible.posix.firewalld:
+    service: mdns
+    zone: home
+    state: enabled
+    permanent: true
+    immediate: yes
+  when: firewalld_is_enable
+
+- name: Allow firewall UDP 5353
+  ansible.posix.firewalld:
+    port: 5353/udp
+    zone: home
+    state: enabled
+    permanent: true
+    immediate: yes
+  when: firewalld_is_enable
