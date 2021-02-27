@@ -1,0 +1,17 @@
+---
+
+linux_os_family:
+  - Alpine
+  - Altlinux
+  - Archlinux
+  - Debian
+  - Gentoo
+  - Mandrake
+  - RedHat
+  - SGML
+  - Slackware
+  - Solaris
+  - Suse
+
+bsd_os_family:
+  - FreeBSD

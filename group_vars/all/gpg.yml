@@ -1,0 +1,4 @@
+---
+
+pgp_key_id: "{{ vault_pgp_key_id }}"
+gpg_primary_mail: "{{ vault_gpg_primary_mail }}"

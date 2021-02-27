@@ -1,0 +1,32 @@
+---
+
+ipv4_wan: "{{ vault_ipv4_wan }}"
+ipv4_lan_subnet: "{{ vault_ipv4_lan_subnet }}"
+ipv4_lan_router: "{{ vault_ipv4_lan_router }}"
+ipv4_lan_asvcontainers01: "{{ vault_ipv4_lan_asvcontainers01 }}"
+ipv4_lan_10gb_A_akpServer01: "{{ vault_ipv4_lan_10gb_A_akpServer01 }}"
+ipv4_lan_10gb_A_asvcontainers01: "{{ vault_ipv4_lan_10gb_A_asvcontainers01 }}"
+ipv4_lan_10gb_A_asvcontainers01_size: "{{ vault_ipv4_lan_10gb_A_asvcontainers01_size }}"
+
+adress_akpnet_akpserver01:    "{{ vault_adress_akpnet_akpserver01 }}"
+
+adress_akpnet10g1_akpserver01: "{{ vault_adress_akpnet10g1_akpserver01 }}"
+ipv6_akpnet10g1_asvcontainers01:          "{{ vault_ipv6_akpnet10g1_asvcontainers01 }}"
+ipv6_akpnet10g1_asvcontainers01_size:     "{{ vault_ipv6_akpnet10g1_asvcontainers01_size }}"
+
+network_akpnet10g1_ipv6:                  "{{ vault_network_akpnet10g1_ipv6 }}"
+network_akpnet10g1_akpserver01_ipv6:      "{{ vault_network_akpnet10g1_akpserver01_ipv6 }}"
+
+network_akpnet10g2_ipv6:                  "{{ vault_network_akpnet10g2_ipv6 }}"
+network_akpnet10g2_akpserver01_ipv6:      "{{ vault_network_akpnet10g2_akpserver01_ipv6 }}"
+network_akpnet10g2_asdbuild_ipv6:  "{{ vault_network_akpnet10g2_asdbuild_ipv6 }}"
+
+url_dns_reverse: "{{ vault_url_dns_reverse }}"
+url_akpHome: "{{ vault_url_akpHome }}"
+
+akpRouter_loadBalancer_server_akpHome: "{{ vault_akpRouter_loadBalancer_server_akpHome }}"
+
+asvcontainers01_hardware_network_net0_mac:  "{{ vault_asvcontainers01_hardware_network_net0_mac }}"
+asvcontainers01_hardware_network_net1_mac:  "{{ vault_asvcontainers01_hardware_network_net1_mac }}"
+asvsync01_hardware_network_net0_mac:        "{{ vault_asvsync01_hardware_network_net0_mac }}"
+asvsync01_hardware_network_net1_mac:        "{{ vault_asvsync01_hardware_network_net1_mac }}"

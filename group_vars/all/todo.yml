@@ -1,0 +1,5 @@
+---
+
+assdonkey_proxmox_root_password: "{{ vault_assdonkey_proxmox_root_password }}"
+asvsync01_root_password: "{{ vault_asvsync01_root_password }}"
+asvsync01_user1_password: "{{ vault_asvsync01_user1_password }}"
