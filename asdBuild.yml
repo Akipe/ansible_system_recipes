@@ -18,28 +18,20 @@
     ### Base
     - { role: ssh, tags: ssh }
     ### Package manager
-    # - { role: dnf, tags: dnf }
-    # - { role: rpmfusion, tags: rpmfusion }
     - { role: makepkg, tags: makepkg }
     - { role: aur-cli, tags: aur-cli }
     - { role: pacman, tags: pacman }
     ### Hardware init
     - { role: microcode, tags: microcode }
-    ### System
-    # - role: swap
-    #   tags: swap
-    #   vars:
-    #     role_swap_type:       "file"
-    #     role_swap_filesystem: "btrfs"
-    #     role_swap_bootloader: "systemd-boot"
-    - { role: bash, tags: bash }
-    - { role: fish, tags: fish }
-    - { role: refind, tags: refind }
-    - { role: tpm2, tags: tpm2 }
-    - { role: rngd, tags: rngd }
+    ### Boot
     - { role: dm-crypt, tags: dm-crypt }
     - { role: plymouth, tags: plymouth }
-    # - { role: systemd-boot, tags: systemd-boot }t
+    - { role: refind, tags: refind }
+    ### System
+    - { role: bash, tags: bash }
+    - { role: fish, tags: fish }
+    - { role: tpm2, tags: tpm2 }
+    - { role: rngd, tags: rngd }
     - { role: systemd-resolved, tags: systemd-resolved }
     - { role: systemd-timesyncd, tags: systemd-timesyncd }
     - { role: avahi, tags: avahi }
@@ -53,7 +45,6 @@
     - { role: linux-kernel, tags: linux-kernel }
     - { role: auditd, tags: auditd }
     - { role: firewalld, tags: firewalld }
-    # - { role: ufw, tags: ufw }
     # - { role: apparmor, tags: apparmor }
     # - { role: tlp, tags: tlp }
     # - { role: thermald, tags: thermald }
@@ -67,7 +58,6 @@
     - { role: amdgpu, tags: amdgpu }
     - { role: asus-prime, tags: asus-prime }
     - { role: renesas-upd72020x, tags: renesas-upd72020x }
-    # - { role: btrfs, tags: btrfs }
     - { role: networkmanager, tags: networkmanager }
     - { role: libinput, tags: libinput }
     - { role: watchdog, vars: { watchdog_activate: no}, tags: watchdog }
