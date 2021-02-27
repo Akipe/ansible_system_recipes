@@ -1,0 +1,3 @@
+---
+
+dmcrypt_crypttab_entry: "akpsystem LABEL=akpcryptsystem none timeout=180,discard"

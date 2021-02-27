@@ -1,0 +1,24 @@
+---
+
+mkinitcpio_initramfs_modules:
+  - i915
+  - dm_mod
+  - dm_crypt
+  - ext4
+  - vfat
+  - sha256
+  - sha512
+  - crc32c-intel
+mkinitcpio_initramfs_hooks:
+  - base
+  - systemd
+  - autodetect
+  - keyboard
+  - sd-vconsole
+  - modconf
+  - block
+  - sd-encrypt
+  - lvm2
+  - filesystems
+  - fsck
+mkinitcpio_initramfs_compression: lz4

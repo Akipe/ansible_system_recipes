@@ -1,0 +1,7 @@
+---
+
+ssh_port: 22
+ssh_firewall_firewalld: no
+ssh_users:
+  - username:   "{{ personal_user_name }}"
+    public_key: "{{ ssh_public_key }}"

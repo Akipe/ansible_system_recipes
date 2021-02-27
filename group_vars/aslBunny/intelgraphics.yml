@@ -1,0 +1,7 @@
+---
+
+intelgraphics_install_vulkan:       no
+intelgraphics_install_video_driver: libva-intel-driver-g45
+intelgraphics_install_video_utils:  yes
+intelgraphics_install_gpgpu_driver: intel-opencl-runtime
+intelgraphics_install_gpgpu_utils:  yes
