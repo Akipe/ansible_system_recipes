@@ -1,12 +1,12 @@
 ---
 
 ansible_python_interpreter: /usr/bin/python3
-ansible_user:               "{{ user_name }}"
+ansible_user:               "{{ personal_user_name }}"
 ansible_become_pass:        "{{ vault_ansible_become_pass }}"
 
 ssh_port: 2222
 ssh_users:
-  - username:   "{{ user_name }}"
+  - username:   "{{ personal_user_name }}"
     public_key: "{{ ssh_public_key }}"
 
 apt:
