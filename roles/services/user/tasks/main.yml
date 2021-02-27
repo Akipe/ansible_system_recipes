@@ -9,7 +9,7 @@
   ansible.builtin.user:
     state:        present
     name:         "{{ item.username }}"
-    password:     "{{ item.password_hashed }}"
+    password:     "{{ item.password | password_hash('sha512', 65534 | random(seed=inventory_hostname) | string, rounds=10000) }}"
     create_home:  yes
     shell:        "{{ item.shell }}"
     groups: 
@@ -49,5 +49,4 @@
     owner: "{{ item.username }}"
     group: "{{ item.username }}"
     mode: u=rwx,g=rx,o=rx
-    recurse: yes
   loop: "{{ users_create }}"

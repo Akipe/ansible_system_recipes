@@ -2,7 +2,7 @@
 
 users_create:
   - username: an_username
-    password_hashed: a_secure_password_hashed
+    password: the_user_password
     shell: /bin/bash
     groups: users
     public_key: "ssh-rsa example"

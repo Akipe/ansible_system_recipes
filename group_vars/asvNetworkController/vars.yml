@@ -8,7 +8,8 @@ user_password_hashed: "{{ vault_user_password_hashed }}"
 
 users_create:
   - username:         "{{ user_username }}"
-    password_hashed:  "{{ user_password_hashed }}"
+    password:         "{{ personal_user_password }}"
+    #password_hashed:  "{{ user_password_hashed }}"
     shell:            /bin/bash
     groups:           users,wheel
     public_key:       "{{ ssh_public_key }}"
