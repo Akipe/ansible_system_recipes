@@ -4,6 +4,11 @@
   hosts: aslBunny
   remote_user: root
   become: yes
+  post_tasks:
+    - ansible.builtin.include_role:
+        name: aur-cli-clean
+      tags:
+        - always
   roles:
     ### Base
     - { role: ansible-guest, tags: ansible-guest }
