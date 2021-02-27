@@ -22,12 +22,7 @@ run-init:
 
 run-local:
 	ansible-playbook $(NODE).yml \
-		--connection=local \
-		--inventory $(NODE), \
-		--extra-vars "@./group_vars/all/vars.yml" \
-		--extra-vars "@./group_vars/all/vault.yml" \
-		--extra-vars "@./group_vars/$(NODE)/vars.yml" \
-		--extra-vars "@./group_vars/$(NODE)/vault.yml"
+		--inventory inventory_local.ini
 
 run-direct:
 	ansible-playbook $(PLAYBOOK).yml \
