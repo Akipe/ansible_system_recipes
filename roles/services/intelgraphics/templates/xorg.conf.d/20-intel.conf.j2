@@ -3,7 +3,11 @@
 Section "Device"
   Identifier  "Intel Graphics"
   Driver      "intel"
-  Option      "AccelMethod"  "sna"
-  Option      "TearFree" "true"
-  # Option      "DRI" "3"
+  {% if intelgraphics_xorg_intel_option_acceleration -%}
+  Option      "AccelMethod" "{{ intelgraphics_xorg_intel_option_acceleration }}"
+  {%- endif %}
+  Option      "DRI"         "{{ intelgraphics_xorg_intel_option_dri }}"
+  {% if intelgraphics_xorg_intel_option_tearfree -%}
+  Option      "TearFree"    "true"
+  {%- endif %}
 EndSection

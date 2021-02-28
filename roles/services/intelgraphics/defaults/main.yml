@@ -2,7 +2,10 @@
 
 # X.org driver, not recommended to install
 # https://wiki.archlinux.org/index.php/Intel_graphics#Installation
-intelgraphics_install_xorgdriver:       no
+intelgraphics_install_xorgdriver:             no
+intelgraphics_xorg_intel_option_acceleration: sna # sna|uxa|blt|no
+intelgraphics_xorg_intel_option_dri:          3   # 3|2|1|no
+intelgraphics_xorg_intel_option_tearfree:     yes # yes|no
 
 # Vulkan
 intelgraphics_install_vulkan:           yes

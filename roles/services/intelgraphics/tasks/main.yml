@@ -13,12 +13,6 @@
     name: "{{ intelgraphics_app_vulkan_archlinux }}"
   when: intelgraphics_install_vulkan
 
-- name: Installation of X.org driver
-  community.general.pacman:
-    state: present
-    name: "{{ intelgraphics_app_xorgdriver_archlinux }}"
-  when: intelgraphics_install_xorgdriver
-
 # For right choosing the video driver : https://wiki.archlinux.org/index.php/Hardware_video_acceleration#Intel
 
 - name: Install video acceleration support with Intel Media driver
@@ -157,11 +151,26 @@
     group: root
     mode: u+rwx,g+rx,o+rx
 
-# - name: Add configuration for Xorg
-#   ansible.builtin.template:
-#     src: xorg.conf.d/20-intel.conf.j2
-#     dest: /etc/X11/xorg.conf.d/20-intel.conf
-#     owner: root
-#     group: root
-#     mode: u+rw,g+r,o+r
-#   tags: debug
+- name: Installation of Intel X.org driver
+  community.general.pacman:
+    state: present
+    name: "{{ intelgraphics_app_xorgdriver_archlinux }}"
+  when: intelgraphics_install_xorgdriver
+
+- name: Add configuration for Intel X.org driver
+  ansible.builtin.template:
+    src: xorg.conf.d/20-intel.conf.j2
+    dest: /etc/X11/xorg.conf.d/20-intel.conf
+    owner: root
+    group: root
+    mode: u+rw,g+r,o+r
+  when: intelgraphics_install_xorgdriver
+
+- name: Add configuration for modesetting X.org driver
+  ansible.builtin.template:
+    src: xorg.conf.d/20-modesetting.conf.j2
+    dest: /etc/X11/xorg.conf.d/20-modesetting.conf
+    owner: root
+    group: root
+    mode: u+rw,g+r,o+r
+  when: not intelgraphics_install_xorgdriver
