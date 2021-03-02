@@ -14,6 +14,15 @@
       - x11-ssh-askpass
     extra_args: --asdeps
 
+- name: Create a directory if it does not exist
+  ansible.builtin.file:
+    path: "/home/{{ user_name }}/.config/Code - OSS/User"
+    state: directory
+    recurse: yes
+    owner: "{{ user_name }}"
+    group: "{{ user_name }}"
+    mode: u+rwx,g+rx,o+rx
+
 - name: Set user configuration
   ansible.builtin.template:
     src: settings/settings.json.j2
