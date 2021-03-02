@@ -1,0 +1,4 @@
+---
+
+yubikey_list_users:
+  - username:   "{{ personal_user_name }}"
