@@ -1,0 +1,7 @@
+---
+
+hardware_disks:
+  - system:
+    id: "{{ ansible_devices.sda.links.ids[0] }}"
+    smartmontools:
+      parameters: -a -d sat -o on -S on -s (S/../.././06|L/../../1/10)

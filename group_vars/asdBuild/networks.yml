@@ -1,0 +1,16 @@
+---
+
+# create_networks:
+#   - name:           akpnet
+#     conn_name:      my-enp7s0
+#     ifname:         enp7s0
+#     type:           ethernet
+#     mtu:            9000
+#     firewall_zone:  home
+#   - name:           akpnet10g2
+#     conn_name:      my-enp4s0
+#     ifname:         enp4s0
+#     type:           ethernet
+#     ipv6:           "{{ network_akpnet10g2_asdBuild_ipv6 }}"
+#     mtu:            9000
+#     firewall_zone:  home
