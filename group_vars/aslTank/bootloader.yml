@@ -5,3 +5,5 @@ bootloader_options:
   - "root=/dev/mapper/akpsystem-root"
   - "resume=/dev/mapper/akpsystem-swap"
   - "audit=1"
+
+refind_os_boot_type: gui
