@@ -61,15 +61,16 @@
     name: "{{ intelgraphics_app_gpgpu_intelcomputeruntime_archlinux }}"
   when: intelgraphics_install_gpgpu_driver == "intel-computer-runtime"
 
-- name: Install GPGPU driver Beignet
-  become: yes
-  become_user: ansible_aur
-  aur:
-    use: yay
-    state: present
-    aur_only: yes
-    name: "{{ intelgraphics_app_gpgpu_beignet_archlinux_aur }}"
-  when: intelgraphics_install_gpgpu_driver == "beignet"
+# todo: beignet build make error : https://aur.archlinux.org/packages/beignet/#comment-776413
+# - name: Install GPGPU driver Beignet
+#   become: yes
+#   become_user: ansible_aur
+#   aur:
+#     use: yay
+#     state: present
+#     aur_only: yes
+#     name: "{{ intelgraphics_app_gpgpu_beignet_archlinux_aur }}"
+#   when: intelgraphics_install_gpgpu_driver == "beignet"
 
 - name: Install GPGPU driver Intel OpenCL Runtime
   become: yes
