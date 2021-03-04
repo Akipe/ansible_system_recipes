@@ -1,0 +1,5 @@
+---
+
+fish_users:
+  # - username: root
+  - username: "{{ personal_user_name }}"

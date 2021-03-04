@@ -12,15 +12,16 @@
       - bluez-tools
   tags: bluetooth
 
-- name: Installation of additionnal bluetooth firmwares (AUR)
-  become: yes
-  become_user: ansible_aur
-  aur:
-    use: yay
-    state: present
-    aur_only: yes
-    name:
-      - bluez-firmware
+# todo: error when building (aur error)
+# - name: Installation of additionnal bluetooth firmwares (AUR)
+#   become: yes
+#   become_user: ansible_aur
+#   aur:
+#     use: yay
+#     state: present
+#     aur_only: yes
+#     name:
+#       - bluez-firmware
 
 # Replace with Pipewire
 # - name: Audio bluetooth

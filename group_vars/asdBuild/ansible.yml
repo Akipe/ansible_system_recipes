@@ -1,0 +1,8 @@
+---
+
+personal_user_name:         "{{ vault_personal_user_name }}"
+personal_user_password:     "{{ vault_personal_user_password }}"
+
+ansible_python_interpreter: /usr/bin/python
+ansible_user:               "{{ personal_user_name }}"
+ansible_become_pass:        "{{ personal_user_password }}"

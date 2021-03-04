@@ -6,6 +6,12 @@
     name:
       - pipewire
 
+- name: Remove pulseaudio for replacing with pipewire
+  community.general.pacman:
+    state: absent
+    name: pulseaudio
+    extra_args: --nodeps --nodeps
+
 - name: Installation of dependencies
   community.general.pacman:
     state: present

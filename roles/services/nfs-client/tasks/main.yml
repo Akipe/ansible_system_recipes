@@ -1,5 +1,9 @@
 ---
 
+- name: Load tasks for install on Archlinux
+  ansible.builtin.include_tasks: archlinux/main.yml
+  when: ansible_distribution == "Archlinux"
+
 - name: Load tasks for install on Debian & derivate
   ansible.builtin.include_tasks: debian_common/main.yml
   when: ansible_distribution == "Debian" or ansible_distribution == "Ubuntu"

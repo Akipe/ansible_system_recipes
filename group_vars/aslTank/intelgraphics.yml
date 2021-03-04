@@ -1,0 +1,9 @@
+---
+
+# Intel HD 4000, CPU Ivy Bridge
+
+intelgraphics_install_vulkan:       yes
+intelgraphics_install_video_driver: libva-intel-driver
+intelgraphics_install_video_utils:  yes
+intelgraphics_install_gpgpu_driver: beignet
+intelgraphics_install_gpgpu_utils:  yes

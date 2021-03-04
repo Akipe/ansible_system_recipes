@@ -27,5 +27,4 @@ amdgpu_app_gpgpu_archlinux:
   - lib32-opencl-mesa
 
 amdgpu_app_gpgpu_amdGpuPro_archlinux:
-  - opencl-amdgpu-pro-orca
-  - lib32-opencl-amdgpu-pro-orca
+  - opencl-amd
