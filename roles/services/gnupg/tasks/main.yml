@@ -64,3 +64,11 @@
     name: pcscd.socket
     enabled: true
     state: started
+
+- name: Import multiple GPG key and set trust
+  gpg_key:
+    content: "{{ item.public_key_content }}"
+    trust: "{{ item.trust_level }}"
+  loop:
+    "{{ gnupg_import_multiple_key }}"
+  when: gnupg_import_multiple_key
