@@ -1,0 +1,16 @@
+---
+
+pacman_config_color: true
+pacman_config_total_download: true
+pacman_config_check_space: true
+pacman_config_verbose_package_lists: true
+pacman_config_enable_multilib: true
+
+pacman_reflector_country: France
+pacman_reflector_latest: 200
+pacman_reflector_age: 24
+pacman_reflector_protocol: https
+pacman_reflector_sort: rate
+
+pacman_reflector_time_onCalendar: "Mon *-*-* 7:00:00"
+pacman_reflector_time_randomizedDelaySec: "15h"

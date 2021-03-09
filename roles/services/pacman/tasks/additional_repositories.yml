@@ -1,0 +1,19 @@
+---
+
+- name: Check if repository key is already import
+  ansible.builtin.shell: "pacman-key --finger {{ pacman_additional_repository.gpg_key_id }}"
+  register: repository_does_not_exist
+  ignore_errors: true
+
+- name: Add repository public key
+  ansible.builtin.shell: "curl {{ pacman_additional_repository.gpg_public_key_url }} | pacman-key --add -"
+  when: repository_does_not_exist is failed
+
+- name: Approve the repository public key
+  ansible.builtin.shell: "pacman-key --lsign-key {{ pacman_additional_repository.gpg_key_id }}"
+  when: repository_does_not_exist is failed
+
+- name: Update pacman cache
+  community.general.pacman:
+    update_cache: yes
+  when: repository_does_not_exist is failed
