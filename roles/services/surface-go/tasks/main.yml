@@ -1,36 +1,69 @@
 ---
 
-- name: Install for Microsoft Surface Go (AUR)
+- name: Intallation
+  community.general.pacman:
+    name:
+    - linux-surface
+    - linux-surface-headers
+    - linux-surface-lts
+    - linux-surface-lts-headers
+    - xf86-input-wacom
+    - iio-sensor-proxy
+    state: present
+
+- name: Installation (AUR)
   become: yes
   become_user: ansible_aur
   aur:
     use: yay
     state: present
     aur_only: yes
-    name: "{{ surfaceGo_appToInstall_archlinux_aur }}"
+    name:
+    - libwacom-surface
+    - surface-control
+    # - screenrotator-git
 
-- name: Install for Microsoft Surface Go (pacman)
-  community.general.pacman:
-    state: present
-    name: "{{ surfaceGo_appToInstall_archlinux }}"
+- name: Create directory for storing the Qualcom Atheros firmware
+  ansible.builtin.file:
+    path: /opt/firmware_ath10k/QCA6174
+    state: directory
+    recurse: yes
+    owner: root
+    group: root
+    mode: u+rwx,g+rx,o+rx
 
 - name: Remove not working firmware (fix wifi for Qualcomm Atheros QCA6174)
   ansible.builtin.file:
     state: absent
-    path: /usr/lib/firmware/ath10k/QCA6174/hw3.0/board-2.bin
+    path: "{{ item }}"
+    loop:
+      - "/usr/lib/firmware/ath10k/QCA6174/hw2.1/board-2.bin"
+      - "/usr/lib/firmware/ath10k/QCA6174/hw3.0/board-2.bin"
 
 - name: Replace firmware from killernetworking.com (fix wifi for Qualcomm Atheros QCA6174)
   ansible.builtin.copy:
-    src: ath10k_firmware/QCA6174/hw3.0/board.bin
-    dest: /usr/lib/firmware/ath10k/QCA6174/hw3.0/board.bin
+    src: atheros/ath10k/QCA6174/board.bin
+    dest: "{{ item }}"
     owner: root
     group: root
-    mode: u=rw,g=r,o=r
+    mode: u+rw,g+r,o+r
+  loop:
+    - "/usr/lib/firmware/ath10k/QCA6174/hw2.1/board.bin"
+    - "/usr/lib/firmware/ath10k/QCA6174/hw3.0/board.bin"
+    - "/opt/firmware_ath10k/QCA6174/board.bin"
 
-- name: Configure Qualcomm Atheros QCA6174
+- name: Configure Qualcomm Atheros QCA6174 wifi
   ansible.builtin.template:
     src: modprobe.d/ath10k.conf.j2
     dest: /etc/modprobe.d/ath10k.conf
     owner: root
     group: root
     mode: u+rw,g+r,o+r
+
+- name: Persist Qualcomm Atheros firmware change after pacman update
+  ansible.builtin.template:
+    src: pacman_hook/ath10k_qca6174.hook.j2
+    dest: /etc/pacman.d/hooks/ath10k_qca6174.hook
+    owner: root
+    group: root
+    mode: "u=rwx,g=rx,o=rx"
