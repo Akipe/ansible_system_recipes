@@ -14,7 +14,8 @@ prepare_log_directory:
 	mkdir ./log
 
 run:
-	ansible-playbook $(NODE).yml
+	ansible-playbook $(NODE).yml \
+		--inventory inventory.ini
 
 run-init:
 	ansible-playbook $(NODE)_init.yml \
