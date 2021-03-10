@@ -1,0 +1,16 @@
+---
+
+- name: Ensure subgid and subuid configuration file exist
+  ansible.builtin.file:
+    path: "/etc/{{ item }}"
+    state: touch
+    owner: root
+    group: root
+    mode: u+rw,g+r,o+r
+  loop:
+    - subgid
+    - subuid
+
+# todo: add check if this command has already be execute
+- name: Allocates the UIDs and GIDs from 165536 to 169631 to the user
+  ansible.builtin.command: "usermod --add-subuids 165536-231072 --add-subgids 165536-231072 {{ podman_rootless_username }}"

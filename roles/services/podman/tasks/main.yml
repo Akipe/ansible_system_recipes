@@ -1,0 +1,28 @@
+---
+
+- name: Installation
+  community.general.pacman:
+    state: present
+    name:
+      - podman
+      - podman-compose
+
+- name: Installation of dependencies
+  community.general.pacman:
+    state: present
+    name:
+      - podman-docker
+    extra_args: --asdeps
+
+- name: Add containers configuration
+  ansible.builtin.template:
+    src: "containers/{{ item }}.conf.j2"
+    dest: "/etc/containers/{{ item }}.conf"
+    owner: root
+    group: root
+    mode: u+rw,g+r,o+r
+  loop:
+    - storage
+
+- name: Load tasks for configuring rootless
+  ansible.builtin.include_tasks: rootless.yml
