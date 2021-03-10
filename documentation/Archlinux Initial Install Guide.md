@@ -551,9 +551,12 @@ sudo pacman -S --needed \
 
 ### Mount the system (to /mnt)
 ```
-cryptsetup luksOpen /dev/disk/by-label/akpcryptsystem akpcryptsystem && \
-mount /dev/mapper/akpsystem-root /mnt && \
-mount -L EFI /mnt/boot && \
+cryptsetup luksOpen /dev/disk/by-label/akpcryptsystem akpcryptsystem
+
+mount /dev/mapper/akpsystem-root /mnt
+
+mount -L EFI /mnt/boot
+
 arch-chroot /mnt /usr/bin/fish
 ```
 
