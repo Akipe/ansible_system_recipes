@@ -3,4 +3,14 @@
 - name: Installation
   community.general.pacman:
     state: present
-    name: "{{ appToInstall_archlinux }}"
+    name:
+      - ansible
+      - sshpass
+      - ansible-lint
+
+- name: Installation of dependencies
+  community.general.pacman:
+    state: present
+    name:
+      - yamllint
+    extra_args: --asdeps
