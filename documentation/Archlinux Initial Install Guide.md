@@ -28,11 +28,18 @@ loadkeys fr
 ```
 iwctl # Then use tab for command helper
 
+# For use WiFi Simple Configuration
 wsc list # For listing wifi devices
 wsc $DEVICE push-button # For using WIFI WPS
 wsc $DEVICE scan
 wsc $DEVICE get-networks # List SSID
 wsc $DEVICE connect $SSID
+
+# For classic WiFi
+station list
+station $DEVICE scan
+station $DEVICE show
+station $DEVICE connect "$SSID"
 
 quit
 ```
