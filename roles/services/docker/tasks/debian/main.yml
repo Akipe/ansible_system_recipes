@@ -7,18 +7,18 @@
   vars:
     add_repository:
       - key:
-          id: "{{ role_repository_ubuntu_key_id }}"
-          url: "{{ role_repository_ubuntu_key_url }}"
+          id: "{{ docker_debian_official_repository_key_id }}"
+          url: "{{ docker_debian_official_repository_key_url }}"
         repository:
-          repo: "{{ role_repository_ubuntu_expression }}"
-          filename: "{{ role_repository_ubuntu_filename }}"
+          repo: "{{ docker_debian_official_repository_expression }}"
+          filename: "{{ docker_debian_official_repository_filename }}"
 
 - name: Install Docker CE
   ansible.builtin.apt:
     update_cache: yes
     cache_valid_time: "{{apt_unattended_cache_valid_time}}"
     state: present
-    name: "{{ role_appToInstall_debian }}"
+    name: docker-ce
 
 # - name: Install NDP Proxy Daemon
 #   ansible.builtin.apt:

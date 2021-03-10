@@ -1,13 +1,12 @@
 {
-	{% if docker_configuration.network.enableIpv6 == true %}"ipv6": true,{% endif %}
-	{% if docker_configuration.network.bip.ipv4.subnet is defined %}"bip": "{{ docker_configuration.network.bip.ipv4.subnet }}",{% endif %}
-	{% if docker_configuration.network.fixed_cidr.ipv4.subnet is defined %}"fixed-cidr": "{{ docker_configuration.network.fixed_cidr.ipv4.subnet }}",{% endif %}
-	{% if docker_configuration.network.fixed_cidr.ipv6.subnet is defined %}"fixed-cidr-v6": "{{ docker_configuration.network.fixed_cidr.ipv6.subnet }}",{% endif %}
-	{% if docker_configuration.network.default_pools is defined %}"default-address-pools": [{% if docker_configuration.network.default_pools.ipv4 is defined %}{
-		"base": "{{ docker_configuration.network.default_pools.ipv4.subnet }}",
-		"size": {{ docker_configuration.network.default_pools.ipv4.size }}
-	},{% endif %} {% if docker_configuration.network.default_pools.ipv6 is defined %}{
-		"base": "{{ docker_configuration.network.default_pools.ipv6.subnet }}",
-		"size": {{ docker_configuration.network.default_pools.ipv6.size }}
-	}{% endif %}]{% endif %}
+	{% if docker_network_ipv6_enable %}"ipv6": true,{% endif %}
+	{% if docker_network_bip_ipv4 is defined %}"bip": "{{ docker_network_bip_ipv4 }}",{% endif %}
+	{% if docker_network_fixed_cidr_ipv4 is defined %}"fixed-cidr": "{{ docker_network_fixed_cidr_ipv4 }}",{% endif %}
+	{% if docker_network_fixed_cidr_ipv6 is defined %}"fixed-cidr-v6": "{{ docker_network_fixed_cidr_ipv6 }}",{% endif %}
+	{% if docker_network_default_address_pools is defined %}"default-address-pools": [
+		{% for address_pool in docker_network_default_address_pools %}{
+		"base": "{{ docker_network_default_address_pools.ipv4.base }}",
+		"size": {{ docker_network_default_address_pools.ipv4.size }}
+	}{% if not loop.last %},{% endif %}
+	{% endif %}]{% endif %}
 }

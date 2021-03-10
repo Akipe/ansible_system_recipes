@@ -1,6 +1,6 @@
 ---
 
-- name: Set configuration inside daemon.json
+- name: Set daemon.json configuration
   ansible.builtin.template:
     src: docker/daemon.json.j2
     dest: /etc/docker/daemon.json
@@ -8,8 +8,9 @@
     group: root
     mode: u+rw,g-rwx,o-rwx
   notify: Restart Docker
+  when: docker_set_custom_daemon_configuration
 
-#- name: Create Docker web network
+# - name: Create Docker web network
 #  community.general.docker_network:
 #    name: web
 #    driver: bridge
@@ -18,4 +19,3 @@
 #    ipam_config:
 #      driver: default
 #      config:
-

@@ -4,7 +4,11 @@
   ansible.builtin.include_tasks: debian/main.yml
   when: ansible_distribution == "Debian" or ansible_distribution == "Ubuntu"
 
+- name: Load tasks for install on Archlinux
+  ansible.builtin.include_tasks: archlinux/main.yml
+  when: ansible_distribution == "Archlinux"
+
 - name: Install Docker Python library
   ansible.builtin.pip:
     state: present
-    name: "{{ docker_pip_libraries_toInstall }}"
+    name: docker
