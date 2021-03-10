@@ -1,0 +1,4 @@
+---
+
+earlyoom_config_memory_minimum_percent: "3"
+earlyoom_config_swap_minimum_percent: "3"

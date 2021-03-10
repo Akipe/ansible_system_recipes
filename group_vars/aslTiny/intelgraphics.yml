@@ -1,0 +1,10 @@
+---
+
+# Intel HD 5500 (Intel Core i7 5600U)
+
+intelgraphics_install_xorgdriver: false
+intelgraphics_install_vulkan: true
+intelgraphics_install_video_driver: intel-media-driver
+intelgraphics_install_video_utils: true
+intelgraphics_install_gpgpu_driver: intel-computer-runtime
+intelgraphics_install_gpgpu_utils: true

@@ -1,11 +1,9 @@
 ---
 
-bootloader_timeout: 20
+bootloader_timeout: 5
 bootloader_options:
   - "root=/dev/mapper/akpsystem-root"
   - "resume=/dev/mapper/akpsystem-swap"
   - "audit=1"
-  - "idle=nomwait"
 
 refind_os_boot_type: gui
-refind_is_dual_boot_with_windows: true

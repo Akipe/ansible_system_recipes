@@ -30,6 +30,18 @@ containers:
 containersAdmin_url: admin.containers.akpnet.lan
 containersRouter_url: router.containers.akpnet.lan
 
+docker_network_ipv6_enable: true
+docker_network_bip_ipv4: "{{ vault_docker_network_bip_ipv4_subnet }}"
+docker_network_fixed_cidr_ipv4: "{{ vault_docker_network_fixed_cidr_ipv4_subnet }}"
+docker_network_fixed_cidr_ipv6: "{{ vault_docker_network_fixed_cidr_ipv6_subnet }}"
+docker_network_default_address_pools:
+  ipv4:
+    base: "{{ vault_docker_network_default_pools_ipv4_subnet }}"
+    size: "{{ vault_docker_network_default_pools_ipv4_size }}"
+  ipv6:
+    base: "{{ vault_docker_network_default_pools_ipv6_subnet }}"
+    size: "{{ vault_docker_network_default_pools_ipv6_size }}"
+
 docker_network_webrouter_ipv4_subnet: "{{ vault_docker_network_webrouter_ipv4_subnet }}"
 docker_network_webrouter_ipv6_subnet: "{{ vault_docker_network_webrouter_ipv6_subnet }}"
 docker_network_bip_ipv4_subnet: "{{ vault_docker_network_bip_ipv4_subnet }}"
