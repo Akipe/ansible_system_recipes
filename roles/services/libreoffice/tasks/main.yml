@@ -14,14 +14,14 @@
       - gst-plugins-base-libs
     extra_args: --asdeps
 
-- name: Installation of grammalecte extension
-  become: yes
-  become_user: ansible_aur
-  aur:
-    use: yay
-    state: present
-    name:
-      - libreoffice-extension-grammalecte-fr
+# - name: Installation of grammalecte extension
+#   become: yes
+#   become_user: ansible_aur
+#   aur:
+#     use: yay
+#     state: present
+#     name:
+#       - libreoffice-extension-grammalecte-fr
 
 # - name: Add configuration to use GTK3 theme
 #   ansible.builtin.lineinfile:
