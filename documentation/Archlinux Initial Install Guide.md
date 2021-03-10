@@ -337,7 +337,10 @@ passwd root
 ```
 groupadd akp && \
     useradd -m -g akp -G users,wheel,storage,power,network -c "Akipe" akp && \
-    passwd akp
+    passwd akp && \
+    pacman -S --needed --noconfirm \
+        xdg-user-dirs && \
+    sudo -u akp xdg-user-dirs-update
 ```
 
 ## Enable sudo for wheel group
@@ -379,7 +382,6 @@ pacman --needed --noconfirm -S refind gptfdisk imagemagick python && \
 ## systemd-boot (EFI)
 
 ```
-pacman --needed --noconfirm -S refind && \
     bootctl --path=/boot install && \
 echo -e "default akpos-zen.conf
 timeout 5
