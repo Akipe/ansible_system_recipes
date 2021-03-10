@@ -1,5 +1,7 @@
 ---
 
-refind_os_boot_type: gui # gui|console|serial
-refind_is_dual_boot_with_windows: no
-refind_load_microcode:  yes
+refind_os_boot_type: gui  # gui|console|serial
+refind_mouse_enable: false
+refind_touch_enable: false
+refind_is_dual_boot_with_windows: false
+refind_load_microcode: true
