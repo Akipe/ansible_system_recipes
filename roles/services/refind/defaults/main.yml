@@ -5,3 +5,6 @@ refind_mouse_enable: false
 refind_touch_enable: false
 refind_is_dual_boot_with_windows: false
 refind_load_microcode: true
+# refind_extra_kernel_strings:  # Define custom kernel
+#   - linux-surface
+#   - linux-surface-lts

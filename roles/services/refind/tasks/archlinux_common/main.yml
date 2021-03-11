@@ -2,13 +2,18 @@
 
 - name: Installation
   community.general.pacman:
-    name: "{{ refind_app_archlinux_common }}"
+    name: refind
     state: present
 
 - name: Installation of dependencies
   community.general.pacman:
     state: present
-    name: "{{ refind_app_archlinux_common }}"
+    name:
+      - gptfdisk
+      - imagemagick
+      - openssl
+      - python
+      - sbsigntools
     extra_args: --asdeps
 
 - name: Configure rEFInd Pacman hook update
@@ -18,16 +23,6 @@
     owner: root
     group: root
     mode: "u=rwx,g=rx,o=rx"
-
-- name: Define microcode path for Intel processor
-  ansible.builtin.set_fact:
-    microcode_path: "intel-ucode.img"
-  when: refind_load_microcode and cpu_vendor == "intel"
-
-- name: Define microcode path for AMD processor
-  ansible.builtin.set_fact:
-    microcode_path: "amd-ucode.img"
-  when: refind_load_microcode and cpu_vendor == "amd"
 
 - name: Installation of Regular theme
   become: yes
@@ -47,3 +42,35 @@
     group: root
     mode: "u=rwx,g=rx,o=x"
   when: refind_os_boot_type == "gui"
+
+- name: Check if processor vendor is Intel
+  ansible.builtin.set_fact: refind_cpu_vendor="intel"
+  when: "'GenuineIntel' in ansible_facts['processor']"
+
+- name: Check if processor vendor is AMD
+  ansible.builtin.set_fact: refind_cpu_vendor="amd"
+  when: "'AuthenticAMD' in ansible_facts['processor']"
+
+- name: Get the packages installed
+  ansible.builtin.package_facts:
+    manager: auto
+
+- name: Check if Intel microcode is installed
+  ansible.builtin.set_fact: refind_is_intel_microcode_installed=true
+  when: "'intel-ucode' in ansible_facts.packages"
+
+- name: Check if AMD microcode is installed
+  ansible.builtin.set_fact: refind_is_amd_microcode_installed=true
+  when: "'amd-ucode' in ansible_facts.packages"
+
+- name: Set bootloader microcode loading for Intel
+  ansible.builtin.set_fact: refind_microcode_path="intel-ucode.img"
+  when:
+    - refind_cpu_vendor == "intel"
+    - refind_is_intel_microcode_installed is defined
+
+- name: Set bootloader microcode loading for AMD
+  ansible.builtin.set_fact: refind_microcode_path="amd-ucode.img"
+  when:
+    - refind_cpu_vendor == "amd"
+    - refind_is_amd_microcode_installed is defined

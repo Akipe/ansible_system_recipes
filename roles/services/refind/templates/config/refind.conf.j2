@@ -427,7 +427,10 @@ fold_linux_kernels false
 # (extra_kernel_version_strings "") or comment out the option to disable it.
 # Default is no extra version strings
 #
-extra_kernel_version_strings linux-hardened,linux-zen,linux-lts,linux
+extra_kernel_version_strings {% if refind_extra_kernel_strings is defined -%}
+    {{ refind_extra_kernel_strings|join(',') }},
+{%- endif -%}
+linux-hardened,linux-zen,linux-lts,linux
 
 # Set the maximum number of tags that can be displayed on the screen at
 # any time. If more loaders are discovered than this value, rEFInd shows

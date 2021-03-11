@@ -1,17 +1,17 @@
 ## {{ ansible_managed }}
 
 {% if refind_os_boot_type == "gui" %}
-"Normal"                  "{% for option in bootloader_options %}{{ option }} {% endfor %} initrd=initramfs-%v.img rw quiet splash loglevel=3 rd.udev.log_priority=3 vt.global_cursor_default=0"
-"Terminal"                "{% for option in bootloader_options %}{{ option }} {% endfor %} initrd=initramfs-%v.img systemd.unit=multi-user.target rw"
-"Recovery (rw)"           "{% for option in bootloader_options %}{{ option }} {% endfor %} initrd=initramfs-%v-fallback.img rw"
-"Recovery (rw, terminal)" "{% for option in bootloader_options %}{{ option }} {% endfor %} initrd=initramfs-%v-fallback.img systemd.unit=multi-user.target rw"
-"Recovery (ro, terminal)" "{% for option in bootloader_options %}{{ option }} {% endfor %} initrd=initramfs-%v-fallback.img systemd.unit=multi-user.target ro"
+"Normal"                  "{% for option in bootloader_options %}{{ option }} {% endfor %} {% if refind_microcode_path is defined %}initrd={{ refind_microcode_path }}{% endif %} initrd=initramfs-%v.img rw quiet splash loglevel=3 rd.udev.log_priority=3 vt.global_cursor_default=0"
+"Terminal"                "{% for option in bootloader_options %}{{ option }} {% endfor %} {% if refind_microcode_path is defined %}initrd={{ refind_microcode_path }}{% endif %} initrd=initramfs-%v.img systemd.unit=multi-user.target rw"
+"Recovery (rw)"           "{% for option in bootloader_options %}{{ option }} {% endfor %} {% if refind_microcode_path is defined %}initrd={{ refind_microcode_path }}{% endif %} initrd=initramfs-%v-fallback.img rw"
+"Recovery (rw, terminal)" "{% for option in bootloader_options %}{{ option }} {% endfor %} {% if refind_microcode_path is defined %}initrd={{ refind_microcode_path }}{% endif %} initrd=initramfs-%v-fallback.img systemd.unit=multi-user.target rw"
+"Recovery (ro, terminal)" "{% for option in bootloader_options %}{{ option }} {% endfor %} {% if refind_microcode_path is defined %}initrd={{ refind_microcode_path }}{% endif %} initrd=initramfs-%v-fallback.img systemd.unit=multi-user.target ro"
 {% elif refind_os_boot_type == "console" %}
-"Normal"                  "{% for option in bootloader_options %}{{ option }} {% endfor %} initrd=initramfs-%v.img rw"
-"Recovery (rw)"           "{% for option in bootloader_options %}{{ option }} {% endfor %} initrd=initramfs-%v-fallback.img rw"
-"Recovery (ro)"           "{% for option in bootloader_options %}{{ option }} {% endfor %} initrd=initramfs-%v-fallback.img ro"
+"Normal"                  "{% for option in bootloader_options %}{{ option }} {% endfor %} {% if refind_microcode_path is defined %}initrd={{ refind_microcode_path }}{% endif %} initrd=initramfs-%v.img rw"
+"Recovery (rw)"           "{% for option in bootloader_options %}{{ option }} {% endfor %} {% if refind_microcode_path is defined %}initrd={{ refind_microcode_path }}{% endif %} initrd=initramfs-%v-fallback.img rw"
+"Recovery (ro)"           "{% for option in bootloader_options %}{{ option }} {% endfor %} {% if refind_microcode_path is defined %}initrd={{ refind_microcode_path }}{% endif %} initrd=initramfs-%v-fallback.img ro"
 {% elif refind_os_boot_type == "serial" %}
-"Normal"                  "{% for option in bootloader_options %}{{ option }} {% endfor %} initrd=initramfs-%v.img console=tty0 console=ttyS0,115200 rw"
-"Recovery (rw)"           "{% for option in bootloader_options %}{{ option }} {% endfor %} initrd=initramfs-%v-fallback.img console=tty0 console=ttyS0,115200 rw"
-"Recovery (ro)"           "{% for option in bootloader_options %}{{ option }} {% endfor %} initrd=initramfs-%v-fallback.img console=tty0 console=ttyS0,115200 ro"
+"Normal"                  "{% for option in bootloader_options %}{{ option }} {% endfor %} {% if refind_microcode_path is defined %}initrd={{ refind_microcode_path }}{% endif %} initrd=initramfs-%v.img console=tty0 console=ttyS0,115200 rw"
+"Recovery (rw)"           "{% for option in bootloader_options %}{{ option }} {% endfor %} {% if refind_microcode_path is defined %}initrd={{ refind_microcode_path }}{% endif %} initrd=initramfs-%v-fallback.img console=tty0 console=ttyS0,115200 rw"
+"Recovery (ro)"           "{% for option in bootloader_options %}{{ option }} {% endfor %} {% if refind_microcode_path is defined %}initrd={{ refind_microcode_path }}{% endif %} initrd=initramfs-%v-fallback.img console=tty0 console=ttyS0,115200 ro"
 {% endif %}
