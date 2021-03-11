@@ -209,10 +209,7 @@ enable_mouse
 #
 #mouse_speed 4
 
-
-use_graphics_for linux,windows
-
-{% if refind_is_dual_boot_with_windows is defined %}
+{% if refind_is_dual_boot_with_windows %}
 use_graphics_for linux,windows
 {% else %}
 use_graphics_for linux
