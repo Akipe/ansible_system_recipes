@@ -382,7 +382,7 @@ pacman --needed --noconfirm -S refind gptfdisk imagemagick python && \
 ## systemd-boot (EFI)
 
 ```
-    bootctl --path=/boot install && \
+bootctl --path=/boot install && \
 echo -e "default akpos-zen.conf
 timeout 5
 console-mode max
