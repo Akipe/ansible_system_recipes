@@ -11,6 +11,12 @@
     - iio-sensor-proxy
     state: present
 
+- name: Remove libwacom (replace later with libwacom-surface)
+  community.general.pacman:
+    state: absent
+    name: libwacom
+    extra_args: --nodeps --nodeps
+
 - name: Installation (AUR)
   become: yes
   become_user: ansible_aur
