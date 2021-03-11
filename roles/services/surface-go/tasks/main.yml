@@ -3,12 +3,10 @@
 - name: Intallation
   community.general.pacman:
     name:
-    - linux-surface
-    - linux-surface-headers
-    - linux-surface-lts
-    - linux-surface-lts-headers
-    - xf86-input-wacom
-    - iio-sensor-proxy
+      - linux-surface
+      - linux-surface-headers
+      - xf86-input-wacom
+      - iio-sensor-proxy
     state: present
 
 - name: Remove libwacom (replace later with libwacom-surface)
@@ -18,22 +16,22 @@
     extra_args: --nodeps --nodeps
 
 - name: Installation (AUR)
-  become: yes
+  become: true
   become_user: ansible_aur
   aur:
     use: yay
     state: present
-    aur_only: yes
+    aur_only: true
     name:
-    - libwacom-surface
-    - surface-control
-    # - screenrotator-git
+      - libwacom-surface
+      - surface-control
+      # - screenrotator-git
 
 - name: Create directory for storing the Qualcom Atheros firmware
   ansible.builtin.file:
     path: /opt/firmware_ath10k/QCA6174
     state: directory
-    recurse: yes
+    recurse: true
     owner: root
     group: root
     mode: u+rwx,g+rx,o+rx
@@ -42,9 +40,9 @@
   ansible.builtin.file:
     state: absent
     path: "{{ item }}"
-    loop:
-      - "/usr/lib/firmware/ath10k/QCA6174/hw2.1/board-2.bin"
-      - "/usr/lib/firmware/ath10k/QCA6174/hw3.0/board-2.bin"
+  loop:
+    - "/usr/lib/firmware/ath10k/QCA6174/hw2.1/board-2.bin"
+    - "/usr/lib/firmware/ath10k/QCA6174/hw3.0/board-2.bin"
 
 - name: Replace firmware from killernetworking.com (fix wifi for Qualcomm Atheros QCA6174)
   ansible.builtin.copy:
