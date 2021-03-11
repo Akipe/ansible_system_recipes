@@ -2,7 +2,10 @@
 
 - name: Intall utilities for pacman
   community.general.pacman:
-    name: "{{ pacman_app_archlinux_common }}"
+    name:
+    - pacman-contrib
+    - pacman-mirrorlist
+    - perl-locale-gettext
     state: present
 
 - name: Include tasks for Archlinux

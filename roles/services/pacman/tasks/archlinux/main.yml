@@ -2,7 +2,8 @@
 
 - name: Intall utilities for pacman
   community.general.pacman:
-    name: "{{ pacman_app_archlinux }}"
+    name:
+    - reflector
     state: present
 
 - name: Add reflector.service

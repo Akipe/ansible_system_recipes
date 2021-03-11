@@ -1,8 +1,0 @@
----
-
-surfaceGo_appToInstall_archlinux_aur:
-  - libwacom-surface
-
-surfaceGo_appToInstall_archlinux:
-  - xf86-input-wacom
-  - iio-sensor-proxy

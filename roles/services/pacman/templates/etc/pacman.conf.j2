@@ -2,10 +2,18 @@
 
 ### GENERAL OPTIONS
 [options]
+{% if pacman_config_color %}
 Color
+{% endif %}
+{% if pacman_config_total_download %}
 TotalDownload
+{% endif %}
+{% if pacman_config_check_space %}
 CheckSpace
+{% endif %}
+{% if pacman_config_verbose_package_lists %}
 VerbosePkgLists
+{% endif %}
 
 ### SIGNATURE OPTIONS
 SigLevel            = Required DatabaseOptional
@@ -14,7 +22,7 @@ LocalFileSigLevel   = Optional
 
 ### OTHERS OPTIONS
 HoldPkg             = pacman glibc {% if ansible_distribution == 'Manjaro' %}manjaro-system{% endif %}
-SyncFirst           = archlinux-keyring {% if ansible_distribution == 'Manjaro' %}manjaro-system manjaro-keyring{% endif %}
+
 #XferCommand        = /usr/bin/curl -L -C - -f -o %o %u
 #XferCommand        = /usr/bin/wget --passive-ftp -c -O %o %u
 #CleanMethod        = KeepInstalled
@@ -23,7 +31,7 @@ Architecture        = auto
 ### DIRECTORY OPTIONS
 #RootDir            = /
 #DBPath             = /var/lib/pacman/
-CacheDir           = /var/cache/pacman/pkg/
+CacheDir            = /var/cache/pacman/pkg/
 #LogFile            = /var/log/pacman.log
 #GPGDir             = /etc/pacman.d/gnupg/
 #HookDir            = /etc/pacman.d/hooks/
@@ -34,6 +42,7 @@ IgnorePkg          = {{ pacman_ignore_package_update }}
 {%- else -%}
 #IgnorePkg          = 
 {%- endif %}
+
 #IgnoreGroup        =
 #NoUpgrade          =
 #NoExtract          =
@@ -51,6 +60,17 @@ Include     = /etc/pacman.d/mirrorlist
 SigLevel    = PackageRequired
 Include     = /etc/pacman.d/mirrorlist
 
+{% if pacman_config_enable_multilib %}
 [multilib]
 SigLevel    = PackageRequired
 Include     = /etc/pacman.d/mirrorlist
+{% endif %}
+
+{% if pacman_additional_repositories is defined %}
+{% for repository in pacman_additional_repositories %}
+[{{ repository.name }}]
+SigLevel    = PackageRequired
+Server      = {{ repository.url }}
+
+{% endfor %}
+{% endif %}

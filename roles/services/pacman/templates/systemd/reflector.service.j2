@@ -7,7 +7,7 @@ After=network-online.target
 
 [Service]
 Type=oneshot
-ExecStart=/usr/bin/reflector --country France --age 12 --protocol https --sort rate --save /etc/pacman.d/mirrorlist
+ExecStart=/usr/bin/reflector --country {{ pacman_reflector_country }} --latest {{ pacman_reflector_latest }} --age {{ pacman_reflector_age }} --protocol {{ pacman_reflector_protocol }} --sort {{ pacman_reflector_sort }} --save /etc/pacman.d/mirrorlist
 
 [Install]
 RequiredBy=multi-user.target

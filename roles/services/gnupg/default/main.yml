@@ -1,0 +1,6 @@
+---
+
+# gnupg_import_multiple_key:
+#   - public_key_content: "-----BEGIN PGP PUBLIC KEY BLOCK-----........."
+#     trust_level: 0
+gnupg_import_multiple_key:  # Can be disable when no need to import keys

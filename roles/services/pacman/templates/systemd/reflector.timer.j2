@@ -4,8 +4,8 @@
 Description=Run reflector weekly
 
 [Timer]
-OnCalendar=Mon *-*-* 7:00:00
-RandomizedDelaySec=15h
+OnCalendar={{ pacman_reflector_time_onCalendar }}
+RandomizedDelaySec={{ pacman_reflector_time_randomizedDelaySec }}
 Persistent=true
 
 [Install]

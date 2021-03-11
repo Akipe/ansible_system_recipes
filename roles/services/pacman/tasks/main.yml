@@ -1,5 +1,12 @@
 ---
 
+- name: Load task for additional repositories
+  ansible.builtin.include_tasks: additional_repositories.yml
+  vars:
+    pacman_additional_repository: "{{ item }}"
+  loop: "{{ pacman_additional_repositories }}"
+  when: pacman_additional_repositories is defined
+
 - name: Include configure tasks
   ansible.builtin.include_tasks: configure.yml
 
