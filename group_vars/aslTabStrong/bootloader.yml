@@ -7,3 +7,5 @@ bootloader_options:
   - "audit=1"
 
 refind_os_boot_type: gui
+refind_extra_kernel_strings:
+  - linux-surface

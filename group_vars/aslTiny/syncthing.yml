@@ -1,0 +1,6 @@
+---
+
+syncthing_cli_open_firewall: true
+syncthing_cli_users:
+  - username: "{{ personal_user_name }}"
+    allow_external_web_access: false

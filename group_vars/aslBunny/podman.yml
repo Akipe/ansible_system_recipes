@@ -1,3 +1,0 @@
----
-
-podman_rootless_username: "{{ personal_user_name }}"
