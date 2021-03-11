@@ -33,22 +33,9 @@
     group: root
     mode: u+r,g+r,o-rwx
 
-- name: "Find uid of user"
-  ansible.builtin.command: "id -u {{ user_name }}"
-  register: the_user_uid
-  check_mode: no # Run even in check mode, otherwise the playbook fails with --check.
-  changed_when: false
-
-- name: "Determine XDG_RUNTIME_DIR"
-  ansible.builtin.set_fact:
-    xdg_runtime_dir: "/run/user/{{ the_user_uid.stdout }}"
-  changed_when: false
-
 - name: Start and enable user psd service
   become: yes
   become_user: "{{ user_name }}"
-  environment:
-    XDG_RUNTIME_DIR: "{{ xdg_runtime_dir }}"
   ansible.builtin.systemd:
     scope: user
     name: psd.service
