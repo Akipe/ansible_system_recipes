@@ -12,6 +12,12 @@
     name: pulseaudio
     extra_args: --nodeps --nodeps
 
+- name: Remove jack for replacing with jack2
+  community.general.pacman:
+    state: absent
+    name: jack
+    extra_args: --nodeps --nodeps
+
 - name: Installation of dependencies
   community.general.pacman:
     state: present
@@ -22,4 +28,5 @@
       - alsa-firmware
       - pipewire-jack
       - gst-plugin-pipewire
+      - jack2
     extra_args: --asdeps
