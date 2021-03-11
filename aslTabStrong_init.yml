@@ -12,6 +12,7 @@
       tags:
         - always
   roles:
+    - { role: firewalld, tags: firewalld }
     - { role: ssh }
     - { role: makepkg, tags: makepkg }
     - { role: pacman, tags: pacman }
