@@ -1,4 +1,5 @@
 ---
+
 - name: Load roles for initialize aslTiny
   hosts: aslTiny
   become_user: root
@@ -11,6 +12,7 @@
       tags:
         - always
   roles:
+    - { role: firewalld, tags: firewalld }
     - { role: ssh }
     - { role: makepkg, tags: makepkg }
     - { role: pacman, tags: pacman }
