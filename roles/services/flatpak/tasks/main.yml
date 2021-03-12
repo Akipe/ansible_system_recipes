@@ -7,3 +7,21 @@
 - name: Include tasks for Manjaro
   ansible.builtin.include_tasks: manjaro/main.yml
   when: ansible_distribution == "Manjaro"
+
+- name: Add the flathub flatpak repository
+  community.general.flatpak_remote:
+    state: present
+    name: flathub
+    flatpakrepo_url: https://dl.flathub.org/repo/flathub.flatpakrepo
+
+- name: Installation of GTK theme for flatpak apps
+  community.general.flatpak:
+    state: present
+    remote: flathub
+    name: org.gtk.Gtk3theme.Materia-dark
+
+# - name: Installation of QT theme for flatpak apps
+#   community.general.flatpak:
+#     state: present
+#     remote: flathub
+#     name: org.kde.PlatformTheme.QGnomePlatform
