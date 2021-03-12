@@ -90,6 +90,22 @@
     - { role: obs-studio, tags: obs-studio }
     - { role: scribus, tags: scribus }
     - { role: wireshark, tags: wireshark }
+    - { role: discord, tags: discord }
+    - { role: etcher, tags: etcher }
+    - { role: gnome-disk-utility, tags: gnome-disk-utility }
+    - { role: gnome-multi-writer, tags: gnome-multi-writer }
+    - { role: signal-desktop, tags: signal-desktop }
+    - { role: skype, tags: skype }
+    - { role: spotify, tags: spotify }
+    - { role: teamviewer, tags: teamviewer }
+    - { role: telegram, tags: telegram }
+    - { role: woeusb-ng, tags: woeusb-ng }
+    ### Gaming
+    - { role: wine, tags: wine }
+    - { role: dosbox, tags: dosbox }
+    - { role: itch-io, tags: itch-io }
+    - { role: gog-wyvern, tags: gog-wyvern }
+    - { role: lutris, tags: lutris }
     ### Development
     - { role: ansible-host, tags: ansible-host }
     ### General

@@ -67,6 +67,10 @@
     ### Desktop environment
     - { role: sddm, tags: sddm }
     - { role: kde, tags: kde }
+    ### General support
+    - { role: filesystem-support, tags: filesystem-support }
+    - { role: format-support, tags: format-support }
+    - { role: fonts-support, tags: fonts-support }
     ### CLI apps
     - { role: man-page, tags: man-page }
     - { role: yubikey, tags: yubikey }
@@ -103,9 +107,6 @@
     - { role: chromium, tags: chromium }
     - { role: keepassxc, tags: keepassxc }
     - { role: vscode, tags: vscode }
-    - { role: filesystem-support, tags: filesystem-support }
-    - { role: format-support, tags: format-support }
-    - { role: fonts-support, tags: fonts-support }
     - { role: hplip, tags: hplip }
     - { role: gimp, tags: gimp }
     - { role: inkscape, tags: inkscape }
@@ -114,6 +115,21 @@
     - { role: scribus, tags: scribus }
     - { role: qbittorrent, tags: qbittorrent }
     - { role: wireshark, tags: wireshark }
+    - { role: discord, tags: discord }
+    - { role: etcher, tags: etcher }
+    - { role: gnome-disk-utility, tags: gnome-disk-utility }
+    - { role: gnome-multi-writer, tags: gnome-multi-writer }
+    - { role: signal-desktop, tags: signal-desktop }
+    - { role: skype, tags: skype }
+    - { role: spotify, tags: spotify }
+    - { role: teamviewer, tags: teamviewer }
+    - { role: telegram, tags: telegram }
+    - { role: woeusb-ng, tags: woeusb-ng }
+    ### Gaming
+    - { role: wine, tags: wine }
+    - { role: dosbox, tags: dosbox }
+    - { role: itch-io, tags: itch-io }
+    - { role: steam, tags: steam }
     ### Development
     - { role: ansible-host, tags: ansible-host }
     - { role: docker, tags: docker }
