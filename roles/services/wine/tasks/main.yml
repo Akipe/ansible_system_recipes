@@ -1,0 +1,59 @@
+---
+
+- name: Installation
+  community.general.pacman:
+    state: present
+    name:
+      - wine
+      - winetricks
+      - wine-nine
+
+- name: Installation of dependencies
+  community.general.pacman:
+    state: present
+    name:
+      - wine-gecko
+      - wine-mono
+      - openal
+      - lib32-openal
+      - giflib
+      - lib32-giflib
+      - libpng
+      - lib32-libpng
+      - gnutls
+      - lib32-gnutls
+      - gst-plugins-base-libs
+      - lib32-gst-plugins-base-libs
+      - lib32-gst-plugins-base
+      - lib32-gst-plugins-good
+      - libxinerama
+      - lib32-libxinerama
+      - libjpeg-turbo
+      - lib32-libjpeg-turbo
+      - mpg123
+      - lib32-mpg123
+      - libxslt
+      - lib32-libxslt
+      - libxcomposite
+      - lib32-libxcomposite
+      - ncurses
+      - lib32-ncurses
+      - sdl2
+      - lib32-sdl2
+      - v4l-utils
+      - lib32-v4l-utils
+      - vkd3d
+      - lib32-vkd3d
+      - libgphoto2
+    extra_args: --asdeps
+
+- name: Installation of dependencies (AUR)
+  become: true
+  become_user: ansible_aur
+  aur:
+    use: yay
+    state: present
+    name:
+      - dxvk-bin
+      # - lib32-gst-plugins-bad
+      # - lib32-gst-plugins-ugly
