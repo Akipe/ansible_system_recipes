@@ -1,0 +1,14 @@
+---
+
+- name: Installation
+  community.general.pacman:
+    state: present
+    name: lutris
+
+- name: Installation of dependencies
+  community.general.pacman:
+    state: present
+    name:
+      - vkd3d
+      - wine
+    extra_args: --asdeps
