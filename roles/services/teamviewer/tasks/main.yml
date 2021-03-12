@@ -1,0 +1,9 @@
+---
+
+- name: Installation (AUR)
+  become: true
+  become_user: ansible_aur
+  aur:
+    use: yay
+    state: present
+    name: teamviewer
