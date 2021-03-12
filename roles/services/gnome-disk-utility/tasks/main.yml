@@ -1,0 +1,6 @@
+---
+
+- name: Installation
+  community.general.pacman:
+    state: present
+    name: gnome-disk-utility
