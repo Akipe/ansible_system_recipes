@@ -1,0 +1,8 @@
+---
+
+- name: Installation
+  community.general.pacman:
+    state: present
+    name:
+      - gamemode
+      - lib32-gamemode
