@@ -1,0 +1,7 @@
+---
+
+- name: Installation (flatpak)
+  community.general.flatpak:
+    state: present
+    remote: flathub
+    name: com.spotify.Client
