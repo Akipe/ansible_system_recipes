@@ -1,0 +1,14 @@
+---
+
+- name: Installation
+  community.general.pacman:
+    state: present
+    name:
+      - steam
+
+- name: Installation of dependencies
+  community.general.pacman:
+    state: present
+    name:
+      - steam-native-runtime
+    extra_args: --asdeps
