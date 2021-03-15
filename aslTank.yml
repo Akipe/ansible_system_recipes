@@ -29,7 +29,7 @@
     ### System
     - { role: bash, tags: bash }
     - { role: fish, tags: fish }
-    - { role: tpm1, tags: tpm1 }
+    - { role: tpm2, tags: tpm2 }
     - { role: rngd, tags: rngd }
     - { role: systemd-resolved, tags: systemd-resolved }
     - { role: systemd-timesyncd, tags: systemd-timesyncd }
