@@ -1,0 +1,14 @@
+---
+
+- name: Installation
+  community.general.pacman:
+    state: present
+    name:
+      - powertop
+
+- name: Installation of dependencies
+  community.general.pacman:
+    state: present
+    name:
+      - xorg-xset
+    extra_args: --asdeps
