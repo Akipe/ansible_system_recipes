@@ -1,0 +1,7 @@
+---
+
+- name: Installation
+  community.general.pacman:
+    state: present
+    name:
+      - plasma5-applets-active-window-control
