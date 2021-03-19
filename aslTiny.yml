@@ -47,6 +47,7 @@
     - { role: firewalld, tags: firewalld }
     # - { role: apparmor, tags: apparmor }
     - { role: tlp, tags: tlp }
+    - { role: powertop, tags: powertop }
     - { role: thermald, tags: thermald }
     - { role: irqbalance, tags: irqbalance }
     - { role: preload, tags: preload }
@@ -56,6 +57,7 @@
     # - { role: snapper, tags: snapper }
     ### Hardware
     - { role: intelgraphics, tags: intelgraphics }
+    - { role: sof-firmware, tags: sof-firmware }
     - { role: disk, tags: disk }
     - { role: networkmanager, tags: networkmanager }
     - { role: libinput, tags: libinput }
@@ -67,6 +69,10 @@
     ### Desktop environment
     - { role: sddm, tags: sddm }
     - { role: kde, tags: kde }
+    ### KDE extensions
+    - { role: plasma-applet-thermal-monitor, tags: plasma-applet-thermal-monitor }
+    - { role: plasma-applet-active-window-control, tags: plasma-applet-active-window-control }
+    - { role: plasma-applets-window-buttons, tags: plasma-applets-window-buttons }
     ### General support
     - { role: filesystem-support, tags: filesystem-support }
     - { role: format-support, tags: format-support }
@@ -125,8 +131,16 @@
     - { role: teamviewer, tags: teamviewer }
     - { role: telegram, tags: telegram }
     - { role: woeusb-ng, tags: woeusb-ng }
+    - { role: neochat, tags: neochat }
+    ### Overclock/undervolt
+    - { role: intel-undervolt, tags: intel-undervolt }
+    - { role: stress, tags: stress }
+    - { role: mprime, tags: mprime }
+    - { role: cpupower, tags: cpupower }
+    - { role: turbostat, tags: turbostat }
     ### Gaming
     - { role: gamemode, tags: gamemode }
+    - { role: steam, tags: steam }
     - { role: wine, tags: wine }
     - { role: dosbox, tags: dosbox }
     - { role: itch-io, tags: itch-io }

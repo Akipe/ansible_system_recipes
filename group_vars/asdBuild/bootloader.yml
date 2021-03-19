@@ -5,7 +5,8 @@ bootloader_options:
   - "root=/dev/mapper/akpsystem-root"
   - "resume=/dev/mapper/akpsystem-swap"
   - "audit=1"
-  - "idle=nomwait"
+  - "idle=nomwait"  # Fix Ryzen CPU errors
+  - "amdgpu.ppfeaturemask=0xffffffff"  # Enable overclock/underclock for amdgpu
 
 refind_os_boot_type: gui
 refind_is_dual_boot_with_windows: true
