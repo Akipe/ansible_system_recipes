@@ -56,7 +56,7 @@
     # - { role: snapper, tags: snapper }
     ### Hardware
     - { role: amdgpu, tags: amdgpu }
-    - { role: asus-prime, tags: asus-prime }
+    - { role: asus-prime-x470-pro, tags: asus-prime-x470-pro }
     - { role: renesas-upd72020x, tags: renesas-upd72020x }
     - { role: networkmanager, tags: networkmanager }
     - { role: libinput, tags: libinput }

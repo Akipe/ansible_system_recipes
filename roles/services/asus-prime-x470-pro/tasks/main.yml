@@ -7,4 +7,5 @@
     use: yay
     state: present
     aur_only: yes
-    name: asus-wmi-sensors-dkms-git
+    name:
+      - asus-wmi-sensors-dkms-git
