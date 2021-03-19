@@ -1,0 +1,27 @@
+## {{ ansible_managed }}
+
+
+{% if tlp_config_runtime_pm_on_ac_connected is not none %}
+RUNTIME_PM_ON_AC={% if tlp_config_runtime_pm_on_ac_connected %}auto{% else %}on{% endif %}
+{% endif %}
+
+{% if tlp_config_runtime_pm_on_battery is not none %}
+RUNTIME_PM_ON_BAT={% if tlp_config_runtime_pm_on_battery %}auto{% else %}on{% endif %}
+{% endif %}
+
+{% if tlp_config_runtime_pm_blacklist is not none %}
+RUNTIME_PM_BLACKLIST={{ tlp_config_runtime_pm_blacklist }}
+{% endif %}
+
+{% if tlp_config_runtime_pm_driver_blacklist is not none %}
+RUNTIME_PM_DRIVER_BLACKLIST={{ tlp_config_runtime_pm_driver_blacklist }}
+{% endif %}
+
+
+{% if tlp_config_aspm_on_ac_connected is not none %}
+PCIE_ASPM_ON_AC={{ tlp_config_aspm_on_ac_connected }}
+{% endif %}
+
+{% if tlp_config_aspm_on_battery is not none %}
+PCIE_ASPM_ON_BAT={{ tlp_config_aspm_on_battery }}
+{% endif %}

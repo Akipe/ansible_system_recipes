@@ -1,0 +1,33 @@
+## {{ ansible_managed }}
+
+{% if tlp_config_restore_device_state_on_startup is not none %}
+RESTORE_DEVICE_STATE_ON_STARTUP={% if tlp_config_restore_device_state_on_startup %}1{% else %}0{% endif %}
+{% endif %}
+
+{% if tlp_config_devices_to_disable_on_startup is not none %}
+DEVICES_TO_DISABLE_ON_STARTUP={{ tlp_config_devices_to_disable_on_startup }}
+{% endif %}
+
+{% if tlp_config_devices_to_enable_on_startup is not none %}
+DEVICES_TO_ENABLE_ON_STARTUP={{ tlp_config_devices_to_enable_on_startup }}
+{% endif %}
+
+{% if tlp_config_devices_to_disable_on_shutdown is not none %}
+DEVICES_TO_DISABLE_ON_SHUTDOWN={{ tlp_config_devices_to_disable_on_shutdown }}
+{% endif %}
+
+{% if tlp_config_devices_to_enable_on_shutdown is not none %}
+DEVICES_TO_ENABLE_ON_SHUTDOWN={{ tlp_config_devices_to_enable_on_shutdown }}
+{% endif %}
+
+{% if tlp_config_devices_to_enable_on_ac_connected is not none %}
+DEVICES_TO_ENABLE_ON_AC={{ tlp_config_devices_to_enable_on_ac_connected }}
+{% endif %}
+
+{% if tlp_config_devices_to_disable_on_battery is not none %}
+DEVICES_TO_DISABLE_ON_BAT={{ tlp_config_devices_to_disable_on_battery }}
+{% endif %}
+
+{% if tlp_config_devices_to_disable_on_battery_not_in_use is not none %}
+DEVICES_TO_DISABLE_ON_BAT_NOT_IN_USE={{ tlp_config_devices_to_disable_on_battery_not_in_use }}
+{% endif %}

@@ -1,0 +1,51 @@
+## {{ ansible_managed }}
+
+{% if tlp_config_intel_gpu_min_frequency_on_ac_connected is not none %}
+INTEL_GPU_MIN_FREQ_ON_AC={{ tlp_config_intel_gpu_min_frequency_on_ac_connected }}
+{% endif %}
+
+{% if tlp_config_intel_gpu_min_frequency_on_battery is not none %}
+INTEL_GPU_MIN_FREQ_ON_BAT={{ tlp_config_intel_gpu_min_frequency_on_battery }}
+{% endif %}
+
+{% if tlp_config_intel_gpu_max_frequency_on_ac_connected is not none %}
+INTEL_GPU_MAX_FREQ_ON_AC={{ tlp_config_intel_gpu_max_frequency_on_ac_connected }}
+{% endif %}
+
+{% if tlp_config_intel_gpu_max_frequency_on_battery is not none %}
+INTEL_GPU_MAX_FREQ_ON_BAT={{ tlp_config_intel_gpu_max_frequency_on_battery }}
+{% endif %}
+
+{% if tlp_config_intel_gpu_boost_frequency_on_ac_connected is not none %}
+INTEL_GPU_BOOST_FREQ_ON_AC={{ tlp_config_intel_gpu_boost_frequency_on_ac_connected }}
+{% endif %}
+
+{% if tlp_config_intel_gpu_boost_frequency_on_battery is not none %}
+INTEL_GPU_BOOST_FREQ_ON_BAT={{ tlp_config_intel_gpu_boost_frequency_on_battery }}
+{% endif %}
+
+
+{% if tlp_config_radeon_power_profile_on_ac_connected is not none %}
+RADEON_POWER_PROFILE_ON_AC={{ tlp_config_radeon_power_profile_on_ac_connected }}
+{% endif %}
+
+{% if tlp_config_radeon_power_profile_on_battery is not none %}
+RADEON_POWER_PROFILE_ON_BAT={{ tlp_config_radeon_power_profile_on_battery }}
+{% endif %}
+
+
+{% if tlp_config_radeon_dpm_state_on_ac_connected is not none %}
+RADEON_DPM_STATE_ON_AC={{ tlp_config_radeon_dpm_state_on_ac_connected }}
+{% endif %}
+
+{% if tlp_config_radeon_dpm_state_on_battery is not none %}
+RADEON_DPM_STATE_ON_BAT={{ tlp_config_radeon_dpm_state_on_battery }}
+{% endif %}
+
+{% if tlp_config_radeon_dpm_performance_level_on_ac_connected is not none %}
+RADEON_DPM_PERF_LEVEL_ON_AC={{ tlp_config_radeon_dpm_performance_level_on_ac_connected }}
+{% endif %}
+
+{% if tlp_config_radeon_dpm_performance_level_on_battery is not none %}
+RADEON_DPM_PERF_LEVEL_ON_BAT={{ tlp_config_radeon_dpm_performance_level_on_battery }}
+{% endif %}

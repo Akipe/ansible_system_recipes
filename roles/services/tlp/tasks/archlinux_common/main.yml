@@ -1,0 +1,16 @@
+---
+
+- name: Installation
+  community.general.pacman:
+    name:
+      - tlp
+      - tlp-rdw
+    state: present
+
+- name: Installation of dependencies
+  community.general.pacman:
+    state: present
+    name:
+      - x86_energy_perf_policy
+      - ethtool
+    extra_args: --asdeps

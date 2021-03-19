@@ -1,0 +1,13 @@
+## {{ ansible_managed }}
+
+{% if tlp_config_wifi_power_saving_on_ac_connected is not none %}
+WIFI_PWR_ON_AC={% if tlp_config_wifi_power_saving_on_ac_connected %}on{% else %}off{% endif %}
+{% endif %}
+
+{% if tlp_config_wifi_power_saving_on_battery is not none %}
+WIFI_PWR_ON_BAT={% if tlp_config_wifi_power_saving_on_battery %}on{% else %}off{% endif %}
+{% endif %}
+
+{% if tlp_config_wake_on_lan_disable is not none %}
+WOL_DISABLE={% if tlp_config_wake_on_lan_disable %}Y{% else %}N{% endif %}
+{% endif %}
