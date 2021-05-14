@@ -1,0 +1,13 @@
+## {{ ansible_managed }}
+
+{% if tlp_config_sound_power_save_on_ac_connected is not none %}
+SOUND_POWER_SAVE_ON_AC={{ tlp_config_sound_power_save_on_ac_connected }}
+{% endif %}
+
+{% if tlp_config_sound_power_save_on_battery is not none %}
+SOUND_POWER_SAVE_ON_BAT={{ tlp_config_sound_power_save_on_battery }}
+{% endif %}
+
+{% if tlp_config_sound_power_save_controller is not none %}
+SOUND_POWER_SAVE_CONTROLLER={% if tlp_config_sound_power_save_controller %}Y{% else %}N{% endif %}
+{% endif %}

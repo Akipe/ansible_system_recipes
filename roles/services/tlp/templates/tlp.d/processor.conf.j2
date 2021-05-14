@@ -1,0 +1,65 @@
+## {{ ansible_managed }}
+
+{% if tlp_config_cpu_scaling_governor_on_ac_connected is not none %}
+CPU_SCALING_GOVERNOR_ON_AC={{ tlp_config_cpu_scaling_governor_on_ac_connected }}
+{% endif %}
+
+{% if tlp_config_cpu_scaling_governor_on_battery is not none %}
+CPU_SCALING_GOVERNOR_ON_BAT={{ tlp_config_cpu_scaling_governor_on_battery }}
+{% endif %}
+
+{% if tlp_config_cpu_scaling_min_frequency_on_ac_connected is not none %}
+CPU_SCALING_MIN_FREQ_ON_AC={{ tlp_config_cpu_scaling_min_frequency_on_ac_connected }}
+{% endif %}
+
+{% if tlp_config_cpu_scaling_max_frequency_on_ac_connected is not none %}
+CPU_SCALING_MAX_FREQ_ON_AC={{ tlp_config_cpu_scaling_max_frequency_on_ac_connected }}
+{% endif %}
+
+{% if tlp_config_cpu_scaling_min_frequency_on_battery is not none %}
+CPU_SCALING_MIN_FREQ_ON_BAT={{ tlp_config_cpu_scaling_min_frequency_on_battery }}
+{% endif %}
+
+{% if tlp_config_cpu_scaling_max_frequency_on_battery is not none %}
+CPU_SCALING_MAX_FREQ_ON_BAT={{ tlp_config_cpu_scaling_max_frequency_on_battery }}
+{% endif %}
+
+{% if tlp_config_cpu_energy_performance_policy_on_ac_connected is not none %}
+CPU_ENERGY_PERF_POLICY_ON_AC={{ tlp_config_cpu_energy_performance_policy_on_ac_connected }}
+{% endif %}
+
+{% if tlp_config_cpu_energy_performance_policy_on_battery is not none %}
+CPU_ENERGY_PERF_POLICY_ON_BAT={{ tlp_config_cpu_energy_performance_policy_on_battery }}
+{% endif %}
+
+{% if tlp_config_cpu_min_performance_on_ac_connected is not none %}
+CPU_MIN_PERF_ON_AC={{ tlp_config_cpu_min_performance_on_ac_connected }}
+{% endif %}
+
+{% if tlp_config_cpu_max_performance_on_ac_connected is not none %}
+CPU_MAX_PERF_ON_AC={{ tlp_config_cpu_max_performance_on_ac_connected }}
+{% endif %}
+
+{% if tlp_config_cpu_min_performance_on_battery is not none %}
+CPU_MIN_PERF_ON_BAT={{ tlp_config_cpu_min_performance_on_battery }}
+{% endif %}
+
+{% if tlp_config_cpu_max_performance_on_battery is not none %}
+CPU_MAX_PERF_ON_BAT={{ tlp_config_cpu_max_performance_on_battery }}
+{% endif %}
+
+{% if tlp_config_cpu_boost_on_ac_connected is not none %}
+CPU_BOOST_ON_AC={% if tlp_config_cpu_boost_on_ac_connected %}1{% else %}0{% endif %}
+{% endif %}
+
+{% if tlp_config_cpu_boost_on_battery is not none %}
+CPU_BOOST_ON_BAT={% if tlp_config_cpu_boost_on_battery %}1{% else %}0{% endif %}
+{% endif %}
+
+{% if tlp_config_scheduler_powersave_on_ac_connected is not none %}
+SCHED_POWERSAVE_ON_AC={% if tlp_config_scheduler_powersave_on_ac_connected %}1{% else %}0{% endif %}
+{% endif %}
+
+{% if tlp_config_scheduler_powersave_on_battery is not none %}
+SCHED_POWERSAVE_ON_BAT={% if tlp_config_scheduler_powersave_on_battery %}1{% else %}0{% endif %}
+{% endif %}

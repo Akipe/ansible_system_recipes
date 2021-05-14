@@ -1,0 +1,13 @@
+## {{ ansible_managed }}
+
+{% if tlp_config_drive_bay_poweroff_on_ac_connected is not none %}
+BAY_POWEROFF_ON_AC={% if tlp_config_drive_bay_poweroff_on_ac_connected %}1{% else %}0{% endif %}
+{% endif %}
+
+{% if tlp_config_drive_bay_poweroff_on_battery is not none %}
+BAY_POWEROFF_ON_BAT={% if tlp_config_drive_bay_poweroff_on_battery %}1{% else %}0{% endif %}
+{% endif %}
+
+{% if tlp_config_drive_bay_device is not none %}
+BAY_DEVICE={{ tlp_config_drive_bay_device }}
+{% endif %}

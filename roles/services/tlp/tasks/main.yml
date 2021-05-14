@@ -1,35 +1,52 @@
 ---
 
-- name: Installation
-  community.general.pacman:
-    state: present
-    name:
-      - tlp
-      - x86_energy_perf_policy 
-      # - tlp-rdw
-  tags: debug
+- name: Include tasks for all Archlinux based distributions
+  ansible.builtin.include_tasks: archlinux_common/main.yml
+  when: ansible_distribution == "Archlinux"
 
-- name: Add configuration
+- name: Add configurations
   ansible.builtin.template:
-    src: etc/tlp.j2
-    dest:  /etc/default/tlp
+    src: "tlp.d/{{ item }}.conf.j2"
+    dest: "/etc/tlp.d/{{ item }}.conf"
     owner: root
     group: root
     mode: u+rw,g+r,o+r
+  loop:
+    - "audio"
+    - "battery_charge_thresholds"
+    - "disks"
+    - "drive_bay"
+    - "graphics"
+    - "kernel"
+    - "networking"
+    - "operation"
+    - "pcie_bus"
+    - "processor"
+    - "radio_device_switching"
+    - "radio_device_wizard"
+    - "trace_mode"
+    - "usb"
   notify:
     - Restart TLP
-  tags: debug
 
 - name: Start and enable service
   ansible.builtin.systemd:
     name: tlp.service
     enabled: yes
     state: started
-  tags: debug
 
-# - name: Start and enable NetworkManager dispatcher for tlp-rdw
-#   ansible.builtin.systemd:
-#     name: NetworkManager-dispatcher.service
-#     enabled: yes
-#     state: started
-#   tags: debug
+- name: Start and enable NetworkManager dispatcher for radio device wizard
+  ansible.builtin.systemd:
+    name: NetworkManager-dispatcher.service
+    enabled: yes
+    state: started
+  when: tlp_enable_radio_device_wizard
+
+- name: Mask systemd-rfkill service & socket to avoid conflicts with TLP radio device switching
+  ansible.builtin.systemd:
+    name: "{{ item }}"
+    masked: yes
+  loop:
+    - "systemd-rfkill.service"
+    - "systemd-rfkill.socket"
+  when: tlp_enable_radio_device_wizard

@@ -1,0 +1,41 @@
+## {{ ansible_managed }}
+
+{% if tlp_config_devices_to_disable_on_lan_connect is not none %}
+DEVICES_TO_DISABLE_ON_LAN_CONNECT={{ tlp_config_devices_to_disable_on_lan_connect }}
+{% endif %}
+
+{% if tlp_config_devices_to_disable_on_wifi_connect is not none %}
+DEVICES_TO_DISABLE_ON_WIFI_CONNECT={{ tlp_config_devices_to_disable_on_wifi_connect }}
+{% endif %}
+
+{% if tlp_config_devices_to_disable_on_wwan_connect is not none %}
+DEVICES_TO_DISABLE_ON_WWAN_CONNECT={{ tlp_config_devices_to_disable_on_wwan_connect }}
+{% endif %}
+
+{% if tlp_config_devices_to_enable_on_lan_connect is not none %}
+DEVICES_TO_ENABLE_ON_LAN_DISCONNECT={{ tlp_config_devices_to_enable_on_lan_connect }}
+{% endif %}
+
+{% if tlp_config_devices_to_enable_on_wifi_connect is not none %}
+DEVICES_TO_ENABLE_ON_WIFI_DISCONNECT={{ tlp_config_devices_to_enable_on_wifi_connect }}
+{% endif %}
+
+{% if tlp_config_devices_to_enable_on_wwan_connect is not none %}
+DEVICES_TO_ENABLE_ON_WWAN_DISCONNECT={{ tlp_config_devices_to_enable_on_wwan_connect }}
+{% endif %}
+
+{% if tlp_config_devices_to_enable_on_dock is not none %}
+DEVICES_TO_ENABLE_ON_DOCK={{ tlp_config_devices_to_enable_on_dock }}
+{% endif %}
+
+{% if tlp_config_devices_to_disable_on_dock is not none %}
+DEVICES_TO_DISABLE_ON_DOCK={{ tlp_config_devices_to_disable_on_dock }}
+{% endif %}
+
+{% if tlp_config_devices_to_enable_on_undock is not none %}
+DEVICES_TO_ENABLE_ON_UNDOCK={{ tlp_config_devices_to_enable_on_undock }}
+{% endif %}
+
+{% if tlp_config_devices_to_disable_on_undock is not none %}
+DEVICES_TO_DISABLE_ON_UNDOCK={{ tlp_config_devices_to_disable_on_undock }}
+{% endif %}

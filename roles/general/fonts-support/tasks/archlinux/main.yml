@@ -46,3 +46,10 @@
       - ttf-cascadia-code
       - ttf-carlito
       - ttf-caladea
+
+- name: Installation of emoji
+  community.general.pacman:
+    state: present
+    name:
+      - noto-fonts-emoji
+      - ttf-joypixels

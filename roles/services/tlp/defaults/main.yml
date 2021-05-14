@@ -1,0 +1,136 @@
+---
+
+tlp_enable_radio_device_wizard: false
+
+### Configuratioon
+
+# Operation
+tlp_config_enable: null  # true|false
+tlp_config_default_mode: null  # AC|BAT
+tlp_config_persistent_default: null  # true|false
+tlp_config_power_supply_class_to_ignore: null  # AC|BAT
+
+# Audio
+tlp_config_sound_power_save_on_ac_connected: null  # int(Timeout in second)
+tlp_config_sound_power_save_on_battery: null  # int(Timeout in second)
+tlp_config_sound_power_save_controller: null  # true|false
+
+# Battery charge thresholds (Thinkpad only)
+tlp_config_start_charge_thresh_battery_0: null  # int(0 to 100, pourcent)
+tlp_config_stop_charge_thresh_battery_0: null  # int(0 to 100, pourcent)
+tlp_config_start_charge_thresh_battery_1: null  # int(0 to 100, pourcent)
+tlp_config_stop_charge_thresh_battery_1: null  # int(0 to 100, pourcent)
+tlp_config_restore_thresholds_on_battery: null  # true|false
+tlp_config_natacpi_enable: null  # true|false
+tlp_config_tpacpi_enable: null  # true|false
+tlp_config_tpsmapi_enable: null  # true|false
+
+# Drive bay
+tlp_config_drive_bay_poweroff_on_ac_connected: null  # true|false
+tlp_config_drive_bay_poweroff_on_battery: null  # true|false
+tlp_config_drive_bay_device: null  # string(device name like "sr0")
+
+# Disk
+tlp_config_disk_devices: null  # string(device name, like "nvme0n1 sda" or ids "ata-INTEL_SSDSA2M160G2GC_XZY123456890")
+tlp_config_disk_apm_level_on_ac_connected: null  # https://linrunner.de/tlp/settings/disks.html?highlight=ahci#disk-apm-level-on-ac-bat
+tlp_config_disk_apm_level_on_battery: null  # https://linrunner.de/tlp/settings/disks.html?highlight=ahci#disk-apm-level-on-ac-bat
+tlp_config_disk_spindown_timeout_on_ac_connected: null  # https://linrunner.de/tlp/settings/disks.html?highlight=ahci#disk-apm-level-on-ac-bat
+tlp_config_disk_spindown_timeout_on_battery: null  # https://linrunner.de/tlp/settings/disks.html?highlight=ahci#disk-apm-level-on-ac-bat
+tlp_config_disk_io_scheduler: null  # https://linrunner.de/tlp/settings/disks.html?highlight=ahci#disk-apm-level-on-ac-bat
+tlp_config_disk_idle_seconds_on_ac_connected: null  # int(seconds)
+tlp_config_disk_idle_seconds_on_battery: null  # int(seconds)
+tlp_config_sata_alpm_on_ac_connected: null  # https://linrunner.de/tlp/settings/disks.html?highlight=ahci#disk-apm-level-on-ac-bat
+tlp_config_sata_alpm_on_battery: null  # https://linrunner.de/tlp/settings/disks.html?highlight=ahci#disk-apm-level-on-ac-bat
+tlp_config_sata_alpm_blacklist: null  # string
+tlp_config_max_lost_works_seconds_on_ac_connected: null  # int(seconds)
+tlp_config_max_lost_works_seconds_on_battery: null  # int(seconds)
+tlp_config_ahci_runtime_pm_on_ac_connected: null  # true|false
+tlp_config_ahci_runtime_pm_on_battery: null  # true|false
+tlp_config_ahci_runtime_pm_timeout: null  # int(seconds)
+
+# GPU - Intel https://linrunner.de/tlp/settings/graphics.html#intel-gpu
+tlp_config_intel_gpu_min_frequency_on_ac_connected: null
+tlp_config_intel_gpu_min_frequency_on_battery: null
+tlp_config_intel_gpu_max_frequency_on_ac_connected: null
+tlp_config_intel_gpu_max_frequency_on_battery: null
+tlp_config_intel_gpu_boost_frequency_on_ac_connected: null
+tlp_config_intel_gpu_boost_frequency_on_battery: null
+
+# GPU - Radeon (old) https://linrunner.de/tlp/settings/graphics.html#radeon-dpm-state-on-ac-bat
+tlp_config_radeon_power_profile_on_ac_connected: null
+tlp_config_radeon_power_profile_on_battery: null
+
+# GPU - Radeon (amdgpu) https://linrunner.de/tlp/settings/graphics.html#radeon-dpm-perf-level-on-ac-bat
+tlp_config_radeon_dpm_state_on_ac_connected: null
+tlp_config_radeon_dpm_state_on_battery: null
+tlp_config_radeon_dpm_performance_level_on_ac_connected: null
+tlp_config_radeon_dpm_performance_level_on_battery: null
+
+# Kernel
+tlp_config_nmi_watchdog: null  # true|false
+
+# Networking
+tlp_config_wifi_power_saving_on_ac_connected: null  # true|false
+tlp_config_wifi_power_saving_on_battery: null  # true|false
+tlp_config_wake_on_lan_disable: null  # true|false
+
+# Processor
+tlp_config_cpu_scaling_governor_on_ac_connected: null
+tlp_config_cpu_scaling_governor_on_battery: null
+tlp_config_cpu_scaling_min_frequency_on_ac_connected: null
+tlp_config_cpu_scaling_max_frequency_on_ac_connected: null
+tlp_config_cpu_scaling_min_frequency_on_battery: null
+tlp_config_cpu_scaling_max_frequency_on_battery: null
+tlp_config_cpu_energy_performance_policy_on_ac_connected: null
+tlp_config_cpu_energy_performance_policy_on_battery: null
+tlp_config_cpu_min_performance_on_ac_connected: null
+tlp_config_cpu_max_performance_on_ac_connected: null
+tlp_config_cpu_min_performance_on_battery: null
+tlp_config_cpu_max_performance_on_battery: null
+tlp_config_cpu_boost_on_ac_connected: null  # true|false
+tlp_config_cpu_boost_on_battery: null  # true|false
+tlp_config_scheduler_powersave_on_ac_connected: null  # true|false
+tlp_config_scheduler_powersave_on_battery: null  # true|false
+
+# Devices state
+tlp_config_restore_device_state_on_startup: null  # true|false
+tlp_config_devices_to_disable_on_startup: null
+tlp_config_devices_to_enable_on_startup: null
+tlp_config_devices_to_disable_on_shutdown: null
+tlp_config_devices_to_enable_on_shutdown: null
+tlp_config_devices_to_enable_on_ac_connected: null
+tlp_config_devices_to_disable_on_battery: null
+tlp_config_devices_to_disable_on_battery_not_in_use: null
+
+# tlp-rdw
+tlp_config_devices_to_disable_on_lan_connect: null
+tlp_config_devices_to_disable_on_wifi_connect: null
+tlp_config_devices_to_disable_on_wwan_connect: null
+tlp_config_devices_to_enable_on_lan_connect: null
+tlp_config_devices_to_enable_on_wifi_connect: null
+tlp_config_devices_to_enable_on_wwan_connect: null
+tlp_config_devices_to_enable_on_dock: null
+tlp_config_devices_to_disable_on_dock: null
+tlp_config_devices_to_enable_on_undock: null
+tlp_config_devices_to_disable_on_undock: null
+
+# PCI(e)
+tlp_config_runtime_pm_on_ac_connected: null  # true|false
+tlp_config_runtime_pm_on_battery: null  # true|false
+tlp_config_runtime_pm_blacklist: null
+tlp_config_runtime_pm_driver_blacklist: null
+tlp_config_aspm_on_ac_connected: null
+tlp_config_aspm_on_battery: null
+
+# USB
+tlp_config_usb_autosuspend: null  # true|false
+tlp_config_usb_blacklist: null
+tlp_config_usb_blacklist_bluetooth_usb: null  # true|false
+tlp_config_usb_blacklist_phone: null  # true|false
+tlp_config_usb_blacklist_printer: null  # true|false
+tlp_config_usb_blacklist_wwan: null  # true|false
+tlp_config_usb_whitelist: null
+tlp_config_usb_autosuspend_disable_on_shutdown: null  # true|false
+
+# Trace Mode
+tlp_config_debug: null  # "arg bat disk lock nm path pm ps rf run sysfs udev usb"

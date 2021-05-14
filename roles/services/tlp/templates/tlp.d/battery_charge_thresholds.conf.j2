@@ -1,0 +1,34 @@
+## {{ ansible_managed }}
+
+{% if tlp_config_start_charge_thresh_battery_0 is not none %}
+START_CHARGE_THRESH_BAT0={{ tlp_config_start_charge_thresh_battery_0 }}
+{% endif %}
+
+{% if tlp_config_stop_charge_thresh_battery_0 is not none %}
+STOP_CHARGE_THRESH_BAT0={{ tlp_config_stop_charge_thresh_battery_0 }}
+{% endif %}
+
+{% if tlp_config_start_charge_thresh_battery_1 is not none %}
+START_CHARGE_THRESH_BAT1={{ tlp_config_start_charge_thresh_battery_1 }}
+{% endif %}
+
+{% if tlp_config_stop_charge_thresh_battery_1 is not none %}
+STOP_CHARGE_THRESH_BAT1={{ tlp_config_stop_charge_thresh_battery_1 }}
+{% endif %}
+
+{% if tlp_config_restore_thresholds_on_battery is not none %}
+RESTORE_THRESHOLDS_ON_BAT={% if tlp_config_restore_thresholds_on_battery %}1{% else %}0{% endif %}
+{% endif %}
+
+
+{% if tlp_config_natacpi_enable is not none %}
+NATACPI_ENABLE={% if tlp_config_natacpi_enable %}1{% else %}0{% endif %}
+{% endif %}
+
+{% if tlp_config_tpacpi_enable is not none %}
+TPACPI_ENABLE={% if tlp_config_tpacpi_enable %}1{% else %}0{% endif %}
+{% endif %}
+
+{% if tlp_config_tpsmapi_enable is not none %}
+TPSMAPI_ENABLE={% if tlp_config_tpsmapi_enable %}1{% else %}0{% endif %}
+{% endif %}

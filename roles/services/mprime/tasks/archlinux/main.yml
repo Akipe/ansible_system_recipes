@@ -1,0 +1,10 @@
+---
+
+- name: Installation
+  become: true
+  become_user: ansible_aur
+  aur:
+    use: yay
+    state: present
+    aur_only: yes
+    name: mprime-bin

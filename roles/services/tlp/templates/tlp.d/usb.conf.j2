@@ -1,0 +1,33 @@
+## {{ ansible_managed }}
+
+{% if tlp_config_usb_autosuspend is not none %}
+USB_AUTOSUSPEND={% if tlp_config_usb_autosuspend %}1{% else %}0{% endif %}
+{% endif %}
+
+{% if tlp_config_usb_blacklist is not none %}
+USB_BLACKLIST={{ tlp_config_usb_blacklist }}
+{% endif %}
+
+{% if tlp_config_usb_blacklist_bluetooth_usb is not none %}
+USB_BLACKLIST_BTUSB={% if tlp_config_usb_blacklist_bluetooth_usb %}1{% else %}0{% endif %}
+{% endif %}
+
+{% if tlp_config_usb_blacklist_phone is not none %}
+USB_BLACKLIST_PHONE={% if tlp_config_usb_blacklist_phone %}1{% else %}0{% endif %}
+{% endif %}
+
+{% if tlp_config_usb_blacklist_printer is not none %}
+USB_BLACKLIST_PRINTER={% if tlp_config_usb_blacklist_printer %}1{% else %}0{% endif %}
+{% endif %}
+
+{% if tlp_config_usb_blacklist_wwan is not none %}
+USB_BLACKLIST_WWAN={% if tlp_config_usb_blacklist_wwan %}1{% else %}0{% endif %}
+{% endif %}
+
+{% if tlp_config_usb_whitelist is not none %}
+USB_WHITELIST={{ tlp_config_usb_whitelist }}
+{% endif %}
+
+{% if tlp_config_usb_autosuspend_disable_on_shutdown is not none %}
+USB_AUTOSUSPEND_DISABLE_ON_SHUTDOWN={% if tlp_config_usb_autosuspend_disable_on_shutdown %}1{% else %}0{% endif %}
+{% endif %}

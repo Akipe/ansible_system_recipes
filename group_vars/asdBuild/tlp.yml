@@ -1,0 +1,10 @@
+---
+
+tlp_config_enable: true
+tlp_config_default_mode: "AC"
+tlp_config_persistent_default: true
+tlp_config_sata_alpm_on_ac_connected: "med_power_with_dipm max_performance"
+tlp_config_ahci_runtime_pm_on_ac_connected: true
+tlp_config_nmi_watchdog: false
+tlp_config_runtime_pm_on_ac_connected: true
+tlp_config_aspm_on_ac_connected: "default"

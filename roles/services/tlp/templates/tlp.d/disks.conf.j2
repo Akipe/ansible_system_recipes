@@ -1,0 +1,68 @@
+## {{ ansible_managed }}
+
+{% if tlp_config_disk_idle_seconds_on_ac_connected is not none %}
+DISK_IDLE_SECS_ON_AC={{ tlp_config_disk_idle_seconds_on_ac_connected }}
+{% endif %}
+
+{% if tlp_config_disk_idle_seconds_on_battery is not none %}
+DISK_IDLE_SECS_ON_BAT={{ tlp_config_disk_idle_seconds_on_battery }}
+{% endif %}
+
+{% if tlp_config_disk_devices is not none %}
+DISK_DEVICES={{ tlp_config_disk_devices }}
+{% endif %}
+
+{% if tlp_config_disk_apm_level_on_ac_connected is not none %}
+DISK_APM_LEVEL_ON_AC={{ tlp_config_disk_apm_level_on_ac_connected }}
+{% endif %}
+
+{% if tlp_config_disk_apm_level_on_battery is not none %}
+DISK_APM_LEVEL_ON_BAT={{ tlp_config_disk_apm_level_on_battery }}
+{% endif %}
+
+{% if tlp_config_disk_spindown_timeout_on_ac_connected is not none %}
+DISK_SPINDOWN_TIMEOUT_ON_AC={{ tlp_config_disk_spindown_timeout_on_ac_connected }}
+{% endif %}
+
+{% if tlp_config_disk_spindown_timeout_on_battery is not none %}
+DISK_SPINDOWN_TIMEOUT_ON_BAT={{ tlp_config_disk_spindown_timeout_on_battery }}
+{% endif %}
+
+{% if tlp_config_disk_io_scheduler is not none %}
+DISK_IOSCHED={{ tlp_config_disk_io_scheduler }}
+{% endif %}
+
+
+{% if tlp_config_max_lost_works_seconds_on_ac_connected is not none %}
+MAX_LOST_WORK_SECS_ON_AC={{ tlp_config_max_lost_works_seconds_on_ac_connected }}
+{% endif %}
+
+{% if tlp_config_max_lost_works_seconds_on_battery is not none %}
+MAX_LOST_WORK_SECS_ON_BAT={{ tlp_config_max_lost_works_seconds_on_battery }}
+{% endif %}
+
+
+{% if tlp_config_sata_alpm_on_ac_connected is not none %}
+SATA_LINKPWR_ON_AC={{ tlp_config_sata_alpm_on_ac_connected }}
+{% endif %}
+
+{% if tlp_config_sata_alpm_on_battery is not none %}
+SATA_LINKPWR_ON_BAT={{ tlp_config_sata_alpm_on_battery }}
+{% endif %}
+
+{% if tlp_config_sata_alpm_blacklist is not none %}
+SATA_LINKPWR_BLACKLIST={{ tlp_config_sata_alpm_blacklist }}
+{% endif %}
+
+
+{% if tlp_config_ahci_runtime_pm_on_ac_connected is not none %}
+AHCI_RUNTIME_PM_ON_AC={% if tlp_config_ahci_runtime_pm_on_ac_connected %}auto{% else %}on{% endif %}
+{% endif %}
+
+{% if tlp_config_ahci_runtime_pm_on_battery is not none %}
+AHCI_RUNTIME_PM_ON_BAT={% if tlp_config_ahci_runtime_pm_on_battery %}auto{% else %}on{% endif %}
+{% endif %}
+
+{% if tlp_config_ahci_runtime_pm_timeout is not none %}
+AHCI_RUNTIME_PM_TIMEOUT={{ tlp_config_ahci_runtime_pm_timeout }}
+{% endif %}

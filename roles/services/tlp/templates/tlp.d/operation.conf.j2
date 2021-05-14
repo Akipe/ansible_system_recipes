@@ -1,0 +1,17 @@
+## {{ ansible_managed }}
+
+{% if tlp_config_enable is not none %}
+TLP_ENABLE={% if tlp_config_enable %}1{% else %}0{% endif %}
+{% endif %}
+
+{% if tlp_config_default_mode is not none %}
+TLP_DEFAULT_MODE={{ tlp_config_default_mode }}
+{% endif %}
+
+{% if tlp_config_persistent_default is not none %}
+TLP_PERSISTENT_DEFAULT={% if tlp_config_persistent_default %}1{% else %}0{% endif %}
+{% endif %}
+
+{% if tlp_config_power_supply_class_to_ignore is not none %}
+TLP_PS_IGNORE={{ tlp_config_power_supply_class_to_ignore }}
+{% endif %}

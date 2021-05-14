@@ -1,0 +1,20 @@
+---
+
+- name: Installation
+  become: yes
+  become_user: ansible_aur
+  aur:
+    use: yay
+    state: present
+    aur_only: yes
+    name:
+      - zenpower-dkms
+
+- name: Disable k10temp for replacing it with zenpower
+  ansible.builtin.template:
+    src: modprobe.d/disable_k10temp.conf.j2
+    dest: /etc/modprobe.d/disable_k10temp.conf
+    owner: root
+    group: root
+    mode: u+rwx,g+rx,o+rx
+  notify: Restart modules loaded

@@ -1,0 +1,5 @@
+## {{ ansible_managed }}
+
+{% if tlp_config_nmi_watchdog is not none %}
+NMI_WATCHDOG={% if tlp_config_nmi_watchdog %}1{% else %}0{% endif %}
+{% endif %}
