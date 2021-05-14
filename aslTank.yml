@@ -24,7 +24,6 @@
     - { role: microcode, tags: microcode }
     ### Boot
     - { role: dm-crypt, tags: dm-crypt }
-    - { role: plymouth, tags: plymouth }
     - { role: refind, tags: refind }
     ### System
     - { role: bash, tags: bash }

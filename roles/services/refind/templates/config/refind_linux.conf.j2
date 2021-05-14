@@ -1,7 +1,7 @@
 ## {{ ansible_managed }}
 
 {% if refind_os_boot_type == "gui" %}
-"Normal"                  "{% for option in bootloader_options %}{{ option }} {% endfor %} {% if refind_microcode_path is defined %}initrd={{ refind_microcode_path }}{% endif %} initrd=initramfs-%v.img rw quiet splash loglevel=3 rd.udev.log_priority=3 vt.global_cursor_default=0"
+"Normal"                  "{% for option in bootloader_options %}{{ option }} {% endfor %} {% if refind_microcode_path is defined %}initrd={{ refind_microcode_path }}{% endif %} initrd=initramfs-%v.img rw quiet"
 "Terminal"                "{% for option in bootloader_options %}{{ option }} {% endfor %} {% if refind_microcode_path is defined %}initrd={{ refind_microcode_path }}{% endif %} initrd=initramfs-%v.img systemd.unit=multi-user.target rw"
 "Recovery (rw)"           "{% for option in bootloader_options %}{{ option }} {% endfor %} {% if refind_microcode_path is defined %}initrd={{ refind_microcode_path }}{% endif %} initrd=initramfs-%v-fallback.img rw"
 "Recovery (rw, terminal)" "{% for option in bootloader_options %}{{ option }} {% endfor %} {% if refind_microcode_path is defined %}initrd={{ refind_microcode_path }}{% endif %} initrd=initramfs-%v-fallback.img systemd.unit=multi-user.target rw"

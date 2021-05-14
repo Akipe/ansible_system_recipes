@@ -13,7 +13,6 @@ mkinitcpio_initramfs_modules:
 mkinitcpio_initramfs_hooks:
   - base
   - systemd
-  - sd-plymouth
   - autodetect
   - keyboard
   - sd-vconsole
