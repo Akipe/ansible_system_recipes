@@ -5,3 +5,4 @@ bootloader_options:
   - "root=/dev/mapper/akpsystem-root"
   - "resume=/dev/mapper/akpsystem-swap"
   - "audit=1"
+  - "pcie_aspm=force"
