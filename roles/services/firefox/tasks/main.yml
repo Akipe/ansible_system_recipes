@@ -14,11 +14,19 @@
       - libnotify
     extra_args: --asdeps
 
-- name: Enable video acceleration
+- name: Enable video acceleration for X11
   ansible.builtin.lineinfile:
     path: /etc/environment
     regexp: '^MOZ_X11_EGL='
     line: 'MOZ_X11_EGL=1'
+  when: firefox_use_X11 == "true"
+
+- name: Enable Wayland
+  ansible.builtin.lineinfile:
+    path: /etc/environment
+    regexp: '^MOZ_ENABLE_WAYLAND='
+    line: 'MOZ_ENABLE_WAYLAND=1'
+  when: firefox_use_wayland == "true"
 
 # - name: Create system wide configuration directory
 #   ansible.builtin.file:

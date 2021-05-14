@@ -10,7 +10,7 @@
   community.general.pacman:
     state: present
     name:
-      - xclip
+      # - xclip
       # - python-neovim
       # - wl-clipboard
     extra_args: --asdeps

@@ -61,7 +61,8 @@
     ### Desktop environment
     - { role: sddm, tags: sddm }
     - { role: kde, tags: kde }
-    - { role: base-reboot, tags: base-reboot }
+    - { role: wayland, tags: wayland }
+    - { role: wl-clipboard, tags: wl-clipboard }
     ### CLI apps
     - { role: fish, tags: fish }
     - { role: yubikey, tags: yubikey }

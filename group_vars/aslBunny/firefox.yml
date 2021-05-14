@@ -1,0 +1,4 @@
+---
+
+firefox_use_X11: false
+firefox_use_wayland: true

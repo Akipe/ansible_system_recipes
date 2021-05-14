@@ -1,0 +1,16 @@
+---
+
+- name: Installation
+  community.general.pacman:
+    state: present
+    name:
+      - wl-clipboard
+
+- name: Installation of wl-clipboard-x11 (AUR)
+  become: true
+  become_user: ansible_aur
+  aur:
+    use: yay
+    state: present
+    name:
+      - wl-clipboard-x11

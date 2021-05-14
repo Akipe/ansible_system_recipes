@@ -1,0 +1,5 @@
+---
+
+wayland_for_lib_qt: false
+wayland_for_lib_clutter: false
+wayland_for_lib_sdl2: false
