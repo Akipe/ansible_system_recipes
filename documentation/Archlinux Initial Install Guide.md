@@ -571,11 +571,11 @@ pacman --needed --noconfirm -S refind gptfdisk imagemagick python sbsigntools fd
     sbsign \
         --key /etc/refind.d/keys/refind_local.key \
         --cert /etc/refind.d/keys/refind_local.crt \
-        --output /boot/vmlinuz-linux-zen && \
+        --output /boot/vmlinuz-linux-zen /boot/vmlinuz-linux-zen && \
     sbsign \
         --key /etc/refind.d/keys/refind_local.key \
         --cert /etc/refind.d/keys/refind_local.crt \
-        --output /boot/vmlinuz-linux-lts && \
+        --output /boot/vmlinuz-linux-lts /boot/vmlinuz-linux-lts && \
     echo -e '"Boot with standard options"  "initrd=initramfs-%v.img root=/dev/mapper/akpsystem rootflags=subvol=@root rd.luks.options=discard resume=/dev/mapper/akpsystem resume_offset='${RESUME_OFFSET}' quiet rw"
 "Boot to console"    "initrd=initramfs-%v.img root=/dev/mapper/akpsystem rootflags=subvol=@root rd.luks.options=discard resume=/dev/mapper/akpsystem resume_offset='${RESUME_OFFSET}' quiet rw systemd.unit=multi-user.target"
 "Boot using fallback initramfs"  "initrd=initramfs-%v-fallback.imgs root=/dev/mapper/akpsystem rootflags=subvol=@root rd.luks.options=discard resume=/dev/mapper/akpsystem resume_offset='${RESUME_OFFSET}' quiet rw systemd.unit=multi-user.target"
