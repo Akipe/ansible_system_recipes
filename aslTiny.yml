@@ -40,6 +40,8 @@
     - { role: user, tags: user }
     - { role: locale, tags: locale }
     - { role: sudo, tags: sudo }
+    - { role: btrfs, tags: btrfs }
+    - { role: swap, tags: swap }
     - { role: mkinitcpio, tags: mkinitcpio }
     - { role: linux-kernel, tags: linux-kernel }
     - { role: auditd, tags: auditd }
@@ -68,8 +70,8 @@
     ### Desktop environment
     - { role: sddm, tags: sddm }
     - { role: kde, tags: kde }
-    - { role: wayland, tags: wayland }
-    - { role: wl-clipboard, tags: wl-clipboard }
+    #- { role: wayland, tags: wayland }
+    #- { role: wl-clipboard, tags: wl-clipboard }
     ### KDE extensions
     - { role: plasma-applet-thermal-monitor, tags: plasma-applet-thermal-monitor }
     - { role: plasma-applet-active-window-control, tags: plasma-applet-active-window-control }

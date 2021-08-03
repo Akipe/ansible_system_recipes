@@ -2,7 +2,11 @@
 
 time_timezone: Europe/Paris
 time_ntpServers:
-  - "{{ vault_network_ntp_akplan_server }}"
+  - 0.fr.pool.ntp.fr
+  - 1.fr.pool.ntp.fr 
+  - 2.fr.pool.ntp.fr
+  - 3.fr.pool.ntp.fr
+  #- "{{ vault_network_ntp_akplan_server }}"
 time_ntpServers_fallback:
   - 0.fr.pool.ntp.fr
   - 1.fr.pool.ntp.fr 
