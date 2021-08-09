@@ -432,7 +432,8 @@ ff02::2          ip6-allrouters
 ## Configure keyboard
 ```
 loadkeys fr-latin9 && \
-    echo "KEYMAP=fr-latin9" > /etc/vconsole.conf
+    echo "KEYMAP=fr-latin9" > /etc/vconsole.conf && \
+    localectl set-x11-keymap fr
 ```
 
 
