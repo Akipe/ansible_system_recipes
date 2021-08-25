@@ -1,7 +1,7 @@
 ---
 
-- name: Load specific roles for aslTiny
-  hosts: aslTiny
+- name: Load specific roles for astMyluz
+  hosts: astMyluz
   remote_user: root
   become: yes
   pre_tasks:
@@ -36,7 +36,7 @@
     - { role: avahi, tags: avahi }
     - { role: host, tags: host }
     - { role: earlyoom, tags: earlyoom }
-    # - { role: systemd-zram-generator, tags: systemd-zram-generator }
+    - { role: systemd-zram-generator, tags: systemd-zram-generator }
     - { role: user, tags: user }
     - { role: locale, tags: locale }
     - { role: sudo, tags: sudo }
@@ -58,8 +58,6 @@
     # - { role: snapper, tags: snapper }
     ### Hardware
     - { role: intelgraphics, tags: intelgraphics }
-    - { role: sof-firmware, tags: sof-firmware }
-    - { role: disk, tags: disk }
     - { role: networkmanager, tags: networkmanager }
     - { role: libinput, tags: libinput }
     - { role: watchdog, vars: { watchdog_activate: no}, tags: watchdog }
@@ -107,7 +105,7 @@
     - { role: smb4k, tags: smb4k }
     - { role: syncthing-cli, tags: syncthing }
     - { role: syncthing-gui-kde, tags: syncthing }
-    # - { role: profile-sync-daemon, tags: profile-sync-daemon }
+    - { role: profile-sync-daemon, tags: profile-sync-daemon }
     - { role: virtualbox-host, tags: virtualbox-host }
     - { role: mpv, tags: mpv }
     - { role: dvdbackup, tags: dvdbackup }
@@ -116,6 +114,9 @@
     - { role: chromium, tags: chromium }
     - { role: keepassxc, tags: keepassxc }
     - { role: vscode, tags: vscode }
+    - { role: filesystem-support, tags: filesystem-support }
+    - { role: format-support, tags: format-support }
+    - { role: fonts-support, tags: fonts-support }
     - { role: hplip, tags: hplip }
     - { role: gimp, tags: gimp }
     - { role: inkscape, tags: inkscape }
@@ -123,6 +124,7 @@
     - { role: obs-studio, tags: obs-studio }
     - { role: scribus, tags: scribus }
     - { role: qbittorrent, tags: qbittorrent }
+    - { role: pcmanfm, tags: pcmanfm }
     - { role: wireshark, tags: wireshark }
     - { role: discord, tags: discord }
     - { role: etcher, tags: etcher }
@@ -136,7 +138,7 @@
     - { role: woeusb-ng, tags: woeusb-ng }
     - { role: neochat, tags: neochat }
     ### Overclock/undervolt
-    - { role: intel-undervolt, tags: intel-undervolt }
+    - { role: amdctl, tags: amdctl }
     - { role: stress, tags: stress }
     - { role: mprime, tags: mprime }
     - { role: cpupower, tags: cpupower }
@@ -153,3 +155,6 @@
     ### Development
     - { role: ansible-host, tags: ansible-host }
     - { role: docker, tags: docker }
+    - { role: terraform, tags: terraform }
+
+

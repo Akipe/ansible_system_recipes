@@ -2,12 +2,24 @@
 
 - name: Install driver
   community.general.pacman:
-    name: "{{ nvidia_app_base_archlinux_common }}"
+    name:
+    - nvidia-utils
+    - opencl-nvidia
+    - ocl-icd
+    - cuda
+    - lib32-nvidia-utils
+    - lib32-opencl-nvidia
+    - lib32-ocl-icd
     state: present
 
 - name: Install GPU decoding libraries
   community.general.pacman:
-    name: "{{ nvidia_app_video_archlinux_common }}"
+    name:
+    - libvdpau
+    - libva-vdpau-driver
+    - libva-utils
+    - vdpauinfo
+    - lib32-libva-vdpau-driver
     state: present
 
 - name: Configure Pacman hook for update initramfs after an NVIDIA driver upgrade

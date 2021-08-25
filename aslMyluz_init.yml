@@ -1,0 +1,16 @@
+---
+- name: Load roles for initialize astMyluz
+  hosts: astMyluz
+  become_user: root
+  become: yes
+  vars:
+    ansible_ssh_pass: "{{ vault_ansible_become_pass }}"
+  pre_tasks:
+    - ansible.builtin.include_role:
+        name: ansible-guest
+      tags:
+        - always
+  roles:
+    - { role: ssh }
+    - { role: makepkg, tags: makepkg }
+    - { role: pacman, tags: pacman }

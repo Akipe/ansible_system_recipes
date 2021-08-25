@@ -2,5 +2,5 @@
 
 - name: Install driver
   community.general.pacman:
-    name: "{{ nvidia_app_base_manjaro }}"
+    name: linux54-nvidia-450xx
     state: present

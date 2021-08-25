@@ -2,5 +2,5 @@
 
 - name: Install driver
   community.general.pacman:
-    name: "{{ nvidia_app_base_archlinux }}"
+    name: nvidia-dkms
     state: present
