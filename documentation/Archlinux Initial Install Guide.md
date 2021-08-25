@@ -112,15 +112,18 @@ lsblk
 ```
 if [ -f /sys/block/nvme0n1/size ] ; then
     export PATH_DISK=/dev/nvme0n1
-    export PATH_PARTITION_BOOT="${PATH_DISK}p1"
-    export PATH_PARTITION_SYSENCRYPT="${PATH_DISK}p2"
+    export PATH_PARTITION_EFI="${PATH_DISK}p1"
+    export PATH_PARTITION_BOOT="${PATH_DISK}p2"
+    export PATH_PARTITION_SYSENCRYPT="${PATH_DISK}p3"
 else
     export PATH_DISK=/dev/sda
-    export PATH_PARTITION_BOOT="${PATH_DISK}1"
-    export PATH_PARTITION_SYSENCRYPT="${PATH_DISK}2"
+    export PATH_PARTITION_EFI="${PATH_DISK}1"
+    export PATH_PARTITION_BOOT="${PATH_DISK}2"
+    export PATH_PARTITION_SYSENCRYPT="${PATH_DISK}3"
 fi
 
 echo "PATH_DISK: ${PATH_DISK}" && \
+    echo "PATH_PARTITION_EFI: ${PATH_PARTITION_EFI}" && \
     echo "PATH_PARTITION_BOOT: ${PATH_PARTITION_BOOT}" && \
     echo "PATH_PARTITION_SYSENCRYPT: ${PATH_PARTITION_SYSENCRYPT}"
 ```
@@ -145,8 +148,9 @@ export SWAP_PARTITION_SIZE_FLOAT=$(($(free|awk '/^Mem:/{print $2}')/1024/1024*1.
 ```
 sgdisk --zap-all $PATH_DISK && \
     sgdisk --clear \
-        --new=1:0:+1G --typecode=1:ef00 --change-name=1:EFI \
-        --new=2:0:+${SYSTEM_PARTITION_SIZE}G --typecode=2:8300 --change-name=2:akpcryptsystem \
+        --new=1:0:+256M --typecode=1:ef00 --change-name=1:EFI \
+        --new=2:0:+512M --typecode=2:8300 --change-name=2:akpsystem-boot \
+        --new=3:0:+${SYSTEM_PARTITION_SIZE}G --typecode=3:8300 --change-name=3:akpsystem-encrypt \
         $PATH_DISK && \
     sgdisk -p $PATH_DISK && \
     sgdisk -v $PATH_DISK && \
@@ -166,12 +170,13 @@ EOF
 
 ### EFI
 ```
-mkfs.vfat -F32 -n "EFI" /dev/disk/by-partlabel/EFI
+mkfs.vfat -F32 -n "EFI" /dev/disk/by-partlabel/EFI && \
+    mkfs.ext4 -L akpsystem-boot /dev/disk/by-partlabel/akpsystem-boot
 ```
 
 ### BIOS (MBR)
 ```
-mkfs.ext4 -L akpsysboot ${PATH_DISK}1
+mkfs.ext4 -L akpsystem-boot ${PATH_DISK}1
 ```
 
 ## Encrypt root partition
@@ -189,8 +194,8 @@ cryptsetup \
     --align-payload=8192 \
     --cipher aes-xts-plain64 \
     --key-size 512 \
-    --label akpcryptsystem \
-    luksFormat $PATH_PARTITION_SYSENCRYPT
+    --label akpsystem-encrypt \
+    luksFormat /dev/disk/by-partlabel/akpsystem-encrypt
 
 # HDD with 4k bytes sectors
 cryptsetup \
@@ -200,8 +205,8 @@ cryptsetup \
     --align-payload=8192 \
     --cipher aes-xts-plain64 \
     --key-size 512 \
-    --label akpcryptsystem \
-    luksFormat $PATH_PARTITION_SYSENCRYPT
+    --label akpsystem-encrypt \
+    luksFormat /dev/disk/by-partlabel/akpsystem-encrypt
 
 # HDD or devices with 512 bytes sectors
 cryptsetup \
@@ -210,21 +215,23 @@ cryptsetup \
     --iter-time 5000 \
     --cipher aes-xts-plain64 \
     --key-size 512 \
-    --label akpcryptsystem \
-    luksFormat $PATH_PARTITION_SYSENCRYPT
+    --label akpsystem-encrypt \
+    luksFormat /dev/disk/by-partlabel/akpsystem-encrypt
 
-# SSD
+
+
+### Open encrypt system
+# with SSD
 cryptsetup luksOpen \
     --allow-discards \
     --perf-no_read_workqueue \
     --perf-no_write_workqueue \
     --persistent \
-    $PATH_PARTITION_SYSENCRYPT akpsystem
+    /dev/disk/by-partlabel/akpsystem-encrypt akpsystem
 
-# Others
+# with HDD
 cryptsetup luksOpen \
-    --allow-discards \
-    $PATH_PARTITION_SYSENCRYPT akpsystem
+    /dev/disk/by-partlabel/akpsystem-encrypt akpsystem
 ```
 
 ## btrfs
@@ -240,12 +247,11 @@ mkfs.btrfs -L akpsystem -f /dev/mapper/akpsystem && \
     btrfs sub create /mnt/@cache && \
     btrfs sub create /mnt/@snapshots && \
     btrfs sub create /mnt/@swap && \
-    umount /mnt
-
+    umount /mnt && \
     mount \
         -o noatime,compress=zstd:1,commit=120,space_cache=v2,ssd,discard=async,autodefrag,subvol=@root \
         /dev/mapper/akpsystem /mnt && \
-    mkdir -p /mnt/{boot,home,var/cache,var/log,swap,.snapshots,var/tmp,var/abs,srv} && \
+    mkdir -p /mnt/{boot,efi,home,var/cache,var/log,swap,.snapshots,var/tmp,var/abs,srv} && \
     mount \
         -o noatime,compress-force=zstd,commit=120,space_cache=v2,ssd,discard=async,autodefrag,subvol=@home \
         /dev/mapper/akpsystem /mnt/home && \
@@ -269,9 +275,8 @@ mkfs.btrfs -L akpsystem -f /dev/mapper/akpsystem && \
         /dev/mapper/akpsystem /mnt/.snapshots && \
     mount \
         -o compress=no,space_cache,ssd,discard=async,subvol=@swap \
-        /dev/mapper/akpsystem /mnt/swap
-
-mkdir -p /mnt/var/lib/{docker,machines,mysql,postgres} && \
+        /dev/mapper/akpsystem /mnt/swap && \
+    mkdir -p /mnt/var/lib/{docker,machines,mysql,postgres} && \
     chattr +C /mnt/var/lib/{docker,machines,mysql,postgres}
 
 # Create Swapfile
@@ -283,7 +288,9 @@ truncate -s 0 /mnt/swap/swapfile && \
     mkswap --label akpsystem-swap /mnt/swap/swapfile && \
     swapon /mnt/swap/swapfile
 
-mount ${PATH_DISK}1 /mnt/boot
+mount /dev/disk/by-partlabel/EFI /mnt/efi && \
+    mount /dev/disk/by-partlabel/akpsystem-boot /mnt/boot && \
+    lsblk
 ```
 
 ## Set up LVM2
@@ -368,7 +375,7 @@ arch-chroot /mnt /bin/bash
 ## Configure decryption
 ```
 echo -e "
-akpsystem LABEL=akpcryptsystem none timeout=180,discard,no-read-workqueue,no-write-workqueue
+akpsystem LABEL=akpsystem-encrypt none timeout=180,discard,no-read-workqueue,no-write-workqueue
 " > /etc/crypttab.initramfs && \
     less /etc/crypttab.initramfs && \
     mkinitcpio -P
@@ -425,7 +432,8 @@ ff02::2          ip6-allrouters
 ## Configure keyboard
 ```
 loadkeys fr-latin9 && \
-    echo "KEYMAP=fr-latin9" > /etc/vconsole.conf
+    echo "KEYMAP=fr-latin9" > /etc/vconsole.conf && \
+    localectl set-x11-keymap fr
 ```
 
 
@@ -472,7 +480,7 @@ echo "%wheel ALL=(ALL) ALL" > /etc/sudoers.d/10-grant-group-wheel-sudo
 
 ```
 sed -i 's/BINARIES=()/BINARIES=("\/usr\/bin\/btrfs")/' /etc/mkinitcpio.conf && \
-sed -i 's/MODULES=()/MODULES=(dm_mod dm_crypt vfat sha256 sha512 crc32c-intel)/g' /etc/mkinitcpio.conf && \
+sed -i 's/MODULES=()/MODULES=(dm_mod dm_crypt vfat ext4 sha256 sha512 crc32c-intel)/g' /etc/mkinitcpio.conf && \
 sed -i 's/^HOOKS.*/HOOKS=(base systemd autodetect keyboard sd-vconsole modconf block sd-encrypt resume btrfs filesystems fsck)/g' /etc/mkinitcpio.conf && \
 sed -i 's/#COMPRESSION="lz4"/COMPRESSION="lz4"/g' /etc/mkinitcpio.conf && \
 less /etc/mkinitcpio.conf && \
@@ -582,8 +590,8 @@ pacman --needed --noconfirm -S refind gptfdisk imagemagick python sbsigntools fd
 "Boot with minimal options"   "initrd=initramfs-%v.img root=/dev/mapper/akpsystem rootflags=subvol=@root ro"
 ' > /boot/refind_linux.conf && \
     less /boot/refind_linux.conf && \
-    sed -i 's/#extra_kernel_version_strings linux-lts,linux/extra_kernel_version_strings linux-hardened,linux-zen,linux-lts,linux/g' /boot/EFI/refind/refind.conf && \
-    less /boot/EFI/refind/refind.conf && \
+    sed -i 's/#extra_kernel_version_strings linux-lts,linux/extra_kernel_version_strings linux-hardened,linux-zen,linux-lts,linux/g' /efi/EFI/refind/refind.conf && \
+    less /efi/EFI/refind/refind.conf && \
     echo -e "[Trigger]
 Operation = Install
 Operation = Upgrade
@@ -717,12 +725,25 @@ sudo pacman -S --needed \
     sudo systemctl enable sddm.service
 ```
 
+## Install Gnome
+```
+sudo pacman -S --needed \
+        gnome \
+        gnome-usage \
+        gnome-multi-writer \
+        gnome-nettool \
+        gnome-sound-recorder \
+        gnome-todo \
+        gnome-tweaks && \
+    sudo systemctl enable gdm.service
+```
+
 
 # Emergency with Arch Live-CD
 
 ### Mount the system (to /mnt)
 ```
-cryptsetup luksOpen /dev/disk/by-label/akpcryptsystem akpcryptsystem
+cryptsetup luksOpen /dev/disk/by-label/akpsystem-encrypt akpsystem-encrypt
 
 mount /dev/mapper/akpsystem-root /mnt
 
