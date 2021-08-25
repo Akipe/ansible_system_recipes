@@ -738,6 +738,66 @@ sudo pacman -S --needed \
     sudo systemctl enable gdm.service
 ```
 
+## Prepare GNUPG, SSH and Yubikey
+```
+pacman -S --needed \
+        git \
+        gnupg \
+        pcsclite \
+        ccid \
+        hopenpgp-tools \
+        yubikey-personalization \
+        libusb-compat && \
+    systemctl enable pcscd.service
+```
+```
+export KEYID=
+export KEYID=0x2EA09EF308096DAF
+```
+```
+gpg --recv $KEYID && \
+    gpg --edit-key $KEYID
+```
+```
+> trust
+> 5
+> y
+> quit
+```
+```
+su akp
+```
+
+```
+echo -e "enable-ssh-support
+default-cache-ttl 60
+max-cache-ttl 120
+pinentry-program /usr/bin/pinentry-qt
+" > ~/.gnupg/gpg-agent.conf && \
+    echo -e '
+
+export GPG_TTY="$(tty)"
+export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
+gpgconf --launch gpg-agent
+' >> ~/.bashrc && \
+    echo -e '
+
+set -x GPG_TTY (tty)
+set -x SSH_AUTH_SOCK (gpgconf --list-dirs agent-ssh-socket)
+gpgconf --launch gpg-agent
+' >> ~/.config/fish/config.fish
+```
+```
+export GIT_USER_NAME=
+export GIT_USER_EMAIL=
+export GIT_USER_NAME="Julien Milletre Akipe"
+export GIT_USER_EMAIL=code.julien@milletre.fr
+```
+```
+git config --global user.name "$GIT_USER_NAME" && \
+    git config --global user.email $GIT_USER_EMAIL
+```
+
 
 # Emergency with Arch Live-CD
 
