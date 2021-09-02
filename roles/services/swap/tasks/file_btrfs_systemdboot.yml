@@ -7,7 +7,7 @@
 
 - name: Save Swap file offset in a variable
   ansible.builtin.shell: |
-    filefrag -v /swap/file | awk '{ if($1=="0:"){print $5} }' | sed 's/.$//'
+    filefrag -v /swap/swapfile | awk '{ if($1=="0:"){print $5} }' | sed 's/.$//'
   register: swap_file_offset
   changed_when: false
 

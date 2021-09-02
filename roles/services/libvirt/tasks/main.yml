@@ -1,0 +1,47 @@
+---
+
+- name: Installation
+  community.general.pacman:
+    name:
+    - libvirt
+    - edk2-ovmf
+    - swtpm
+    state: present
+  
+- name: Installation of dependencies
+  community.general.pacman:
+    state: present
+    name:
+    - dnsmasq
+    #- iptables-nft
+    - bridge-utils
+    - openbsd-netcat
+    - lvm2
+    - qemu
+    extra_args: --asdeps
+
+- name: Installation of a client
+  community.general.pacman:
+    name:
+    - virt-manager
+    state: present
+
+- name: Enable and start libvirt server service
+  ansible.builtin.systemd:
+    name: libvirtd.service
+    daemon_reload: yes
+    enabled: yes
+    state: started
+
+- name: Enable and start libvirt server service
+  ansible.builtin.systemd:
+    name: libvirtd.service
+    daemon_reload: yes
+    enabled: yes
+    state: started
+
+- name: Start virtlogd
+  ansible.builtin.systemd:
+    name: virtlogd.service
+    state: started
+  

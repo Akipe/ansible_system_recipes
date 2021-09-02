@@ -1,7 +1,6 @@
 ---
 
 pacman_config_color: true
-pacman_config_total_download: true
 pacman_config_check_space: true
 pacman_config_verbose_package_lists: true
 pacman_config_enable_multilib: true

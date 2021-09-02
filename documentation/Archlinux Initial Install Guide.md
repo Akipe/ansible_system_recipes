@@ -803,7 +803,7 @@ git config --global user.name "$GIT_USER_NAME" && \
 
 ### Mount the system (to /mnt)
 ```
-cryptsetup luksOpen /dev/disk/by-label/akpsystem-encrypt akpsystem-encrypt
+cryptsetup luksOpen /dev/disk/by-label/akpsystem-encrypt akpsystem
 
 mount /dev/mapper/akpsystem-root /mnt
 

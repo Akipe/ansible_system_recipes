@@ -5,24 +5,3 @@ Section "Device"
     Driver          "nvidia"
     Option          "NoLogo" "1"
 EndSection
-
-Section "Screen"
-    Identifier     "Screen0"
-    Option         "metamodes" "HDMI-0: nvidia-auto-select {rotation=left}, HDMI-1: nvidia-auto-select {rotation=left}, DP-2: nvidia-auto-select"
-EndSection
-
-{#
-
-# Option         "nvidiaXineramaInfoOrder" "DFP-5"
-
-# Option         "metamodes"                  "HDMI-0: nvidia-auto-select +4520+0 {rotation=left}, HDMI-1: nvidia-auto-select +0+0 {rotation=left}, DP-2: 3440x1440_75 +1080+240 {}"
-# Option         "metamodes" "nvidia-auto-select +0+0 { ForceFullCompositionPipeline = On }"
-# Option         "metamodes" "HDMI-0: nvidia-auto-select +4520+0 {rotation=left}, HDMI-1: nvidia-auto-select +0+0 {rotation=left, ForceCompositionPipeline=On}, DP-2: nvidia-auto-select +1080+240 {ForceCompositionPipeline=On}"
-# Option         "metamodes" "HDMI-0: nvidia-auto-select +4520+0 {rotation=left, ForceCompositionPipeline=On}, HDMI-1: nvidia-auto-select +0+0 {rotation=left, ForceCompositionPipeline=On}, DP-2: nvidia-auto-select +1080+240 {ForceCompositionPipeline=On}"
-# Option         "metamodes" "HDMI-0: nvidia-auto-select +4520+0 {rotation=left, ForceCompositionPipeline=On, ForceFullCompositionPipeline=On}, HDMI-1: nvidia-auto-select +0+0 {rotation=left, ForceCompositionPipeline=On, ForceFullCompositionPipeline=On}, DP-2: 3440x1440_75 +1080+240 {ForceCompositionPipeline=On, ForceFullCompositionPipeline=On}"
-# Option         "metamodes" "DP-2: {AllowGSYNCCompatible=On}, HDMI-0: {rotation=left, ForceCompositionPipeline=On, ForceFullCompositionPipeline=On}, HDMI-1: {rotation=left, ForceCompositionPipeline=On, ForceFullCompositionPipeline=On}"
-
-# Option         "AllowIndirectGLXProtocol" "off"
-# Option         "TripleBuffer" "on"
-
-#}

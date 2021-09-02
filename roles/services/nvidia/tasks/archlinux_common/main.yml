@@ -38,10 +38,10 @@
     group: root
     mode: "u=rwx,g=rx,o=rx"
 
-- name: Add xorg configuration
-  ansible.builtin.template:
-    src: archlinux_common/xorg.conf.d/20-nvidia.conf.j2
-    dest: /etc/X11/xorg.conf.d/20-nvidia.conf
-    owner: root
-    group: root
-    mode: "u=rwx,g=rx,o=rx"
+#- name: Add xorg configuration
+#  ansible.builtin.template:
+#    src: archlinux_common/xorg.conf.d/20-nvidia.conf.j2
+#    dest: /etc/X11/xorg.conf.d/20-nvidia.conf
+#    owner: root
+#    group: root
+#    mode: "u=rwx,g=rx,o=rx"

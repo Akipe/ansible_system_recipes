@@ -1,7 +1,7 @@
 ---
 
-- name: Load specific roles for astMyluz
-  hosts: astMyluz
+- name: Load specific roles for aslMyluz
+  hosts: aslMyluz
   remote_user: root
   become: yes
   pre_tasks:
@@ -15,7 +15,8 @@
       tags:
         - always
   roles:
-    ### Base
+    ## Base
+    - { role: firewalld, tags: firewalld }
     - { role: ssh, tags: ssh }
     ### Package manager
     - { role: makepkg, tags: makepkg }
@@ -23,9 +24,6 @@
     - { role: pacman, tags: pacman }
     ### Hardware init
     - { role: microcode, tags: microcode }
-    ### Boot
-    - { role: dm-crypt, tags: dm-crypt }
-    - { role: refind, tags: refind }
     ### System
     - { role: bash, tags: bash }
     - { role: fish, tags: fish }
@@ -41,7 +39,11 @@
     - { role: locale, tags: locale }
     - { role: sudo, tags: sudo }
     - { role: btrfs, tags: btrfs }
-    - { role: swap, tags: swap }
+    - role: swap
+      tags: swap
+      vars:
+        role_swap_type:       "file"
+        role_swap_filesystem: "btrfs"
     - { role: mkinitcpio, tags: mkinitcpio }
     - { role: linux-kernel, tags: linux-kernel }
     - { role: auditd, tags: auditd }
@@ -56,8 +58,11 @@
     - { role: snap, tags: snap }
     - { role: fwupd, tags: fwupd }
     # - { role: snapper, tags: snapper }
+    ### Boot
+    - { role: dm-crypt, tags: dm-crypt }
+    - { role: refind, tags: refind }
     ### Hardware
-    - { role: intelgraphics, tags: intelgraphics }
+    - { role: nvidia, tags: nvidia }
     - { role: networkmanager, tags: networkmanager }
     - { role: libinput, tags: libinput }
     - { role: watchdog, vars: { watchdog_activate: no}, tags: watchdog }
@@ -65,15 +70,10 @@
     - { role: pipewire, tags: pipewire }
     - { role: lm_sensors, tags: lm_sensors }
     - { role: bluetooth, tags: bluetooth }
+    - { role: thinkpad, tags: thinkpad }
     ### Desktop environment
     - { role: sddm, tags: sddm }
     - { role: kde, tags: kde }
-    - { role: wayland, tags: wayland }
-    - { role: wl-clipboard, tags: wl-clipboard }
-    ### KDE extensions
-    - { role: plasma-applet-thermal-monitor, tags: plasma-applet-thermal-monitor }
-    - { role: plasma-applet-active-window-control, tags: plasma-applet-active-window-control }
-    - { role: plasma-applets-window-buttons, tags: plasma-applets-window-buttons }
     ### General support
     - { role: filesystem-support, tags: filesystem-support }
     - { role: format-support, tags: format-support }
@@ -106,9 +106,7 @@
     - { role: syncthing-cli, tags: syncthing }
     - { role: syncthing-gui-kde, tags: syncthing }
     - { role: profile-sync-daemon, tags: profile-sync-daemon }
-    - { role: virtualbox-host, tags: virtualbox-host }
     - { role: mpv, tags: mpv }
-    - { role: dvdbackup, tags: dvdbackup }
     - { role: firefox, tags: firefox }
     - { role: thunderbird, tags: thunderbird }
     - { role: chromium, tags: chromium }
@@ -117,44 +115,38 @@
     - { role: filesystem-support, tags: filesystem-support }
     - { role: format-support, tags: format-support }
     - { role: fonts-support, tags: fonts-support }
-    - { role: hplip, tags: hplip }
+    # - { role: hplip, tags: hplip }
     - { role: gimp, tags: gimp }
     - { role: inkscape, tags: inkscape }
     - { role: handbrake, tags: handbrake }
     - { role: obs-studio, tags: obs-studio }
     - { role: scribus, tags: scribus }
     - { role: qbittorrent, tags: qbittorrent }
-    - { role: pcmanfm, tags: pcmanfm }
     - { role: wireshark, tags: wireshark }
     - { role: discord, tags: discord }
     - { role: etcher, tags: etcher }
     - { role: gnome-disk-utility, tags: gnome-disk-utility }
     - { role: gnome-multi-writer, tags: gnome-multi-writer }
     - { role: signal-desktop, tags: signal-desktop }
-    - { role: skype, tags: skype }
+    # - { role: skype, tags: skype }
     - { role: spotify, tags: spotify }
     - { role: teamviewer, tags: teamviewer }
     - { role: telegram, tags: telegram }
     - { role: woeusb-ng, tags: woeusb-ng }
     - { role: neochat, tags: neochat }
-    ### Overclock/undervolt
-    - { role: amdctl, tags: amdctl }
-    - { role: stress, tags: stress }
-    - { role: mprime, tags: mprime }
-    - { role: cpupower, tags: cpupower }
-    - { role: turbostat, tags: turbostat }
-    ### Gaming
-    - { role: gamemode, tags: gamemode }
+    - { role: libvirt, tags: libvirt }
+    # ### Gaming
+    # - { role: gamemode, tags: gamemode }
     - { role: steam, tags: steam }
-    - { role: wine, tags: wine }
-    - { role: dosbox, tags: dosbox }
-    - { role: itch-io, tags: itch-io }
-    - { role: epic-games-legendary, tags: epic-games-legendary }
-    - { role: gog-wyvern, tags: gog-wyvern }
-    - { role: lutris, tags: lutris }
+    # - { role: wine, tags: wine }
+    # - { role: dosbox, tags: dosbox }
+    # - { role: itch-io, tags: itch-io }
+    # - { role: epic-games-legendary, tags: epic-games-legendary }
+    # - { role: gog-wyvern, tags: gog-wyvern }
+    # - { role: lutris, tags: lutris }
     ### Development
     - { role: ansible-host, tags: ansible-host }
     - { role: docker, tags: docker }
-    - { role: terraform, tags: terraform }
+    # - { role: terraform, tags: terraform }
 
 

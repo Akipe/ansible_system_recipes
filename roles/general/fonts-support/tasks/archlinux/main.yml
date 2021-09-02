@@ -5,7 +5,7 @@
     state: present
     name:
       - ttf-font-awesome
-      - ttf-ionicons
+      #- ttf-ionicons
       - powerline-fonts
       - ttf-dejavu
       - gnu-free-fonts

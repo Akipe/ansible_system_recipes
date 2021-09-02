@@ -1,6 +1,6 @@
 ---
-- name: Load roles for initialize astMyluz
-  hosts: astMyluz
+- name: Load roles for initialize aslMyluz
+  hosts: aslMyluz
   become_user: root
   become: yes
   vars:

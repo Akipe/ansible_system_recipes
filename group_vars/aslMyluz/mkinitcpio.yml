@@ -1,0 +1,28 @@
+---
+
+mkinitcpio_initramfs_modules:
+  - nvidia
+  - nvidia_modeset
+  - nvidia_uvm
+  - nvidia_drm 
+  - dm_mod
+  - dm_crypt 
+  - vfat
+  - sha256
+  - sha512
+  - crc32c-intel
+mkinitcpio_initramfs_hooks:
+  - base
+  - systemd
+  - autodetect
+  - keyboard
+  - sd-vconsole
+  - modconf
+  - block
+  - sd-encrypt
+  - btrfs
+  - filesystems
+  - fsck
+mkinitcpio_initramfs_binaries:
+  - "/usr/bin/btrfs"
+mkinitcpio_initramfs_compression: lz4
