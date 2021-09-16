@@ -5,6 +5,8 @@
     state: present
     name:
       - steam
+      - ttf-liberation
+      - wqy-zenhei
 
 - name: Installation of dependencies
   community.general.pacman:
