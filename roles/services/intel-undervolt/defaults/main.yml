@@ -1,0 +1,10 @@
+---
+
+# https://github.com/kitsunyan/intel-undervolt/blob/master/intel-undervolt.conf
+intelundervolt_undervolt_cpu: 0 # 0 > -x
+intelundervolt_undervolt_cpu_cache: 0
+intelundervolt_undervolt_gpu: 0
+intelundervolt_undervolt_system_agent: 0
+intelundervolt_undervolt_analog_io: 0
+
+intelundervolt_interval: 5000
