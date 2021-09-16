@@ -3,10 +3,8 @@
 bootloader_timeout: 5
 bootloader_options:
   - "nvidia-drm.modeset=1"
-  - "root=/dev/mapper/akpsystem"
-  - "rootflags=subvol=@root"
-  - "resume=/dev/mapper/akpsystem"
-  - "resume_offset='{{ swap_file_offset.stdout }}'"
+  - "root=/dev/mapper/akpsystem-root"
+  - "resume=/dev/mapper/akpsystem-swap"
   - "audit=1"
   - "pcie_aspm=force"
 

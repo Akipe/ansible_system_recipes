@@ -1,0 +1,5 @@
+---
+
+intelundervolt_undervolt_cpu: "-180"
+intelundervolt_undervolt_cpu_cache: "-150"
+intelundervolt_undervolt_gpu: "-180"

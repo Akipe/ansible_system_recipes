@@ -38,12 +38,12 @@
     - { role: user, tags: user }
     - { role: locale, tags: locale }
     - { role: sudo, tags: sudo }
-    - { role: btrfs, tags: btrfs }
-    - role: swap
-      tags: swap
-      vars:
-        role_swap_type:       "file"
-        role_swap_filesystem: "btrfs"
+    # - { role: btrfs, tags: btrfs }
+    # - role: swap
+    #   tags: swap
+    #   vars:
+    #     role_swap_type:       "file"
+    #     role_swap_filesystem: "btrfs"
     - { role: mkinitcpio, tags: mkinitcpio }
     - { role: linux-kernel, tags: linux-kernel }
     - { role: auditd, tags: auditd }
@@ -67,10 +67,11 @@
     - { role: libinput, tags: libinput }
     - { role: watchdog, vars: { watchdog_activate: no}, tags: watchdog }
     - { role: android-client, tags: android-client }
-    - { role: pipewire, tags: pipewire }
+    # - { role: pipewire, tags: pipewire }
     - { role: lm_sensors, tags: lm_sensors }
     - { role: bluetooth, tags: bluetooth }
     - { role: thinkpad, tags: thinkpad }
+    - { role: intel-undervolt, tags: intel-undervolt }
     ### Desktop environment
     - { role: sddm, tags: sddm }
     - { role: kde, tags: kde }
