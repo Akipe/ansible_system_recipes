@@ -6,3 +6,11 @@
     name:
       - gamemode
       - lib32-gamemode
+
+- name: Add configuration
+  ansible.builtin.template:
+    src: gamemode.ini.j2
+    dest: /etc/gamemode.ini
+    owner: root
+    group: root
+    mode: u+rw,g+r,o+r

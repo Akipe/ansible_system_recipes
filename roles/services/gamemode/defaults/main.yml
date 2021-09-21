@@ -1,0 +1,20 @@
+---
+
+gamemode_reaper_frequence: "5"
+gamemode_desired_governor: "performance"
+gamemode_igpu_desired_governor: "powersave"
+gamemode_igpu_power_threshold: "0.3"
+gamemode_soft_realtime: "off"
+gamemode_renice: "0"
+gamemode_io_priority: "0"
+gamemode_inhibit_screensaver: "1"
+
+gamemode_apply_gpu_optimisations: "0"
+
+# gamemode_gpu_device: "0"
+
+# gamemode_nvidia_powermizer_mode: "1"
+# gamemode_nvidia_core_clock_mhz_offset: "0"
+# gamemode_nvidia_mem_clock_mhz_offset: "0"
+
+# gamemode_amd_performance_level: "high"
