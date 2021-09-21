@@ -5,7 +5,7 @@ bootloader_options:
   - "raid0.default_layout=2"
   - "nvidia-drm.modeset=1"
   - "root=/dev/mapper/akpsystem-root"
-  - "resume=/dev/mapper/akpsystem-swap"
+  # - "resume=/dev/mapper/akpsystem-swap"
   - "audit=1"
   - "pcie_aspm=force"
 

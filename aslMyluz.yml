@@ -129,6 +129,7 @@
     - { role: gnome-disk-utility, tags: gnome-disk-utility }
     - { role: gnome-multi-writer, tags: gnome-multi-writer }
     - { role: signal-desktop, tags: signal-desktop }
+    - { role: webapp-manager, tags: webapp-manager }
     # - { role: skype, tags: skype }
     - { role: spotify, tags: spotify }
     - { role: teamviewer, tags: teamviewer }
@@ -137,7 +138,7 @@
     - { role: neochat, tags: neochat }
     - { role: libvirt, tags: libvirt }
     # ### Gaming
-    # - { role: gamemode, tags: gamemode }
+    - { role: gamemode, tags: gamemode }
     - { role: steam, tags: steam }
     # - { role: wine, tags: wine }
     # - { role: dosbox, tags: dosbox }

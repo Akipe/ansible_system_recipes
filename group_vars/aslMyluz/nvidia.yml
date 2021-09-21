@@ -1,0 +1,10 @@
+---
+
+nvidia_xorg_identifier: "Device0"
+nvidia_xorg_baord_name: "Quadro M2000M"
+nvidia_xorg_no_logo: "1"
+nvidia_xorg_coolbits: "28"
+
+nvidia_modprobe_modeset: "1"
+nvidia_modprobe_use_page_attribute_table: "1"
+nvidia_modprobe_enable_pcie_gen3: "1"
