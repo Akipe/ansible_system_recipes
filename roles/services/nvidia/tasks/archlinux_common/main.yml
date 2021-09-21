@@ -24,24 +24,32 @@
 
 - name: Configure Pacman hook for update initramfs after an NVIDIA driver upgrade
   ansible.builtin.template:
-    src: archlinux_common/pacman_hook/nvidia.hook.j2
+    src: pacman_hook/nvidia.hook.j2
     dest: /etc/pacman.d/hooks/nvidia.hook
     owner: root
     group: root
-    mode: "u=rwx,g=rx,o=rx"
+    mode: "u=rw,g=r,o=r"
 
 - name: Add kernel configuration
   ansible.builtin.template:
-    src: archlinux_common/modprobe.d/nvidia.conf.j2
+    src: modprobe.d/nvidia.conf.j2
     dest: /etc/modprobe.d/nvidia.conf
     owner: root
     group: root
-    mode: "u=rwx,g=rx,o=rx"
+    mode: "u=rw,g=r,o=r"
 
-#- name: Add xorg configuration
-#  ansible.builtin.template:
-#    src: archlinux_common/xorg.conf.d/20-nvidia.conf.j2
-#    dest: /etc/X11/xorg.conf.d/20-nvidia.conf
-#    owner: root
-#    group: root
-#    mode: "u=rwx,g=rx,o=rx"
+- name: Add xorg configuration
+  ansible.builtin.template:
+   src: xorg.conf.d/20-nvidia.conf.j2
+   dest: /etc/X11/xorg.conf.d/20-nvidia.conf
+   owner: root
+   group: root
+   mode: "u=rw,g=r,o=r"
+
+- name: Enable hardware accelerated video encoding with NVENC 
+  ansible.builtin.template:
+   src: xorg.conf.d/20-nvidia.conf.j2
+   dest: /etc/udev/rules.d/70-nvidia.rules
+   owner: root
+   group: root
+   mode: "u=rw,g=r,o=r"

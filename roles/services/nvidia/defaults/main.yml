@@ -1,0 +1,10 @@
+---
+
+nvidia_xorg_identifier: "Device0"
+#nvidia_xorg_baord_name: 
+nvidia_xorg_no_logo: "1"
+nvidia_xorg_coolbits: "0"
+
+nvidia_modprobe_modeset: "0"
+nvidia_modprobe_use_page_attribute_table: "0"
+nvidia_modprobe_enable_pcie_gen3: "0"

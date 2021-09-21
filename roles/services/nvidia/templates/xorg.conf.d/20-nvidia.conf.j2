@@ -1,0 +1,10 @@
+## {{ ansible_managed }}
+
+Section "Device"
+    Identifier      "{{ nvidia_xorg_identifier }}"
+    Driver          "nvidia"
+    VendorName      "NVIDIA Corporation"
+    BoardName       "{{ nvidia_xorg_baord_name }}"
+    Option          "NoLogo"    "{{ nvidia_xorg_no_logo }}"
+    Option          "Coolbits"  "{{ nvidia_xorg_coolbits }}"
+EndSection
