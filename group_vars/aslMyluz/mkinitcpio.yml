@@ -22,6 +22,7 @@ mkinitcpio_initramfs_hooks:
   - sd-vconsole
   - modconf
   - block
+  - mdadm_udev
   - sd-encrypt
   - lvm2
   - filesystems
