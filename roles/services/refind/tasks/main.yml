@@ -10,7 +10,7 @@
     dest: /boot/EFI/refind/refind.conf
     owner: root
     group: root
-    mode: "u=rwx,g=rx,o=rx"
+    mode: "u=rw,g=r,o=r"
   notify: Reinstall rEFInd
 
 - name: Add Linux kernel configuration
@@ -19,5 +19,5 @@
     dest: /boot/refind_linux.conf
     owner: root
     group: root
-    mode: "u=rwx,g=rx,o=rx"
+    mode: "u=rw,g=r,o=r"
   notify: Reinstall rEFInd

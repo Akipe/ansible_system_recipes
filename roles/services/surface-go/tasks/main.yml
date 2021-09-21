@@ -70,4 +70,4 @@
     dest: /etc/pacman.d/hooks/ath10k_qca6174.hook
     owner: root
     group: root
-    mode: "u=rwx,g=rx,o=rx"
+    mode: "u=rw,g=r,o=r"

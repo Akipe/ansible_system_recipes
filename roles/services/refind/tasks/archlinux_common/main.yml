@@ -22,7 +22,7 @@
     dest: /etc/pacman.d/hooks/refind.hook
     owner: root
     group: root
-    mode: "u=rwx,g=rx,o=rx"
+    mode: "u=rw,g=r,o=r"
 
 - name: Installation of Regular theme
   become: yes
@@ -40,7 +40,7 @@
     dest: /boot/EFI/refind/refind-theme-regular/theme.conf
     owner: root
     group: root
-    mode: "u=rwx,g=rx,o=x"
+    mode: "u=rwx,g=rx,o=rx"
   when: refind_os_boot_type == "gui"
 
 - name: Check if processor vendor is Intel

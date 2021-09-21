@@ -16,7 +16,7 @@
     dest: /boot/loader/loader.conf
     owner: root
     group: root
-    mode: "u=rwx,g=rx,o=rx"
+    mode: "u=rw,g=r,o=r"
   vars:
     role_systemdBoot_default_entry: "{{ bootloader_defaultEntry }}"
     role_systemdBoot_timeout: "{{ bootloader_timeout }}"
@@ -28,7 +28,7 @@
     dest: "/boot/loader/entries/{{ item.role_systemdBoot_filename }}.conf"
     owner: root
     group: root
-    mode: "u=rwx,g=rx,o=rx"
+    mode: "u=rw,g=r,o=r"
   loop:
     - role_systemdBoot_title: "AkpOS"
       role_systemdBoot_filename: "akpos-zen"
