@@ -3,7 +3,7 @@
 - name: Install Yay
   become: yes
   become_user: ansible_aur
-  aur:
+  kewlfft.aur.aur:
     use: makepkg
     state: present
     name:

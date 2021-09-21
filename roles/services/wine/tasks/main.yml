@@ -50,7 +50,7 @@
 - name: Installation of dependencies (AUR)
   become: true
   become_user: ansible_aur
-  aur:
+  kewlfft.aur.aur:
     use: yay
     state: present
     name:

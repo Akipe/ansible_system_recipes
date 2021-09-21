@@ -55,6 +55,7 @@ get-info-direct:
 		--module-name setup
 
 init: fetch_git_submodules \
+		ansible-collection-install \
 		prepare_vault_password_file \
 		prepare_log_directory
 
@@ -73,6 +74,9 @@ ifdef NODE
 else
 	ansible-vault edit ./_external/secrets/group_vars/all/vault.yml
 endif
+
+ansible-collection-install:
+	ansible-galaxy collection install -r ./requirements.yml
 
 clean:
 	rm -rf ~/.ansible

@@ -3,7 +3,7 @@
 - name: Installation (AUR)
   become: true
   become_user: ansible_aur
-  aur:
+  kewlfft.aur.aur:
     use: yay
     state: present
     name: webapp-manager

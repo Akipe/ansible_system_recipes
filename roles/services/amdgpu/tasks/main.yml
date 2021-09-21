@@ -18,7 +18,7 @@
 - name: Install proprietary standalone runtime from ADMGPU-PRO
   become: yes
   become_user: ansible_aur
-  aur:
+  kewlfft.aur.aur:
     use: yay
     state: present
     aur_only: yes

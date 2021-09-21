@@ -17,7 +17,7 @@
 # - name: Installation of grammalecte extension
 #   become: yes
 #   become_user: ansible_aur
-#   aur:
+#   kewlfft.aur.aur:
 #     use: yay
 #     state: present
 #     name:

@@ -16,7 +16,7 @@
 # - name: Installation of additionnal bluetooth firmwares (AUR)
 #   become: yes
 #   become_user: ansible_aur
-#   aur:
+#   kewlfft.aur.aur:
 #     use: yay
 #     state: present
 #     aur_only: yes
@@ -35,7 +35,7 @@
 # - name: Audio bluetooth (AUR)
 #   become: yes
 #   become_user: ansible_aur
-#   aur:
+#   kewlfft.aur.aur:
 #     use: yay
 #     state: present
 #     aur_only: yes

@@ -1,6 +1,3 @@
-[submodule "library/aur"]
-	path = library/aur
-	url = https://github.com/kewlfft/ansible-aur.git
 [submodule "_external/secrets"]
 	path = _external/secrets
 	url = gitea@git.akipe.fr:akp/ansible_system_recipes_external_secrets.git

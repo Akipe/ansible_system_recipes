@@ -30,7 +30,7 @@
 - name: Install video acceleration support with Libva Intel Driver hybrid
   become: yes
   become_user: ansible_aur
-  aur:
+  kewlfft.aur.aur:
     use: yay
     state: present
     aur_only: yes
@@ -40,7 +40,7 @@
 - name: Install video acceleration support with Libva Intel Driver for GMA 4500
   become: yes
   become_user: ansible_aur
-  aur:
+  kewlfft.aur.aur:
     use: yay
     state: present
     aur_only: yes
@@ -65,7 +65,7 @@
 # - name: Install GPGPU driver Beignet
 #   become: yes
 #   become_user: ansible_aur
-#   aur:
+#   kewlfft.aur.aur:
 #     use: yay
 #     state: present
 #     aur_only: yes
@@ -75,7 +75,7 @@
 - name: Install GPGPU driver Intel OpenCL Runtime
   become: yes
   become_user: ansible_aur
-  aur:
+  kewlfft.aur.aur:
     use: yay
     state: present
     aur_only: yes

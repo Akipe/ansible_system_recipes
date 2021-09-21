@@ -10,7 +10,7 @@
 - name: Install GUI
   become: yes
   become_user: ansible_aur
-  aur:
+  kewlfft.aur.aur:
     use: yay
     state: present
     name:
