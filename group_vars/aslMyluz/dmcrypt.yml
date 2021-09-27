@@ -1,3 +1,3 @@
 ---
 
-dmcrypt_crypttab_entry: "akpsystem /dev/md/akpsystem-encrypt none timeout=180,discard,no-read-workqueue,no-write-workqueue"
+dmcrypt_crypttab_entry: "akpsystem LABEL=akpsystem-encrypt none timeout=180,discard,no-read-workqueue,no-write-workqueue"
