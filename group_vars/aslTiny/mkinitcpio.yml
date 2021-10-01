@@ -4,10 +4,13 @@ mkinitcpio_initramfs_modules:
   - i915
   - dm_mod
   - dm_crypt 
+  - ext4
   - vfat
   - sha256
   - sha512
   - crc32c-intel
+  - usbhid
+  - xhci_hcd
 mkinitcpio_initramfs_hooks:
   - base
   - systemd
@@ -17,9 +20,7 @@ mkinitcpio_initramfs_hooks:
   - modconf
   - block
   - sd-encrypt
-  - btrfs
+  - lvm2
   - filesystems
   - fsck
-mkinitcpio_initramfs_binaries:
-  - "/usr/bin/btrfs"
-mkinitcpio_initramfs_compression: lz4
+mkinitcpio_initramfs_compression: zstd

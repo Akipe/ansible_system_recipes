@@ -1,4 +1,4 @@
 ---
 
-firefox_use_X11: true
-firefox_use_wayland: false
+firefox_use_X11: false
+firefox_use_wayland: true

@@ -63,6 +63,7 @@
     - { role: refind, tags: refind }
     ### Hardware
     - { role: nvidia, tags: nvidia }
+    - { role: disk, tags: disk }
     - { role: networkmanager, tags: networkmanager }
     - { role: libinput, tags: libinput }
     - { role: watchdog, vars: { watchdog_activate: no}, tags: watchdog }
@@ -71,7 +72,6 @@
     - { role: lm_sensors, tags: lm_sensors }
     - { role: bluetooth, tags: bluetooth }
     - { role: thinkpad, tags: thinkpad }
-    - { role: intel-undervolt, tags: intel-undervolt }
     ### Desktop environment
     - { role: sddm, tags: sddm }
     - { role: kde, tags: kde }
@@ -107,15 +107,13 @@
     - { role: syncthing-cli, tags: syncthing }
     - { role: syncthing-gui-kde, tags: syncthing }
     - { role: profile-sync-daemon, tags: profile-sync-daemon }
+    - { role: virtualbox-host, tags: virtualbox-host }
     - { role: mpv, tags: mpv }
     - { role: firefox, tags: firefox }
     - { role: thunderbird, tags: thunderbird }
     - { role: chromium, tags: chromium }
     - { role: keepassxc, tags: keepassxc }
     - { role: vscode, tags: vscode }
-    - { role: filesystem-support, tags: filesystem-support }
-    - { role: format-support, tags: format-support }
-    - { role: fonts-support, tags: fonts-support }
     # - { role: hplip, tags: hplip }
     - { role: gimp, tags: gimp }
     - { role: inkscape, tags: inkscape }
@@ -137,6 +135,12 @@
     - { role: woeusb-ng, tags: woeusb-ng }
     - { role: neochat, tags: neochat }
     - { role: libvirt, tags: libvirt }
+    ### Overclock/undervolt
+    - { role: intel-undervolt, tags: intel-undervolt }
+    - { role: stress, tags: stress }
+    - { role: mprime, tags: mprime }
+    - { role: cpupower, tags: cpupower }
+    - { role: turbostat, tags: turbostat }
     # ### Gaming
     - { role: gamemode, tags: gamemode }
     - { role: steam, tags: steam }

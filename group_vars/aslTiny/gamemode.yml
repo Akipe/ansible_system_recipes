@@ -1,0 +1,11 @@
+---
+
+gamemode_desired_governor: "performance"
+gamemode_renice: "10"
+
+gamemode_apply_gpu_optimisations: "1"
+gamemode_gpu_device: "0"
+
+gamemode_nvidia_powermizer_mode: "1"
+# gamemode_nvidia_core_clock_mhz_offset: "0"
+# gamemode_nvidia_mem_clock_mhz_offset: "0"

@@ -16,6 +16,7 @@
         - always
   roles:
     ### Base
+    - { role: firewalld, tags: firewalld }
     - { role: ssh, tags: ssh }
     ### Package manager
     - { role: makepkg, tags: makepkg }
@@ -23,9 +24,6 @@
     - { role: pacman, tags: pacman }
     ### Hardware init
     - { role: microcode, tags: microcode }
-    ### Boot
-    - { role: dm-crypt, tags: dm-crypt }
-    - { role: refind, tags: refind }
     ### System
     - { role: bash, tags: bash }
     - { role: fish, tags: fish }
@@ -36,12 +34,12 @@
     - { role: avahi, tags: avahi }
     - { role: host, tags: host }
     - { role: earlyoom, tags: earlyoom }
-    # - { role: systemd-zram-generator, tags: systemd-zram-generator }
+    - { role: systemd-zram-generator, tags: systemd-zram-generator }
     - { role: user, tags: user }
     - { role: locale, tags: locale }
     - { role: sudo, tags: sudo }
-    - { role: btrfs, tags: btrfs }
-    - { role: swap, tags: swap }
+    # - { role: btrfs, tags: btrfs }
+    # - { role: swap, tags: swap }
     - { role: mkinitcpio, tags: mkinitcpio }
     - { role: linux-kernel, tags: linux-kernel }
     - { role: auditd, tags: auditd }
@@ -56,6 +54,9 @@
     - { role: snap, tags: snap }
     - { role: fwupd, tags: fwupd }
     # - { role: snapper, tags: snapper }
+    ### Boot
+    - { role: dm-crypt, tags: dm-crypt }
+    - { role: refind, tags: refind }
     ### Hardware
     - { role: intelgraphics, tags: intelgraphics }
     - { role: sof-firmware, tags: sof-firmware }
@@ -107,7 +108,7 @@
     - { role: smb4k, tags: smb4k }
     - { role: syncthing-cli, tags: syncthing }
     - { role: syncthing-gui-kde, tags: syncthing }
-    # - { role: profile-sync-daemon, tags: profile-sync-daemon }
+    - { role: profile-sync-daemon, tags: profile-sync-daemon }
     - { role: virtualbox-host, tags: virtualbox-host }
     - { role: mpv, tags: mpv }
     - { role: dvdbackup, tags: dvdbackup }
@@ -129,27 +130,28 @@
     - { role: gnome-disk-utility, tags: gnome-disk-utility }
     - { role: gnome-multi-writer, tags: gnome-multi-writer }
     - { role: signal-desktop, tags: signal-desktop }
-    - { role: skype, tags: skype }
+    - { role: webapp-manager, tags: webapp-manager }
+    # - { role: skype, tags: skype }
     - { role: spotify, tags: spotify }
     - { role: teamviewer, tags: teamviewer }
     - { role: telegram, tags: telegram }
     - { role: woeusb-ng, tags: woeusb-ng }
     - { role: neochat, tags: neochat }
     ### Overclock/undervolt
-    - { role: intel-undervolt, tags: intel-undervolt }
-    - { role: stress, tags: stress }
-    - { role: mprime, tags: mprime }
-    - { role: cpupower, tags: cpupower }
-    - { role: turbostat, tags: turbostat }
+    # - { role: intel-undervolt, tags: intel-undervolt }
+    # - { role: stress, tags: stress }
+    # - { role: mprime, tags: mprime }
+    # - { role: cpupower, tags: cpupower }
+    # - { role: turbostat, tags: turbostat }
     ### Gaming
     - { role: gamemode, tags: gamemode }
     - { role: steam, tags: steam }
     - { role: wine, tags: wine }
     - { role: dosbox, tags: dosbox }
-    - { role: itch-io, tags: itch-io }
-    - { role: epic-games-legendary, tags: epic-games-legendary }
-    - { role: gog-wyvern, tags: gog-wyvern }
-    - { role: lutris, tags: lutris }
+    # - { role: itch-io, tags: itch-io }
+    # - { role: epic-games-legendary, tags: epic-games-legendary }
+    # - { role: gog-wyvern, tags: gog-wyvern }
+    # - { role: lutris, tags: lutris }
     ### Development
     - { role: ansible-host, tags: ansible-host }
     - { role: docker, tags: docker }

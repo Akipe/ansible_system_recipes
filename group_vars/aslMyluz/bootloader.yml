@@ -9,3 +9,4 @@ bootloader_options:
   - "pcie_aspm=force"
 
 refind_os_boot_type: gui
+refind_is_dual_boot_with_windows: true
