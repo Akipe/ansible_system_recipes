@@ -12,6 +12,7 @@
     state: present
     name:
       - libnotify
+      - libfido2
     extra_args: --asdeps
 
 - name: Enable video acceleration for X11

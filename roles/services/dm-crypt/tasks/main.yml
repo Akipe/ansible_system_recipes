@@ -1,5 +1,11 @@
 ---
 
+- name: Install Fido2 dependency
+  community.general.pacman:
+    name:
+      - libfido2
+    state: present
+
 - name: Add encryption boot configuration
   ansible.builtin.template:
     src: crypttab.j2

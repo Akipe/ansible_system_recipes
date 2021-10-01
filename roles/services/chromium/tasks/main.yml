@@ -11,6 +11,7 @@
     name:
       - libpipewire02
       - libva
+      - libfido2
     extra_args: --asdeps
 
 - name: Installation of DRM
