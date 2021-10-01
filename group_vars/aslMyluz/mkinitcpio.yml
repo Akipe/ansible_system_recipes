@@ -26,4 +26,4 @@ mkinitcpio_initramfs_hooks:
   - lvm2
   - filesystems
   - fsck
-mkinitcpio_initramfs_compression: lz4
+mkinitcpio_initramfs_compression: zstd
