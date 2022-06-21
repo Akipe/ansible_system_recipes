@@ -595,7 +595,7 @@ echo "%wheel ALL=(ALL) ALL" > /etc/sudoers.d/10-grant-group-wheel-sudo
 ```
 sed -i 's/BINARIES=()/BINARIES=("btrfs")/' /etc/mkinitcpio.conf && \
 sed -i 's/MODULES=()/MODULES=(dm_mod dm_crypt vfat btrfs sha256 sha512)/g' /etc/mkinitcpio.conf && \
-sed -i 's/^HOOKS.*/HOOKS=(base systemd autodetect keyboard sd-vconsole modconf block sd-encrypt resume btrfs filesystems fsck)/g' /etc/mkinitcpio.conf && \
+sed -i 's/^HOOKS.*/HOOKS=(base systemd autodetect keyboard sd-vconsole modconf block sd-encrypt btrfs filesystems fsck)/g' /etc/mkinitcpio.conf && \
 sed -i 's/#COMPRESSION="zstd"/COMPRESSION="zstd"/g' /etc/mkinitcpio.conf && \
 less /etc/mkinitcpio.conf && \
 mkinitcpio -P
