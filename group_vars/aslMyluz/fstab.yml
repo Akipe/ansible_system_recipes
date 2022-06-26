@@ -35,3 +35,9 @@ fstab_mounts:
     options:    defaults
     dump:       0
     pass:       0
+  - device:     LABEL=akpsystem-vm-con
+    directory:  /vm
+    filesystem: ext4
+    options:    noatime,noauto,users
+    dump:       0
+    pass:       0
