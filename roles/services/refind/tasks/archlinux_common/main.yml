@@ -24,24 +24,28 @@
     group: root
     mode: "u=rw,g=r,o=r"
 
-- name: Installation of Regular theme
-  become: yes
-  become_user: ansible_aur
-  kewlfft.aur.aur:
-    use: yay
-    state: present
-    name:
-      - refind-theme-regular-git
-  when: refind_os_boot_type == "gui"
+# - name: Installation of Regular theme
+#   become: yes
+#   become_user: ansible_aur
+#   kewlfft.aur.aur:
+#     use: yay
+#     state: present
+#     name:
+#       - refind-theme-regular-git
+#   when:
+#     - refind_os_boot_type == "gui"
+#     - refind_compatibility_boot_path_use == false
 
-- name: Set dark mode for Regular theme
-  ansible.builtin.template:
-    src: theme_regular/theme.conf.j2
-    dest: /boot/EFI/refind/refind-theme-regular/theme.conf
-    owner: root
-    group: root
-    mode: "u=rwx,g=rx,o=rx"
-  when: refind_os_boot_type == "gui"
+# - name: Set dark mode for Regular theme (default boot path)
+#   ansible.builtin.template:
+#     src: theme_regular/theme.conf.j2
+#     dest: /boot/EFI/refind/refind-theme-regular/theme.conf
+#     owner: root
+#     group: root
+#     mode: "u=rwx,g=rx,o=rx"
+#   when:
+#     - refind_os_boot_type == "gui"
+#     - refind_compatibility_boot_path_use == false
 
 - name: Check if processor vendor is Intel
   ansible.builtin.set_fact: refind_cpu_vendor="intel"

@@ -1,5 +1,12 @@
 ---
 
+- name: Installation
+  community.general.pacman:
+    state: present
+    name:
+      - fuse-overlayfs
+      - slirp4netns
+
 - name: Ensure subgid and subuid configuration file exist
   ansible.builtin.file:
     path: "/etc/{{ item }}"

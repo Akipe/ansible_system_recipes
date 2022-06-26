@@ -1,0 +1,14 @@
+---
+
+bootloader_timeout: 5
+bootloader_options:
+  - "root=/dev/mapper/akpsystem-sys-raid0-1"
+  - "rootflags=subvol=@root" # btrfs
+  - "resume=/dev/mapper/akpsystem-swap-1" # hibernate to swap
+  - "audit=1" # apparmor
+  - "lsm=landlock,lockdown,yama,integrity,apparmor,bpf" # apparmor
+
+refind_os_boot_type: gui
+refind_is_dual_boot_with_windows: false
+refind_compatibility_boot_path_use: true
+refind_compatibility_boot_path_device: "/dev/disk/by-partlabel/EFI"

@@ -1,0 +1,14 @@
+---
+
+- name: Installation
+  community.general.pacman:
+    state: present
+    name:
+    - xdg-desktop-portal
+    - xdg-desktop-portal-kde
+
+- name: Enable consistent file dialog for all applications
+  ansible.builtin.lineinfile:
+    path: /etc/environment
+    regexp: '^GTK_USE_PORTAL='
+    line: 'GTK_USE_PORTAL=1'

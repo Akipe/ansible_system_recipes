@@ -1,0 +1,10 @@
+---
+
+# webcam_disable_devices:
+#   - id_vendor: 0000
+#     id_product: 0000
+
+# webcam_configure_devices:
+#   - id_vendor: 0000
+#     id_product: 0000
+#     parameter: "zoom_absolute=170"

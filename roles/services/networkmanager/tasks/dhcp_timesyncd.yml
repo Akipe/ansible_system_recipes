@@ -1,0 +1,18 @@
+---
+
+- name: Create timesyncd configuration directory for DHCP
+  ansible.builtin.file:
+    path: /etc/systemd/timesyncd.conf.d
+    state: directory
+    recurse: yes
+    owner: root
+    group: root
+    mode: u+rwx,g+rx,o+rx
+
+- name: Add dispatcher for updating NTP server from DHCP
+  ansible.builtin.template:
+    src: dispatcher.d/10-update-timesyncd.sh.j2
+    dest: /etc/NetworkManager/dispatcher.d/10-update-timesyncd.sh
+    owner: root
+    group: root
+    mode: "u=rwx,g=rx,o=rx"

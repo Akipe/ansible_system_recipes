@@ -1,3 +1,5 @@
 ## {{ ansible_managed }}
 
-{{ dmcrypt_crypttab_entry }}
+{% for entry in dmcrypt_crypttab_entries %}
+{{ entry }}
+{% endfor %}

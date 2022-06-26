@@ -23,7 +23,7 @@
       - ttf-hack
       - ttf-roboto
       - ttf-roboto-mono
-      - bdf-unifont
+      #- bdf-unifont
       - ttf-anonymous-pro
       - ttf-fira-mono
       - otf-fira-mono

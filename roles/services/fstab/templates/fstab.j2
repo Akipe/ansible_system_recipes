@@ -1,0 +1,13 @@
+## {{ ansible_managed }}
+
+# Static information about the filesystems.
+# See fstab(5) for details.
+
+# <file system> <dir> <type> <options> <dump> <pass>
+
+{% if fstab_mounts is defined %}
+{% for fstab_mount in fstab_mounts %}
+{{ fstab_mount.device }}	{{ fstab_mount.directory }}	{{ fstab_mount.filesystem }}	{{ fstab_mount.options }}	{{ fstab_mount.dump }}	{{ fstab_mount.pass }}
+
+{% endfor %}
+{% endif %}

@@ -6,11 +6,11 @@
     name:
       - neovim
 
-- name: Installation of dependencies
-  community.general.pacman:
-    state: present
-    name:
-      # - xclip
-      # - python-neovim
-      # - wl-clipboard
-    extra_args: --asdeps
+# - name: Installation of dependencies
+#   community.general.pacman:
+#     state: present
+#     name:
+#       - xclip
+#       - python-neovim
+#       - wl-clipboard
+#     extra_args: --asdeps

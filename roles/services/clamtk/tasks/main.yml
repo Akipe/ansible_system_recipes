@@ -1,0 +1,7 @@
+---
+
+- name: Installation
+  community.general.pacman:
+    name: 
+      - clamtk
+    state: present

@@ -1,0 +1,7 @@
+## {{ ansible_managed }}
+
+{% if webcam_configure_devices is defined %}
+{% for webcam_configure_device in webcam_configure_devices %}
+SUBSYSTEM=="video4linux", KERNEL=="video[0-9]*", ATTR{index}=="0", ATTRS{idVendor}=="{{ webcam_configure_device.id_vendor }}", ATTRS{idProduct}=="{{ webcam_configure_device.id_product }}", RUN+="/usr/bin/v4l2-ctl -d $devnode --set-ctrl={{ webcam_configure_device.parameter }}"
+{% endfor %}
+{% endif %}

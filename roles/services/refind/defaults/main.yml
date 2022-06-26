@@ -1,5 +1,7 @@
 ---
 
+refind_compatibility_boot_path_use: false
+refind_compatibility_boot_path_device: "/dev/sda1"
 refind_os_boot_type: gui  # gui|console|serial
 refind_mouse_enable: false
 refind_touch_enable: false

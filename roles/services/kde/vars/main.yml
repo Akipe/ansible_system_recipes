@@ -5,16 +5,21 @@
 kde_app_meta_archlinux:
   - plasma-meta
   - kde-system-meta
-  - kde-pim-meta
-  - kde-accessibility-meta
   - kde-utilities-meta
   - kde-network-meta
   - kde-graphics-meta
-  - kde-multimedia-meta
-  - kde-sdk-meta
   - phonon-qt5-gstreamer
+#  - plasma-workspace
+  - pipewire-jack
+  - wireplumber
+  - noto-fonts
+  - cronie
+  # - kde-sdk-meta
+  # - kde-pim-meta
   # - phonon-qt5-vlc
   # - kde-development-environment-meta
+  # - kde-multimedia-meta
+  # - kde-accessibility-meta
 
 kde_app_kdeplasma_optional_archlinux:
   - quota-tools
@@ -26,9 +31,9 @@ kde_app_workspace_optional_archlinux:
   - appmenu-gtk-module
   - baloo
   - discover
-  - gpsd
-  - kdepim-addons
   - qt5-virtualkeyboard
+#  - gpsd
+#  - kdepim-addons
 
 kde_app_wayland_archlinux:
   - plasma-wayland-session
@@ -39,6 +44,7 @@ kde_app_xdguserdirs_archlinux:
 # print
 
 kde_app_print_optional_archlinux:
+  - print-manager
   - system-config-printer
   - cups-pk-helper
   - libsecret
@@ -55,8 +61,8 @@ kde_app_systemtrayicon_archlinux:
   - lib32-libappindicator-gtk2
   - lib32-libappindicator-gtk3
 
-kde_app_systemtrayicon_archlinux_aur:
-  - libappindicator-sharp
+#kde_app_systemtrayicon_archlinux_aur:
+#  - libappindicator-sharp
 
 # kio
 
@@ -91,7 +97,7 @@ kde_app_dolphin_rawthumbnailer_archlinux:
 # okular
 
 kde_app_okular_optional_archlinux:
-  - calligra
+#  - calligra
   - chmlib
   - khtml
   - libzip
@@ -105,8 +111,9 @@ kde_app_partition_archlinux:
 
 # wacom support
 
-kde_app_wacom_archlinux:
-  - kcm-wacomtablet
+# todo: install if needed
+#kde_app_wacom_archlinux:
+#  - kcm-wacomtablet
 
 # kde connect
 
@@ -115,28 +122,33 @@ kde_app_kdeconnect_optional_archlinux:
 
 # kget
 
-kde_app_kget_archlinux:
-  - kget
-kde_app_kget_archlinux_optional:
-  - libktorrent
-  - libmms
-kde_app_kget_archlinux_aur:
-  - kget-integrator-firefox
-  - kget-integrator-chromium
+# kde_app_kget_archlinux:
+#   - kget
+# kde_app_kget_archlinux_optional:
+#   - libktorrent
+#   - libmms
+# kde_app_kget_archlinux_aur:
+#   - kget-integrator-firefox
+#   - kget-integrator-chromium
 
 # themes
 
+kde_app_theme_breeze_archlinux:
+  - breeze
+  - breeze-gtk
+
 kde_app_utils_theme_archlinux:
-  - kvantum-qt5
+  - kde-gtk-config
+#   - kvantum-qt5
 
-kde_app_theme_materia_archlinux:
-  - materia-kde
-  - papirus-icon-theme
+# kde_app_theme_materia_archlinux:
+#   - materia-kde
+#   - papirus-icon-theme
 
-kde_app_theme_materia_optional_archlinux:
-  - kvantum-theme-materia
-  - materia-gtk-theme
-  - gtk-engine-murrine
+# kde_app_theme_materia_optional_archlinux:
+#   - kvantum-theme-materia
+#   - materia-gtk-theme
+#   - gtk-engine-murrine
 
 
 

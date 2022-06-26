@@ -1,0 +1,152 @@
+---
+
+- name: Load specific roles for asvArchDeskLab
+  hosts: asvArchDeskLab
+  become: yes
+  pre_tasks:
+    - ansible.builtin.include_role:
+        name: ansible-guest
+      tags:
+        - always
+  post_tasks:
+    - ansible.builtin.include_role:
+        name: aur-cli-clean
+      tags:
+        - always
+  roles:
+    ## Base
+    - { role: firewalld, tags: firewalld }
+    - { role: ssh, tags: ssh }
+    ### Package manager
+    - { role: makepkg, tags: makepkg }
+    - { role: aur-cli, tags: aur-cli }
+    - { role: pacman, tags: pacman }
+    ### Hardware init
+    - { role: microcode, tags: microcode }
+    ### System
+    - { role: bash, tags: bash }
+    - { role: fish, tags: fish }
+    # - { role: tpm2, tags: tpm2 }
+    # - { role: rngd, tags: rngd }
+    - { role: systemd-resolved, tags: systemd-resolved }
+    - { role: systemd-timesyncd, tags: systemd-timesyncd }
+    - { role: host, tags: host }
+    # - { role: earlyoom, tags: earlyoom }
+    - { role: user, tags: user }
+    - { role: locale, tags: locale }
+    - { role: sudo, tags: sudo }
+    - { role: btrfs, tags: btrfs }
+    # # - role: swap
+    # #   tags: swap
+    # #   vars:
+    # #     role_swap_type:       "file"
+    # #     role_swap_filesystem: "btrfs"
+    - { role: mkinitcpio, tags: mkinitcpio }
+    - { role: linux-kernel, tags: linux-kernel }
+    - { role: auditd, tags: auditd }
+    - { role: apparmor, tags: apparmor }
+    # - { role: tlp, tags: tlp }
+    # - { role: powertop, tags: powertop }
+    # - { role: thermald, tags: thermald }
+    - { role: irqbalance, tags: irqbalance }
+    - { role: flatpak, tags: flatpak }
+    - { role: fwupd, tags: fwupd }
+    - { role: font, tags: font }
+    - { role: wireguard, tags: wireguard }
+    # ### Boot
+    - { role: dm-crypt, tags: dm-crypt }
+    - { role: refind, tags: refind }
+    - { role: fstab, tags: fstab }
+    # ### Hardware
+    - { role: disk, tags: disk }
+    - { role: networkmanager, tags: networkmanager }
+    - { role: libinput, tags: libinput }
+    - { role: watchdog, vars: { watchdog_activate: no}, tags: watchdog }
+    # - { role: android-client, tags: android-client }
+    - { role: pipewire, tags: pipewire }
+    # - { role: lm_sensors, tags: lm_sensors }
+    # - { role: bluetooth, tags: bluetooth }
+    # ### Desktop environment
+    - { role: sddm, tags: sddm }
+    - { role: kde, tags: kde }
+    # ### General support
+    - { role: filesystem-support, tags: filesystem-support }
+    - { role: format-support, tags: format-support }
+    - { role: fonts-support, tags: fonts-support }
+    # ### CLI apps
+    - { role: man-page, tags: man-page }
+    - { role: yubikey, tags: yubikey }
+    - { role: gnupg, tags: gnupg }
+    - { role: git, tags: git }
+    # - { role: smb-client, tags: smb-client }
+    - { role: hwdetect, tags: hwdetect }
+    - { role: wget, tags: wget }
+    # - { role: trash-cli, tags: trash-cli }
+    # - { role: top-utils, tags: top-utils }
+    - { role: tmux, tags: tmux }
+    - { role: rsync, tags: rsync }
+    - { role: neovim, tags: neovim }
+    - { role: lsb-release, tags: lsb-release }
+    - { role: curl, tags: curl }
+    # - { role: bpytop, tags: bpytop }
+    # - { role: tree, tags: tree }
+    # - { role: hwinfo, tags: hwinfo }
+    - { role: dmidecode, tags: dmidecode }
+    - { role: neofetch, tags: neofetch }
+    - { role: arch-audit, tags: arch-audit }
+    - { role: clamav, tags: clamav }
+    - { role: firejail, tags: firejail }
+    - { role: rkhunter, tags: rkhunter }
+    # ### GUI apps
+    - { role: aur-gui, tags: aur-gui }
+    - { role: vlc, tags: vlc }
+    - { role: libreoffice, tags: libreoffice }
+    # - { role: smb4k, tags: smb4k }
+    - { role: syncthing-cli, tags: syncthing }
+    - { role: syncthing-gui-kde, tags: syncthing }
+    - { role: profile-sync-daemon, tags: profile-sync-daemon }
+    # - { role: mpv, tags: mpv }
+    - { role: firefox, tags: firefox }
+    - { role: thunderbird, tags: thunderbird }
+    - { role: chromium, tags: chromium }
+    - { role: keepassxc, tags: keepassxc }
+    - { role: vscode, tags: vscode }
+    # # - { role: hplip, tags: hplip }
+    - { role: gimp, tags: gimp }
+    - { role: inkscape, tags: inkscape }
+    - { role: handbrake, tags: handbrake }
+    - { role: obs-studio, tags: obs-studio }
+    - { role: scribus, tags: scribus }
+    - { role: qbittorrent, tags: qbittorrent }
+    - { role: wireshark, tags: wireshark }
+    - { role: discord, tags: discord }
+    - { role: etcher, tags: etcher }
+    # - { role: gnome-disk-utility, tags: gnome-disk-utility }
+    # - { role: gnome-multi-writer, tags: gnome-multi-writer }
+    - { role: signal-desktop, tags: signal-desktop }
+    - { role: webapp-manager, tags: webapp-manager }
+    - { role: spotify, tags: spotify }
+    # - { role: teamviewer, tags: teamviewer }
+    # - { role: telegram, tags: telegram }
+    - { role: woeusb-ng, tags: woeusb-ng }
+    # - { role: neochat, tags: neochat }
+    - { role: libvirt, tags: libvirt }
+    - { role: arch-audit-gtk, tags: arch-audit-gtk }
+    - { role: clamtk, tags: clamtk }
+    - { role: timeshift, tags: timeshift }
+    # # ### Gaming
+    # - { role: gamemode, tags: gamemode }
+    - { role: steam, tags: steam }
+    - { role: wine, tags: wine }
+    - { role: dosbox, tags: dosbox }
+    # # - { role: itch-io, tags: itch-io }
+    # # - { role: epic-games-legendary, tags: epic-games-legendary }
+    # # - { role: gog-wyvern, tags: gog-wyvern }
+    # # - { role: lutris, tags: lutris }
+    # ### Development
+    # - { role: ansible-host, tags: ansible-host }
+    # - { role: docker, tags: docker }
+    # # - { role: terraform, tags: terraform }
+    # - { role: podman, tags: podman }
+
+

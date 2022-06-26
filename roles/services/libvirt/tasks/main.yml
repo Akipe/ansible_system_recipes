@@ -44,4 +44,11 @@
   ansible.builtin.systemd:
     name: virtlogd.service
     state: started
-  
+
+- name: Add qemu configuration
+  ansible.builtin.template:
+    src: qemu.conf.j2
+    dest: /etc/libvirt/qemu.conf
+    owner: root
+    group: root
+    mode: u+rw,g+r,o+r

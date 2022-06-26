@@ -1,0 +1,39 @@
+---
+
+- name: Installation
+  community.general.pacman:
+    state: present
+    name: xsettingsd
+
+- name: Set config
+  ansible.builtin.template:
+    src: xsettingsd/xsettingsd.conf.j2
+    dest: "/home/{{ item.username }}/.config/xsettingsd/xsettingsd.conf"
+    owner: "{{ item.username }}"
+    group: "{{ item.username }}"
+    mode: u+rw,g+r,o+r
+  loop: "{{ kde_users }}"
+
+- name: Create xprofile file if not exist
+  ansible.builtin.file:
+    path:  "/home/{{ item.username }}/.xprofile"
+    state: touch
+    owner: "{{ item.username }}"
+    group: "{{ item.username }}"
+    mode:  u+rwx,g+rx,o+rx
+  loop: "{{ kde_users }}"
+
+- name: Enable at startup (profile)
+  ansible.builtin.lineinfile:
+    path: "/home/{{ item.username }}/.xprofile"
+    regexp: '^xsettingsd &'
+    line: 'xsettingsd &'
+  loop: "{{ kde_users }}"
+
+- name: Enable at startup (global)
+  ansible.builtin.template:
+    src: xinitrc.d/xsettingsd.sh.j2
+    dest: /etc/X11/xinit/xinitrc.d/80-xsettingsd.sh
+    owner: root
+    group: root
+    mode: u+rwx,g+rx,o+rx

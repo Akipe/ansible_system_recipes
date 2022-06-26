@@ -53,3 +53,6 @@
    owner: root
    group: root
    mode: "u=rw,g=r,o=r"
+
+- name: Include tasks for configure resuming
+  ansible.builtin.include_tasks: resume.yml

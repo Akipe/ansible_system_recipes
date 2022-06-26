@@ -4,13 +4,24 @@
   ansible.builtin.include_tasks: archlinux_common/main.yml
   when: ansible_distribution == "Archlinux"
 
-- name: Add general configuration
+- name: Add general configuration (default boot path)
   ansible.builtin.template:
     src: config/refind.conf.j2
     dest: /boot/EFI/refind/refind.conf
     owner: root
     group: root
     mode: "u=rw,g=r,o=r"
+  when: refind_compatibility_boot_path_use == false
+  notify: Reinstall rEFInd
+
+- name: Add general configuration (compatibility boot path)
+  ansible.builtin.template:
+    src: config/refind.conf.j2
+    dest: /boot/EFI/BOOT/refind.conf
+    owner: root
+    group: root
+    mode: "u=rw,g=r,o=r"
+  when: refind_compatibility_boot_path_use == true
   notify: Reinstall rEFInd
 
 - name: Add Linux kernel configuration

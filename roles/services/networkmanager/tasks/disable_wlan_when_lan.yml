@@ -1,0 +1,9 @@
+---
+
+- name: Add dispatcher for disable wifi when connected to wifi 
+  ansible.builtin.template:
+    src: dispatcher.d/10-wlan-auto-toggle.sh.j2
+    dest: /etc/NetworkManager/dispatcher.d/10-wlan-auto-toggle.sh
+    owner: root
+    group: root
+    mode: "u=rwx,g=rx,o=rx"

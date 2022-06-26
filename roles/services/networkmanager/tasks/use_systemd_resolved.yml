@@ -1,0 +1,9 @@
+---
+
+- name: Set configuration for use systemd-resolved
+  ansible.builtin.template:
+    src: conf.d/20-dns.conf.j2
+    dest: /etc/NetworkManager/conf.d/20-dns.conf
+    owner: root
+    group: root
+    mode: "u=rw,g=r,o=r"

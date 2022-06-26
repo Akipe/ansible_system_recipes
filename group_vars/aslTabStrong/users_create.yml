@@ -4,5 +4,5 @@ users_create:
   - username: "{{ personal_user_name }}"
     password: "{{ personal_user_password }}"
     shell: /bin/bash
-    groups: users,wheel,storage,power,network
+    groups: users,wheel
     public_key: "{{ ssh_public_key }}"

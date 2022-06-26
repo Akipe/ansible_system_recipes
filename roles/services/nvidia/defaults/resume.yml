@@ -1,0 +1,4 @@
+---
+
+nvidia_modprobe_resume_preserve_video_memory_allocations: "1"
+nvidia_modprobe_resume_temporary_file_path: "/tmp"

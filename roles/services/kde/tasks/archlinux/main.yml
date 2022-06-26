@@ -10,12 +10,12 @@
     - "{{ kde_app_wayland_archlinux }}"
     - "{{ kde_app_xdguserdirs_archlinux }}"
     - "{{ kde_app_systemtrayicon_archlinux }}"
-    - "{{ kde_app_dolphin_rawthumbnailer_archlinux }}"
+    # - "{{ kde_app_dolphin_rawthumbnailer_archlinux }}"
     - "{{ kde_app_partition_archlinux }}"
-    - "{{ kde_app_wacom_archlinux }}"
+    # - "{{ kde_app_wacom_archlinux }}"
     - "{{ kde_app_utils_theme_archlinux }}"
-    - "{{ kde_app_theme_materia_archlinux }}"
-    - "{{ kde_app_kget_archlinux }}"
+    # - "{{ kde_app_kget_archlinux }}"
+    - "{{ kde_app_theme_breeze_archlinux }}"
 
 - name: Installation of dependencies
   community.general.pacman:
@@ -27,55 +27,35 @@
     - "{{ kde_app_workspace_optional_archlinux }}"
     - "{{ kde_app_print_optional_archlinux }}"
     - "{{ kde_app_kio_optional_archlinux }}"
-    - "{{ kde_app_kdepim_optional_archlinux }}"
+    # - "{{ kde_app_kdepim_optional_archlinux }}"
     - "{{ kde_app_dolphin_optional_archlinux }}"
     - "{{ kde_app_okular_optional_archlinux }}"
     - "{{ kde_app_kdeconnect_optional_archlinux }}"
-    - "{{ kde_app_theme_materia_optional_archlinux }}"
-    - "{{ kde_app_kget_archlinux_optional }}"
+    # - "{{ kde_app_theme_materia_optional_archlinux }}"
+    # - "{{ kde_app_kget_archlinux_optional }}"
 
 # todo: import "gpg --keyserver hkp://keys.gnupg.net:80 --recv-keys 6FC05581A37D71FCECE165DB5BE41E162CD6358E"
 # for libappindicator-sharp
-- name: Installation of KDE applications from AUR
-  become: yes
-  become_user: ansible_aur
-  kewlfft.aur.aur:
-    use: yay
-    state: present
-    aur_only: yes
-    name: "{{ item }}"
-  loop:
-    - "{{ kde_app_systemtrayicon_archlinux_aur }}"
-    - "{{ kde_app_kget_archlinux_aur }}"
+# - name: Installation of KDE applications from AUR
+#   become: yes
+#   become_user: ansible_aur
+#   kewlfft.aur.aur:
+#     use: yay
+#     state: present
+#     aur_only: yes
+#     name: "{{ item }}"
+#   loop:
+#     - "{{ kde_app_systemtrayicon_archlinux_aur }}"
+#     - "{{ kde_app_kget_archlinux_aur }}"
 
-- name: set Materia theme for gtk2 apps (user)
-  ansible.builtin.template:
-    src: theme/gtk2/gtkrc-2.0.j2
-    dest: "/home/{{ user_name }}/.gtkrc-2.0"
-    owner: "{{ user_name }}"
-    group: "{{ user_name }}"
-    mode: u+rw,g+r,o+r
+# - name: Load tasks for Materia theme
+#   ansible.builtin.include_tasks: materia_theme.yml
 
-- name: set gtk2 theme for root same as user
-  ansible.builtin.file:
-    state: link
-    src: "/home/{{ user_name }}/.gtkrc-2.0"
-    dest: /etc/gtk-2.0/gtkrc
-    owner: root
-    group: root
+- name: Load tasks for xsettingsd
+  ansible.builtin.include_tasks: xsettingsd.yml
 
-- name: set Materia theme for gtk3 apps (user)
-  ansible.builtin.template:
-    src: theme/gtk3/settings.ini.j2
-    dest: "/home/{{ user_name }}/.config/gtk-3.0/settings.ini"
-    owner: "{{ user_name }}"
-    group: "{{ user_name }}"
-    mode: u+rw,g+r,o+r
+- name: Load tasks for wallet
+  ansible.builtin.include_tasks: wallet.yml
 
-- name: set gtk3 theme for root same as user
-  ansible.builtin.file:
-    state: link
-    src: "/home/{{ user_name }}/.config/gtk-3.0/settings.ini"
-    dest: /etc/gtk-3.0/settings.ini
-    owner: root
-    group: root
+- name: Load tasks for consistent file dialog
+  ansible.builtin.include_tasks: consistent_file_dialog.yml

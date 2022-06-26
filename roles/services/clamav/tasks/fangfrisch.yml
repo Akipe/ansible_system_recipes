@@ -1,0 +1,26 @@
+---
+
+# todo: add config
+# https://rseichter.github.io/fangfrisch/#_default_providers
+
+- name: Installation of other definitions repositories
+  become: yes
+  become_user: ansible_aur
+  kewlfft.aur.aur:
+    use: yay
+    state: present
+    aur_only: yes
+    name: python-fangfrisch
+
+# todo: run only first time
+- name: Initialize database for other definitions repositories
+  become: yes
+  become_user: clamav
+  ansible.builtin.command: "/usr/bin/fangfrisch --conf /etc/fangfrisch/fangfrisch.conf initdb"
+  ignore_errors: true
+
+- name: Enable automatic update of other definition repositories
+  ansible.builtin.service:
+    name: fangfrisch.timer
+    state: started
+    enabled: yes

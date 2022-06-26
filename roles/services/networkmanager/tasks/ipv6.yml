@@ -1,0 +1,9 @@
+---
+
+- name: Set configuration for use systemd-resolved
+  ansible.builtin.template:
+    src: conf.d/20-ipv6-privacy.conf.j2
+    dest: /etc/NetworkManager/conf.d/20-ipv6-privacy.conf
+    owner: root
+    group: root
+    mode: "u=rw,g=r,o=r"

@@ -27,6 +27,12 @@
     state: started
     enabled: yes
 
+- name: Active and enable dispatcher
+  ansible.builtin.systemd:
+    name: NetworkManager-dispatcher.service
+    state: started
+    enabled: yes
+
 - name: Include firewall tasks
   ansible.builtin.include_tasks: firewall.yml
 
@@ -67,3 +73,21 @@
 #   when: not item.ipv4 and not item.gw4 and not item.ipv6 and not item.gw6
 #   with_items:
 #     - '{{ create_networks }}'
+
+- name: Include connectivity checker tasks
+  ansible.builtin.include_tasks: connectivity_checker.yml
+
+- name: Include dhcp timesyncd tasks
+  ansible.builtin.include_tasks: dhcp_timesyncd.yml
+
+- name: Include disable wlan when lan tasks
+  ansible.builtin.include_tasks: disable_wlan_when_lan.yml
+
+- name: Include ipv6 tasks
+  ansible.builtin.include_tasks: ipv6.yml
+
+- name: Include use systemd resolved tasks
+  ansible.builtin.include_tasks: use_systemd_resolved.yml
+
+- name: Include iwd tasks
+  ansible.builtin.include_tasks: iwd.yml

@@ -1,0 +1,12 @@
+---
+
+- name: Installation
+  community.general.pacman:
+    state: present
+    name:
+      - rkhunter
+
+# todo: run only first time
+- name: Initialize database for other definitions repositories
+  ansible.builtin.command: rkhunter --propupd
+

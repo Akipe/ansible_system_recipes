@@ -1,0 +1,28 @@
+---
+
+- name: Installation
+  community.general.pacman:
+    name: 
+      - clamtk
+    state: present
+
+- name: Enable automatic virus definitions update
+  ansible.builtin.service:
+    name: clamav-freshclam.service
+    state: started
+    enabled: yes
+
+# todo: wait some time before launch clamav
+
+- name: Pause for 20 seconds to be sure virus definitions are updated
+  ansible.builtin.pause:
+    seconds: 20
+
+- name: Enable daemon
+  ansible.builtin.service:
+    name: clamav-daemon.service
+    state: started
+    enabled: yes
+
+- name: Load external repositories with frangfrisch
+  ansible.builtin.include_tasks: fangfrisch.yml

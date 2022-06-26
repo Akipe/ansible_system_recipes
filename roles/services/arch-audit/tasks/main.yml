@@ -1,0 +1,13 @@
+---
+
+- name: Installation
+  community.general.pacman:
+    name: 
+      - arch-audit
+    state: present
+
+- name: Enable automatic check
+  ansible.builtin.service:
+    name: arch-audit.timer
+    state: started
+    enabled: yes

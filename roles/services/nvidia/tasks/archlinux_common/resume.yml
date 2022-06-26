@@ -1,0 +1,21 @@
+---
+
+- name: Add configuration for resuming
+  ansible.builtin.template:
+    src: modprobe.d/nvidia-resume.conf.j2
+    dest: /etc/modprobe.d/nvidia-resume.conf
+    owner: root
+    group: root
+    mode: "u=rw,g=r,o=r"
+
+- name: Active and enable suspend for Nvidia
+  ansible.builtin.systemd:
+    name: nvidia-suspend.service
+    state: started
+    enabled: yes
+
+- name: Active and enable hibernate for Nvidia
+  ansible.builtin.systemd:
+    name: nvidia-hibernate.service
+    state: started
+    enabled: yes

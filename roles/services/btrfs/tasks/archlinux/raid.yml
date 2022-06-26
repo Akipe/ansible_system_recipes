@@ -1,0 +1,20 @@
+---
+
+# todo: dynamic load
+- name: Enable periodic scrub for root
+  ansible.builtin.systemd:
+    name: btrfs-scrub@-.timer
+    state: started
+    enabled: yes
+
+- name: Enable periodic scrub for home
+  ansible.builtin.systemd:
+    name: btrfs-scrub@home.timer
+    state: started
+    enabled: yes
+
+- name: Enable periodic scrub for snapshot
+  ansible.builtin.systemd:
+    name: btrfs-scrub@snapshots.timer
+    state: started
+    enabled: yes

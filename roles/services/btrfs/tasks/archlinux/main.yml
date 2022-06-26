@@ -6,3 +6,6 @@
     name:
       - btrfs-progs
       - zstd
+
+- name: Load raid tasks
+  ansible.builtin.include_tasks: raid.yml

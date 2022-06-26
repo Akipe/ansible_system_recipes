@@ -1,0 +1,15 @@
+---
+
+- name: Install iwd
+  community.general.pacman:
+    state: present
+    name:
+      - iwd
+
+- name: Add configuration for using iwd
+  ansible.builtin.template:
+    src: conf.d/20-wifi-backend.conf.j2
+    dest: /etc/NetworkManager/conf.d/20-wifi-backend.conf
+    owner: root
+    group: root
+    mode: "u=rw,g=r,o=r"

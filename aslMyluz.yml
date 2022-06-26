@@ -2,7 +2,6 @@
 
 - name: Load specific roles for aslMyluz
   hosts: aslMyluz
-  remote_user: root
   become: yes
   pre_tasks:
     - ansible.builtin.include_role:
@@ -31,14 +30,12 @@
     - { role: rngd, tags: rngd }
     - { role: systemd-resolved, tags: systemd-resolved }
     - { role: systemd-timesyncd, tags: systemd-timesyncd }
-    - { role: avahi, tags: avahi }
     - { role: host, tags: host }
-    - { role: earlyoom, tags: earlyoom }
-    - { role: systemd-zram-generator, tags: systemd-zram-generator }
+    # - { role: earlyoom, tags: earlyoom }
     - { role: user, tags: user }
     - { role: locale, tags: locale }
     - { role: sudo, tags: sudo }
-    # - { role: btrfs, tags: btrfs }
+    - { role: btrfs, tags: btrfs }
     # - role: swap
     #   tags: swap
     #   vars:
@@ -48,26 +45,26 @@
     - { role: linux-kernel, tags: linux-kernel }
     - { role: auditd, tags: auditd }
     - { role: firewalld, tags: firewalld }
-    # - { role: apparmor, tags: apparmor }
+    - { role: apparmor, tags: apparmor }
     - { role: tlp, tags: tlp }
     - { role: powertop, tags: powertop }
     - { role: thermald, tags: thermald }
     - { role: irqbalance, tags: irqbalance }
-    - { role: preload, tags: preload }
     - { role: flatpak, tags: flatpak }
-    - { role: snap, tags: snap }
     - { role: fwupd, tags: fwupd }
-    # - { role: snapper, tags: snapper }
+    - { role: font, tags: font }
+    - { role: wireguard, tags: wireguard }
     ### Boot
     - { role: dm-crypt, tags: dm-crypt }
     - { role: refind, tags: refind }
+    - { role: fstab, tags: fstab }
     ### Hardware
     - { role: nvidia, tags: nvidia }
     - { role: disk, tags: disk }
     - { role: networkmanager, tags: networkmanager }
     - { role: libinput, tags: libinput }
     - { role: watchdog, vars: { watchdog_activate: no}, tags: watchdog }
-    - { role: android-client, tags: android-client }
+    # - { role: android-client, tags: android-client }
     - { role: pipewire, tags: pipewire }
     - { role: lm_sensors, tags: lm_sensors }
     - { role: bluetooth, tags: bluetooth }
@@ -99,6 +96,10 @@
     - { role: hwinfo, tags: hwinfo }
     - { role: dmidecode, tags: dmidecode }
     - { role: neofetch, tags: neofetch }
+    - { role: arch-audit, tags: arch-audit }
+    - { role: clamav, tags: clamav }
+    - { role: firejail, tags: firejail }
+    - { role: rkhunter, tags: rkhunter }
     ### GUI apps
     - { role: aur-gui, tags: aur-gui }
     - { role: vlc, tags: vlc }
@@ -107,7 +108,6 @@
     - { role: syncthing-cli, tags: syncthing }
     - { role: syncthing-gui-kde, tags: syncthing }
     - { role: profile-sync-daemon, tags: profile-sync-daemon }
-    - { role: virtualbox-host, tags: virtualbox-host }
     - { role: mpv, tags: mpv }
     - { role: firefox, tags: firefox }
     - { role: thunderbird, tags: thunderbird }
@@ -124,35 +124,34 @@
     - { role: wireshark, tags: wireshark }
     - { role: discord, tags: discord }
     - { role: etcher, tags: etcher }
-    - { role: gnome-disk-utility, tags: gnome-disk-utility }
-    - { role: gnome-multi-writer, tags: gnome-multi-writer }
+    # - { role: gnome-disk-utility, tags: gnome-disk-utility }
+    # - { role: gnome-multi-writer, tags: gnome-multi-writer }
     - { role: signal-desktop, tags: signal-desktop }
     - { role: webapp-manager, tags: webapp-manager }
-    # - { role: skype, tags: skype }
     - { role: spotify, tags: spotify }
     - { role: teamviewer, tags: teamviewer }
-    - { role: telegram, tags: telegram }
+    # - { role: telegram, tags: telegram }
     - { role: woeusb-ng, tags: woeusb-ng }
     - { role: neochat, tags: neochat }
     - { role: libvirt, tags: libvirt }
     ### Overclock/undervolt
     - { role: intel-undervolt, tags: intel-undervolt }
-    - { role: stress, tags: stress }
-    - { role: mprime, tags: mprime }
-    - { role: cpupower, tags: cpupower }
-    - { role: turbostat, tags: turbostat }
+    # - { role: stress, tags: stress }
+    # - { role: mprime, tags: mprime }
+    # - { role: cpupower, tags: cpupower }
+    # - { role: turbostat, tags: turbostat }
     # ### Gaming
     - { role: gamemode, tags: gamemode }
     - { role: steam, tags: steam }
-    # - { role: wine, tags: wine }
-    # - { role: dosbox, tags: dosbox }
+    - { role: wine, tags: wine }
+    - { role: dosbox, tags: dosbox }
     # - { role: itch-io, tags: itch-io }
     # - { role: epic-games-legendary, tags: epic-games-legendary }
     # - { role: gog-wyvern, tags: gog-wyvern }
     # - { role: lutris, tags: lutris }
     ### Development
     - { role: ansible-host, tags: ansible-host }
-    - { role: docker, tags: docker }
+    # - { role: podman, tags: podman }
     # - { role: terraform, tags: terraform }
 
 

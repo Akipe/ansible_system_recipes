@@ -16,3 +16,12 @@
     group: root
     mode: u+r,g+r,o-rwx
   when: ansible_system != "FreeBSD"
+
+- name: Add configuration
+  ansible.builtin.template:
+    src: 20-configuration.j2
+    dest: /etc/sudoers.d/20-configuration
+    owner: root
+    group: root
+    mode: u+r,g+r,o-rwx
+  when: ansible_system != "FreeBSD"

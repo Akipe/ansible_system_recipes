@@ -1,9 +1,9 @@
 [submodule "_external/secrets"]
 	path = _external/secrets
-	url = gitea@git.akipe.fr:akp/ansible_system_recipes_external_secrets.git
+	url = https://git.akipe.fr/akp/ansible_system_recipes_external_secrets.git
 [submodule "_external/blob"]
 	path = _external/blob
-	url = gitea@git.akipe.fr:akp/ansible_system_recipes_external_blob.git
+	url = https://git.akipe.fr/akp/ansible_system_recipes_external_blob.git
 [submodule "library/gpg-key"]
 	path = library/gpg-key
 	url = https://github.com/netson/ansible-gpg-key.git

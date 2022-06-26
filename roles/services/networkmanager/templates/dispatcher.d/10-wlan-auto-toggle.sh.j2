@@ -1,0 +1,17 @@
+#!/bin/sh
+
+## {{ ansible_managed }}
+# Disable wlan when lan is connected
+
+if [ "$1" = "{{ networkmanager_lan_interface }}" ]; then
+    case "$2" in
+        up)
+            nmcli radio wifi off
+            ;;
+        down)
+            nmcli radio wifi on
+            ;;
+    esac
+elif [ "$(nmcli -g GENERAL.STATE device show {{ networkmanager_lan_interface }})" = "20 (unavailable)" ]; then
+    nmcli radio wifi on
+fi

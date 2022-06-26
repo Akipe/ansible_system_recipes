@@ -1,3 +1,1 @@
----
-
 # Lenovo Thinkpad P50

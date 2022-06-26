@@ -21,7 +21,6 @@ formatsupport_multimedia_appToInstall_archlinux:
   - gst-plugins-good
   - gst-plugins-ugly
   - gst-python
-  - gst-transcoder
   - lib32-gst-plugins-base
   - lib32-gst-plugins-base-libs
   - lib32-gst-plugins-good

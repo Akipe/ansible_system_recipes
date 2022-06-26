@@ -50,3 +50,9 @@
     group: "{{ item.username }}"
     mode: u=rwx,g=rx,o=rx
   loop: "{{ users_create }}"
+
+- name: Enable automatic integrity checks for users and groups
+  ansible.builtin.systemd:
+    name: shadow.timer
+    state: started
+    enabled: yes

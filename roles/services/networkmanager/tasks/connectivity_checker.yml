@@ -1,0 +1,9 @@
+---
+
+- name: Set configuration for connectivity checker
+  ansible.builtin.template:
+    src: conf.d/20-connectivity.conf.j2
+    dest: /etc/NetworkManager/conf.d/20-connectivity.conf
+    owner: root
+    group: root
+    mode: "u=rw,g=r,o=r"

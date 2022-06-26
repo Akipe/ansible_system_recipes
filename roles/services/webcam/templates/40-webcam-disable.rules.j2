@@ -1,0 +1,7 @@
+## {{ ansible_managed }}
+
+{% if webcam_disable_devices is defined %}
+{% for webcam_disable_device in webcam_disable_devices %}
+ACTION=="add", ATTR{idVendor}=="{{ webcam_disable_device.id_vendor }}", ATTR{idProduct}=="{{ webcam_disable_device.id_product }}", RUN="/bin/sh -c 'echo 1 >/sys/\$devpath/remove'"
+{% endfor %}
+{% endif %}

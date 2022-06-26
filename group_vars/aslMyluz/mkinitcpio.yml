@@ -7,7 +7,7 @@ mkinitcpio_initramfs_modules:
   - nvidia_drm 
   - dm_mod
   - dm_crypt
-  - ext4
+  - btrfs
   - vfat
   - sha256
   - sha512
@@ -23,7 +23,9 @@ mkinitcpio_initramfs_hooks:
   - modconf
   - block
   - sd-encrypt
-  - lvm2
+  - btrfs
   - filesystems
   - fsck
+mkinitcpio_initramfs_binaries:
+  - btrfs
 mkinitcpio_initramfs_compression: zstd

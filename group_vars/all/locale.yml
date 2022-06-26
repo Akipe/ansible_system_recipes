@@ -4,6 +4,8 @@ language_default:     "en_US.UTF-8"
 language_list:
   - fr_FR.UTF-8
   - en_US.UTF-8
-language_listOrder:   "en_US:en:fr_FR"
+language_listOrder:   "en_US.UTF-8:fr_FR.UTF-8"
 language_timeFormat:  "fr_FR.UTF-8"
-language_collate:     "C"
+language_collate:     "C.UTF-8"
+
+locale_keyboard_map:  "fr-latin9"

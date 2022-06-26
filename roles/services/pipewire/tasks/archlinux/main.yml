@@ -5,6 +5,7 @@
     state: present
     name:
       - pipewire
+      - wireplumber
 
 - name: Remove pulseaudio for replacing with pipewire
   community.general.pacman:
@@ -12,11 +13,11 @@
     name: pulseaudio
     extra_args: --nodeps --nodeps
 
-- name: Remove jack for replacing with jack2
-  community.general.pacman:
-    state: absent
-    name: jack
-    extra_args: --nodeps --nodeps
+# - name: Remove jack for replacing with jack2
+#   community.general.pacman:
+#     state: absent
+#     name: jack
+#     extra_args: --nodeps --nodeps
 
 - name: Installation of dependencies
   community.general.pacman:
@@ -26,7 +27,9 @@
       - pipewire-alsa
       - alsa-plugins
       - alsa-firmware
-      - pipewire-jack
       - gst-plugin-pipewire
-      - jack2
+      - pipewire-v4l2
+      - lib32-pipewire-v4l2
+      - pipewire-jack
+      - lib32-pipewire-jack
     extra_args: --asdeps

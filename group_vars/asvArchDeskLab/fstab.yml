@@ -1,0 +1,37 @@
+fstab_mounts:
+  - device:     LABEL=akpsystem
+    directory:  /
+    filesystem: btrfs
+    options:    rw,noatime,compress=zstd:3,ssd,discard=async,space_cache=v2,subvolid=256,subvol=/@root
+    dump:       0
+    pass:       0
+  - device:     LABEL=EFI
+    directory:  /boot
+    filesystem: vfat
+    options:    rw,noatime,fmask=0022,dmask=0022,codepage=437,iocharset=ascii,shortname=mixed,utf8,errors=remount-ro
+    dump:       0
+    pass:       2
+  - device:     LABEL=akpsystem
+    directory:  /home
+    filesystem: btrfs
+    options:    rw,noatime,compress=zstd:3,ssd,discard=async,space_cache=v2,subvolid=257,subvol=/@home
+    dump:       0
+    pass:       0
+  - device:     LABEL=akpsystem
+    directory:  /.snapshots
+    filesystem: btrfs
+    options:    rw,noatime,compress=zstd:3,ssd,discard=async,space_cache=v2,subvolid=258,subvol=/@snapshots
+    dump:       0
+    pass:       0
+  - device:     LABEL=akpsystem-swap1
+    directory:  none
+    filesystem: swap
+    options:    defaults
+    dump:       0
+    pass:       0
+  - device:     LABEL=akpsystem-swap2
+    directory:  none
+    filesystem: swap
+    options:    defaults
+    dump:       0
+    pass:       0
