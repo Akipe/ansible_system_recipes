@@ -1,0 +1,106 @@
+---
+
+ansible_python_interpreter: /usr/bin/python3
+
+# init vars is for post-installing proxmox
+# normal vars is for connection with normal user
+init_ansible_user: "{{ secret_init_ansible_user }}"
+init_ansible_ssh_pass: "{{ secret_init_ansible_ssh_pass }}"
+normal_ansible_user: "{{ secret_normal_ansible_user }}"
+normal_ansible_become_pass: "{{ secret_normal_ansible_become_pass }}"
+personal_user_name: "{{ secret_personal_user_name }}"
+personal_user_password: "{{ secret_personal_user_password }}"
+# personal_user_password_hashed: "{{ secret_personal_user_password_hashed }}"
+
+users_create:
+  - username: "{{ normal_ansible_user }}"
+    password: "{{ normal_ansible_become_pass }}"
+    #password_hashed: "{{ personal_user_password_hashed }}"
+    shell: /bin/bash
+    groups: users,wheel
+    public_key: "{{ ssh_public_key }}"
+  - username: "{{ personal_user_name }}"
+    password: "{{ personal_user_password }}"
+    #password_hashed: "{{ personal_user_password_hashed }}"
+    shell: /bin/bash
+    groups: users,wheel
+    public_key: "{{ ssh_public_key }}"
+
+proxmox_users:
+  - username: "{{ personal_user_name }}"
+
+# vm_commons_archlinux_iso_path: local:iso/archlinux-2020.12.01-x86_64.iso
+# lxc_template_ubuntu_1804_path: squirrel-templates:vztmpl/ubuntu-18.04-standard_18.04.1-1_amd64.tar.gz
+# lxc_template_ubuntu_2004_path: squirrel-templates:vztmpl/ubuntu-20.04-standard_20.04-1_amd64.tar.gz
+# lxc_template_debian_10_path: squirrel-templates:vztmpl/debian-10-standard_10.7-1_amd64.tar.gz
+
+# nut_mode: netclient
+# nut_monitor_connect_ups_name: ups
+# nut_monitor_connect_adress: "{{ secret_nut_monitor_connect_adress }}"
+# nut_monitor_connect_number_power_supplies: 1
+# nut_monitor_connect_username: "{{ secret_nut_monitor_connect_username }}"
+# nut_monitor_connect_password: "{{ secret_nut_monitor_connect_password }}"
+# nut_monitor_connect_type: slave
+
+# akpvmserver_template_name: akp-vmserver-template
+# akpvmserver_template_id: 9000
+# akpvmserver_template_disk_efi_path: local-lvm:0
+# akpvmserver_template_disk_system_path: local-lvm:1
+# akpvmserver_template_disk_system_size: "8G"
+# akpvmserver_template_cpu_cores: "1"
+# akpvmserver_template_memory: "1024"
+
+# lxc_asvSync01_root_password:      "{{ secret_lxc_asvSync01_root_password }}"
+# lxc_asvSync01_name:                asvSync01
+# lxc_asvSync01_id:                  "2000"
+# lxc_asvSync01_disk_system_size_gb: "4"
+# lxc_asvSync01_cpu_cores:           "2"
+# lxc_asvSync01_cpu_units:           "1024"
+# lxc_asvSync01_memory:              "512"
+# lxc_asvSync01_net0_macaddress:     "{{ asvSync01_hardware_network_net0_mac }}"
+
+# lxc_asvNetworkController:
+#   name: asvNetworkController
+#   id: "2000"
+#   disk_system_size_gb: "20"
+#   cpu_cores: "4"
+#   cpu_units: "1024"
+#   memory: "2046"
+#   net0_macaddress: "{{ secret_lxc_asvnetworkcontroller_hardware_network_net0_mac }}"
+#   root_password: "{{ secret_lxc_asvnetworkcontroller_root_password }}"
+
+ssh_port: 22
+ssh_firewall_firewalld: no
+ssh_users:
+  - username: "{{ secret_normal_ansible_user }}"
+    public_key: "{{ ssh_public_key }}"
+  - username: "{{ personal_user_name }}"
+    public_key: "{{ ssh_public_key }}"
+
+bash_configuration_mode: proxmox
+bash_users:
+  - username: root
+  - username: "{{ secret_normal_ansible_user }}"
+  - username: "{{ personal_user_name }}"
+
+# fish_users:
+#   - username: root
+#   - username: "{{ personal_user_name }}"
+
+# apt:
+#   unattended_origins_patterns:
+#   - 'origin=Debian,codename=${distro_codename}-updates'
+#   - 'origin=Debian,codename=${distro_codename}-proposed-updates'
+#   - 'origin=Debian,codename=${distro_codename},label=Debian'
+#   - 'origin=Debian,codename=${distro_codename},label=Debian-Security'
+#   - 'origin=Debian,archive=stable'
+#   - 'origin=Debian,archive=stable-updates'
+#   - 'origin=Debian,archive=proposed-updates'
+#   - 'origin=Proxmox,archive=stable'
+
+firewalld_is_enable: false
+
+bootloader_timeout: 5
+bootloader_options:
+  - "mitigations=off"
+  #- "quiet"

@@ -3,4 +3,6 @@
 - name: Installation
   ansible.builtin.dnf:
     state: present
-    name: "{{ role_appToInstall_debian }}"
+    name:
+      - python3
+      - python3-pip

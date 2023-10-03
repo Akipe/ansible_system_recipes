@@ -1,10 +1,10 @@
 ---
 
-- name: Open firewall for sshd 
+- name: Open firewall for sshd
   ansible.posix.firewalld:
     service: ssh
     zone: home
     state: enabled
     permanent: true
-    immediate: yes
+    immediate: true
   when: ssh_firewall_firewalld or firewalld_is_enable

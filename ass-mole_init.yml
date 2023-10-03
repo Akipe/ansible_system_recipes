@@ -1,0 +1,26 @@
+---
+
+- name: Load roles concerning ass-mole for ansible initialization
+  hosts: ass-mole
+  remote_user: "{{ init_ansible_user }}"
+  vars:
+    ansible_user: "{{ init_ansible_user }}"
+    ansible_ssh_pass: "{{ init_ansible_ssh_pass }}"
+  pre_tasks:
+    - name: Set PVE repositories
+      ansible.builtin.include_role:
+        name: proxmox
+        tasks_from: set_no_subscription_repository
+      tags:
+        - always
+    - name: Configure ansible guest requirement
+      ansible.builtin.include_role:
+        name: ansible-guest
+      tags:
+        - always
+  roles:
+    ### Base
+    - { role: user, tags: user }
+    - { role: proxmox, tags: proxmox }
+    - { role: sudo, tags: sudo }
+    - { role: ssh, tags: ssh }

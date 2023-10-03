@@ -8,100 +8,81 @@
   loop: "{{ users_create }}"
   when: users_create is defined
 
-- name: Remove Proxmox VE enterprise repository
-  ansible.builtin.include_role:
-    name: apt
-    tasks_from: remove_repository
-  vars:
-    remove_repository:
-      - repository:
-          repo: "deb https://enterprise.proxmox.com/debian/pve buster pve-enterprise"
-
-- name: Remove Proxmox VE enterprise repository file
-  ansible.builtin.file:
-    state: absent
-    path: /etc/apt/sources.list.d/pve-enterprise.list
-
-- name: Add Proxmox VE no-subscription repository
-  ansible.builtin.include_role:
-    name: apt
-    tasks_from: add_repository
-  vars:
-    add_repository:
-      - key:
-          id: 7BF2812E8A6E88E0
-          url: http://download.proxmox.com/debian/proxmox-ve-release-6.x.gpg
-        repository:
-          repo: "deb http://download.proxmox.com/debian/pve  {{ ansible_distribution_release }} pve-no-subscription"
-          filename: proxmox-ve_no-subscription
+- name: Add no-subscription repository
+  ansible.builtin.include_tasks:
+    file: set_no_subscription_repository.yml
 
 - name: Remove unused Proxmox packages
   ansible.builtin.apt:
-    update_cache: yes
+    update_cache: true
     cache_valid_time: "{{apt_unattended_cache_valid_time}}"
     name:
       - os-prober
     state: absent
 
-- name: Install Proxmox VE and related packages
-  ansible.builtin.apt:
-    update_cache: yes
-    cache_valid_time: "{{apt_unattended_cache_valid_time}}"
-    name:
-      - proxmox-ve
-      - open-iscsi
-      - ksm-control-daemon
-      - ifupdown2
-    state: present
+- name: Remove blacklist Intel Microcode
+  ansible.builtin.include_tasks:
+    file: remove_blacklist_intel_microcode.yml
 
-- name: Install dependencies for Ansible
-  ansible.builtin.pip:
-    name:
-      - requests
-      - proxmoxer
-    state: present
+# - name: Install Proxmox VE and related packages
+#   ansible.builtin.apt:
+#     update_cache: true
+#     cache_valid_time: "{{apt_unattended_cache_valid_time}}"
+#     name:
+#       - proxmox-ve
+#       - open-iscsi
+#       - ksm-control-daemon
+#       - ifupdown2
+#     state: present
 
-- name: Add kernel config for Proxmox
-  ansible.builtin.template:
-    src: "sysctl.d/{{ item }}.conf.j2"
-    dest: "/etc/sysctl.d/{{ item }}.conf"
-    owner: root
-    group: root
-    mode: u+rw,g+r,o+r
-  notify: Reload kernel config
-  loop:
-    - pve
+# - name: Install dependencies for Ansible
+#   ansible.builtin.pip:
+#     name:
+#       - requests
+#       - proxmoxer
+#     state: present
+
+# - name: Add kernel config for Proxmox
+#   ansible.builtin.template:
+#     src: "sysctl.d/{{ item }}.conf.j2"
+#     dest: "/etc/sysctl.d/{{ item }}.conf"
+#     owner: root
+#     group: root
+#     mode: u+rw,g+r,o+r
+#   notify: Reload kernel config
+#   loop:
+#     - pve
 
 - name: Active automatic update of LXC templates
   ansible.builtin.systemd:
     name: pve-daily-update.timer
-    enabled: yes
+    enabled: true
     state: started
 
-- name: Create directory for store public key
-  ansible.builtin.file:
-    path: /etc/pub_keys
-    state: directory
-    owner: root
-    group: www-data
-    mode: u+rwx,g+rx,o+rx
+# - name: Create directory for store public key
+#   ansible.builtin.file:
+#     path: /etc/pub_keys
+#     state: directory
+#     owner: root
+#     group: www-data
+#     mode: u+rwx,g+rx,o+rx
 
-- name: Add akpKey public key
-  ansible.builtin.copy:
-    src: pubkey/akpkey/ssh.public.key
-    dest: /etc/pub_keys/akpkey.ssh.pub
+# - name: Add akpKey public key
+#   ansible.builtin.copy:
+#     src: pubkey/akpkey/ssh.public.key
+#     dest: /etc/pub_keys/akpkey.ssh.pub
 
-- name: Allow LXC containers to mount NFS
-  ansible.builtin.template:
-    src: apparmor.d/lxc-default-with-nfs.j2
-    dest: /etc/apparmor.d/lxc/lxc-default-with-nfs
-    owner: root
-    group: root
-    mode: u+rw,g+r,o+r
-  notify: Restart apparmor
+# - name: Allow LXC containers to mount NFS
+#   ansible.builtin.template:
+#     src: apparmor.d/lxc-default-with-nfs.j2
+#     dest: /etc/apparmor.d/lxc/lxc-default-with-nfs
+#     owner: root
+#     group: root
+#     mode: u+rw,g+r,o+r
+#   notify: Restart apparmor
 
-- name: Include web interface proxy tasks
-  ansible.builtin.include_tasks: web_interface_proxy.yml
+# - name: Include web interface proxy tasks
+#   ansible.builtin.include_tasks: web_interface_proxy.yml
 
 # - name: setup IPV4 forwarding for NAT
 #   ansible.builtin.lineinfile: "state=present dest=/etc/sysctl.conf
@@ -142,9 +123,6 @@
 #     users: "{{ item.users | default([]) }}"
 #   with_items: "{{ pve_acls }}"
 #   when: "not pve_cluster_enabled | bool or (pve_cluster_enabled and inventory_hostname == groups[pve_group][0])"
-
-
-
 
 # - block:
 #   - name: Remove automatically installed PVE Enterprise repo configuration
@@ -206,8 +184,6 @@
 #     dest="{{ proxmox_isci_config_path }}"
 #   notify: open-iscsi restart
 
-
-
 # - name: Modprobe some modules to enable firewall in containers
 #   modprobe: name='{{ item }}'
 #   with_items: '{{ proxmox_modules }}'
@@ -219,5 +195,3 @@
 #     src:  "{{ proxmox_interfaces_template }}"
 #     dest: "{{ proxmox_interfaces_file }}"
 #   when: proxmox_interfaces_template | length
-
-

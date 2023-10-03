@@ -1,0 +1,28 @@
+- name: Remove Proxmox VE enterprise repositories
+  ansible.builtin.include_role:
+    name: apt
+    tasks_from: remove_repository
+  vars:
+    remove_repository:
+      - repository:
+          repo: "deb https://enterprise.proxmox.com/debian/pve {{ ansible_distribution_release }} pve-enterprise"
+      - repository:
+          repo: "deb https://enterprise.proxmox.com/debian/ceph-quincy {{ ansible_distribution_release }} enterprise"
+
+# - name: Remove Proxmox VE enterprise repository file
+#   ansible.builtin.file:
+#     state: absent
+#     path: /etc/apt/sources.list.d/pve-enterprise.list
+
+- name: Add Proxmox VE no-subscription repository
+  ansible.builtin.include_role:
+    name: apt
+    tasks_from: add_repository
+  vars:
+    add_repository:
+      - key:
+          id: 1140AF8F639E0C39
+          url: https://enterprise.proxmox.com/debian/proxmox-release-bookworm.gpg
+        repository:
+          repo: "deb http://download.proxmox.com/debian/pve {{ ansible_distribution_release }} pve-no-subscription"
+          filename: pve-no-subscription

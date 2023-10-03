@@ -1,6 +1,6 @@
 ---
 
-ssh_firewall_firewalld: no
+ssh_firewall_firewalld: false
 
 ssh_port: 22
 ssh_keys_rsa_size: 4096

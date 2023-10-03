@@ -1,0 +1,17 @@
+## {{ ansible_managed }}
+
+# lower the priority of all packages in the unstable repository
+
+Package: *
+Pin: release o=Debian,a=unstable
+Pin-Priority: 10
+
+# allow upgrading microcode from the unstable repository
+
+Package: intel-microcode
+Pin: release o=Debian,a=unstable
+Pin-Priority: 500
+
+Package: amd64-microcode
+Pin: release o=Debian,a=unstable
+Pin-Priority: 500

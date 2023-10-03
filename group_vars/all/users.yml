@@ -1,5 +1,5 @@
 ---
 
-user_name: "{{ vault_user_name }}"
-personal_user_name: "{{ vault_user_name }}"
-personal_user_password: "{{ vault_user_password }}"
+user_name: "{{ secret_user_name }}"
+personal_user_name: "{{ secret_user_name }}"
+personal_user_password: "{{ secret_user_password }}"

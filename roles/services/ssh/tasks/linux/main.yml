@@ -23,15 +23,15 @@
   notify:
     - Restart SSH server with Linux
 
-- name: set file permissions
+- name: Set file permissions
   ansible.builtin.file:
     path: /etc/ssh
     owner: root
     group: root
-    mode: 0755
+    mode: "0755"
 
 - name: Start and enable SSH server
   ansible.builtin.systemd:
     name: sshd.service
-    enabled: yes
+    enabled: true
     state: started

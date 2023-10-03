@@ -4,5 +4,10 @@
   ansible.builtin.apt_repository:
     repo: "{{ item.repository.repo }}"
     state: absent
-  notify: Update APT cache
+    update_cache: false
+  # notify: Update APT cache
   with_items: "{{ remove_repository }}"
+
+- name: Update APT cache
+  ansible.builtin.apt:
+    update_cache: yes

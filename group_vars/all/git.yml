@@ -1,5 +1,5 @@
 ---
 
-git_name:         "{{ vault_git_name }}"
-git_email:        "{{ vault_git_email }}"
-git_signing_key:  "{{ gpg_akpkey_key_id }}"
+# git_name:         "{{ vault_git_name }}"
+# git_email:        "{{ vault_git_email }}"
+# git_signing_key:  "{{ gpg_akpkey_key_id }}"

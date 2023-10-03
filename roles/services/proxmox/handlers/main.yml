@@ -1,16 +1,16 @@
 ---
 
-- name: restart pvedaemon
+- name: Restart pvedaemon
   ansible.builtin.service:
     name: pvedaemon
     state: restarted
 
-- name: restart pveproxy
+- name: Restart pveproxy
   ansible.builtin.service:
     name: pveproxy
     state: restarted
 
-- name: open-iscsi restart
+- name: Restart open-iscsi
   ansible.builtin.service:
     name: 'open-iscsi'
     state: 'restarted'
@@ -24,10 +24,16 @@
   ansible.builtin.shell: sysctl --system
 
 - name: Reload systemd configuration
-  ansible.builtin.systemd: 
-    daemon_reload: yes
+  ansible.builtin.systemd:
+    daemon_reload: true
 
 - name: Restart apparmor
   ansible.builtin.service:
     name: apparmor.service
     state: restarted
+
+- name: Update initramfs
+  ansible.builtin.shell: update-initramfs -u
+
+- name: Re-generate the Grub configuration
+  ansible.builtin.command:  "update-grub"

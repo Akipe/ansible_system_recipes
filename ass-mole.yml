@@ -1,0 +1,59 @@
+---
+
+- name: Load roles concerning ass-mole
+  hosts: ass-mole
+  become_user: root
+  become: true
+  pre_tasks:
+    - name: Set PVE repositories
+      ansible.builtin.include_role:
+        name: proxmox
+        tasks_from: set_no_subscription_repository
+      tags:
+        - always
+    - name: Configure ansible guest requirement
+      ansible.builtin.include_role:
+        name: ansible-guest
+      tags:
+        - always
+  roles:
+    ### Base
+    - { role: ssh, tags: ssh }
+    # ### System
+    - { role: user, tags: user }
+    - { role: sudo, tags: sudo }
+    # - { role: apt, tags: apt }
+    # - { role: linux-kernel, tags: linux-kernel }
+    # - { role: irqbalance, tags: irqbalance }
+    # - { role: tpm2, tags: tpm2 }
+    # - { role: rngd, tags: rngd }
+    # - { role: systemd-journald, tags: systemd-journald }
+    # - { role: systemd-timesyncd, tags: systemd-timesyncd }
+    # - { role: ipmitool, tags: ipmitool }
+    # - { role: nut, tags: nut }
+    # # - { role: locale, tags: locale } # todo: do it
+    - { role: proxmox, tags: proxmox }
+    # ### Hardware
+    # - { role: disk, tags: disk }
+    - { role: microcode, tags: microcode }
+    # ### Commons rules
+    # # - { role: base-cli, tags: base-cli }
+    # ### Apps
+    # - { role: bash, tags: bash }
+    # - { role: fish, tags: fish }
+    # - { role: man-page, tags: man-page }
+    # - { role: wget, tags: wget }
+    # - { role: trash-cli, tags: trash-cli }
+    # - { role: top-utils, tags: top-utils }
+    # - { role: tmux, tags: tmux }
+    # # - { role: rsync, tags: rsync }
+    # - { role: neovim, tags: neovim }
+    # - { role: lsb-release, tags: lsb-release }
+    # - { role: curl, tags: curl }
+    # - { role: bpytop, tags: bpytop }
+    # - { role: tree, tags: tree }
+    # - { role: hwinfo, tags: hwinfo }
+    # - { role: dmidecode, tags: dmidecode }
+    # - { role: neofetch, tags: neofetch }
+    # ### Specifics rules
+    # - { role: assdonkey, tags: assdonkey }

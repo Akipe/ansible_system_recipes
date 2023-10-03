@@ -1,8 +1,31 @@
 ---
 
+- name: Add Debian microcode unstable repository
+  ansible.builtin.include_role:
+    name: apt
+    tasks_from: add_repository
+  vars:
+    add_repository:
+      # - key:
+      #     id: 1140AF8F639E0C39
+      #     url: https://enterprise.proxmox.com/debian/proxmox-release-bookworm.gpg
+      - repository:
+          repo: "deb http://deb.debian.org/debian/ unstable non-free-firmware"
+          filename: debian-unstable.list
+
+- name: Allow only Intel and AMD microcode update from unstable repository
+  ansible.builtin.template:
+    src: unstable-repository.j2
+    dest: /etc/apt/preferences.d/unstable-repository
+    backup: true
+    owner: root
+    group: root
+    mode: "u=rw,g=r,o=r"
+  notify: Update APT cache
+
 - name: Install Intel CPU microcode
   ansible.builtin.apt:
-    update_cache: yes
+    update_cache: true
     cache_valid_time: "{{apt_unattended_cache_valid_time}}"
     state: present
     name: intel-microcode
@@ -10,7 +33,7 @@
 
 - name: Install AMD CPU microcode
   ansible.builtin.apt:
-    update_cache: yes
+    update_cache: true
     cache_valid_time: "{{apt_unattended_cache_valid_time}}"
     state: present
     name: amd64-microcode

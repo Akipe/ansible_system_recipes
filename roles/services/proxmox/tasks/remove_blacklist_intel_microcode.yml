@@ -1,0 +1,7 @@
+---
+
+- name: Remove blacklist Intel Microcode
+  ansible.builtin.file:
+    path: "/etc/modprobe.d/intel-microcode-blacklist.conf"
+    state: absent
+  notify: Update initramfs

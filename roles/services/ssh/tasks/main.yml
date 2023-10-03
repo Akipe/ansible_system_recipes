@@ -15,7 +15,7 @@
   community.crypto.openssh_keypair:
     path: /etc/ssh/ssh_host_ed25519_key
     type: ed25519
-    force: yes
+    force: true
   when: not is_ansible_has_generate_keys.stat.exists
 
 - name: Generate RSA key
@@ -23,7 +23,7 @@
     path: /etc/ssh/ssh_host_rsa_key
     type: rsa
     size: "{{ ssh_keys_rsa_size }}"
-    force: yes
+    force: true
   when: not is_ansible_has_generate_keys.stat.exists
 
 - name: Generate ECDSA key
@@ -31,10 +31,10 @@
     path: /etc/ssh/ssh_host_ecdsa_key
     type: ecdsa
     size: "{{ ssh_keys_ecdsa_size }}"
-    force: yes
+    force: true
   when: not is_ansible_has_generate_keys.stat.exists
 
-- name: remove DSA key
+- name: Remove DSA key
   ansible.builtin.file:
     path: "{{ item }}"
     state: absent
@@ -50,9 +50,9 @@
 
 - name: Set public key for SSH
   ansible.posix.authorized_key:
-    state:  present
-    user:   "{{ item.username }}"
-    key:    "{{ item.public_key }}"
+    state: present
+    user: "{{ item.username }}"
+    key: "{{ item.public_key }}"
   with_items: "{{ ssh_users }}"
 
 - name: Load tasks for Linux distributions

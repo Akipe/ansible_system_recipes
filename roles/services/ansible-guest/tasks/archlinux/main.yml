@@ -3,4 +3,6 @@
 - name: Installation
   community.general.pacman:
     state: present
-    name: "{{ role_appToInstall_archlinux }}"
+    name:
+      - python
+      - python-pip

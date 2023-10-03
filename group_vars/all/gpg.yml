@@ -1,11 +1,11 @@
 ---
 
-gpg_akpkey_key_id: "{{ vault_pgp_key_id }}"
-gpg_akpkey_primary_mail: "{{ vault_gpg_primary_mail }}"
-gpg_akpkey_public_key_content: "{{ lookup('file', 'pubkey/akpkey/gpg.public.key') }}"
+# gpg_akpkey_key_id: "{{ vault_pgp_key_id }}"
+# gpg_akpkey_primary_mail: "{{ vault_gpg_primary_mail }}"
+# gpg_akpkey_public_key_content: "{{ lookup('file', 'pubkey/akpkey/gpg.public.key') }}"
 
-gnupg_import_multiple_key:
-  - public_key_content: "{{ gpg_akpkey_public_key_content }}"
-    trust_level: 5
+# gnupg_import_multiple_key:
+#   - public_key_content: "{{ gpg_akpkey_public_key_content }}"
+#     trust_level: 5
 
-yubikey_primary_mail_link_to_gpg_key_to_rotate: "{{ gpg_akpkey_primary_mail }}"
+# yubikey_primary_mail_link_to_gpg_key_to_rotate: "{{ gpg_akpkey_primary_mail }}"
