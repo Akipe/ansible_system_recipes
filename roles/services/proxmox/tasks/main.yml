@@ -15,7 +15,7 @@
 - name: Remove unused Proxmox packages
   ansible.builtin.apt:
     update_cache: true
-    cache_valid_time: "{{apt_unattended_cache_valid_time}}"
+    cache_valid_time: "{{ apt_unattended_cache_valid_time }}"
     name:
       - os-prober
     state: absent

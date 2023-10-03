@@ -22,7 +22,7 @@
     path: /etc/ssh
     owner: root
     group: wheel
-    mode: 0755
+    mode: "0755"
 
 - name: Start
   ansible.builtin.service:

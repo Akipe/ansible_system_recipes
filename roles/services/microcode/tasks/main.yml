@@ -1,11 +1,13 @@
 ---
 
 - name: Check if processor vendor is Intel
-  ansible.builtin.set_fact: cpu_vendor="intel"
+  ansible.builtin.set_fact:
+    cpu_vendor: intel
   when: "'GenuineIntel' in ansible_facts['processor']"
 
 - name: Check if processor vendor is AMD
-  ansible.builtin.set_fact: cpu_vendor="amd"
+  ansible.builtin.set_fact:
+    cpu_vendor: amd
   when: "'AuthenticAMD' in ansible_facts['processor']"
 
 - name: Load tasks for install on Debian & derivate

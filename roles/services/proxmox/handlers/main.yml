@@ -21,7 +21,7 @@
     state: restarted
 
 - name: Reload kernel config
-  ansible.builtin.shell: sysctl --system
+  ansible.builtin.command: sysctl --system
 
 - name: Reload systemd configuration
   ansible.builtin.systemd:
@@ -33,7 +33,7 @@
     state: restarted
 
 - name: Update initramfs
-  ansible.builtin.shell: update-initramfs -u
+  ansible.builtin.command: update-initramfs -u
 
 - name: Re-generate the Grub configuration
   ansible.builtin.command:  "update-grub"
