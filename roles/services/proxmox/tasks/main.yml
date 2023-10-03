@@ -24,6 +24,10 @@
   ansible.builtin.include_tasks:
     file: remove_blacklist_intel_microcode.yml
 
+- name: Update bootloader configuration
+  ansible.builtin.include_tasks:
+    file: update_grub_config.yml
+
 # - name: Install Proxmox VE and related packages
 #   ansible.builtin.apt:
 #     update_cache: true

@@ -1,14 +1,8 @@
 ---
 
-- name: Installation of grub
-  community.general.pacman:
-    state: present
-    name:
-      - grub
-
-- name: Set configuration
+- name: Set Grub configuration
   ansible.builtin.template:
-    src: default.grub.cfg.j2
+    src: grub/default.grub.cfg.j2
     dest: /etc/default/grub
     owner: root
     group: root
